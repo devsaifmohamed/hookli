@@ -1,4 +1,4 @@
-# Ralph — a gated, self-driving task loop for `@saif.dev/use-any-hook`
+# Ralph — a gated, self-driving task loop for `re-hooks` (rehooks)
 
 > Ported into this repo from the original Nzmly-platform harness. The mechanics below are
 > general; the concrete examples (apps, globs, gate steps) still describe that monorepo —

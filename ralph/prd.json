@@ -1,6 +1,6 @@
 {
-  "feature": "use-any-hook-quality-pass",
-  "description": "Starter backlog for the @saif.dev/use-any-hook library, seeded from a code scan on 2026-07-11. One task = one coherent slice with clear acceptance criteria and a status the loop mutates. Replace/extend with your real work.",
+  "feature": "rehooks-quality-pass",
+  "description": "Starter backlog for the re-hooks (rehooks) library, seeded from a code scan on 2026-07-11. One task = one coherent slice with clear acceptance criteria and a status the loop mutates. Replace/extend with your real work.",
   "release_branch": "main",
   "constraints": {
     "max_files_per_commit": 8,
@@ -42,18 +42,6 @@
       "acceptance": [
         "No browser global is accessed during render or module evaluation without a typeof guard",
         "Public APIs unchanged",
-        "bash ralph/check.sh is green"
-      ],
-      "status": "todo"
-    },
-    {
-      "id": "T4",
-      "title": "Fix README npm badges + install to the scoped package name",
-      "priority": 4,
-      "notes": "Badges point at unscoped 'use-any-hook' while the package is '@saif.dev/use-any-hook'. Align badges and any install snippets.",
-      "acceptance": [
-        "All badges and install commands reference @saif.dev/use-any-hook",
-        "Don't commit at the end — I should review the README diff first",
         "bash ralph/check.sh is green"
       ],
       "status": "todo"

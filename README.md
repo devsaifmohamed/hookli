@@ -1,7 +1,7 @@
-[![npm version](https://img.shields.io/npm/v/use-any-hook.svg?style=flat-square)](https://www.npmjs.org/package/use-any-hook)
-[![npm downloads](https://img.shields.io/npm/dm/use-any-hook.svg?style=flat-square)](https://npm-stat.com/charts.html?package=use-any-hook)
+[![npm version](https://img.shields.io/npm/v/re-hooks.svg?style=flat-square)](https://www.npmjs.org/package/re-hooks)
+[![npm downloads](https://img.shields.io/npm/dm/re-hooks.svg?style=flat-square)](https://npm-stat.com/charts.html?package=re-hooks)
 
-# [useAnyHook](https://www.npmjs.com/package/@saif.dev/use-any-hook)
+# [rehooks](https://www.npmjs.com/package/re-hooks)
 
 A group of commonly used custom [React.js](https://reactjs.org) hooks.
 
@@ -10,13 +10,13 @@ A group of commonly used custom [React.js](https://reactjs.org) hooks.
 You can install the package using npm or yarn:
 
 ```bash
-npm i @saif.dev/use-any-hook
+npm i re-hooks
 ```
 
 ### OR
 
 ```bash
-yarn add @saif.dev/use-any-hook
+yarn add re-hooks
 ```
 
 ## Read The [Docs](https://use-any-hook-d92674ab.mintlify.app/installation)
@@ -50,11 +50,11 @@ Thi is a quide through the usage process, jump directly to the hook you want:
 <!--
 ## Usage
 
-A quick quide for each hook in the [use-any-hook](https://www.npmjs.com/package/use-any-hook) package
+A quick quide for each hook in the [re-hooks](https://www.npmjs.com/package/re-hooks) package
 
 ```javascript
 // Import your desired custom hook 1st.
-import { useInfiniteScroll } from "use-any-hook";
+import { useInfiniteScroll } from "re-hooks";
 ```
 
 ### 1. useFetch

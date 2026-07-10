@@ -1,7 +1,7 @@
 {
-  "name": "@saif.dev/use-any-hook",
-  "version": "1.3.11",
-  "description": "All react.js custom hooks you frequently use.",
+  "name": "re-hooks",
+  "version": "1.3.12",
+  "description": "rehooks — all the React.js custom hooks you frequently use.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -12,6 +12,8 @@
     "build": "tsup"
   },
   "keywords": [
+    "rehooks",
+    "re-hooks",
     "hooks",
     "react.js",
     "custom-hooks",

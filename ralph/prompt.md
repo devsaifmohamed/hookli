@@ -1,6 +1,6 @@
 # Ralph — operating manual (one iteration)
 
-You are running one iteration of the Ralph loop on the **`@saif.dev/use-any-hook`**
+You are running one iteration of the Ralph loop on the **`re-hooks`** (brand: rehooks)
 React hooks library. All your memory is in files: the backlog (`ralph/prd.json`), the
 progress log (`ralph/progress.txt`), and git history. Read them first, every time — do
 **not** assume you remember anything from a previous iteration.
