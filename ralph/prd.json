@@ -1,0 +1,62 @@
+{
+  "feature": "use-any-hook-quality-pass",
+  "description": "Starter backlog for the @saif.dev/use-any-hook library, seeded from a code scan on 2026-07-11. One task = one coherent slice with clear acceptance criteria and a status the loop mutates. Replace/extend with your real work.",
+  "release_branch": "main",
+  "constraints": {
+    "max_files_per_commit": 8,
+    "target_globs": ["src/hooks/*.hook.ts", "src/hooks/index.ts", "src/index.ts", "README.md"],
+    "never": ["merge to main", "push to main", "delete files/branches", "npm publish", "npm version / git tag"]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Fix useDarkMode persisting the stale/inverted theme value",
+      "priority": 1,
+      "notes": "toggleDarkMode() calls localStorage.setItem('theme', isDarkMode ? 'dark' : 'light') using the OLD isDarkMode value (setState is async), so it persists the opposite of what was just toggled to. Also the initial render reads localStorage directly (SSR-unsafe).",
+      "acceptance": [
+        "Persist the NEXT theme value, not the stale one (derive from the toggled value)",
+        "Guard localStorage/document access so the hook is SSR-safe (typeof window !== 'undefined')",
+        "No behaviour change to the public API { isDarkMode, toggleDarkMode }",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T2",
+      "title": "Fix useLocalStorageWithExpiry read/write inconsistency",
+      "priority": 2,
+      "notes": "Writes wrap the value as { value, expiry } but reads go through useLocalStorage which returns the raw wrapper, not the inner value. On expiry the key is removed but React state is never updated, so callers keep seeing the stale value. setStoredValue also bypasses the underlying useLocalStorage setter.",
+      "acceptance": [
+        "Reading returns the inner value (or null when expired/absent), never the { value, expiry } wrapper",
+        "On expiry, both storage AND the returned React state reflect null",
+        "SSR-safe localStorage access",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T3",
+      "title": "Make all remaining hooks SSR-safe (guard window/document/navigator/localStorage)",
+      "priority": 3,
+      "notes": "This lib is consumed by Next.js apps that render on the server. useLocalStorage, useClickOutside, useMousePosition, useInfiniteScroll, useGeoLocation touch browser globals in effects (mostly fine) — audit each and guard any module-scope or initial-render access.",
+      "acceptance": [
+        "No browser global is accessed during render or module evaluation without a typeof guard",
+        "Public APIs unchanged",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T4",
+      "title": "Fix README npm badges + install to the scoped package name",
+      "priority": 4,
+      "notes": "Badges point at unscoped 'use-any-hook' while the package is '@saif.dev/use-any-hook'. Align badges and any install snippets.",
+      "acceptance": [
+        "All badges and install commands reference @saif.dev/use-any-hook",
+        "Don't commit at the end — I should review the README diff first",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    }
+  ]
+}

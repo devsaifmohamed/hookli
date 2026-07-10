@@ -1,0 +1,6 @@
+# Ralph progress log — @saif.dev/use-any-hook
+# Durable, append-only memory across iterations. The harness appends one structured
+# metrics line per iteration; the model adds ONE short note line after it. Committed
+# to git on purpose — it's the loop's long-term memory. Do not truncate.
+
+2026-07-11T00:00Z · seeded · backlog created from initial code scan (T1–T4). Gate = ralph/check.sh (tsc --noEmit + tsup build).

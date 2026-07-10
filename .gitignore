@@ -14,6 +14,9 @@
 # production
 /build
 
+# ralph loop runtime state (progress.txt IS tracked — it's durable memory)
+/ralph/heartbeat.log
+
 # misc
 .DS_Store
 .env.local
