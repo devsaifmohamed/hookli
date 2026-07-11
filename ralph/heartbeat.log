@@ -1,5 +1,5 @@
-── Ralph iteration · 2026-07-11T16:04Z
-   next task: T7  Hook pages batch 1 — state: useDebounce, useForm, useLocalStorage
+── Ralph iteration · 2026-07-11T16:09Z
+   next task: T8  Hook pages batch 2 — storage/theme: useLocalStorageWithExpiry, useDarkMode, useToggle-polish
    watch:     tail -f ralph/heartbeat.log
     0m00s · searching · 0 file(s)
     0m15s · searching · 0 file(s)
@@ -10,13 +10,17 @@
     1m30s · searching · 0 file(s)
     1m45s · searching · 0 file(s)
     2m00s · searching · 0 file(s)
-    2m15s · editing   · 1 file(s) · ui.tsx
-    2m30s · editing   · 1 file(s) · ui.tsx
-    2m45s · editing   · 4 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    3m00s · editing   · 5 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    3m15s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    3m31s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    3m46s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    4m01s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    4m16s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
-    4m31s · editing   · 6 file(s) · ui.tsx,use-debounce-demo.tsx,use-form-demo.tsx,use-local-storage-demo.tsx
+    2m15s · searching · 0 file(s)
+    2m31s · searching · 0 file(s)
+    2m46s · searching · 0 file(s)
+    3m01s · searching · 0 file(s)
+    3m16s · editing   · 2 file(s) · Icons.tsx,use-dark-mode-demo.tsx
+    3m31s · editing   · 3 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx
+    3m46s · editing   · 4 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,hook-docs.ts
+    4m01s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    4m16s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    4m31s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    4m46s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    5m01s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    5m16s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx
+    5m31s · editing   · 6 file(s) · Icons.tsx,use-dark-mode-demo.tsx,use-local-storage-with-expiry-demo.tsx,use-toggle-demo.tsx

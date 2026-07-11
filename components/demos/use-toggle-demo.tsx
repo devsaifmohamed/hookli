@@ -1,6 +1,7 @@
 "use client";
 
 import { useToggle } from "hookli";
+import { DemoButton } from "./ui";
 
 /* Live proof for the landing page: same logic as the LightSwitch sample shown
    beside it (components/LiveProofSection.tsx), imported from the published
@@ -20,8 +21,8 @@ export function UseToggleDocDemo() {
     <div className="flex flex-col items-center gap-5">
       <Switch on={on} onToggle={toggle} />
       <div className="flex gap-3">
-        <SetButton onClick={() => setOn(true)}>Set on</SetButton>
-        <SetButton onClick={() => setOn(false)}>Set off</SetButton>
+        <DemoButton onClick={() => setOn(true)}>Set on</DemoButton>
+        <DemoButton onClick={() => setOn(false)}>Set off</DemoButton>
       </div>
     </div>
   );
@@ -48,24 +49,6 @@ function Switch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
         />
       </span>
       <span className="font-mono text-sm text-fg">{on ? "On" : "Off"}</span>
-    </button>
-  );
-}
-
-function SetButton({
-  onClick,
-  children,
-}: {
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="min-h-11 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg"
-    >
-      {children}
     </button>
   );
 }

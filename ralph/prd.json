@@ -109,7 +109,7 @@
         "useToggle reference page consistent with the final template",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T9",

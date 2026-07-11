@@ -1,8 +1,10 @@
 import type { ComponentType } from "react";
 import type { ApiRow } from "@/components/ApiTable";
+import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
+import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
@@ -188,6 +190,93 @@ export function Demo() {
         type: "(value: T | ((val: T) => T)) => void",
         description:
           "Persists to localStorage and updates state; accepts a value or an updater function.",
+      },
+    ],
+  },
+  "use-local-storage-with-expiry": {
+    demo: UseLocalStorageWithExpiryDocDemo,
+    usage: `
+import { useLocalStorageWithExpiry } from "hookli";
+
+export function Demo() {
+  const { value, setStoredValue } = useLocalStorageWithExpiry(
+    "draft",
+    "",
+    10_000,
+  );
+
+  return (
+    <div>
+      <button onClick={() => setStoredValue("hello")}>Save for 10s</button>
+      <p>{value === null ? "Expired" : value || "Nothing stored"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "key",
+        type: "string",
+        description: "The localStorage key to read and write.",
+      },
+      {
+        name: "initialValue",
+        type: "T",
+        description:
+          "Value used before hydration and when nothing is stored under the key.",
+      },
+      {
+        name: "expiryMs",
+        type: "number",
+        description:
+          "Time-to-live in milliseconds. Every write stores the value with a fresh expiry timestamp.",
+      },
+    ],
+    returns: [
+      {
+        name: "value",
+        type: "T | null",
+        description:
+          "The stored value, or null once the item has expired. Expiry is checked when the hook reads — on mount or key change — at which point the item is removed.",
+      },
+      {
+        name: "setStoredValue",
+        type: "(value: T) => void",
+        description:
+          "Persists the value to localStorage with a new expiry of now + expiryMs.",
+      },
+    ],
+  },
+  "use-dark-mode": {
+    demo: UseDarkModeDocDemo,
+    usage: `
+import { useDarkMode } from "hookli";
+
+export function Demo() {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
+
+  return (
+    <div className={isDarkMode ? "panel-dark" : "panel-light"}>
+      <button onClick={toggleDarkMode}>
+        {isDarkMode ? "Switch to light" : "Switch to dark"}
+      </button>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "isDarkMode",
+        type: "boolean",
+        description:
+          'Current mode. Initialized from localStorage("theme") on the client; false during SSR.',
+      },
+      {
+        name: "toggleDarkMode",
+        type: "() => void",
+        description:
+          'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
       },
     ],
   },

@@ -59,7 +59,7 @@ export const HOOKS: readonly HookEntry[] = [
     description: "Persisted state with a TTL.",
     category: "state",
     signature:
-      "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T; setStoredValue: (value: T) => void }",
+      "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T | null; setStoredValue: (value: T) => void }",
   },
   {
     slug: "use-dark-mode",
