@@ -1,0 +1,201 @@
+{
+  "feature": "hookli-docs-site-v1",
+  "description": "Build the hookli docs + landing site (Next.js App Router, Tailwind, dark-first brand) to premium quality: catchy landing, a doc page with live interactive demo for every hook, search, donation placeholder, OG images, full polish. Benchmark: usehooks-ts.com. One task per iteration; ralph/check.sh (lint + tsc + next build) must be green before every commit.",
+  "release_branch": "main",
+  "constraints": {
+    "max_files_per_commit": 15,
+    "never": ["push to remote", "npm publish", "deploy", "real payment links", "touch ../rehooks-app", "leave dev servers running"]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Research benchmark docs sites and write docs/DESIGN.md",
+      "priority": 1,
+      "notes": "Study usehooks-ts.com (landing + a hook page like /react-hook/use-boolean), react-use, and mantine.dev/hooks via WebFetch/WebSearch. Capture: information architecture, landing section order, hook-page anatomy (description/demo/code/API), sidebar+search patterns, what makes them feel premium.",
+      "acceptance": [
+        "docs/DESIGN.md exists with: IA sitemap, landing section list, hook-page template spec, component inventory (Header, Sidebar, HookDemo, CodeBlock, CopyButton, Footer...), and hookli brand tokens (#0B1120 / #61DAFB / #475569 / #94A3B8, monospace headings)",
+        "Decisions are concrete (no 'maybe/or'), so later tasks can build without re-deciding",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T2",
+      "title": "Design system + app shell",
+      "priority": 2,
+      "notes": "Implement DESIGN.md tokens as CSS variables + Tailwind theme. Replace create-next-app boilerplate entirely.",
+      "acceptance": [
+        "globals.css defines brand tokens (ground #0B1120, accent #61DAFB, slate #475569, gray #94A3B8) as CSS vars wired into Tailwind",
+        "Root layout: metadata (title template 'hookli — %s'), favicon from /hookli-icon.svg, monospace heading font + sans body via next/font",
+        "Header (use(hookli) wordmark linking home, Docs link, GitHub link) and Footer (npm, GitHub, license) shared components",
+        "Default boilerplate page/svgs removed",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T3",
+      "title": "Landing hero — catchy, code-first",
+      "priority": 3,
+      "notes": "The hero IS the pitch. use(hookli) wordmark treatment, tagline, copyable `npm i hookli` command, CTA to /docs.",
+      "acceptance": [
+        "Hero: big monospace use(hookli) headline with cyan accent + blinking cursor (CSS animation, respects prefers-reduced-motion)",
+        "Tagline: 'Simple React hooks. Typed. SSR-safe. Zero dependencies.'",
+        "Install command box with working copy-to-clipboard button (visual feedback on copy)",
+        "Primary CTA 'Explore the docs' -> /docs; secondary link to GitHub",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T4",
+      "title": "Landing features + live code preview section",
+      "priority": 4,
+      "notes": "Why-hookli grid + a real code sample rendered with syntax highlighting next to a LIVE working demo (e.g. useToggle) to prove it.",
+      "acceptance": [
+        "Feature grid (6 items: zero deps, TypeScript-first, SSR-safe, tree-shakable, ESM+CJS, 11 hooks) with inline SVG icons — no emoji",
+        "Split section: highlighted code sample on one side, the same hook running live on the other",
+        "Responsive at 375/768/1024/1440",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T5",
+      "title": "Docs infrastructure: registry, /docs layout, sidebar",
+      "priority": 5,
+      "notes": "Central hook registry drives everything (sidebar, pages, search, landing counts). One source of truth.",
+      "acceptance": [
+        "lib/hooks-registry.ts: all 11 hooks with slug, name, one-line description, category (state/effects/dom/data), signature summary",
+        "/docs layout with sidebar (grouped by category, active state) + /docs index page introducing the library",
+        "Dynamic route /docs/[slug] scaffolded, generateStaticParams from the registry, notFound for unknown slugs",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T6",
+      "title": "HookDemo + CodeBlock framework",
+      "priority": 6,
+      "notes": "Reusable machinery every hook page uses: live preview pane + code with copy button. This is the site's core differentiator.",
+      "acceptance": [
+        "components/HookDemo: client component wrapper with Preview/Code tabs, consistent frame, error boundary so a demo crash never kills the page",
+        "components/CodeBlock: syntax-highlighted TS/TSX (shiki or lightweight equivalent) + CopyButton with feedback",
+        "Hook-page template composes: title, description, live demo, usage code, API table (parameters/returns), 'view source on GitHub' link",
+        "Demonstrated end-to-end on ONE hook page (useToggle) as the reference implementation",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T7",
+      "title": "Hook pages batch 1 — state: useDebounce, useForm, useLocalStorage",
+      "priority": 7,
+      "notes": "Follow the T6 reference page exactly. Each demo must be genuinely interactive (type-to-debounce, live form values, persisted input).",
+      "acceptance": [
+        "Three complete pages with live demos importing from 'hookli', usage code, API tables",
+        "Demos handle SSR prerender safely (next build green)",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T8",
+      "title": "Hook pages batch 2 — storage/theme: useLocalStorageWithExpiry, useDarkMode, useToggle-polish",
+      "priority": 8,
+      "notes": "useLocalStorageWithExpiry demo shows TTL countdown + expiry. useDarkMode demo toggles a scoped preview panel (not the whole site theme). Revisit the T6 useToggle page to match any template refinements.",
+      "acceptance": [
+        "useLocalStorageWithExpiry + useDarkMode pages complete with interactive demos and API tables",
+        "useToggle reference page consistent with the final template",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T9",
+      "title": "Hook pages batch 3 — DOM: useClickOutside, useMousePosition, useInfiniteScroll",
+      "priority": 9,
+      "notes": "useClickOutside: dropdown demo. useMousePosition: tracked coordinates inside a bounded panel. useInfiniteScroll: scrollable list demo loading mock items (scoped container).",
+      "acceptance": [
+        "Three complete pages with genuinely interactive demos, usage code, API tables",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T10",
+      "title": "Hook pages batch 4 — data/device: useFetch, useGeoLocation",
+      "priority": 10,
+      "notes": "useFetch: fetch from a public JSON API (jsonplaceholder) with loading/error states visible. useGeoLocation: permission-aware demo with graceful denied state (never auto-request on page load).",
+      "acceptance": [
+        "Both pages complete; all 11 registry hooks now have live doc pages",
+        "Geolocation demo requests permission only on user click",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T11",
+      "title": "Search — command palette over the registry",
+      "priority": 11,
+      "notes": "Client-side ⌘K / Ctrl+K palette filtering the hook registry by name/description/category. No external search service.",
+      "acceptance": [
+        "Keyboard-openable (⌘K) + header search button; arrow-key navigation; Enter routes to the hook page; Esc closes",
+        "Accessible: focus trap, aria roles, works at 375px",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T12",
+      "title": "Support/donate placeholder + contributing section",
+      "priority": 12,
+      "notes": "Tasteful 'Support hookli' presence WITHOUT real payment links (placeholder hrefs '#' + TODO comments for GitHub Sponsors/Ko-fi later).",
+      "acceptance": [
+        "Landing section + /support page: sponsor card, 'star on GitHub' (real link), contribute card linking CONTRIBUTING notes",
+        "All payment links are clearly placeholder ('#'), no fabricated accounts",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T13",
+      "title": "SEO, OG images, metadata polish",
+      "priority": 13,
+      "notes": "Per-page metadata from the registry; OG image via opengraph-image (brand banner style: solid #0B1120, use(hookli) mark); sitemap + robots.",
+      "acceptance": [
+        "Root + per-hook metadata (title, description, openGraph); opengraph-image renders the brand lockup",
+        "app/sitemap.ts and app/robots.ts generated from the registry",
+        "favicon/apple-icon wired from the {h} icon",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T14",
+      "title": "Polish pass — responsive, a11y, motion, 404",
+      "priority": 14,
+      "notes": "Sweep every page against the quality bar in prompt.md.",
+      "acceptance": [
+        "No horizontal scroll at 375px anywhere; sidebar collapses to a mobile drawer/menu",
+        "Visible focus states everywhere; body contrast AA; all micro-interactions 150-300ms; prefers-reduced-motion disables cursor blink + transitions",
+        "Custom branded not-found page",
+        "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T15",
+      "title": "Final QA + site README",
+      "priority": 15,
+      "notes": "Walk the full sitemap as a checklist; fix anything below premium; document the app.",
+      "acceptance": [
+        "Checklist in progress.txt: every route (/, /docs, 11 hook pages, /support, 404) verified against DESIGN.md and prompt.md quality bar, with fixes applied",
+        "README.md rewritten for this app: what it is, stack, dev/build commands, structure, how to add a new hook page (registry + demo)",
+        "bash ralph/check.sh is green",
+        "Don't push or deploy — leave that to the human"
+      ],
+      "status": "todo"
+    }
+  ]
+}

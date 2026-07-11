@@ -1,0 +1,10 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli icon">
+  <!-- solid tile -->
+  <rect width="256" height="256" rx="56" fill="#0B1120"/>
+  <!-- {h} monogram -->
+  <text x="128" y="170" text-anchor="middle"
+        font-family="ui-monospace, 'SF Mono', Menlo, monospace"
+        font-size="118" font-weight="700">
+    <tspan fill="#475569">{</tspan><tspan fill="#61DAFB">h</tspan><tspan fill="#475569">}</tspan>
+  </text>
+</svg>
