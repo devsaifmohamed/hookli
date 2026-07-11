@@ -58,7 +58,7 @@
         "Responsive at 375/768/1024/1440",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T5",

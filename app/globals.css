@@ -21,6 +21,20 @@
 
 :root {
   color-scheme: dark;
+
+  /* Shiki css-variables theme → brand tokens (docs/DESIGN.md §1, §5 CodeBlock).
+     Background stays transparent — the CodeBlock frame owns the surface. */
+  --shiki-foreground: var(--color-fg);
+  --shiki-background: transparent;
+  --shiki-token-keyword: var(--color-accent);
+  --shiki-token-function: var(--color-fg);
+  --shiki-token-constant: var(--color-fg);
+  --shiki-token-string: var(--color-gray-body);
+  --shiki-token-string-expression: var(--color-gray-body);
+  --shiki-token-parameter: var(--color-gray-body);
+  --shiki-token-punctuation: var(--color-gray-body);
+  --shiki-token-comment: var(--color-slate-syntax);
+  --shiki-token-link: var(--color-accent);
 }
 
 body {
