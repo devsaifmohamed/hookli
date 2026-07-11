@@ -1,10 +1,9 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli icon">
-  <!-- solid tile -->
-  <rect width="256" height="256" rx="56" fill="#0B1120"/>
-  <!-- {h} monogram -->
-  <text x="128" y="170" text-anchor="middle"
-        font-family="ui-monospace, 'SF Mono', Menlo, monospace"
-        font-size="118" font-weight="700">
-    <tspan fill="#475569">{</tspan><tspan fill="#61DAFB">h</tspan><tspan fill="#475569">}</tspan>
-  </text>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli — a hook holding a state dot">
+  <!-- tile -->
+  <rect width="256" height="256" rx="56" fill="#003748"/>
+  <!-- hook: shaft, curl, upturned tip — one continuous stroke -->
+  <path d="M170 68 V140 A42 42 0 1 1 86 140 V116"
+        stroke="#30C5CA" stroke-width="26" stroke-linecap="round" fill="none"/>
+  <!-- the state dot, held by the hook -->
+  <circle cx="128" cy="140" r="15" fill="#FFFFFF"/>
 </svg>
