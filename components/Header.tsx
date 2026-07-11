@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Wordmark } from "./Wordmark";
 import { GitHubIcon } from "./Icons";
+import { SearchPalette } from "./SearchPalette";
 import { GITHUB_URL } from "@/lib/site";
 
 export function Header() {
@@ -21,6 +22,7 @@ export function Header() {
           >
             Docs
           </Link>
+          <SearchPalette />
           <a
             href={GITHUB_URL}
             target="_blank"
