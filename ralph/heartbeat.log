@@ -1,5 +1,5 @@
-── Ralph iteration · 2026-07-11T15:51Z
-   next task: T5  Docs infrastructure: registry, /docs layout, sidebar
+── Ralph iteration · 2026-07-11T15:57Z
+   next task: T6  HookDemo + CodeBlock framework
    watch:     tail -f ralph/heartbeat.log
     0m00s · searching · 0 file(s)
     0m15s · searching · 0 file(s)
@@ -11,16 +11,18 @@
     1m45s · searching · 0 file(s)
     2m00s · searching · 0 file(s)
     2m15s · searching · 0 file(s)
-    2m30s · searching · 0 file(s)
-    2m45s · searching · 0 file(s)
-    3m00s · searching · 0 file(s)
-    3m15s · editing   · 1 file(s) · hooks-registry.ts
-    3m30s · editing   · 3 file(s) · HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    3m45s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    4m00s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    4m15s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    4m30s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    4m46s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    5m01s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    5m16s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
-    5m31s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    2m31s · searching · 0 file(s)
+    2m46s · searching · 0 file(s)
+    3m01s · searching · 0 file(s)
+    3m16s · searching · 0 file(s)
+    3m31s · editing   · 1 file(s) · CodeBlock.tsx
+    3m46s · editing   · 2 file(s) · CodeBlock.tsx,DemoErrorBoundary.tsx
+    4m01s · editing   · 3 file(s) · CodeBlock.tsx,DemoErrorBoundary.tsx,HookDemo.tsx
+    4m16s · editing   · 4 file(s) · ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx,HookDemo.tsx
+    4m31s · editing   · 6 file(s) · ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx,HookDemo.tsx
+    4m46s · editing   · 6 file(s) · ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx,HookDemo.tsx
+    5m01s · editing   · 7 file(s) · page.tsx,ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx
+    5m16s · editing   · 7 file(s) · page.tsx,ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx
+    5m31s · editing   · 7 file(s) · page.tsx,ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx
+    5m46s · editing   · 7 file(s) · page.tsx,ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx
+    6m01s · editing   · 7 file(s) · page.tsx,ApiTable.tsx,CodeBlock.tsx,DemoErrorBoundary.tsx

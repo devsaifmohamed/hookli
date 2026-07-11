@@ -85,7 +85,7 @@
         "Demonstrated end-to-end on ONE hook page (useToggle) as the reference implementation",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T7",
