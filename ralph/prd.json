@@ -163,7 +163,7 @@
         "All payment links are clearly placeholder ('#'), no fabricated accounts",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T13",

@@ -4,6 +4,7 @@ import { InstallCommand } from "@/components/InstallCommand";
 import { ArrowRightIcon, GitHubIcon } from "@/components/Icons";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { LiveProofSection } from "@/components/LiveProofSection";
+import { SupportSection } from "@/components/SupportSection";
 import { GITHUB_URL, TAGLINE } from "@/lib/site";
 
 export default function Home() {
@@ -40,6 +41,7 @@ export default function Home() {
       </section>
       <FeaturesSection />
       <LiveProofSection />
+      <SupportSection />
     </main>
   );
 }

@@ -34,6 +34,12 @@ export function Footer() {
           >
             GitHub
           </a>
+          <Link
+            href="/support"
+            className="flex min-h-11 items-center rounded-md px-2 text-gray-body transition-colors duration-200 hover:text-fg"
+          >
+            Support
+          </Link>
           <span className="flex min-h-11 items-center px-2 text-gray-body">
             ISC License
           </span>
