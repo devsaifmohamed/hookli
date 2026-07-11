@@ -19,7 +19,7 @@
         "No behaviour change to the public API { isDarkMode, toggleDarkMode }",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T2",
@@ -32,7 +32,7 @@
         "SSR-safe localStorage access",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T3",

@@ -1,9 +1,13 @@
-import { useEffect } from "react";
-import { useLocalStorage } from "./useLocalStorage.hook"; // Assuming useLocalStorage is also typed
+import { useEffect, useState } from "react";
 
 interface UseLocalStorageWithExpiryState<T> {
   value: T | null;
   setStoredValue: (newValue: T) => void;
+}
+
+interface StoredItem<T> {
+  value: T;
+  expiry: number;
 }
 
 export const useLocalStorageWithExpiry = <T>(
@@ -11,32 +15,39 @@ export const useLocalStorageWithExpiry = <T>(
   initialValue: T,
   expiryMs: number
 ): UseLocalStorageWithExpiryState<T> => {
-  const { value, setStoredValue: setValue } = useLocalStorage<T>(
-    key,
-    initialValue
-  );
-
-  useEffect(() => {
-    const item = localStorage.getItem(key) as string;
-    const itemWithExpiry: { value: T; expiry: number } | null =
-      JSON.parse(item) || null;
-
-    if (
-      itemWithExpiry &&
-      itemWithExpiry.expiry &&
-      new Date().getTime() > itemWithExpiry.expiry
-    ) {
-      localStorage.removeItem(key);
+  // Read the wrapper, returning the INNER value — or null once expired/absent.
+  const read = (): T | null => {
+    if (typeof window === "undefined") return initialValue;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return initialValue;
+    try {
+      const item = JSON.parse(raw) as StoredItem<T>;
+      if (item && typeof item.expiry === "number" && Date.now() > item.expiry) {
+        window.localStorage.removeItem(key);
+        return null;
+      }
+      return item.value;
+    } catch {
+      return initialValue;
     }
-  }, [key, initialValue, expiryMs]); // Include expiryMs in the dependency array
+  };
+
+  const [value, setValue] = useState<T | null>(initialValue);
+
+  // Hydrate from storage on the client (SSR renders `initialValue`, then this syncs).
+  useEffect(() => {
+    setValue(read());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   const setStoredValue = (newValue: T) => {
-    const now = new Date();
-    const itemWithExpiry = {
+    setValue(newValue);
+    if (typeof window === "undefined") return;
+    const item: StoredItem<T> = {
       value: newValue,
-      expiry: now.getTime() + expiryMs,
+      expiry: Date.now() + expiryMs,
     };
-    localStorage.setItem(key, JSON.stringify(itemWithExpiry));
+    window.localStorage.setItem(key, JSON.stringify(item));
   };
 
   return { value, setStoredValue };

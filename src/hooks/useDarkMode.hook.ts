@@ -7,28 +7,24 @@ interface UseDarkModeState {
 
 export const useDarkMode = (): UseDarkModeState => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    // Get initial state from localStorage (optional)
-    const persistedTheme = localStorage.getItem("theme");
-    return persistedTheme === "dark" ? true : false;
+    // SSR-safe: no localStorage on the server.
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("theme") === "dark";
   });
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  };
+  const toggleDarkMode = () => setIsDarkMode((prevMode) => !prevMode);
 
   useEffect(() => {
-    // Optional: Apply CSS classes based on isDarkMode
+    if (typeof document === "undefined") return;
+
     const bodyElement = document.body;
     const darkClass = "dark"; // Replace with your actual class name
 
-    if (isDarkMode) {
-      bodyElement.classList.add(darkClass);
-    } else {
-      bodyElement.classList.remove(darkClass);
-    }
+    bodyElement.classList.toggle(darkClass, isDarkMode);
+    // Persist the CURRENT theme (not the pre-toggle value).
+    window.localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 
-    // Cleanup function to remove class on unmount
+    // Cleanup: drop the class on unmount.
     return () => {
       bodyElement.classList.remove(darkClass);
     };

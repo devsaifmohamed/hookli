@@ -4,3 +4,4 @@
 # to git on purpose — it's the loop's long-term memory. Do not truncate.
 
 2026-07-11T00:00Z · seeded · backlog created from initial code scan (T1–T4). Gate = ralph/check.sh (tsc --noEmit + tsup build).
+2026-07-11T00:00Z · fixed · T1 useDarkMode (persist current value, SSR-safe) + T2 useLocalStorageWithExpiry (return inner value, honor expiry in state, drop useLocalStorage coupling). Gate green. T3 (broader SSR audit) still todo; effect-based hooks are already client-only.
