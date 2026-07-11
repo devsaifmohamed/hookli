@@ -3,7 +3,9 @@ import type { ApiRow } from "@/components/ApiTable";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
+import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
+import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
@@ -419,6 +421,96 @@ export function Demo() {
         type: "boolean",
         description:
           "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
+      },
+    ],
+  },
+  "use-fetch": {
+    demo: UseFetchDocDemo,
+    usage: `
+import { useFetch } from "hookli";
+
+type Post = { id: number; title: string; body: string };
+
+export function Demo() {
+  const { data, loading, error } = useFetch<Post>(
+    "https://jsonplaceholder.typicode.com/posts/1",
+  );
+
+  if (loading) return <p>Loading…</p>;
+  if (error) return <p>Request failed: {error.message}</p>;
+
+  return <article>{data?.title}</article>;
+}
+`,
+    parameters: [
+      {
+        name: "url",
+        type: "string",
+        description:
+          "The endpoint to GET. The request starts on mount and re-runs whenever the url changes.",
+      },
+    ],
+    returns: [
+      {
+        name: "data",
+        type: "T | null",
+        description:
+          "The parsed JSON body; null until the first request succeeds. Kept from the previous url while a refetch is in flight.",
+      },
+      {
+        name: "error",
+        type: "Error | null",
+        description:
+          'Set on network failure or a non-ok response ("HTTP error! status: 404"). Never cleared by later requests — remount the component (e.g. key={url}) for fresh state.',
+      },
+      {
+        name: "loading",
+        type: "boolean",
+        description:
+          "True until the first request settles. Not reset to true when the url changes — remount for a per-request loading flag.",
+      },
+    ],
+  },
+  "use-geo-location": {
+    demo: UseGeoLocationDocDemo,
+    usage: `
+import { useState } from "react";
+import { useGeoLocation } from "hookli";
+
+function Coordinates() {
+  const { location, error } = useGeoLocation();
+
+  if (error) return <p>{error.message}</p>;
+  if (!location) return <p>Locating…</p>;
+
+  const { latitude, longitude } = location.coords;
+  return <p>{latitude.toFixed(4)}, {longitude.toFixed(4)}</p>;
+}
+
+export function Demo() {
+  const [asked, setAsked] = useState(false);
+
+  // The hook may prompt for permission as soon as it mounts —
+  // keep it unmounted until a user gesture.
+  if (!asked) {
+    return <button onClick={() => setAsked(true)}>Where am I?</button>;
+  }
+  return <Coordinates />;
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "location",
+        type: "GeolocationPosition | null",
+        description:
+          "hookli's trimmed position type — just coords.latitude and coords.longitude. Null until the first reading arrives.",
+      },
+      {
+        name: "error",
+        type: "GeolocationError | Error | null",
+        description:
+          "Permission denials, unsupported browsers and failed lookups all land here — read .message for display. Requesting starts on mount, so mount the hook behind a user gesture.",
       },
     ],
   },

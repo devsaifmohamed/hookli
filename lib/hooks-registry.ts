@@ -114,7 +114,7 @@ export const HOOKS: readonly HookEntry[] = [
     description: "Browser geolocation state.",
     category: "data",
     signature:
-      "useGeoLocation(): { location: GeolocationCoordinates | null; error: string | null }",
+      "useGeoLocation(): { location: GeolocationPosition | null; error: GeolocationError | Error | null }",
   },
 ] as const;
 

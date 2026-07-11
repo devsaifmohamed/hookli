@@ -132,7 +132,7 @@
         "Geolocation demo requests permission only on user click",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T11",
