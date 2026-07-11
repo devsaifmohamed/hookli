@@ -89,7 +89,13 @@ export default async function HookPage({
           )}
 
           <h3 className="mt-8 text-lg">Returns</h3>
-          <ApiTable rows={doc.returns} className="mt-4" />
+          {doc.returns.length > 0 ? (
+            <ApiTable rows={doc.returns} className="mt-4" />
+          ) : (
+            <p className="mt-4 text-sm text-gray-body">
+              This hook returns nothing.
+            </p>
+          )}
         </>
       )}
 

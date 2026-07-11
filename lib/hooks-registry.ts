@@ -90,14 +90,15 @@ export const HOOKS: readonly HookEntry[] = [
     description: "Cursor coordinates within an element.",
     category: "dom",
     signature:
-      "useMousePosition<T extends HTMLElement>(ref: RefObject<T>): { x: number; y: number }",
+      "useMousePosition<T extends HTMLElement>(ref: RefObject<T>): { x: number | null; y: number | null }",
   },
   {
     slug: "use-infinite-scroll",
     name: "useInfiniteScroll",
     description: "Triggers loading near the scroll end.",
     category: "dom",
-    signature: "useInfiniteScroll(fetchMoreData: () => void): boolean",
+    signature:
+      "useInfiniteScroll(fetchMoreData: () => Promise<void>): boolean",
   },
   {
     slug: "use-fetch",

@@ -1,10 +1,13 @@
 import type { ComponentType } from "react";
 import type { ApiRow } from "@/components/ApiTable";
+import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
+import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
+import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
@@ -277,6 +280,145 @@ export function Demo() {
         type: "() => void",
         description:
           'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
+      },
+    ],
+  },
+  "use-click-outside": {
+    demo: UseClickOutsideDocDemo,
+    usage: `
+import { useRef, useState } from "react";
+import { useClickOutside } from "hookli";
+
+export function Demo() {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useClickOutside(menuRef, () => setOpen(false));
+
+  return (
+    <div ref={menuRef}>
+      <button onClick={() => setOpen((prev) => !prev)}>Actions</button>
+      {open && (
+        <ul role="menu">
+          <li>Rename</li>
+          <li>Duplicate</li>
+        </ul>
+      )}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "ref",
+        type: "RefObject<T>",
+        description:
+          "Ref attached to the element that counts as inside — clicks within it (or its children) never fire the callback.",
+      },
+      {
+        name: "callback",
+        type: "() => void",
+        description:
+          "Called on every mousedown outside the ref'd element — even while your UI is closed, so guard inside the callback if needed.",
+      },
+    ],
+    returns: [],
+  },
+  "use-mouse-position": {
+    demo: UseMousePositionDocDemo,
+    usage: `
+import { useRef } from "react";
+import { useMousePosition } from "hookli";
+
+export function Demo() {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const { x, y } = useMousePosition(panelRef);
+
+  return (
+    <div ref={panelRef} style={{ height: 160 }}>
+      {x === null || y === null ? (
+        <p>Move your cursor</p>
+      ) : (
+        <p>
+          {Math.round(x)} × {Math.round(y)}
+        </p>
+      )}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "ref",
+        type: "RefObject<T>",
+        description:
+          "Ref attached to the element the coordinates are measured against.",
+      },
+    ],
+    returns: [
+      {
+        name: "x",
+        type: "number | null",
+        description:
+          "Cursor X relative to the element's left edge; null until the first mousemove. Updates on every window mousemove, so it can go negative or exceed the element's width.",
+      },
+      {
+        name: "y",
+        type: "number | null",
+        description:
+          "Cursor Y relative to the element's top edge; null until the first mousemove.",
+      },
+    ],
+  },
+  "use-infinite-scroll": {
+    demo: UseInfiniteScrollDocDemo,
+    usage: `
+import { useCallback, useState } from "react";
+import { useInfiniteScroll } from "hookli";
+
+const page = (start: number) =>
+  Array.from({ length: 10 }, (_, i) => \`Item \${start + i + 1}\`);
+
+export function Demo() {
+  const [items, setItems] = useState(() => page(0));
+
+  const fetchMoreData = useCallback(
+    () =>
+      new Promise<void>((resolve) => {
+        setItems((prev) => [...prev, ...page(prev.length)]);
+        resolve();
+      }),
+    [],
+  );
+
+  const isFetching = useInfiniteScroll(fetchMoreData);
+
+  return (
+    <div>
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+      {isFetching && <p>Loading more…</p>}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "fetchMoreData",
+        type: "() => Promise<void>",
+        description:
+          "Called when the window scroll comes within 500px of the document bottom. Must return a promise — the hook stays in the fetching state until it resolves.",
+      },
+    ],
+    returns: [
+      {
+        name: "isFetching",
+        type: "boolean",
+        description:
+          "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
       },
     ],
   },

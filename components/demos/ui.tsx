@@ -29,17 +29,17 @@ export function DemoInput({
 }
 
 export function DemoButton({
-  onClick,
   children,
-}: {
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
+  ...props
+}: { children: React.ReactNode } & Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "className" | "type"
+>) {
   return (
     <button
       type="button"
-      onClick={onClick}
-      className="min-h-11 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg"
+      {...props}
+      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg"
     >
       {children}
     </button>
