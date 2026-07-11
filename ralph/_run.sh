@@ -86,4 +86,4 @@ progress_begin
 # clean exit, a red claude exit, OR Ctrl-C/SIGTERM, via the EXIT trap. The script
 # exits with claude's own status.
 trap progress_end EXIT
-$RUNNER --permission-mode acceptEdits -p "$PROMPT"
+$RUNNER --model "${RALPH_MODEL:-opus}" --permission-mode acceptEdits -p "$PROMPT"
