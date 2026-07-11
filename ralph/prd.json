@@ -97,7 +97,7 @@
         "Demos handle SSR prerender safely (next build green)",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T8",

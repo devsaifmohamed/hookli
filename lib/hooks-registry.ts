@@ -51,7 +51,7 @@ export const HOOKS: readonly HookEntry[] = [
     description: "State persisted to localStorage.",
     category: "state",
     signature:
-      "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T) => void }",
+      "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T | ((val: T) => T)) => void }",
   },
   {
     slug: "use-local-storage-with-expiry",
