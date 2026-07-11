@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ralph runtime state (progress.txt IS tracked)
+/ralph/heartbeat.log

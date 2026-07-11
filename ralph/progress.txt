@@ -21,3 +21,15 @@
 2026-07-11T16:18Z · T8 done · /docs/use-local-storage-with-expiry + /docs/use-dark-mode live; useToggle polished (private SetButton → shared DemoButton from demos/ui.tsx). Registry fix: useLocalStorageWithExpiry returns value: T | null (null = expired, per d.ts). GOTCHAS: eslint react-hooks/set-state-in-effect bans setState in effect bodies — use useSyncExternalStore for mounted gates (see use-dark-mode-demo) and put setState inside interval callbacks; hookli useDarkMode inits from localStorage("theme") on client (hydration-gate any styling) and expiry is only checked on read — expiry demo remounts its reader via key bump to evict. NEW icons: SunIcon/MoonIcon. 8/15 done.
 2026-07-11T16:15Z · 08e97da · 6m00s · 0 file(s) · gate:green · done 8/15 · review 0 · feat(site): T8 — hook pages batch 2: useLocalStorageWithExpiry, useDarkMode (TTL countdown, scoped theme panel) + useToggle polish
 2026-07-11T16:25Z · T9 done · /docs/use-click-outside, /docs/use-mouse-position, /docs/use-infinite-scroll live. Registry fixes per d.ts: useMousePosition returns x/y: number | null; useInfiniteScroll takes () => Promise<void>. Template: Returns section now has an empty-state (useClickOutside returns void). DemoButton now spreads button attrs (aria-expanded etc.) — still className-locked. GOTCHAS: useClickOutside fires callback on EVERY outside mousedown (guard with open state — closure stays fresh because the effect re-subscribes per render); useMousePosition listens on window (coords go negative outside the ref — clip with overflow-hidden); useInfiniteScroll watches WINDOW scroll within 500px of document bottom, NOT a container — demo uses a scoped list for height stability but page scroll triggers it. New icon: ChevronDownIcon. 9/15 done.
+2026-07-11T16:58Z · f0446d3 · 42m56s · 0 file(s) · gate:green · done 9/15 · review 0 · feat(site): T9 — hook pages batch 3 (DOM): useClickOutside, useMousePosition, useInfiniteScroll (dropdown, crosshair panel, window-scroll batches)
+2026-07-11T17:15Z · — · 16m58s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:15Z · — · 0m02s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:15Z · — · 0m06s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:16Z · — · 0m03s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:16Z · — · 0m02s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:33Z · — · 0m02s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:33Z · — · 0m02s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:33Z · — · 0m02s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:38Z · — · 4m31s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:38Z · — · 0m03s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
+2026-07-11T17:45Z · — · 0m04s · 0 file(s) · gate:— · done 9/15 · review 0 · (no changes this iteration)
