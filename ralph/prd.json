@@ -176,7 +176,7 @@
         "favicon/apple-icon wired from the {h} icon",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T14",

@@ -3,7 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { TAGLINE } from "@/lib/site";
+import { SITE_URL, TAGLINE } from "@/lib/site";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -11,11 +11,25 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "hookli — %s",
     default: "hookli — simple React hooks",
   },
   description: TAGLINE,
+  openGraph: {
+    type: "website",
+    siteName: "hookli",
+    url: "/",
+    title: {
+      template: "hookli — %s",
+      default: "hookli — simple React hooks",
+    },
+    description: TAGLINE,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
   icons: {
     icon: "/hookli-icon.svg",
   },

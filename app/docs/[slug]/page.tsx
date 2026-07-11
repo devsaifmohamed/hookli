@@ -26,7 +26,15 @@ export async function generateMetadata({
   const { slug } = await params;
   const hook = getHook(slug);
   if (!hook) return {};
-  return { title: hook.name, description: hook.description };
+  return {
+    title: hook.name,
+    description: hook.description,
+    openGraph: {
+      title: hook.name,
+      description: hook.description,
+      url: `/docs/${slug}`,
+    },
+  };
 }
 
 export default async function HookPage({
