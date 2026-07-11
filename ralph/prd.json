@@ -45,7 +45,7 @@
         "Primary CTA 'Explore the docs' -> /docs; secondary link to GitHub",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T4",

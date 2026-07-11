@@ -2,6 +2,7 @@ const sizeClasses = {
   sm: "text-base",
   md: "text-xl",
   lg: "text-4xl sm:text-5xl",
+  xl: "text-5xl sm:text-6xl md:text-7xl",
 } as const;
 
 export function Wordmark({
