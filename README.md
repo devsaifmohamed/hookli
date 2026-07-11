@@ -1,307 +1,214 @@
-[![npm version](https://img.shields.io/npm/v/hookio.svg?style=flat-square)](https://www.npmjs.org/package/hookio)
-[![npm downloads](https://img.shields.io/npm/dm/hookio.svg?style=flat-square)](https://npm-stat.com/charts.html?package=hookio)
+<p align="center">
+  <a href="https://www.npmjs.com/package/hookio">
+    <img src="https://raw.githubusercontent.com/use-any-hook/use-any-hook/main/assets/hookio-banner.svg" alt="hook.io — React hooks, ready to use" width="680" />
+  </a>
+</p>
 
-# [hook.io](https://www.npmjs.com/package/hookio)
+<h1 align="center">hook.io</h1>
 
-> Published on npm as **`hookio`** (the merged spelling) — `npm i hookio`.
+<p align="center">
+  A tiny, typed collection of the React hooks you reach for every day.<br/>
+  <strong>Zero dependencies · SSR-safe · ESM + CJS · fully tree-shakable.</strong>
+</p>
 
-A group of commonly used custom [React.js](https://reactjs.org) hooks.
+<p align="center">
+  <a href="https://www.npmjs.com/package/hookio"><img src="https://img.shields.io/npm/v/hookio?style=flat-square&color=6366f1" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/hookio"><img src="https://img.shields.io/npm/dm/hookio?style=flat-square&color=22d3ee" alt="npm downloads" /></a>
+  <a href="https://bundlephobia.com/package/hookio"><img src="https://img.shields.io/bundlephobia/minzip/hookio?style=flat-square&color=818cf8" alt="minzipped size" /></a>
+  <img src="https://img.shields.io/npm/types/hookio?style=flat-square&color=c084fc" alt="TypeScript types included" />
+  <img src="https://img.shields.io/npm/l/hookio?style=flat-square&color=94a3b8" alt="license" />
+</p>
 
-## Installation
+---
 
-You can install the package using npm or yarn:
+## 💫 Why hook.io
+
+Every React project ends up re-writing the same handful of hooks — a debounce here, a
+`localStorage` wrapper there, an outside-click listener for the third time this month.
+**hook.io** is that boilerplate, extracted once, typed properly, and hardened for real apps.
+
+- **📦 Zero runtime dependencies** — nothing but React ships to your users.
+- **🌳 Tree-shakable** — import one hook, bundle one hook. The rest never leaves `node_modules`.
+- **🧠 TypeScript-first** — every hook is generic where it counts; full inference, no `any` leaks.
+- **🖥️ SSR-safe** — browser globals are guarded, so it just works in Next.js / Remix.
+- **🎯 Familiar APIs** — hooks mirror the `useState` shape you already know.
+- **⚡ Dual module** — ships ESM **and** CommonJS with `.d.ts` types for both.
+
+## 🚀 Install
 
 ```bash
 npm i hookio
-```
-
-### OR
-
-```bash
+# or
 yarn add hookio
+# or
+pnpm add hookio
 ```
 
-## Read The [Docs](https://use-any-hook-d92674ab.mintlify.app/installation)
+> **Peer dependency:** React `>=18`.
 
-Visit the documentation website so you can find installation/usage guides.
+```tsx
+import { useDebounce, useToggle, useClickOutside } from "hookio";
+```
 
-## Stable
+## 🪝 Available hooks
 
-Thi is a quide through the usage process, jump directly to the hook you want:
+| Hook | What it does |
+| --- | --- |
+| [`useToggle`](#usetoggle) | Boolean state with `toggle()` and explicit `set()`. |
+| [`useDebounce`](#usedebounce) | Debounce any fast-changing value. |
+| [`useFetch`](#usefetch) | Fetch JSON with `data` / `error` / `loading` state. |
+| [`useForm`](#useform) | Minimal controlled-form state + change handler. |
+| [`useLocalStorage`](#uselocalstorage) | `useState` that persists to `localStorage`. |
+| [`useLocalStorageWithExpiry`](#uselocalstoragewithexpiry) | Persisted state that expires after a TTL. |
+| [`useDarkMode`](#usedarkmode) | Toggle a `dark` class + persisted theme. |
+| [`useClickOutside`](#useclickoutside) | Fire a callback on clicks outside a ref. |
+| [`useMousePosition`](#usemouseposition) | Track the cursor `{ x, y }` inside an element. |
+| [`useInfiniteScroll`](#useinfinitescroll) | Call a loader when the page nears the bottom. |
+| [`useGeoLocation`](#usegeolocation) | Read the user's coordinates (with permission). |
 
-###### [useFetch](https://use-any-hook-d92674ab.mintlify.app/hooks/useFetch)
+## 📖 Usage
 
-###### [useDebounce](https://use-any-hook-d92674ab.mintlify.app/hooks/useDebounce)
+### useToggle
+```tsx
+import { useToggle } from "hookio";
 
-###### [useClickOutside](https://use-any-hook-d92674ab.mintlify.app/hooks/useClickOutside)
+function Panel() {
+  const [isOpen, toggle, setOpen] = useToggle(false);
 
-###### [useLocalStorageWithExpiry](https://use-any-hook-d92674ab.mintlify.app/hooks/useLocalStorageWithExpiry)
+  return (
+    <>
+      <button onClick={toggle}>{isOpen ? "Hide" : "Show"}</button>
+      <button onClick={() => setOpen(false)}>Force close</button>
+      {isOpen && <div>Now you see me.</div>}
+    </>
+  );
+}
+```
 
-###### [useForm](https://use-any-hook-d92674ab.mintlify.app/hooks/useForm)
+### useDebounce
+```tsx
+import { useState } from "react";
+import { useDebounce } from "hookio";
 
-###### [useDarkMode](https://use-any-hook-d92674ab.mintlify.app/hooks/useDarkMode)
+function Search() {
+  const [term, setTerm] = useState("");
+  const debounced = useDebounce(term, 400); // waits 400ms after the last keystroke
 
-###### [useInfiniteScroll](https://use-any-hook-d92674ab.mintlify.app/hooks/useInfiniteScroll)
+  // Fire the request only when `debounced` settles.
+  // useEffect(() => { fetch(`/api?q=${debounced}`) }, [debounced]);
 
-###### [useMousePosition](https://use-any-hook-d92674ab.mintlify.app/hooks/useMousePosition)
+  return <input value={term} onChange={(e) => setTerm(e.target.value)} />;
+}
+```
 
-###### [useGeoLocation](https://use-any-hook-d92674ab.mintlify.app/hooks/useGeoLocation)
+### useFetch
+```tsx
+import { useFetch } from "hookio";
 
-###### [useToggle](https://use-any-hook-d92674ab.mintlify.app/hooks/useToggle)
+type User = { id: number; name: string };
 
-<!--
-## Usage
+function Users() {
+  const { data, error, loading } = useFetch<User[]>("/api/users");
 
-A quick quide for each hook in the [hookio](https://www.npmjs.com/package/hookio) package
+  if (loading) return <p>Loading…</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  return <ul>{data?.map((u) => <li key={u.id}>{u.name}</li>)}</ul>;
+}
+```
 
-```javascript
-// Import your desired custom hook 1st.
+### useClickOutside
+```tsx
+import { useRef } from "react";
+import { useClickOutside } from "hookio";
+
+function Dropdown({ onClose }: { onClose: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useClickOutside(ref, onClose);
+  return <div ref={ref}>…menu…</div>;
+}
+```
+
+### useLocalStorage
+```tsx
+import { useLocalStorage } from "hookio";
+
+function Settings() {
+  const { value, setStoredValue } = useLocalStorage("volume", 50);
+  return <input type="range" value={value} onChange={(e) => setStoredValue(Number(e.target.value))} />;
+}
+```
+
+### useDarkMode
+```tsx
+import { useDarkMode } from "hookio";
+
+function ThemeToggle() {
+  const { isDarkMode, toggleDarkMode } = useDarkMode(); // toggles a `dark` class on <body>
+  return <button onClick={toggleDarkMode}>{isDarkMode ? "🌙" : "☀️"}</button>;
+}
+```
+
+<details>
+<summary>More hooks — <code>useForm</code>, <code>useMousePosition</code>, <code>useInfiniteScroll</code>, <code>useGeoLocation</code>, <code>useLocalStorageWithExpiry</code></summary>
+
+### useForm
+```tsx
+import { useForm } from "hookio";
+
+const { values, handleChange, resetForm } = useForm({ email: "", name: "" });
+// <input name="email" value={values.email} onChange={handleChange} />
+```
+
+### useMousePosition
+```tsx
+import { useRef } from "react";
+import { useMousePosition } from "hookio";
+
+const ref = useRef<HTMLDivElement>(null);
+const { x, y } = useMousePosition(ref); // relative to the element
+```
+
+### useInfiniteScroll
+```tsx
 import { useInfiniteScroll } from "hookio";
+
+const isFetching = useInfiniteScroll(async () => {
+  await loadNextPage(); // called when the viewport nears the bottom
+});
 ```
 
-### 1. useFetch
+### useGeoLocation
+```tsx
+import { useGeoLocation } from "hookio";
 
-`useFetch` is a hook for making HTTP requests and managing the loading and error state of the fetched data.
-
-```javascript
-function MyComponent() {
-  const [data, loading, error] = useFetch("https://api.example.com/data");
-
-  useEffect(() => {
-    // Handle data when it is available
-    if (data) {
-      // Do something with the fetched data
-    }
-  }, [data]);
-
-  return (
-    <div>
-      {loading ? "Loading..." : null}
-      {error ? "Error: Unable to fetch data" : null}
-      {data ? <div>Data: {data}</div> : null}
-    </div>
-  );
-}
+const { location, error } = useGeoLocation();
+// location?.coords.latitude / location?.coords.longitude
 ```
 
-### 2. useDebounce
+### useLocalStorageWithExpiry
+```tsx
+import { useLocalStorageWithExpiry } from "hookio";
 
-`useDebounce` is a hook that allows you to debounce a value or function to delay its execution until a certain timeout has passed.
+const { value, setStoredValue } = useLocalStorageWithExpiry("token", null, 3600_000); // 1h TTL
+```
+</details>
 
-```javascript
-function MyComponent() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+## 🧪 TypeScript
 
-  const handleSearch = async () => {
-    const response = await fetch(
-      `https://dummyjson.com/products/search?q=${debouncedSearchTerm}`
-    );
-  };
+Every hook is written in TypeScript and ships its own declarations — no `@types/hookio`
+needed. Data hooks are generic, so inference flows through:
 
-  useEffect(() => {
-    handleSearch();
-    // This will be called after (1000ms = 1second) from your last keypress
-  }, [debouncedSearchTerm]);
-
-  return (
-    <input
-      type="text"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-    />
-  );
-}
+```tsx
+const { data } = useFetch<Product[]>("/api/products"); // data: Product[] | null
+const debounced = useDebounce(query, 300);              // debounced: typeof query
 ```
 
-### 3. useClickOutside
+## 🤝 Contributing
 
-`useClickOutside` detects clicks outside of a specified element and triggers a callback.
+Issues and PRs are welcome. Add a hook as `src/hooks/use<Name>.hook.ts`, export it from
+`src/hooks/index.ts`, keep it SSR-safe, and make sure `npx tsc --noEmit` and `yarn build`
+are both green.
 
-```typescript
-function MyComponent() {
-  const myRef = useRef<HTMLDivElement>(null);
+## 📄 License
 
-  const handleClickOutside = () => {
-    console.log("Clicked outside the element");
-  };
-
-  useClickOutside(myRef, handleClickOutside);
-
-  return (
-    <div className="p-14 bg-red-500" ref={myRef}>
-      {/* Your content here */}
-    </div>
-  );
-}
-```
-
-### 4. useLocalStorageWithExpiry
-
-`useLocalStorageWithExpiry` extends useLocalStorage to store values with an expiration time.
-
-```typescript
-function MyComponent() {
-  const [data, setData] = useState<string | null>('');
-
-  const { value, setStoredValue } = useLocalStorageWithExpiry('key', 'initialValue', 3000); // Expire after 3 seconds
-
-  useEffect(() => {
-    if (value) {
-      // Use the retrieved data
-      console.log('Data from localStorage:', value);
-      setData(value); // Set the component state with retrieved data
-    }
-  }, [value]);
-
-  const handleSaveData = (newData: string) => {
-    setData(newData);
-    setStoredValue(newData);
-  };
-
-  return (
-    <div>
-      <input value={data || ''} onChange={(e) => setData(e.target.value)} />
-      <button onClick={() => handleSaveData(data)}>Save Data</button>
-    </div>
-  );
-}
-```
-
-### 5. useForm
-
-`useForm` is a hook for handling form input state and simplifying form management.
-
-```javascript
-function MyComponent() {
-  const { values, handleChange, resetForm } = useForm({
-    username: "",
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Use the form values for submission
-    console.log("Submitted data:", values);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="username"
-        value={values.username}
-        onChange={handleChange}
-        placeholder="Username"
-      />
-
-      <button type="submit">Submit</button>
-      <button type="button" onClick={resetForm}>
-        Reset
-      </button>
-    </form>
-  );
-}
-```
-
-### 6. useDarkMode
-
-`useDarkMode` is a hook for managing the theme, such as toggling between light and dark mode.
-
-```javascript
-function MyComponent() {
-  const { isDarkMode, toggleTheme } = useDarkMode();
-
-  // toggleTheme() function toggles the body tag className too.
-  // <body className="dark"></body>
-
-  return (
-    <div className={isDarkMode ? "dark-mode" : "light-mode"}>
-      <button onClick={toggleTheme}>Toggle Theme</button>
-      {isDarkMode ? "Dark Mode" : "Light Mode"}
-    </div>
-  );
-}
-```
-
-### 7. useInfiniteScroll
-
-`useInfiniteScroll` This hook helps you implement infinite scrolling in your application, fetching and appending data as the user scrolls.
-
-```javascript
-function InfiniteScrollExample() {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
-
-  // Simulated function to fetch more data
-  const fetchMoreData = async () => {
-    // Simulated API call to fetch more items (e.g., from a backend server)
-    const response = await fetch(`https://api.example.com/items?page=${page}`);
-    const newData = await response.json();
-
-    // Update the items and page
-    setItems([...items, ...newData]);
-    setPage(page + 1);
-  };
-
-  const isFetching = useInfiniteScroll(fetchMoreData);
-
-  useEffect(() => {
-    // Initial data fetch when the component mounts
-    fetchMoreData();
-  }, []);
-
-  return (
-    <div>
-      <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-      {isFetching && <p>Loading more items...</p>}
-    </div>
-  );
-}
-```
-
-### 8. useMousePosition
-
-`useMousePosition` is a hook for detecting the mouse position in a specific div x,y axis.
-
-```javascript
-function MyComponent() {
-  const ref = React.useRef(null);
-  const { x, y } = useMousePosition(ref);
-
-  return (
-    <div ref={ref}>
-      Mouse Position: `x-axis: ${x}, y-axis: ${x}`
-    </div>
-  );
-}
-```
-
-### 9. useGeoLocation
-
-`useGeoLocation` is a hook for detecting the user accurate position in latitude and longitude after asking for permission.
-
-```javascript
-function MyComponent() {
-  const { location, error } = useGeoLocation();
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  return (
-    <div>
-      {location ? (
-        <div>
-          Latitude: {location.coords.latitude}, Longitude: {location.coords.longitude}
-        </div>
-      ) : (
-        <div>Fetching location...</div>
-      )}
-    </div>
-  );
-}
-``` -->
+ISC © [Saif Mohamed](https://linkedin.com/in/saifmohamedsv/)
