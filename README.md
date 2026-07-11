@@ -8,20 +8,34 @@
 
 <p align="center">
   A tiny, typed collection of the React hooks you reach for every day.<br/>
-  <strong>Zero dependencies · SSR-safe · ESM + CJS · fully tree-shakable.</strong>
+  <strong>Ready to use · written in TypeScript · zero dependencies.</strong>
 </p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=6366f1" alt="npm version" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=22d3ee" alt="npm downloads" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=22d3ee" alt="npm downloads per month" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=38bdf8" alt="total npm downloads" /></a>
   <a href="https://bundlephobia.com/package/hookli"><img src="https://img.shields.io/bundlephobia/minzip/hookli?style=flat-square&color=818cf8" alt="minzipped size" /></a>
-  <img src="https://img.shields.io/npm/types/hookli?style=flat-square&color=c084fc" alt="TypeScript types included" />
+  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=c084fc" alt="GitHub stars" /></a>
   <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=94a3b8" alt="license" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/zero_dependencies-22d3ee?style=for-the-badge" alt="zero dependencies" />
+  <img src="https://img.shields.io/badge/TypeScript-818cf8?style=for-the-badge" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/SSR--safe-c084fc?style=for-the-badge" alt="SSR-safe" />
+  <img src="https://img.shields.io/badge/tree--shakable-22d3ee?style=for-the-badge" alt="tree-shakable" />
+  <img src="https://img.shields.io/badge/ESM_%2B_CJS-818cf8?style=for-the-badge" alt="ESM + CJS" />
+  <img src="https://img.shields.io/badge/11_hooks-c084fc?style=for-the-badge" alt="11 hooks" />
+</p>
+
+<p align="center">
+  <a href="#-available-hooks"><strong>Browse the hooks &rarr;</strong></a>
 </p>
 
 ---
 
-## 💫 Why hookli
+## 💫 Introduction
 
 Every React project ends up re-writing the same handful of hooks — a debounce here, a
 `localStorage` wrapper there, an outside-click listener for the third time this month.
