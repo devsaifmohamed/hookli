@@ -33,20 +33,7 @@
   <a href="#-available-hooks"><strong>Browse the hooks &rarr;</strong></a>
 </p>
 
----
-
-## 💫 Introduction
-
-Every React project ends up re-writing the same handful of hooks — a debounce here, a
-`localStorage` wrapper there, an outside-click listener for the third time this month.
-**hookli** is that boilerplate, extracted once, typed properly, and hardened for real apps.
-
-- **📦 Zero runtime dependencies** — nothing but React ships to your users.
-- **🌳 Tree-shakable** — import one hook, bundle one hook. The rest never leaves `node_modules`.
-- **🧠 TypeScript-first** — every hook is generic where it counts; full inference, no `any` leaks.
-- **🖥️ SSR-safe** — browser globals are guarded, so it just works in Next.js / Remix.
-- **🎯 Familiar APIs** — hooks mirror the `useState` shape you already know.
-- **⚡ Dual module** — ships ESM **and** CommonJS with `.d.ts` types for both.
+<p align="center"><sub>Created by <a href="https://linkedin.com/in/saifmohamedsv/">Saif Mohamed</a> · ISC licensed</sub></p>
 
 ## 🚀 Install
 
@@ -60,157 +47,51 @@ pnpm add hookli
 
 > **Peer dependency:** React `>=18`.
 
+## 💫 Introduction
+
+**hookli** is a React hooks library, written in TypeScript and easy to use. It gives you a
+small, dependency-free set of the hooks you reach for in almost every project — so you stop
+re-writing the same debounce, `localStorage` wrapper, or outside-click listener for the
+hundredth time. The hooks are built on the principle of DRY (Don't Repeat Yourself).
+
+The library is designed to be as minimal as possible. It is fully **tree-shakable** (via the
+ESM build), meaning you only ship the hooks you import and the rest is removed from your
+bundle — the cost of adding hookli is negligible. Every hook is **typed** and **SSR-safe**,
+so it drops straight into Next.js / Remix.
+
+### Usage
+
 ```tsx
-import { useDebounce, useToggle, useClickOutside } from "hookli";
+import { useLocalStorage } from "hookli";
+
+function Component() {
+  const { value, setStoredValue } = useLocalStorage("my-key", 0);
+
+  // ...
+}
 ```
 
 ## 🪝 Available hooks
 
-| Hook | What it does |
-| --- | --- |
-| [`useToggle`](#usetoggle) | Boolean state with `toggle()` and explicit `set()`. |
-| [`useDebounce`](#usedebounce) | Debounce any fast-changing value. |
-| [`useFetch`](#usefetch) | Fetch JSON with `data` / `error` / `loading` state. |
-| [`useForm`](#useform) | Minimal controlled-form state + change handler. |
-| [`useLocalStorage`](#uselocalstorage) | `useState` that persists to `localStorage`. |
-| [`useLocalStorageWithExpiry`](#uselocalstoragewithexpiry) | Persisted state that expires after a TTL. |
-| [`useDarkMode`](#usedarkmode) | Toggle a `dark` class + persisted theme. |
-| [`useClickOutside`](#useclickoutside) | Fire a callback on clicks outside a ref. |
-| [`useMousePosition`](#usemouseposition) | Track the cursor `{ x, y }` inside an element. |
-| [`useInfiniteScroll`](#useinfinitescroll) | Call a loader when the page nears the bottom. |
-| [`useGeoLocation`](#usegeolocation) | Read the user's coordinates (with permission). |
+> 📚 A dedicated docs site with a **page per hook** and **live demos** is on the way. For
+> now, each hook links to its source.
 
-## 📖 Usage
-
-### useToggle
-```tsx
-import { useToggle } from "hookli";
-
-function Panel() {
-  const [isOpen, toggle, setOpen] = useToggle(false);
-
-  return (
-    <>
-      <button onClick={toggle}>{isOpen ? "Hide" : "Show"}</button>
-      <button onClick={() => setOpen(false)}>Force close</button>
-      {isOpen && <div>Now you see me.</div>}
-    </>
-  );
-}
-```
-
-### useDebounce
-```tsx
-import { useState } from "react";
-import { useDebounce } from "hookli";
-
-function Search() {
-  const [term, setTerm] = useState("");
-  const debounced = useDebounce(term, 400); // waits 400ms after the last keystroke
-
-  // Fire the request only when `debounced` settles.
-  // useEffect(() => { fetch(`/api?q=${debounced}`) }, [debounced]);
-
-  return <input value={term} onChange={(e) => setTerm(e.target.value)} />;
-}
-```
-
-### useFetch
-```tsx
-import { useFetch } from "hookli";
-
-type User = { id: number; name: string };
-
-function Users() {
-  const { data, error, loading } = useFetch<User[]>("/api/users");
-
-  if (loading) return <p>Loading…</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  return <ul>{data?.map((u) => <li key={u.id}>{u.name}</li>)}</ul>;
-}
-```
-
-### useClickOutside
-```tsx
-import { useRef } from "react";
-import { useClickOutside } from "hookli";
-
-function Dropdown({ onClose }: { onClose: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useClickOutside(ref, onClose);
-  return <div ref={ref}>…menu…</div>;
-}
-```
-
-### useLocalStorage
-```tsx
-import { useLocalStorage } from "hookli";
-
-function Settings() {
-  const { value, setStoredValue } = useLocalStorage("volume", 50);
-  return <input type="range" value={value} onChange={(e) => setStoredValue(Number(e.target.value))} />;
-}
-```
-
-### useDarkMode
-```tsx
-import { useDarkMode } from "hookli";
-
-function ThemeToggle() {
-  const { isDarkMode, toggleDarkMode } = useDarkMode(); // toggles a `dark` class on <body>
-  return <button onClick={toggleDarkMode}>{isDarkMode ? "🌙" : "☀️"}</button>;
-}
-```
-
-<details>
-<summary>More hooks — <code>useForm</code>, <code>useMousePosition</code>, <code>useInfiniteScroll</code>, <code>useGeoLocation</code>, <code>useLocalStorageWithExpiry</code></summary>
-
-### useForm
-```tsx
-import { useForm } from "hookli";
-
-const { values, handleChange, resetForm } = useForm({ email: "", name: "" });
-// <input name="email" value={values.email} onChange={handleChange} />
-```
-
-### useMousePosition
-```tsx
-import { useRef } from "react";
-import { useMousePosition } from "hookli";
-
-const ref = useRef<HTMLDivElement>(null);
-const { x, y } = useMousePosition(ref); // relative to the element
-```
-
-### useInfiniteScroll
-```tsx
-import { useInfiniteScroll } from "hookli";
-
-const isFetching = useInfiniteScroll(async () => {
-  await loadNextPage(); // called when the viewport nears the bottom
-});
-```
-
-### useGeoLocation
-```tsx
-import { useGeoLocation } from "hookli";
-
-const { location, error } = useGeoLocation();
-// location?.coords.latitude / location?.coords.longitude
-```
-
-### useLocalStorageWithExpiry
-```tsx
-import { useLocalStorageWithExpiry } from "hookli";
-
-const { value, setStoredValue } = useLocalStorageWithExpiry("token", null, 3600_000); // 1h TTL
-```
-</details>
+- **[`useToggle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useToggle.hook.ts)** — boolean state with a `toggle()` and an explicit setter.
+- **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useDebounce.hook.ts)** — returns a debounced version of a fast-changing value.
+- **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useFetch.hook.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
+- **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useForm.hook.ts)** — minimal controlled-form state with a generic change handler.
+- **[`useLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useLocalStorage.hook.ts)** — persists state to `localStorage`, `useState`-style.
+- **[`useLocalStorageWithExpiry`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useLocalStorageWithExpiry.hook.ts)** — persisted state that expires after a TTL.
+- **[`useDarkMode`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useDarkMode.hook.ts)** — toggles a `dark` class on `<body>` and persists the theme.
+- **[`useClickOutside`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useClickOutside.hook.ts)** — fires a callback on clicks outside a ref'd element.
+- **[`useMousePosition`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useMousePosition.hook.ts)** — tracks the cursor `{ x, y }` within an element.
+- **[`useInfiniteScroll`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useInfiniteScroll.hook.ts)** — runs a loader when the page nears the bottom.
+- **[`useGeoLocation`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/useGeoLocation.hook.ts)** — reads the user's coordinates via the Geolocation API.
 
 ## 🧪 TypeScript
 
-Every hook is written in TypeScript and ships its own declarations — no `@types/hookli`
-needed. Data hooks are generic, so inference flows through:
+Every hook ships its own declarations — no `@types/hookli` needed. Data hooks are generic,
+so inference flows through:
 
 ```tsx
 const { data } = useFetch<Product[]>("/api/products"); // data: Product[] | null
