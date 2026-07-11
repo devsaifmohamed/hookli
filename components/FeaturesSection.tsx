@@ -7,6 +7,7 @@ import {
   PackageIcon,
   ServerIcon,
 } from "@/components/Icons";
+import { HOOKS } from "@/lib/hooks-registry";
 
 const FEATURES = [
   {
@@ -36,7 +37,7 @@ const FEATURES = [
   },
   {
     icon: <BlocksIcon className="size-6" />,
-    title: "11 hooks & counting",
+    title: `${HOOKS.length} hooks & counting`,
     body: "State, storage, DOM, and data — the hooks you rewrite in every project, done once and typed.",
   },
 ];

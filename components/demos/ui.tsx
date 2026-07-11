@@ -39,7 +39,7 @@ export function DemoButton({
     <button
       type="button"
       {...props}
-      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg"
+      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg aria-expanded:border-accent/60 aria-expanded:text-accent aria-pressed:border-accent/60 aria-pressed:bg-accent/10 aria-pressed:text-accent"
     >
       {children}
     </button>

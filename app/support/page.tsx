@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   title: "Support",
   description:
     "Support hookli — star the repo, contribute a hook, or sponsor the project (coming soon).",
+  openGraph: {
+    title: "Support",
+    description:
+      "Support hookli — star the repo, contribute a hook, or sponsor the project (coming soon).",
+    url: "/support",
+  },
 };
 
 const CONTRIBUTE_WAYS = [

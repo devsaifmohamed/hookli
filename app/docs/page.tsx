@@ -13,6 +13,11 @@ import { TAGLINE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Docs",
   description: `${TAGLINE} Documentation for all ${HOOKS.length} hooks.`,
+  openGraph: {
+    title: "Docs",
+    description: `${TAGLINE} Documentation for all ${HOOKS.length} hooks.`,
+    url: "/docs",
+  },
 };
 
 const QUICK_EXAMPLE = `
