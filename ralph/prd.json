@@ -71,7 +71,7 @@
         "Dynamic route /docs/[slug] scaffolded, generateStaticParams from the registry, notFound for unknown slugs",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T6",

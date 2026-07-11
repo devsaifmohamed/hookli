@@ -1,5 +1,5 @@
-── Ralph iteration · 2026-07-11T15:43Z
-   next task: T4  Landing features + live code preview section
+── Ralph iteration · 2026-07-11T15:51Z
+   next task: T5  Docs infrastructure: registry, /docs layout, sidebar
    watch:     tail -f ralph/heartbeat.log
     0m00s · searching · 0 file(s)
     0m15s · searching · 0 file(s)
@@ -7,31 +7,20 @@
     0m45s · searching · 0 file(s)
     1m00s · searching · 0 file(s)
     1m15s · searching · 0 file(s)
-    1m30s · editing   · 1 file(s) · CopyButton.tsx
-    1m45s · editing   · 2 file(s) · CopyButton.tsx,Footer.tsx
-    2m00s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    2m15s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    2m30s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    2m45s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    3m00s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    3m15s · editing   · 4 file(s) · CopyButton.tsx,Footer.tsx,package-lock.json,package.json
-    3m30s · editing   · 5 file(s) · CopyButton.tsx,Footer.tsx,Wordmark.tsx,package-lock.json
-    3m45s · editing   · 5 file(s) · CopyButton.tsx,Footer.tsx,Wordmark.tsx,package-lock.json
-    4m01s · editing   · 5 file(s) · CopyButton.tsx,Footer.tsx,Wordmark.tsx,package-lock.json
-    4m16s · editing   · 5 file(s) · CopyButton.tsx,Footer.tsx,Wordmark.tsx,package-lock.json
-    4m31s · editing   · 7 file(s) · CodeBlock.tsx,CopyButton.tsx,Footer.tsx,Wordmark.tsx
-    4m46s · editing   · 8 file(s) · globals.css,CodeBlock.tsx,CopyButton.tsx,Footer.tsx
-    5m01s · editing   · 10 file(s) · globals.css,CodeBlock.tsx,CopyButton.tsx,FeatureCard.tsx
-    5m16s · editing   · 11 file(s) · globals.css,CodeBlock.tsx,CopyButton.tsx,FeatureCard.tsx
-    5m31s · editing   · 13 file(s) · globals.css,CodeBlock.tsx,CopyButton.tsx,FeatureCard.tsx
-    5m46s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    6m01s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    6m16s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    6m31s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    6m46s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    7m01s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    7m16s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    7m31s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    7m46s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    8m01s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
-    8m16s · editing   · 14 file(s) · globals.css,page.tsx,CodeBlock.tsx,CopyButton.tsx
+    1m30s · searching · 0 file(s)
+    1m45s · searching · 0 file(s)
+    2m00s · searching · 0 file(s)
+    2m15s · searching · 0 file(s)
+    2m30s · searching · 0 file(s)
+    2m45s · searching · 0 file(s)
+    3m00s · searching · 0 file(s)
+    3m15s · editing   · 1 file(s) · hooks-registry.ts
+    3m30s · editing   · 3 file(s) · HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    3m45s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    4m00s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    4m15s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    4m30s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    4m46s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    5m01s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    5m16s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
+    5m31s · editing   · 4 file(s) · ,HookCard.tsx,Sidebar.tsx,hooks-registry.ts
