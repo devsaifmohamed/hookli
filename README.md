@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/hookli">
-    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookli/main/assets/hookli-banner.svg" alt="hookli — React hooks, ready to use" width="680" />
+    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookli/main/assets/hookli-banner.png" alt="hookli — React hooks, ready to use" width="680" />
   </a>
 </p>
 
