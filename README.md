@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/hookio">
-    <img src="https://raw.githubusercontent.com/use-any-hook/use-any-hook/main/assets/hookio-banner.svg" alt="hook.io — React hooks, ready to use" width="680" />
+    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookio/main/assets/hookio-banner.svg" alt="hook.io — React hooks, ready to use" width="680" />
   </a>
 </p>
 

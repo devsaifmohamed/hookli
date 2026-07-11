@@ -26,7 +26,14 @@
   ],
   "author": "Saif Mohamed <saifmohamed.dev@gmail.com> (https://linkedin.com/in/saifmohamedsv/)",
   "license": "ISC",
-  "homepage": "https://use-any-hook-d92674ab.mintlify.app/installation",
+  "homepage": "https://github.com/saifmohamedsv/hookio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saifmohamedsv/hookio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/saifmohamedsv/hookio/issues"
+  },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
