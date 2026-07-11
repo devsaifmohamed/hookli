@@ -17,7 +17,7 @@
         "Decisions are concrete (no 'maybe/or'), so later tasks can build without re-deciding",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T2",

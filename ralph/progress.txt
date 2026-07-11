@@ -4,3 +4,4 @@
 # to git on purpose — it's the loop's long-term memory. Do not truncate.
 
 2026-07-11T14:00Z · seeded · scaffold: create-next-app (TS, Tailwind, App Router, npm), hookli@1.3.16 installed from npm (React 19 peer fix shipped), brand assets in public/. Backlog T1–T15. Gate = ralph/check.sh (lint + tsc + next build).
+2026-07-11T14:30Z · T1 done · docs/DESIGN.md written (IA, landing order, hook-page template, component inventory, registry table w/ verified hookli@1.3.16 signatures). Gotchas for next iterations: Next 16 = await params, separate viewport export, Image preload not priority; Tailwind v4 tokens go in @theme in globals.css; JetBrains Mono via next/font chosen for headings.
