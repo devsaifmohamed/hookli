@@ -27,22 +27,28 @@ export default async function Image({
           justifyContent: "space-between",
           padding: 72,
           backgroundColor: OG_COLORS.ground,
+          fontFamily: "Plus Jakarta Sans",
         }}
       >
-        <OgWordmark fontSize={36} />
+        <OgWordmark fontSize={36} withMark />
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div
             style={{
               fontSize: 26,
               letterSpacing: 4,
               textTransform: "uppercase",
-              color: OG_COLORS.slate,
+              color: OG_COLORS.gray,
             }}
           >
             {CATEGORY_LABELS[hook.category]}
           </div>
           <div
-            style={{ fontSize: 92, fontWeight: 700, color: OG_COLORS.accent }}
+            style={{
+              fontFamily: "JetBrains Mono",
+              fontSize: 92,
+              fontWeight: 700,
+              color: OG_COLORS.accent,
+            }}
           >
             {hook.name}
           </div>
@@ -50,7 +56,13 @@ export default async function Image({
             {hook.description}
           </div>
         </div>
-        <div style={{ fontSize: 26, color: OG_COLORS.slate }}>
+        <div
+          style={{
+            fontFamily: "JetBrains Mono",
+            fontSize: 26,
+            color: OG_COLORS.slate,
+          }}
+        >
           npm i hookli
         </div>
       </div>

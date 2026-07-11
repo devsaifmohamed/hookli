@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wordmark } from "./Wordmark";
+import { HookMark, Wordmark } from "./Wordmark";
 import { GitHubIcon } from "./Icons";
 import { SearchPalette } from "./SearchPalette";
 import { GITHUB_URL } from "@/lib/site";
@@ -11,14 +11,15 @@ export function Header() {
         <Link
           href="/"
           aria-label="hookli — home"
-          className="flex min-h-11 items-center rounded-md"
+          className="flex min-h-11 items-center gap-2 rounded-md"
         >
+          <HookMark className="h-5 w-auto" />
           <Wordmark size="sm" />
         </Link>
         <nav aria-label="Main" className="flex items-center gap-1">
           <Link
             href="/docs"
-            className="flex min-h-11 items-center rounded-md px-3 font-mono text-sm text-gray-body transition-colors duration-200 hover:text-fg"
+            className="flex min-h-11 items-center rounded-md px-3 text-sm text-gray-body transition-colors duration-200 hover:text-fg"
           >
             Docs
           </Link>

@@ -14,29 +14,36 @@ what all three lack on brand: a code-first hero that proves the library live.
 Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 `@theme` directive (Tailwind 4 has no `tailwind.config.ts` theme — tokens live in CSS).
 
+> **Brand v3 (2026-07-12).** Assets in `public/` (Prussian tile, teal hook cradling a
+> white state dot, `hookli.` wordmark) are the source; the token values below match them.
+
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#0B1120` | `--color-ground` | `ground` | Page + surface background |
-| Ground raised | `#111A2E` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar |
-| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark name, focus rings |
-| Syntax slate | `#475569` | `--color-slate-syntax` | `slate-syntax` | Wordmark parens, borders, muted UI |
-| Gray | `#94A3B8` | `--color-gray-body` | `gray-body` | Secondary/body text |
-| Foreground | `#E2E8F0` | `--color-fg` | `fg` | Primary text (AA on ground: 12.6:1) |
-| Accent-ink | `#0B1120` | — | `ground` | Text on accent-filled buttons |
+| Ground | `#003748` | `--color-ground` | `ground` | Page + surface background (Prussian Blue) |
+| Ground raised | `#0A4557` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar |
+| Accent | `#30C5CA` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (Scooter) |
+| Syntax slate | `#4A7A8C` | `--color-slate-syntax` | `slate-syntax` | Borders, code comments, muted chrome |
+| Gray | `#8FB6C2` | `--color-gray-body` | `gray-body` | Secondary/body text (mist) |
+| Foreground | `#FFFFFF` | `--color-fg` | `fg` | Primary text/ink (AA on ground: 12.8:1) |
+| Accent-ink | `#003748` | — | `ground` | Text on accent-filled buttons (6.1:1 on accent) |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
 theme in v1. Borders are `--color-slate-syntax` at 40% opacity (`border-slate-syntax/40`).
 Accent is used sparingly: one primary CTA per viewport, links, active nav states.
-`#94A3B8` on `#0B1120` is 7.5:1 — safe for body text; never go darker than that for copy.
+`#8FB6C2` on `#003748` is 5.9:1 — safe for body text; never go darker than that for copy.
 
 ### Typography
-- **Headings + wordmark + code:** monospace via `next/font` — `JetBrains_Mono`
-  (Google, variable). CSS var `--font-mono`.
-- **Body:** system sans stack (`ui-sans-serif, system-ui, ...`) — no webfont, zero cost.
-- Wordmark treatment (component `Wordmark`): `use(` and `)` in slate `#475569`,
-  `hookli` in cyan `#61DAFB`, monospace, single line. Never letter-spaced, never bold-ed
-  beyond 600.
-- Scale: h1 `text-4xl/5xl` mono 600 · h2 `text-2xl` mono 600 · h3 `text-lg` mono 600 ·
+- **Headings + wordmark + UI:** Plus Jakarta Sans (Avenir-class geometric) via
+  `next/font/local` from `@fontsource/plus-jakarta-sans` (400/600/700). CSS var
+  `--font-sans`; headings weight 600, `letter-spacing: -0.02em`.
+- **Code only:** JetBrains Mono (`--font-mono`) — code blocks, commands, identifiers,
+  signatures, API type cells, kbd. Monospace is never used for UI copy, nav, buttons,
+  or headings.
+- Wordmark treatment (component `Wordmark`): `hookli` lowercase in ink `#FFFFFF` +
+  full stop in accent `#30C5CA`, sans 600, `tracking-tight`. The mark (`HookMark`,
+  same file) is the icon's hook + dot without the tile. The old `use(hookli)` mono
+  lockup is retired.
+- Scale: h1 `text-4xl/5xl` sans 600 · h2 `text-2xl` sans 600 · h3 `text-lg` sans 600 ·
   body `text-base` sans · small `text-sm`.
 
 ### Iconography
@@ -70,15 +77,15 @@ Inline SVG only, lucide-style (24×24 viewBox, `stroke="currentColor"`,
 
 ## 3. Landing page — section order (final)
 
-1. **Hero** — big mono headline rendering `use(hookli)` with cyan accent and a blinking
-   block cursor (CSS `steps()` animation; disabled under `prefers-reduced-motion`).
+1. **Hero** — the hook mark (`HookMark`) stacked above a big `hookli.` wordmark
+   (brand v3; the mono `use(hookli)` + cursor-blink treatment is retired).
    Tagline: *"Simple React hooks. Typed. SSR-safe. Zero dependencies."*
    Install box: `npm i hookli` with copy button (icon flips to check for 2s).
    Primary CTA button (accent fill): **Explore the docs** → `/docs`.
    Secondary text link: **Star on GitHub** →  repo.
 2. **Feature grid** — 6 cards, 3×2 desktop / 2×3 tablet / 1-col mobile: Zero
    dependencies, TypeScript-first, SSR-safe, Tree-shakable, ESM + CJS, 11 hooks &
-   counting. Each: SVG icon, mono title, one-sentence body.
+   counting. Each: SVG icon, sans title, one-sentence body.
 3. **Live proof** — split section: left = syntax-highlighted `useToggle` sample
    (the exact code), right = that code running live (client component importing
    from `hookli`). Header: "This demo is running the code beside it."
@@ -117,14 +124,14 @@ page exceeds ~3 screens.
 |---|---|---|
 | `Header` | server | sticky, ground/90 + backdrop-blur, wordmark, nav, search trigger, GitHub |
 | `Footer` | server | links, license, mini install command |
-| `Wordmark` | server | `use(hookli)` colored spans; `size` prop |
+| `Wordmark` | server | `hookli.` lockup (ink + accent stop); `size` prop; also exports `HookMark` |
 | `Sidebar` | client | category groups, active link state, collapses to drawer <768px (T14) |
 | `HookDemo` | client | tabs Preview/Code, error boundary, consistent frame |
 | `DemoErrorBoundary` | client | class component, branded fallback |
 | `CodeBlock` | server | shiki (`css-variables` theme wired to brand tokens) + CopyButton |
 | `CopyButton` | client | clipboard API, check-icon feedback, `aria-live="polite"` |
 | `InstallCommand` | client | `$ npm i hookli` + CopyButton, used in hero/footer/docs index |
-| `FeatureCard` | server | icon + mono title + body |
+| `FeatureCard` | server | icon + sans title + body |
 | `HookCard` | server | registry entry → linked card |
 | `ApiTable` | server | typed rows from the registry page data |
 | `SearchPalette` | client | ⌘K dialog over registry (T11) |
@@ -173,9 +180,9 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 
 - Focus: visible 2px accent ring (`outline-accent`, offset 2) on every interactive.
 - Touch targets ≥44×44px; icon buttons get padding to reach it.
-- Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills the
-  hero cursor blink and all transitions (global CSS guard).
-- Contrast: body `#94A3B8`+ on `#0B1120` (≥4.5:1); UI chrome may use slate.
+- Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills all
+  animations and transitions (global CSS guard).
+- Contrast: body `#8FB6C2`+ on `#003748` (≥4.5:1); UI chrome may use slate.
 - Breakpoints checked every task: 375 / 768 / 1024 / 1440. No horizontal scroll at 375.
 - Code blocks: `overflow-x-auto`, never wrap-break code.
 

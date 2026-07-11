@@ -3,53 +3,112 @@ import { join } from "node:path";
 
 /* Shared machinery for the generated OG images (app/opengraph-image.tsx,
    app/docs/[slug]/opengraph-image.tsx) and app/apple-icon.tsx. Satori can't
-   reach next/font's build cache, so the JetBrains Mono woffs come from the
-   @fontsource/jetbrains-mono devDependency. Brand tokens mirror
-   app/globals.css @theme — keep in sync. */
+   reach next/font's build cache (and doesn't read woff2), so the woffs come
+   from the @fontsource devDependencies. Brand tokens mirror app/globals.css
+   @theme — keep in sync. */
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_COLORS = {
-  ground: "#0b1120",
-  accent: "#61dafb",
-  slate: "#475569",
-  gray: "#94a3b8",
-  fg: "#e2e8f0",
+  ground: "#003748",
+  accent: "#30c5ca",
+  slate: "#4a7a8c",
+  gray: "#8fb6c2",
+  fg: "#ffffff",
 } as const;
 
-const FONT_DIR = join(
-  process.cwd(),
-  "node_modules/@fontsource/jetbrains-mono/files",
-);
+const FONT_FILES = join(process.cwd(), "node_modules/@fontsource");
 
 export async function loadOgFonts() {
-  const [regular, bold] = await Promise.all([
-    readFile(join(FONT_DIR, "jetbrains-mono-latin-400-normal.woff")),
-    readFile(join(FONT_DIR, "jetbrains-mono-latin-700-normal.woff")),
+  const [sansRegular, sansBold, monoRegular, monoBold] = await Promise.all([
+    readFile(
+      join(
+        FONT_FILES,
+        "plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff",
+      ),
+    ),
+    readFile(
+      join(
+        FONT_FILES,
+        "plus-jakarta-sans/files/plus-jakarta-sans-latin-700-normal.woff",
+      ),
+    ),
+    readFile(
+      join(FONT_FILES, "jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff"),
+    ),
+    readFile(
+      join(FONT_FILES, "jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff"),
+    ),
   ]);
   return [
     {
+      name: "Plus Jakarta Sans",
+      data: sansRegular,
+      style: "normal" as const,
+      weight: 400 as const,
+    },
+    {
+      name: "Plus Jakarta Sans",
+      data: sansBold,
+      style: "normal" as const,
+      weight: 700 as const,
+    },
+    {
       name: "JetBrains Mono",
-      data: regular,
+      data: monoRegular,
       style: "normal" as const,
       weight: 400 as const,
     },
     {
       name: "JetBrains Mono",
-      data: bold,
+      data: monoBold,
       style: "normal" as const,
       weight: 700 as const,
     },
   ];
 }
 
-/* use(hookli) lockup — parens slate, name cyan, same as components/Wordmark. */
-export function OgWordmark({ fontSize }: { fontSize: number }) {
+/* The brand mark from public/hookli-icon.svg without the tile — a hook cradling
+   a state dot. Satori needs explicit svg dimensions; viewBox is 110×140. */
+export function OgMark({ height }: { height: number }) {
+  const width = Math.round((height * 110) / 140);
   return (
-    <div style={{ display: "flex", fontSize, fontWeight: 700 }}>
-      <span style={{ color: OG_COLORS.slate }}>use(</span>
-      <span style={{ color: OG_COLORS.accent }}>hookli</span>
-      <span style={{ color: OG_COLORS.slate }}>)</span>
+    <svg width={width} height={height} viewBox="-13 -3 110 140" fill="none">
+      <path
+        d="M84 10 V82 A42 42 0 1 1 0 82 V58"
+        stroke={OG_COLORS.accent}
+        strokeWidth={26}
+        strokeLinecap="round"
+      />
+      <circle cx={42} cy={82} r={15} fill={OG_COLORS.fg} />
+    </svg>
+  );
+}
+
+/* hookli. lockup — brand v3, same as components/Wordmark. */
+export function OgWordmark({
+  fontSize,
+  withMark = false,
+}: {
+  fontSize: number;
+  withMark?: boolean;
+}) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: fontSize * 0.35 }}>
+      {withMark ? <OgMark height={fontSize * 1.05} /> : null}
+      <div
+        style={{
+          display: "flex",
+          fontFamily: "Plus Jakarta Sans",
+          fontSize,
+          fontWeight: 700,
+          letterSpacing: "-0.03em",
+          color: OG_COLORS.fg,
+        }}
+      >
+        hookli
+        <span style={{ color: OG_COLORS.accent }}>.</span>
+      </div>
     </div>
   );
 }
