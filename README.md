@@ -13,8 +13,8 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=003748" alt="npm version" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=30C5CA" alt="npm downloads per month" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=003748" alt="total npm downloads" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=30C5CA&label=downloads%2Fmonth" alt="npm downloads per month" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=003748&label=total%20downloads" alt="total npm downloads" /></a>
   <a href="https://bundlephobia.com/package/hookli"><img src="https://img.shields.io/bundlephobia/minzip/hookli?style=flat-square&color=30C5CA" alt="minzipped size" /></a>
   <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=003748" alt="GitHub stars" /></a>
   <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=8FB6C2" alt="license" />
