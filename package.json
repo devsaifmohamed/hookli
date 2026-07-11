@@ -1,7 +1,7 @@
 {
-  "name": "re-hooks",
+  "name": "hookio",
   "version": "1.3.12",
-  "description": "rehooks — all the React.js custom hooks you frequently use.",
+  "description": "hook.io — all the React.js custom hooks you frequently use.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,8 +13,8 @@
     "prepublishOnly": "tsup"
   },
   "keywords": [
-    "rehooks",
-    "re-hooks",
+    "hookio",
+    "hook.io",
     "hooks",
     "react.js",
     "custom-hooks",

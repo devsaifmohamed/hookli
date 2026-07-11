@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[rehooks defaults] This is the re-hooks (brand: rehooks) React hooks library (published to npm, built with tsup). Conventions: one hook per src/hooks/<name>.hook.ts, re-exported from src/hooks/index.ts; every hook has a typed public API and is SSR-safe (guard window/document/navigator/localStorage). Quality gate before any commit: `bash ralph/check.sh` (tsc --noEmit + tsup build) — there is no test suite yet. NEVER `npm publish` / `npm version` / push git tags — releases are a human step. Autonomous batches: `bash ralph/afk-ralph.sh <N>`; single supervised iteration: `bash ralph/ralph-once.sh`.'"
+            "command": "echo '[hookio defaults] This is the hookio (brand: hook.io) React hooks library (published to npm, built with tsup). Conventions: one hook per src/hooks/<name>.hook.ts, re-exported from src/hooks/index.ts; every hook has a typed public API and is SSR-safe (guard window/document/navigator/localStorage). Quality gate before any commit: `bash ralph/check.sh` (tsc --noEmit + tsup build) — there is no test suite yet. NEVER `npm publish` / `npm version` / push git tags — releases are a human step. Autonomous batches: `bash ralph/afk-ralph.sh <N>`; single supervised iteration: `bash ralph/ralph-once.sh`.'"
           }
         ]
       }

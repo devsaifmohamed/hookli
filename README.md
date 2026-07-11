@@ -1,7 +1,9 @@
-[![npm version](https://img.shields.io/npm/v/re-hooks.svg?style=flat-square)](https://www.npmjs.org/package/re-hooks)
-[![npm downloads](https://img.shields.io/npm/dm/re-hooks.svg?style=flat-square)](https://npm-stat.com/charts.html?package=re-hooks)
+[![npm version](https://img.shields.io/npm/v/hookio.svg?style=flat-square)](https://www.npmjs.org/package/hookio)
+[![npm downloads](https://img.shields.io/npm/dm/hookio.svg?style=flat-square)](https://npm-stat.com/charts.html?package=hookio)
 
-# [rehooks](https://www.npmjs.com/package/re-hooks)
+# [hook.io](https://www.npmjs.com/package/hookio)
+
+> Published on npm as **`hookio`** (the merged spelling) — `npm i hookio`.
 
 A group of commonly used custom [React.js](https://reactjs.org) hooks.
 
@@ -10,13 +12,13 @@ A group of commonly used custom [React.js](https://reactjs.org) hooks.
 You can install the package using npm or yarn:
 
 ```bash
-npm i re-hooks
+npm i hookio
 ```
 
 ### OR
 
 ```bash
-yarn add re-hooks
+yarn add hookio
 ```
 
 ## Read The [Docs](https://use-any-hook-d92674ab.mintlify.app/installation)
@@ -50,11 +52,11 @@ Thi is a quide through the usage process, jump directly to the hook you want:
 <!--
 ## Usage
 
-A quick quide for each hook in the [re-hooks](https://www.npmjs.com/package/re-hooks) package
+A quick quide for each hook in the [hookio](https://www.npmjs.com/package/hookio) package
 
 ```javascript
 // Import your desired custom hook 1st.
-import { useInfiniteScroll } from "re-hooks";
+import { useInfiniteScroll } from "hookio";
 ```
 
 ### 1. useFetch

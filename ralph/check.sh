@@ -2,7 +2,7 @@
 #
 # check.sh — the verification gate ("back-pressure") for the Ralph loop.
 #
-# For this repo — the re-hooks (rehooks) React hooks library — a green gate means:
+# For this repo — the hookio (hook.io) React hooks library — a green gate means:
 #   1. TypeScript typechecks with no errors (npx tsc --noEmit)
 #   2. The tsup build succeeds (CJS + ESM + .d.ts all emit)
 # Ralph must see this exit 0 before it is allowed to commit. Red gates block the
