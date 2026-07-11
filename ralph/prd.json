@@ -1,6 +1,6 @@
 {
-  "feature": "hookio-quality-pass",
-  "description": "Starter backlog for the hookio (hook.io) library, seeded from a code scan on 2026-07-11. One task = one coherent slice with clear acceptance criteria and a status the loop mutates. Replace/extend with your real work.",
+  "feature": "hookli-quality-pass",
+  "description": "Starter backlog for the hookli (hookli) library, seeded from a code scan on 2026-07-11. One task = one coherent slice with clear acceptance criteria and a status the loop mutates. Replace/extend with your real work.",
   "release_branch": "main",
   "constraints": {
     "max_files_per_commit": 8,

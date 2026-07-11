@@ -1,7 +1,7 @@
 {
-  "name": "hookio",
+  "name": "hookli",
   "version": "1.3.12",
-  "description": "hook.io — all the React.js custom hooks you frequently use.",
+  "description": "hookli — all the React.js custom hooks you frequently use.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -13,8 +13,8 @@
     "prepublishOnly": "tsup"
   },
   "keywords": [
-    "hookio",
-    "hook.io",
+    "hookli",
+    "react-hooks",
     "hooks",
     "react.js",
     "custom-hooks",
@@ -26,13 +26,13 @@
   ],
   "author": "Saif Mohamed <saifmohamed.dev@gmail.com> (https://linkedin.com/in/saifmohamedsv/)",
   "license": "ISC",
-  "homepage": "https://github.com/saifmohamedsv/hookio#readme",
+  "homepage": "https://github.com/saifmohamedsv/hookli#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saifmohamedsv/hookio.git"
+    "url": "git+https://github.com/saifmohamedsv/hookli.git"
   },
   "bugs": {
-    "url": "https://github.com/saifmohamedsv/hookio/issues"
+    "url": "https://github.com/saifmohamedsv/hookli/issues"
   },
   "peerDependencies": {
     "react": "^18.2.0",

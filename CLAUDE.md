@@ -4,12 +4,13 @@ Guidance for Claude Code (claude.ai/code) when working in this repository.
 
 ## What this is
 
-**`hookio`** (brand: **hook.io**) — a published npm library of commonly-used React hooks,
+**`hookli`** — a published npm library of commonly-used React hooks,
 written in TypeScript and bundled with **tsup** (CJS + ESM + `.d.ts`). No app, no
 framework — a pure hooks package consumed by other React/Next.js projects.
 
-- Package name: `hookio` (the merged spelling of the brand **hook.io** — npm disallows dots
-  in names). Renamed 2026-07-11 from the old `@saif.dev/use-any-hook`.
+- Package name: `hookli`. Renamed 2026-07-11 from the old `@saif.dev/use-any-hook`
+  (via short-lived `re-hooks`/`hookio` attempts — `hookio` was blocked by npm as too
+  similar to the existing `hook.io`).
 - Entry: `src/index.ts` → `export * from "./hooks"`.
 - Docs site: https://use-any-hook-d92674ab.mintlify.app (still under the OLD slug — rebrand separately).
 - Peer deps: `react` / `react-dom` `^18.2.0`. Runtime deps: none.

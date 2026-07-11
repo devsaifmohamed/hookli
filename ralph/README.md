@@ -1,4 +1,4 @@
-# Ralph — a gated, self-driving task loop for `hookio` (hookio)
+# Ralph — a gated, self-driving task loop for `hookli` (hookli)
 
 > Ported into this repo from the original Nzmly-platform harness. The mechanics below are
 > general; the concrete examples (apps, globs, gate steps) still describe that monorepo —

@@ -1,4 +1,4 @@
-# Ralph progress log — hookio (hook.io)
+# Ralph progress log — hookli (hookli)
 # Durable, append-only memory across iterations. The harness appends one structured
 # metrics line per iteration; the model adds ONE short note line after it. Committed
 # to git on purpose — it's the loop's long-term memory. Do not truncate.

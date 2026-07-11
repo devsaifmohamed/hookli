@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://www.npmjs.com/package/hookio">
-    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookio/main/assets/hookio-banner.svg" alt="hook.io — React hooks, ready to use" width="680" />
+  <a href="https://www.npmjs.com/package/hookli">
+    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookli/main/assets/hookli-banner.svg" alt="hookli — React hooks, ready to use" width="680" />
   </a>
 </p>
 
-<h1 align="center">hook.io</h1>
+<h1 align="center">hookli</h1>
 
 <p align="center">
   A tiny, typed collection of the React hooks you reach for every day.<br/>
@@ -12,20 +12,20 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/hookio"><img src="https://img.shields.io/npm/v/hookio?style=flat-square&color=6366f1" alt="npm version" /></a>
-  <a href="https://www.npmjs.com/package/hookio"><img src="https://img.shields.io/npm/dm/hookio?style=flat-square&color=22d3ee" alt="npm downloads" /></a>
-  <a href="https://bundlephobia.com/package/hookio"><img src="https://img.shields.io/bundlephobia/minzip/hookio?style=flat-square&color=818cf8" alt="minzipped size" /></a>
-  <img src="https://img.shields.io/npm/types/hookio?style=flat-square&color=c084fc" alt="TypeScript types included" />
-  <img src="https://img.shields.io/npm/l/hookio?style=flat-square&color=94a3b8" alt="license" />
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=6366f1" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=22d3ee" alt="npm downloads" /></a>
+  <a href="https://bundlephobia.com/package/hookli"><img src="https://img.shields.io/bundlephobia/minzip/hookli?style=flat-square&color=818cf8" alt="minzipped size" /></a>
+  <img src="https://img.shields.io/npm/types/hookli?style=flat-square&color=c084fc" alt="TypeScript types included" />
+  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=94a3b8" alt="license" />
 </p>
 
 ---
 
-## 💫 Why hook.io
+## 💫 Why hookli
 
 Every React project ends up re-writing the same handful of hooks — a debounce here, a
 `localStorage` wrapper there, an outside-click listener for the third time this month.
-**hook.io** is that boilerplate, extracted once, typed properly, and hardened for real apps.
+**hookli** is that boilerplate, extracted once, typed properly, and hardened for real apps.
 
 - **📦 Zero runtime dependencies** — nothing but React ships to your users.
 - **🌳 Tree-shakable** — import one hook, bundle one hook. The rest never leaves `node_modules`.
@@ -37,17 +37,17 @@ Every React project ends up re-writing the same handful of hooks — a debounce 
 ## 🚀 Install
 
 ```bash
-npm i hookio
+npm i hookli
 # or
-yarn add hookio
+yarn add hookli
 # or
-pnpm add hookio
+pnpm add hookli
 ```
 
 > **Peer dependency:** React `>=18`.
 
 ```tsx
-import { useDebounce, useToggle, useClickOutside } from "hookio";
+import { useDebounce, useToggle, useClickOutside } from "hookli";
 ```
 
 ## 🪝 Available hooks
@@ -70,7 +70,7 @@ import { useDebounce, useToggle, useClickOutside } from "hookio";
 
 ### useToggle
 ```tsx
-import { useToggle } from "hookio";
+import { useToggle } from "hookli";
 
 function Panel() {
   const [isOpen, toggle, setOpen] = useToggle(false);
@@ -88,7 +88,7 @@ function Panel() {
 ### useDebounce
 ```tsx
 import { useState } from "react";
-import { useDebounce } from "hookio";
+import { useDebounce } from "hookli";
 
 function Search() {
   const [term, setTerm] = useState("");
@@ -103,7 +103,7 @@ function Search() {
 
 ### useFetch
 ```tsx
-import { useFetch } from "hookio";
+import { useFetch } from "hookli";
 
 type User = { id: number; name: string };
 
@@ -119,7 +119,7 @@ function Users() {
 ### useClickOutside
 ```tsx
 import { useRef } from "react";
-import { useClickOutside } from "hookio";
+import { useClickOutside } from "hookli";
 
 function Dropdown({ onClose }: { onClose: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -130,7 +130,7 @@ function Dropdown({ onClose }: { onClose: () => void }) {
 
 ### useLocalStorage
 ```tsx
-import { useLocalStorage } from "hookio";
+import { useLocalStorage } from "hookli";
 
 function Settings() {
   const { value, setStoredValue } = useLocalStorage("volume", 50);
@@ -140,7 +140,7 @@ function Settings() {
 
 ### useDarkMode
 ```tsx
-import { useDarkMode } from "hookio";
+import { useDarkMode } from "hookli";
 
 function ThemeToggle() {
   const { isDarkMode, toggleDarkMode } = useDarkMode(); // toggles a `dark` class on <body>
@@ -153,7 +153,7 @@ function ThemeToggle() {
 
 ### useForm
 ```tsx
-import { useForm } from "hookio";
+import { useForm } from "hookli";
 
 const { values, handleChange, resetForm } = useForm({ email: "", name: "" });
 // <input name="email" value={values.email} onChange={handleChange} />
@@ -162,7 +162,7 @@ const { values, handleChange, resetForm } = useForm({ email: "", name: "" });
 ### useMousePosition
 ```tsx
 import { useRef } from "react";
-import { useMousePosition } from "hookio";
+import { useMousePosition } from "hookli";
 
 const ref = useRef<HTMLDivElement>(null);
 const { x, y } = useMousePosition(ref); // relative to the element
@@ -170,7 +170,7 @@ const { x, y } = useMousePosition(ref); // relative to the element
 
 ### useInfiniteScroll
 ```tsx
-import { useInfiniteScroll } from "hookio";
+import { useInfiniteScroll } from "hookli";
 
 const isFetching = useInfiniteScroll(async () => {
   await loadNextPage(); // called when the viewport nears the bottom
@@ -179,7 +179,7 @@ const isFetching = useInfiniteScroll(async () => {
 
 ### useGeoLocation
 ```tsx
-import { useGeoLocation } from "hookio";
+import { useGeoLocation } from "hookli";
 
 const { location, error } = useGeoLocation();
 // location?.coords.latitude / location?.coords.longitude
@@ -187,7 +187,7 @@ const { location, error } = useGeoLocation();
 
 ### useLocalStorageWithExpiry
 ```tsx
-import { useLocalStorageWithExpiry } from "hookio";
+import { useLocalStorageWithExpiry } from "hookli";
 
 const { value, setStoredValue } = useLocalStorageWithExpiry("token", null, 3600_000); // 1h TTL
 ```
@@ -195,7 +195,7 @@ const { value, setStoredValue } = useLocalStorageWithExpiry("token", null, 3600_
 
 ## 🧪 TypeScript
 
-Every hook is written in TypeScript and ships its own declarations — no `@types/hookio`
+Every hook is written in TypeScript and ships its own declarations — no `@types/hookli`
 needed. Data hooks are generic, so inference flows through:
 
 ```tsx
