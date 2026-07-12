@@ -221,7 +221,7 @@
         "Right rail reserves a support slot below the TOC (placeholder consistent with T12)",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T18",

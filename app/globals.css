@@ -67,6 +67,33 @@ body {
   }
 }
 
+/* Usage-snippet gutter + highlighted hook-call line (T16 usehooks-ts anatomy).
+   `display: grid` on <code> drops shiki's inter-line "\n" text nodes so each
+   .line is a full-width row — line numbers and the call-line tint align. */
+.line-numbers code {
+  display: grid;
+  counter-reset: line;
+}
+
+.line-numbers .line {
+  counter-increment: line;
+}
+
+.line-numbers .line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: var(--color-slate-syntax);
+  user-select: none;
+}
+
+.highlighted-line {
+  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  box-shadow: inset 2px 0 0 0 var(--color-accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

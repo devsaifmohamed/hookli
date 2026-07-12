@@ -6,7 +6,7 @@ export default function DocsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 sm:px-6">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 sm:px-6">
       <MobileDocsNav />
       <div className="flex flex-1">
         <Sidebar />

@@ -52,8 +52,14 @@ export function ApiTable({
                 {row.type}
               </td>
               {withDefault && (
-                <td className="whitespace-nowrap px-4 py-3 font-mono text-gray-body">
-                  {row.defaultValue ?? "—"}
+                <td className="whitespace-nowrap px-4 py-3">
+                  {row.defaultValue ? (
+                    <span className="inline-block rounded border border-slate-syntax/50 bg-ground px-2 py-0.5 font-mono text-xs text-accent">
+                      {row.defaultValue}
+                    </span>
+                  ) : (
+                    <span className="font-mono text-gray-body">—</span>
+                  )}
                 </td>
               )}
               <td className="min-w-48 px-4 py-3 text-gray-body">

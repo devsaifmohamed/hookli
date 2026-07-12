@@ -18,11 +18,20 @@ import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
    the remaining hooks; a slug without an entry renders the signature-only
    scaffold. Data here must match the hookli@1.3.16 type declarations. */
 
+/* A named type referenced by the signature (e.g. GeolocationPosition), rendered
+   as its own Name/Type/Description table below the Returns table (T16). */
+export type TypeAlias = {
+  name: string;
+  description?: string;
+  rows: readonly ApiRow[];
+};
+
 export type HookDoc = {
   demo: ComponentType;
   usage: string;
   parameters: readonly ApiRow[];
   returns: readonly ApiRow[];
+  typeAliases?: readonly TypeAlias[];
 };
 
 const HOOK_DOCS: Partial<Record<string, HookDoc>> = {
@@ -511,6 +520,42 @@ export function Demo() {
         type: "GeolocationError | Error | null",
         description:
           "Permission denials, unsupported browsers and failed lookups all land here — read .message for display. Requesting starts on mount, so mount the hook behind a user gesture.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "GeolocationPosition",
+        description:
+          "hookli's trimmed reading — only the coordinates, not the full browser GeolocationPosition.",
+        rows: [
+          {
+            name: "coords.latitude",
+            type: "number",
+            description: "Latitude in decimal degrees.",
+          },
+          {
+            name: "coords.longitude",
+            type: "number",
+            description: "Longitude in decimal degrees.",
+          },
+        ],
+      },
+      {
+        name: "GeolocationError",
+        description: "Shape of a permission or lookup failure.",
+        rows: [
+          {
+            name: "code",
+            type: "number",
+            description:
+              "Numeric error code mirrored from the browser's GeolocationPositionError.",
+          },
+          {
+            name: "message",
+            type: "string",
+            description: "Human-readable reason for the failure.",
+          },
+        ],
       },
     ],
   },
