@@ -192,17 +192,20 @@
       "status": "done"
     },
     {
-      "id": "T15",
-      "title": "Final QA + site README",
-      "priority": 18,
-      "notes": "Walk the full sitemap as a checklist; fix anything below premium; document the app.",
+      "id": "T17",
+      "title": "Brand v3 recolor — new assets, token system (colors + fonts)",
+      "priority": 15,
+      "notes": "The brand changed (2026-07-12): assets in public/ are ALREADY the new ones (hookli-banner.svg/.png, hookli-icon.svg — Prussian tile, teal hook cradling a white state dot, Avenir wordmark with teal full stop). The site still uses the OLD tokens from T2 (#0B1120 ground, #61DAFB accent, monospace headings) — replace them everywhere via the token layer, not per-component edits.",
       "acceptance": [
-        "Checklist in progress.txt: every route (/, /docs, 11 hook pages, /support, 404) verified against DESIGN.md and prompt.md quality bar, with fixes applied",
-        "README.md rewritten for this app: what it is, stack, dev/build commands, structure, how to add a new hook page (registry + demo)",
-        "bash ralph/check.sh is green",
-        "Don't push or deploy — leave that to the human"
+        "globals.css/Tailwind tokens swapped to brand v3: ground #003748 (Prussian Blue), accent #30C5CA (Scooter), ink #FFFFFF, secondary/muted #8FB6C2 (mist) — derive hover/surface/border shades from these (solid colors, no gradients); every page picks the change up through tokens only",
+        "Typography: replace monospace-heading treatment with a premium geometric sans via next/font (DM Sans or Plus Jakarta Sans — the Avenir-class Google option); body stays a clean sans; monospace remains ONLY for code blocks",
+        "Header wordmark: hookli. (lowercase + teal full stop) matching the new banner — the use(hookli) monospace lockup is retired; hero updated to the same treatment with the new mark (inline SVG from the icon)",
+        "Favicon/apple-icon wired from public/hookli-icon.svg; landing + OG surfaces use the new banner assets",
+        "Contrast verified: white on #003748 and #30C5CA usage meet WCAG AA for their text sizes",
+        "No stray old-brand hexes remain (grep 0B1120/61DAFB/475569 clean, except code-syntax theme)",
+        "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T16",
@@ -221,22 +224,6 @@
       "status": "todo"
     },
     {
-      "id": "T17",
-      "title": "Brand v3 recolor — new assets, token system (colors + fonts)",
-      "priority": 15,
-      "notes": "The brand changed (2026-07-12): assets in public/ are ALREADY the new ones (hookli-banner.svg/.png, hookli-icon.svg — Prussian tile, teal hook cradling a white state dot, Avenir wordmark with teal full stop). The site still uses the OLD tokens from T2 (#0B1120 ground, #61DAFB accent, monospace headings) — replace them everywhere via the token layer, not per-component edits.",
-      "acceptance": [
-        "globals.css/Tailwind tokens swapped to brand v3: ground #003748 (Prussian Blue), accent #30C5CA (Scooter), ink #FFFFFF, secondary/muted #8FB6C2 (mist) — derive hover/surface/border shades from these (solid colors, no gradients); every page picks the change up through tokens only",
-        "Typography: replace monospace-heading treatment with a premium geometric sans via next/font (DM Sans or Plus Jakarta Sans — the Avenir-class Google option); body stays a clean sans; monospace remains ONLY for code blocks",
-        "Header wordmark: hookli. (lowercase + teal full stop) matching the new banner — the use(hookli) monospace lockup is retired; hero updated to the same treatment with the new mark (inline SVG from the icon)",
-        "Favicon/apple-icon wired from public/hookli-icon.svg; landing + OG surfaces use the new banner assets",
-        "Contrast verified: white on #003748 and #30C5CA usage meet WCAG AA for their text sizes",
-        "No stray old-brand hexes remain (grep 0B1120/61DAFB/475569 clean, except code-syntax theme)",
-        "bash ralph/check.sh is green"
-      ],
-      "status": "todo"
-    },
-    {
       "id": "T18",
       "title": "Engineering conventions — port the Nzmly CLAUDE.md style, align the codebase",
       "priority": 17,
@@ -247,6 +234,19 @@
         "Codebase aligned to the written rules: files renamed to the chosen casing, folders regrouped per the module structure, imports updated — repo passes its own conventions",
         "ralph/prompt.md quality bar references the conventions so later iterations follow them",
         "bash ralph/check.sh is green"
+      ],
+      "status": "todo"
+    },
+    {
+      "id": "T15",
+      "title": "Final QA + site README",
+      "priority": 18,
+      "notes": "Walk the full sitemap as a checklist; fix anything below premium; document the app.",
+      "acceptance": [
+        "Checklist in progress.txt: every route (/, /docs, 11 hook pages, /support, 404) verified against DESIGN.md and prompt.md quality bar, with fixes applied",
+        "README.md rewritten for this app: what it is, stack, dev/build commands, structure, how to add a new hook page (registry + demo)",
+        "bash ralph/check.sh is green",
+        "Don't push or deploy — leave that to the human"
       ],
       "status": "todo"
     }

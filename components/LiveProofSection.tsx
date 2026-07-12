@@ -30,7 +30,7 @@ export function LiveProofSection() {
       <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-2">
         <CodeBlock code={SAMPLE} title="light-switch.tsx" />
         <div className="flex min-h-[180px] flex-col overflow-hidden rounded-xl border border-slate-syntax/40 bg-ground-raised">
-          <p className="border-b border-slate-syntax/40 px-4 py-[15px] font-mono text-xs text-gray-body">
+          <p className="border-b border-slate-syntax/40 px-4 py-[15px] text-xs text-gray-body">
             live · imported from hookli
           </p>
           <div className="flex flex-1 items-center justify-center p-8">

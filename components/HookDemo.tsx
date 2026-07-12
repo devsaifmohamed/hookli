@@ -73,7 +73,7 @@ export function HookDemo({
               aria-controls={`${baseId}-panel-${tab.id}`}
               tabIndex={active === tab.id ? 0 : -1}
               onClick={() => setActive(tab.id)}
-              className={`-mb-px min-h-11 border-b-2 px-4 font-mono text-xs transition-colors duration-200 ${
+              className={`-mb-px min-h-11 border-b-2 px-4 text-xs transition-colors duration-200 ${
                 active === tab.id
                   ? "border-accent text-fg"
                   : "border-transparent text-gray-body hover:text-fg"
@@ -83,7 +83,7 @@ export function HookDemo({
             </button>
           ))}
         </div>
-        <span className="hidden px-2 font-mono text-xs text-gray-body sm:inline">
+        <span className="hidden px-2 text-xs text-gray-body sm:inline">
           live · imported from hookli
         </span>
       </div>

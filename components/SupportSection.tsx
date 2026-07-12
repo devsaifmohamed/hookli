@@ -47,13 +47,13 @@ export function SupportSection() {
           const inner = (
             <>
               <span className="text-accent">{card.icon}</span>
-              <h3 className="mt-4 font-mono text-lg font-semibold">
+              <h3 className="mt-4 text-lg font-semibold">
                 {card.title}
               </h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-body">
                 {card.body}
               </p>
-              <span className="mt-4 flex min-h-11 items-center gap-2 font-mono text-sm text-accent">
+              <span className="mt-4 flex min-h-11 items-center gap-2 text-sm text-accent">
                 {card.label}
                 <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </span>

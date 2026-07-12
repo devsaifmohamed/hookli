@@ -23,18 +23,18 @@ export function ApiTable({
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="border-b border-slate-syntax/40">
-            <th scope="col" className="px-4 py-3 font-mono text-xs text-gray-body">
+            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
               Name
             </th>
-            <th scope="col" className="px-4 py-3 font-mono text-xs text-gray-body">
+            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
               Type
             </th>
             {withDefault && (
-              <th scope="col" className="px-4 py-3 font-mono text-xs text-gray-body">
+              <th scope="col" className="px-4 py-3 text-xs text-gray-body">
                 Default
               </th>
             )}
-            <th scope="col" className="px-4 py-3 font-mono text-xs text-gray-body">
+            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
               Description
             </th>
           </tr>

@@ -89,7 +89,7 @@ export function MobileDocsNav() {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="flex min-h-11 w-full items-center gap-2 font-mono text-sm text-gray-body transition-colors duration-200 hover:text-fg"
+        className="flex min-h-11 w-full items-center gap-2 text-sm text-gray-body transition-colors duration-200 hover:text-fg"
       >
         <MenuIcon className="size-4 shrink-0" />
         <span className="text-slate-syntax">docs /</span>
@@ -112,7 +112,7 @@ export function MobileDocsNav() {
               className="flex h-full w-72 max-w-[85vw] flex-col border-r border-slate-syntax/40 bg-ground-raised"
             >
               <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-syntax/40 pl-4 pr-2">
-                <span className="font-mono text-sm text-gray-body">Docs</span>
+                <span className="text-sm text-gray-body">Docs</span>
                 <button
                   autoFocus
                   type="button"
@@ -159,7 +159,7 @@ function DocsNavList({
       </SidebarLink>
       {CATEGORY_ORDER.map((category) => (
         <div key={category} className="mt-6">
-          <h3 className="px-3 font-mono text-xs font-semibold uppercase tracking-wider text-slate-syntax">
+          <h3 className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-syntax">
             {CATEGORY_LABELS[category]}
           </h3>
           <ul className="mt-2 flex flex-col gap-0.5">
@@ -200,7 +200,7 @@ function SidebarLink({
       href={href}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
-      className={`flex min-h-11 items-center rounded-md px-3 font-mono text-sm transition-colors duration-200 md:min-h-9 ${
+      className={`flex min-h-11 items-center rounded-md px-3 text-sm transition-colors duration-200 md:min-h-9 ${
         active
           ? "bg-accent/10 text-accent"
           : "text-gray-body hover:bg-fg/5 hover:text-fg"

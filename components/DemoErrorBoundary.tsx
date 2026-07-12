@@ -19,14 +19,14 @@ export class DemoErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         <div className="flex flex-col items-center gap-3 text-center">
-          <p className="font-mono text-sm text-fg">This demo crashed.</p>
+          <p className="text-sm text-fg">This demo crashed.</p>
           <p className="text-sm text-gray-body">
             The rest of the page is unaffected.
           </p>
           <button
             type="button"
             onClick={() => this.setState({ hasError: false })}
-            className="min-h-11 rounded-md border border-slate-syntax/40 px-4 font-mono text-sm text-fg transition-colors duration-200 hover:border-slate-syntax"
+            className="min-h-11 rounded-md border border-slate-syntax/40 px-4 text-sm text-fg transition-colors duration-200 hover:border-slate-syntax"
           >
             Re-run demo
           </button>

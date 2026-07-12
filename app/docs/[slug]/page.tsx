@@ -53,7 +53,7 @@ export default async function HookPage({
 
   return (
     <article className="flex max-w-3xl flex-col">
-      <p className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-syntax">
+      <p className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">
         {CATEGORY_LABELS[hook.category]}
       </p>
       <h1 className="mt-2 text-3xl sm:text-4xl">{hook.name}</h1>
@@ -125,7 +125,7 @@ export default async function HookPage({
         {prev ? (
           <Link
             href={`/docs/${prev.slug}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md font-mono text-sm text-gray-body transition-colors duration-200 hover:text-fg"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm text-gray-body transition-colors duration-200 hover:text-fg"
           >
             <ArrowRightIcon className="size-4 rotate-180" aria-hidden="true" />
             {prev.name}
@@ -136,7 +136,7 @@ export default async function HookPage({
         {next ? (
           <Link
             href={`/docs/${next.slug}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md font-mono text-sm text-gray-body transition-colors duration-200 hover:text-fg"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm text-gray-body transition-colors duration-200 hover:text-fg"
           >
             {next.name}
             <ArrowRightIcon className="size-4" aria-hidden="true" />

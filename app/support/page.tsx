@@ -70,7 +70,7 @@ export default function SupportPage() {
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 flex min-h-11 w-fit items-center gap-2 rounded-md bg-accent px-5 font-mono text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
+          className="mt-5 flex min-h-11 w-fit items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
         >
           <GitHubIcon className="size-4" />
           Star on GitHub
@@ -95,7 +95,7 @@ export default function SupportPage() {
         <ul className="mt-6 flex flex-col gap-5">
           {CONTRIBUTE_WAYS.map((way) => (
             <li key={way.title}>
-              <h3 className="font-mono text-base font-semibold">{way.title}</h3>
+              <h3 className="text-base font-semibold">{way.title}</h3>
               <p className="mt-1 max-w-xl text-sm leading-relaxed text-gray-body">
                 {way.body}
               </p>
@@ -103,7 +103,7 @@ export default function SupportPage() {
                 href={way.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 flex min-h-11 w-fit items-center gap-2 font-mono text-sm text-accent transition-opacity duration-200 hover:opacity-80"
+                className="mt-1 flex min-h-11 w-fit items-center gap-2 text-sm text-accent transition-opacity duration-200 hover:opacity-80"
               >
                 {way.label}
                 <ArrowRightIcon className="size-4" />
@@ -133,7 +133,7 @@ export default function SupportPage() {
           <a
             href="#"
             aria-disabled="true"
-            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 font-mono text-sm text-gray-body"
+            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-gray-body"
           >
             GitHub Sponsors
             <span className="rounded-full border border-slate-syntax/40 px-2 py-0.5 text-xs">
@@ -144,7 +144,7 @@ export default function SupportPage() {
           <a
             href="#"
             aria-disabled="true"
-            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 font-mono text-sm text-gray-body"
+            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-gray-body"
           >
             Ko-fi
             <span className="rounded-full border border-slate-syntax/40 px-2 py-0.5 text-xs">

@@ -62,7 +62,7 @@ export default function DocsIndexPage() {
       <h2 className="mt-12 text-2xl">Hooks</h2>
       {CATEGORY_ORDER.map((category) => (
         <section key={category} className="mt-8" aria-label={CATEGORY_LABELS[category]}>
-          <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-syntax">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">
             {CATEGORY_LABELS[category]}
           </h3>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
