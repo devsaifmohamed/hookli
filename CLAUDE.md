@@ -20,23 +20,30 @@ framework — a pure hooks package consumed by other React/Next.js projects.
 ```bash
 yarn install          # deps (yarn 1.x classic; a yarn.lock is committed)
 yarn build            # tsup → dist/ (index.js CJS, index.mjs ESM, index.d.ts types)
-npx tsc --noEmit      # typecheck only (no test suite exists yet)
-bash ralph/check.sh   # the quality gate: tsc --noEmit + tsup build must both pass
+yarn test             # vitest — colocated per-hook tests
+npx tsc --noEmit      # typecheck only
+bash ralph/check.sh   # quality gate: tsc --noEmit + vitest + tsup build
 ```
 
-There is **no test runner, linter, or CI** configured yet. The quality net today is
-`tsc --noEmit` + a successful `tsup` build — that is exactly what `ralph/check.sh`
+Tests run on **vitest** (colocated `*.test.ts` per hook) and **CI** runs the gate on every push/PR. The quality net is
+`tsc --noEmit` + `vitest` tests + a successful `tsup` build — that is exactly what `ralph/check.sh`
 enforces. If you add hooks, keep that gate green.
 
 ## Layout
 
+Per-hook folders (usehooks-ts style), all kebab-case:
+
 ```
 src/
-  index.ts              # public entrypoint — re-exports everything in ./hooks
-  types.ts              # shared type helpers (e.g. CustomHook<T>)
+  index.ts                       # public entrypoint — re-exports ./hooks
+  types.ts                       # shared type helpers (e.g. CustomHook<T>)
   hooks/
-    index.ts            # barrel — every hook MUST be re-exported here
-    use<Name>.hook.ts   # one hook per file
+    index.ts                     # barrel — re-exports every hook folder
+    use-toggle/
+      index.ts                   # folder barrel — export * from "./use-toggle"
+      use-toggle.ts              # the hook (camelCase export `useToggle`)
+      use-toggle.test.ts         # vitest test, colocated
+    use-local-storage/ …         # one folder per hook
 ```
 
 ## Conventions
@@ -44,16 +51,16 @@ src/
 Decisive rules — **one convention per topic, no alternatives.** Each shows the right way and
 the wrong way. (Documentation style borrowed from the Nzmly frontend `CLAUDE.md`.)
 
-### 1 — File names: `use-<name>.hook.ts` (kebab-case)
+### 1 — One folder per hook, kebab-case
 
-One hook per file under `src/hooks/`, **kebab-case** with the `.hook.ts` suffix — matching the
-docs app's kebab convention (unified 2026-07-13). Only the **file name** is kebab; the **export
-stays camelCase** `use<Name>`.
+Each hook is a kebab-case **folder** under `src/hooks/` (usehooks-ts style, unified 2026-07-13)
+containing three files: the hook, its colocated test, and a folder barrel. Only file/folder
+names are kebab — the **export stays camelCase** `use<Name>`.
 
 ```
-✅ src/hooks/use-toggle.hook.ts               (export const useToggle = …)
-✅ src/hooks/use-local-storage-with-expiry.hook.ts
-❌ src/hooks/useToggle.hook.ts   src/hooks/use-toggle.ts   src/hooks/Toggle.hook.ts
+✅ src/hooks/use-toggle/use-toggle.ts        (export const useToggle = …)
+✅ src/hooks/use-toggle/use-toggle.test.ts   src/hooks/use-toggle/index.ts
+❌ src/hooks/use-toggle.hook.ts   src/hooks/useToggle/useToggle.ts   src/hooks/Toggle/…
 ```
 
 ### 2 — Register every hook in the barrel
@@ -62,7 +69,7 @@ Add each new file to `src/hooks/index.ts` (which `src/index.ts` re-exports). A h
 re-exported ships to nobody — the most common miss.
 
 ```ts
-✅ export * from "./use-toggle.hook";      ❌ // file added but not exported from the barrel
+✅ export * from "./use-toggle";      ❌ // file added but not exported from the barrel
 ```
 
 ### 3 — Type the public API explicitly
@@ -97,7 +104,7 @@ the README (and, once it exists, the docs site's `hook-docs` entry in `../hookli
 
 ### Build & typecheck stay green
 
-`bash ralph/check.sh` (`tsc --noEmit` + `tsup`) must pass before any commit — there is no test suite.
+`bash ralph/check.sh` (`tsc --noEmit` + `vitest` + `tsup`) must pass before any commit.
 
 ## Releasing (human-gated — do NOT automate)
 

@@ -76,17 +76,17 @@ function Component() {
 > 📚 A dedicated docs site with a **page per hook** and **live demos** is on the way. For
 > now, each hook links to its source.
 
-- **[`useToggle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-toggle.hook.ts)** — boolean state with a `toggle()` and an explicit setter.
-- **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce.hook.ts)** — returns a debounced version of a fast-changing value.
-- **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch.hook.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
-- **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form.hook.ts)** — minimal controlled-form state with a generic change handler.
-- **[`useLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage.hook.ts)** — persists state to `localStorage`, `useState`-style.
-- **[`useLocalStorageWithExpiry`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage-with-expiry.hook.ts)** — persisted state that expires after a TTL.
-- **[`useDarkMode`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-dark-mode.hook.ts)** — toggles a `dark` class on `<body>` and persists the theme.
-- **[`useClickOutside`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-click-outside.hook.ts)** — fires a callback on clicks outside a ref'd element.
-- **[`useMousePosition`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-mouse-position.hook.ts)** — tracks the cursor `{ x, y }` within an element.
-- **[`useInfiniteScroll`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-infinite-scroll.hook.ts)** — runs a loader when the page nears the bottom.
-- **[`useGeoLocation`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-geo-location.hook.ts)** — reads the user's coordinates via the Geolocation API.
+- **[`useToggle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-toggle/use-toggle.ts)** — boolean state with a `toggle()` and an explicit setter.
+- **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
+- **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
+- **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
+- **[`useLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage/use-local-storage.ts)** — persists state to `localStorage`, `useState`-style.
+- **[`useLocalStorageWithExpiry`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage-with-expiry/use-local-storage-with-expiry.ts)** — persisted state that expires after a TTL.
+- **[`useDarkMode`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-dark-mode/use-dark-mode.ts)** — toggles a `dark` class on `<body>` and persists the theme.
+- **[`useClickOutside`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-click-outside/use-click-outside.ts)** — fires a callback on clicks outside a ref'd element.
+- **[`useMousePosition`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-mouse-position/use-mouse-position.ts)** — tracks the cursor `{ x, y }` within an element.
+- **[`useInfiniteScroll`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-infinite-scroll/use-infinite-scroll.ts)** — runs a loader when the page nears the bottom.
+- **[`useGeoLocation`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-geo-location/use-geo-location.ts)** — reads the user's coordinates via the Geolocation API.
 
 ## 🧪 TypeScript
 

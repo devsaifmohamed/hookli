@@ -1,0 +1,30 @@
+name: Bug report
+description: Something isn't working as documented
+labels: [bug]
+body:
+  - type: input
+    id: hook
+    attributes:
+      label: Which hook?
+      placeholder: useDebounce
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: A small snippet, StackBlitz, or steps to reproduce.
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: hookli 1.3.18, react 19.0.0, next 15
+    validations:
+      required: true

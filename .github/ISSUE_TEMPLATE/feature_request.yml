@@ -1,0 +1,16 @@
+name: Feature / new hook
+description: Suggest a new hook or an improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the hook or improvement and the use case it solves.
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API (optional)
+      description: A rough signature — inputs and return shape.
