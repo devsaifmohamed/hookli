@@ -1,5 +1,5 @@
-<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli — the React hooks you keep rewriting, done right">
-  <rect width="1200" height="400" fill="#003748"/>
+<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli — type-safe React hooks. SSR-safe. Tree-shakable.">
+  <rect width="1200" height="400" fill="#0A1315"/>
   <g transform="translate(356 104)">
     <g stroke="#30C5CA" stroke-width="30" stroke-linecap="round" fill="none">
       <path d="M96 12 V94 A48 48 0 1 1 0 94 V66"/><circle cx="48" cy="94" r="17" fill="#FFFFFF" stroke="none"/>
@@ -9,5 +9,5 @@
   </g>
   <rect x="540" y="298" width="120" height="3" rx="1.5" fill="#30C5CA"/>
   <text x="600" y="346" text-anchor="middle" font-family="ui-monospace,'SF Mono',Menlo,monospace"
-        font-size="23" font-weight="500" fill="#8FB6C2" letter-spacing="0.5">the React hooks you keep rewriting, done right</text>
+        font-size="23" font-weight="500" fill="#94B0B8" letter-spacing="0.5">type-safe React hooks · SSR-safe · tree-shakable</text>
 </svg>
