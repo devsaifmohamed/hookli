@@ -4,8 +4,19 @@
   "release_branch": "main",
   "constraints": {
     "max_files_per_commit": 8,
-    "target_globs": ["src/hooks/*.hook.ts", "src/hooks/index.ts", "src/index.ts", "README.md"],
-    "never": ["merge to main", "push to main", "delete files/branches", "npm publish", "npm version / git tag"]
+    "target_globs": [
+      "src/hooks/*.hook.ts",
+      "src/hooks/index.ts",
+      "src/index.ts",
+      "README.md"
+    ],
+    "never": [
+      "merge to main",
+      "push to main",
+      "delete files/branches",
+      "npm publish",
+      "npm version / git tag"
+    ]
   },
   "tasks": [
     {
@@ -44,7 +55,7 @@
         "Public APIs unchanged",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     }
   ]
 }
