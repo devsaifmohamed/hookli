@@ -1,0 +1,8 @@
+<svg width="1200" height="400" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli stacked">
+  <rect width="1200" height="400" fill="#003748"/>
+  <g transform="translate(551 54) scale(1.05)" stroke="#30C5CA" stroke-width="30" stroke-linecap="round" fill="none">
+    <path d="M96 12 V94 A48 48 0 1 1 0 94 V66"/><circle cx="48" cy="94" r="17" fill="#FFFFFF" stroke="none"/>
+  </g>
+  <text x="600" y="300" text-anchor="middle" font-family="'Avenir Next',Futura,Inter,sans-serif" font-size="92" font-weight="600" letter-spacing="-2"><tspan fill="#FFFFFF">hookli</tspan><tspan fill="#30C5CA">.</tspan></text>
+  <text x="600" y="352" text-anchor="middle" font-family="'Avenir Next',Futura,Inter,sans-serif" font-size="24" font-weight="500" fill="#8FB6C2" letter-spacing="0.4">Simple React hooks. Typed. SSR-safe. Zero dependencies.</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg width="1200" height="400" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli editorial">
+  <rect width="1200" height="400" fill="#003748"/>
+  <g transform="translate(940 30) scale(2.9)" opacity="0.10" stroke="#30C5CA" stroke-width="30" stroke-linecap="round" fill="none">
+    <path d="M96 12 V94 A48 48 0 1 1 0 94 V66"/><circle cx="48" cy="94" r="17" fill="#30C5CA" stroke="none"/>
+  </g>
+  <g transform="translate(96 118)">
+    <g stroke="#30C5CA" stroke-width="30" stroke-linecap="round" fill="none"><path d="M96 12 V94 A48 48 0 1 1 0 94 V66"/><circle cx="48" cy="94" r="17" fill="#FFFFFF" stroke="none"/></g>
+    <text x="150" y="140" font-family="'Avenir Next',Futura,Inter,sans-serif" font-size="116" font-weight="600" letter-spacing="-3"><tspan fill="#FFFFFF">hookli</tspan><tspan fill="#30C5CA">.</tspan></text>
+  </g>
+  <text x="98" y="300" font-family="'Avenir Next',Futura,Inter,sans-serif" font-size="26" font-weight="500" fill="#8FB6C2" letter-spacing="0.4">Simple React hooks. Typed. SSR-safe. Zero dependencies.</text>
+</svg>
