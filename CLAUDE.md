@@ -42,19 +42,18 @@ src/
 ## Conventions
 
 Decisive rules — **one convention per topic, no alternatives.** Each shows the right way and
-the wrong way. (Documentation style borrowed from the Nzmly frontend `CLAUDE.md`; the *naming*
-below is this library's own, established across its published history — keep it consistent.)
+the wrong way. (Documentation style borrowed from the Nzmly frontend `CLAUDE.md`.)
 
-### 1 — File names: `use<Name>.hook.ts`
+### 1 — File names: `use-<name>.hook.ts` (kebab-case)
 
-One hook per file under `src/hooks/`, named `use<Name>.hook.ts` — camelCase matching the
-export, with the `.hook.ts` suffix. This is the library's own convention (NOT the docs site's
-kebab-case rule — the two repos differ on purpose). The export is the same `use<Name>`.
+One hook per file under `src/hooks/`, **kebab-case** with the `.hook.ts` suffix — matching the
+docs app's kebab convention (unified 2026-07-13). Only the **file name** is kebab; the **export
+stays camelCase** `use<Name>`.
 
 ```
-✅ src/hooks/useToggle.hook.ts        (export const useToggle = …)
-✅ src/hooks/useLocalStorage.hook.ts
-❌ src/hooks/use-toggle.ts   src/hooks/useToggle.ts   src/hooks/Toggle.hook.ts
+✅ src/hooks/use-toggle.hook.ts               (export const useToggle = …)
+✅ src/hooks/use-local-storage-with-expiry.hook.ts
+❌ src/hooks/useToggle.hook.ts   src/hooks/use-toggle.ts   src/hooks/Toggle.hook.ts
 ```
 
 ### 2 — Register every hook in the barrel
@@ -63,7 +62,7 @@ Add each new file to `src/hooks/index.ts` (which `src/index.ts` re-exports). A h
 re-exported ships to nobody — the most common miss.
 
 ```ts
-✅ export * from "./useToggle.hook";      ❌ // file added but not exported from the barrel
+✅ export * from "./use-toggle.hook";      ❌ // file added but not exported from the barrel
 ```
 
 ### 3 — Type the public API explicitly
