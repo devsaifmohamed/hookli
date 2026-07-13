@@ -2,6 +2,10 @@
 
 All notable changes are documented here. This project follows semantic-ish versioning.
 
+## 1.3.19 — 2026-07-13
+- Packaging: `sideEffects: false` + `exports` map for better tree-shaking.
+- Repo: per-hook folder structure (usehooks-ts style), vitest test suite, CI, and community-health files.
+
 ## 1.3.18 — 2026-07-13
 - Rename hook files to kebab-case (`use-<name>.hook.ts`); exports unchanged.
 - Verified all 11 hooks are SSR-safe.
