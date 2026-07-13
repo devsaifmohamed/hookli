@@ -15,10 +15,11 @@ Next.js (App Router, TypeScript, Tailwind, npm). Hooks for live demos are import
 the **published `hookli` package** (in node_modules), not from relative paths.
 
 ## Brand (v3 — dark-first, solid, no gradients)
-- Accent `#30C5CA` (Scooter) · Ink `#FFFFFF` · Muted `#8FB6C2` (mist). Prussian Blue `#003748`
-  is a brand MID-tone — it's the card **surface**, not the page. Depth is a three-step tonal
-  scale in that hue family: ground `#04191F` (near-black page) → surface `#003748` (cards) →
-  overlay `#0A4557` (nested/hover). Derive shades within this scale — never invent off-hue colors.
+- The base is a **near-black neutral** (faint teal undertone), NOT a saturated fill. Surfaces are
+  defined by subtle elevation + hairline borders, and the brand hues are **accents, not backgrounds**:
+  ground `#0A1315` (page) → raised `#101D21` (cards) → overlay `#17282E` (hover/nested); hairline
+  borders via `border-slate-syntax/40`. Accent `#30C5CA` (Scooter) = links/focus/CTA/active; Prussian
+  `#003748` (`--color-brand`) = select brand moments only; ink `#FFFFFF`, muted `#94B0B8`.
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
   resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,
   `text-fg`, `text-gray-body`, `border-*`) — **never** a raw hex or arbitrary value.

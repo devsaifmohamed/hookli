@@ -5,12 +5,16 @@
    The page ground is a much darker near-black blue in the same hue family, letting
    cards/panels visibly lift; a third step lifts nested/hover surfaces above the card. */
 @theme {
-  --color-ground: #04191f;
-  --color-ground-raised: #003748;
-  --color-ground-overlay: #0a4557;
-  --color-accent: #30c5ca;
-  --color-slate-syntax: #4a7a8c;
-  --color-gray-body: #8fb6c2;
+  /* Near-black neutral base with a faint teal undertone — surfaces are defined by
+     subtle elevation + hairline borders, NOT by saturated fills. Prussian (#003748)
+     and Scooter (#30c5ca) are reserved as ACCENTS, not backgrounds. */
+  --color-ground: #0a1315;         /* page */
+  --color-ground-raised: #101d21;  /* cards / panels — a subtle lift off the page */
+  --color-ground-overlay: #17282e; /* hover / nested / code-line highlight */
+  --color-brand: #003748;          /* Prussian — for select brand moments only */
+  --color-accent: #30c5ca;         /* Scooter — links, focus, CTA, active state */
+  --color-slate-syntax: #4a7a8c;   /* hairline borders (used at /40) + code comments */
+  --color-gray-body: #94b0b8;      /* secondary text */
   --color-fg: #ffffff;
 }
 
