@@ -19,8 +19,9 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#003748` | `--color-ground` | `ground` | Page + surface background (Prussian Blue) |
-| Ground raised | `#0A4557` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar |
+| Ground | `#04191F` | `--color-ground` | `ground` | Page background (near-black blue — the darkest step) |
+| Ground raised | `#003748` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar (Prussian Blue surface) |
+| Ground overlay | `#0A4557` | `--color-ground-overlay` | `ground-overlay` | Second elevation: nested / hover / active surfaces |
 | Accent | `#30C5CA` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (Scooter) |
 | Syntax slate | `#4A7A8C` | `--color-slate-syntax` | `slate-syntax` | Borders, code comments, muted chrome |
 | Gray | `#8FB6C2` | `--color-gray-body` | `gray-body` | Secondary/body text (mist) |

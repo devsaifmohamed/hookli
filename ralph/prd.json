@@ -241,7 +241,7 @@
     {
       "id": "T19",
       "priority": 17,
-      "status": "todo",
+      "status": "done",
       "title": "Fix dark-theme depth — proper tonal scale (ground/surface/border)",
       "notes": "DESIGN FIX (Saif): --color-ground is #003748 used as BOTH full-page bg AND cards (raised only one step, #0a4557), so the site reads as a bright saturated teal-blue with cards that barely separate. #003748 is a brand MID-tone, not a dark neutral — make it the SURFACE, and give the page a much darker near-black-blue ground. Token-only change; keep brand hues.",
       "acceptance": [

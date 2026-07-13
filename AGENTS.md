@@ -15,11 +15,13 @@ Next.js (App Router, TypeScript, Tailwind, npm). Hooks for live demos are import
 the **published `hookli` package** (in node_modules), not from relative paths.
 
 ## Brand (v3 — dark-first, solid, no gradients)
-- Ground `#003748` (Prussian Blue) · Accent `#30C5CA` (Scooter) · Ink `#FFFFFF` · Muted `#8FB6C2` (mist).
-  Hover/surface/border shades derive from these — never invent new hexes.
+- Accent `#30C5CA` (Scooter) · Ink `#FFFFFF` · Muted `#8FB6C2` (mist). Prussian Blue `#003748`
+  is a brand MID-tone — it's the card **surface**, not the page. Depth is a three-step tonal
+  scale in that hue family: ground `#04191F` (near-black page) → surface `#003748` (cards) →
+  overlay `#0A4557` (nested/hover). Derive shades within this scale — never invent off-hue colors.
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
-  resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `text-accent`, `text-fg`, `text-gray-body`,
-  `border-*`) — **never** a raw hex or arbitrary value.
+  resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,
+  `text-fg`, `text-gray-body`, `border-*`) — **never** a raw hex or arbitrary value.
 - Wordmark: `hookli.` (lowercase, teal full stop) beside the hook mark (inline SVG from
   `public/hookli-icon.svg`). Assets in `public/` (`hookli-banner.svg/.png`, `hookli-icon.svg`).
 - **Plus Jakarta Sans** for headings + body; monospace ONLY inside code surfaces (code block,

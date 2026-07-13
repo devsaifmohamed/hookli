@@ -189,7 +189,7 @@ export function SearchPalette() {
                     aria-selected={index === active}
                     onMouseMove={() => setActiveIndex(index)}
                     onClick={() => select(hook)}
-                    className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-3 transition-colors duration-150 ${index === active ? "bg-ground/70 text-accent" : "text-gray-body"}`}
+                    className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-3 transition-colors duration-150 ${index === active ? "bg-ground-overlay text-accent" : "text-gray-body"}`}
                   >
                     <span className="shrink-0 text-sm">{hook.name}</span>
                     <span className="truncate text-xs">{hook.description}</span>

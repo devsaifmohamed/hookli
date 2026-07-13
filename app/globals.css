@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
-/* Brand v3 tokens — docs/DESIGN.md §1. Solid colors only, dark-first, no light theme. */
+/* Brand v3 tokens — docs/DESIGN.md §1. Solid colors only, dark-first, no light theme.
+   Tonal depth (T19): #003748 is a brand MID-tone, so it's the SURFACE, not the page.
+   The page ground is a much darker near-black blue in the same hue family, letting
+   cards/panels visibly lift; a third step lifts nested/hover surfaces above the card. */
 @theme {
-  --color-ground: #003748;
-  --color-ground-raised: #0a4557;
+  --color-ground: #04191f;
+  --color-ground-raised: #003748;
+  --color-ground-overlay: #0a4557;
   --color-accent: #30c5ca;
   --color-slate-syntax: #4a7a8c;
   --color-gray-body: #8fb6c2;
