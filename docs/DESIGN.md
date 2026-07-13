@@ -114,8 +114,10 @@ Modeled on usehooks-ts's progressive disclosure + Mantine's demo-first ordering:
    (repo root — per-file deep links only if the path is verified).
 7. **Prev / Next** pager across the registry order.
 
-Right-side table of contents: **skipped** in v1 (pages are short); revisit only if a
-page exceeds ~3 screens.
+Right-side table of contents: added in T16 (`components/on-this-page.tsx`) — an "On this
+page" scroll-spy rail (Demo / Usage / API / Hook), hidden below `xl`, with a T12 support
+slot beneath it. Every hook page also embeds its implementation source (**Hook** section,
+`lib/hook-sources.ts`) with a view-on-GitHub link, per the usehooks-ts anatomy parity in T16.
 
 ---
 

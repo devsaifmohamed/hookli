@@ -265,7 +265,7 @@
         "bash ralph/check.sh is green",
         "Don't push or deploy — leave that to the human"
       ],
-      "status": "todo"
+      "status": "done"
     }
   ]
 }

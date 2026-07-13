@@ -7,7 +7,7 @@ import { CATEGORY_LABELS, HOOKS, type HookEntry } from "@/lib/hooks-registry";
 import { SearchIcon } from "./icons";
 
 /* ⌘K command palette over the hook registry (docs/DESIGN.md §7). Client-only —
-   lowercase substring match on name/description/category is enough for 11 hooks;
+   lowercase substring match on name/description/category is enough at this size;
    no service, no index build. Combobox pattern: focus stays on the input and the
    highlighted option is conveyed via aria-activedescendant; Tab cycles between
    the input and the close button (the dialog's only tab stops). Full-screen

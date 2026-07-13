@@ -106,16 +106,14 @@ export function Demo() {
       {
         name: "delay",
         type: "number",
-        description:
-          "Milliseconds the value must stay unchanged before the debounced value updates.",
+        description: "Milliseconds the value must stay unchanged before the debounced value updates.",
       },
     ],
     returns: [
       {
         name: "debouncedValue",
         type: "T",
-        description:
-          "Trails the input value, updating only after delay ms without a change.",
+        description: "Trails the input value, updating only after delay ms without a change.",
       },
     ],
   },
@@ -140,8 +138,7 @@ export function Demo() {
       {
         name: "initialState",
         type: "T",
-        description:
-          "Initial field values. Keys must match the name attribute of each input.",
+        description: "Initial field values. Keys must match the name attribute of each input.",
       },
     ],
     returns: [
@@ -153,8 +150,7 @@ export function Demo() {
       {
         name: "handleChange",
         type: "(event: ChangeEvent) => void",
-        description:
-          "One change handler for every named input, textarea and select.",
+        description: "One change handler for every named input, textarea and select.",
       },
       {
         name: "resetForm",
@@ -188,22 +184,19 @@ export function Demo() {
       {
         name: "initialValue",
         type: "T",
-        description:
-          "Value used before hydration and when the key is empty. Prefer a stable reference — the sync effect depends on it.",
+        description: "Value used before hydration and when the key is empty. Prefer a stable reference — the sync effect depends on it.",
       },
     ],
     returns: [
       {
         name: "value",
         type: "T",
-        description:
-          "The stored value. Server-rendered as initialValue, then synced from localStorage after mount.",
+        description: "The stored value. Server-rendered as initialValue, then synced from localStorage after mount.",
       },
       {
         name: "setStoredValue",
         type: "(value: T | ((val: T) => T)) => void",
-        description:
-          "Persists to localStorage and updates state; accepts a value or an updater function.",
+        description: "Persists to localStorage and updates state; accepts a value or an updater function.",
       },
     ],
   },
@@ -236,28 +229,24 @@ export function Demo() {
       {
         name: "initialValue",
         type: "T",
-        description:
-          "Value used before hydration and when nothing is stored under the key.",
+        description: "Value used before hydration and when nothing is stored under the key.",
       },
       {
         name: "expiryMs",
         type: "number",
-        description:
-          "Time-to-live in milliseconds. Every write stores the value with a fresh expiry timestamp.",
+        description: "Time-to-live in milliseconds. Every write stores the value with a fresh expiry timestamp.",
       },
     ],
     returns: [
       {
         name: "value",
         type: "T | null",
-        description:
-          "The stored value, or null once the item has expired. Expiry is checked when the hook reads — on mount or key change — at which point the item is removed.",
+        description: "The stored value, or null once the item has expired. Expiry is checked when the hook reads — on mount or key change — at which point the item is removed.",
       },
       {
         name: "setStoredValue",
         type: "(value: T) => void",
-        description:
-          "Persists the value to localStorage with a new expiry of now + expiryMs.",
+        description: "Persists the value to localStorage with a new expiry of now + expiryMs.",
       },
     ],
   },
@@ -283,14 +272,12 @@ export function Demo() {
       {
         name: "isDarkMode",
         type: "boolean",
-        description:
-          'Current mode. Initialized from localStorage("theme") on the client; false during SSR.',
+        description: 'Current mode. Initialized from localStorage("theme") on the client; false during SSR.',
       },
       {
         name: "toggleDarkMode",
         type: "() => void",
-        description:
-          'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
+        description: 'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
       },
     ],
   },
@@ -323,14 +310,12 @@ export function Demo() {
       {
         name: "ref",
         type: "RefObject<T>",
-        description:
-          "Ref attached to the element that counts as inside — clicks within it (or its children) never fire the callback.",
+        description: "Ref attached to the element that counts as inside — clicks within it (or its children) never fire the callback.",
       },
       {
         name: "callback",
         type: "() => void",
-        description:
-          "Called on every mousedown outside the ref'd element — even while your UI is closed, so guard inside the callback if needed.",
+        description: "Called on every mousedown outside the ref'd element — even while your UI is closed, so guard inside the callback if needed.",
       },
     ],
     returns: [],
@@ -362,22 +347,19 @@ export function Demo() {
       {
         name: "ref",
         type: "RefObject<T>",
-        description:
-          "Ref attached to the element the coordinates are measured against.",
+        description: "Ref attached to the element the coordinates are measured against.",
       },
     ],
     returns: [
       {
         name: "x",
         type: "number | null",
-        description:
-          "Cursor X relative to the element's left edge; null until the first mousemove. Updates on every window mousemove, so it can go negative or exceed the element's width.",
+        description: "Cursor X relative to the element's left edge; null until the first mousemove. Updates on every window mousemove, so it can go negative or exceed the element's width.",
       },
       {
         name: "y",
         type: "number | null",
-        description:
-          "Cursor Y relative to the element's top edge; null until the first mousemove.",
+        description: "Cursor Y relative to the element's top edge; null until the first mousemove.",
       },
     ],
   },
@@ -420,16 +402,14 @@ export function Demo() {
       {
         name: "fetchMoreData",
         type: "() => Promise<void>",
-        description:
-          "Called when the window scroll comes within 500px of the document bottom. Must return a promise — the hook stays in the fetching state until it resolves.",
+        description: "Called when the window scroll comes within 500px of the document bottom. Must return a promise — the hook stays in the fetching state until it resolves.",
       },
     ],
     returns: [
       {
         name: "isFetching",
         type: "boolean",
-        description:
-          "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
+        description: "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
       },
     ],
   },
@@ -455,28 +435,24 @@ export function Demo() {
       {
         name: "url",
         type: "string",
-        description:
-          "The endpoint to GET. The request starts on mount and re-runs whenever the url changes.",
+        description: "The endpoint to GET. The request starts on mount and re-runs whenever the url changes.",
       },
     ],
     returns: [
       {
         name: "data",
         type: "T | null",
-        description:
-          "The parsed JSON body; null until the first request succeeds. Kept from the previous url while a refetch is in flight.",
+        description: "The parsed JSON body; null until the first request succeeds. Kept from the previous url while a refetch is in flight.",
       },
       {
         name: "error",
         type: "Error | null",
-        description:
-          'Set on network failure or a non-ok response ("HTTP error! status: 404"). Never cleared by later requests — remount the component (e.g. key={url}) for fresh state.',
+        description: 'Set on network failure or a non-ok response ("HTTP error! status: 404"). Never cleared by later requests — remount the component (e.g. key={url}) for fresh state.',
       },
       {
         name: "loading",
         type: "boolean",
-        description:
-          "True until the first request settles. Not reset to true when the url changes — remount for a per-request loading flag.",
+        description: "True until the first request settles. Not reset to true when the url changes — remount for a per-request loading flag.",
       },
     ],
   },
@@ -512,21 +488,18 @@ export function Demo() {
       {
         name: "location",
         type: "GeolocationPosition | null",
-        description:
-          "hookli's trimmed position type — just coords.latitude and coords.longitude. Null until the first reading arrives.",
+        description: "hookli's trimmed position type — just coords.latitude and coords.longitude. Null until the first reading arrives.",
       },
       {
         name: "error",
         type: "GeolocationError | Error | null",
-        description:
-          "Permission denials, unsupported browsers and failed lookups all land here — read .message for display. Requesting starts on mount, so mount the hook behind a user gesture.",
+        description: "Permission denials, unsupported browsers and failed lookups all land here — read .message for display. Requesting starts on mount, so mount the hook behind a user gesture.",
       },
     ],
     typeAliases: [
       {
         name: "GeolocationPosition",
-        description:
-          "hookli's trimmed reading — only the coordinates, not the full browser GeolocationPosition.",
+        description: "hookli's trimmed reading — only the coordinates, not the full browser GeolocationPosition.",
         rows: [
           {
             name: "coords.latitude",
@@ -547,8 +520,7 @@ export function Demo() {
           {
             name: "code",
             type: "number",
-            description:
-              "Numeric error code mirrored from the browser's GeolocationPositionError.",
+            description: "Numeric error code mirrored from the browser's GeolocationPositionError.",
           },
           {
             name: "message",
