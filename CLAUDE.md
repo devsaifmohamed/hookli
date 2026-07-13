@@ -39,31 +39,66 @@ src/
     use<Name>.hook.ts   # one hook per file
 ```
 
-## Conventions (follow these when adding or editing a hook)
+## Conventions
 
-1. **One hook per file**: `src/hooks/use<Name>.hook.ts`, named export `use<Name>`.
-2. **Register the export**: add the file to `src/hooks/index.ts`. A hook that isn't
-   re-exported there ships to nobody — this is the most common miss.
-3. **Type the public API explicitly.** Prefer a named `interface`/`type` for the return
-   shape over inferred anonymous objects. Generics (`<T>`) where the hook is data-shaped
-   (`useFetch<T>`, `useLocalStorage<T>`).
-4. **SSR-safety is mandatory.** Consumers render on the server (Next.js). Never touch
-   `window` / `document` / `navigator` / `localStorage` at module scope or during the
-   initial render without a `typeof window !== "undefined"` guard. Browser access belongs
-   inside `useEffect` (which only runs client-side) or behind a guard.
-5. **Clean up every subscription.** `addEventListener` / `setTimeout` / observers must be
-   removed in the effect's cleanup return.
-6. **Document it** in `README.md` (there's a per-hook list + a commented usage section).
+Decisive rules — **one convention per topic, no alternatives.** Each shows the right way and
+the wrong way. (Documentation style borrowed from the Nzmly frontend `CLAUDE.md`; the *naming*
+below is this library's own, established across its published history — keep it consistent.)
 
-### Known issues worth knowing (from the initial scan)
-- `useDarkMode` persists the **stale** theme value (writes `localStorage` from the
-  pre-toggle `isDarkMode`) — see `ralph/prd.json` T1.
-- `useLocalStorageWithExpiry` reads the raw `{value, expiry}` wrapper instead of the inner
-  value, and doesn't update React state on expiry — T2.
-- Several hooks read browser globals during initial render — T3.
+### 1 — File names: `use<Name>.hook.ts`
 
-These are seeded as tasks in `ralph/prd.json`; don't silently "fix" them outside that flow
-unless asked.
+One hook per file under `src/hooks/`, named `use<Name>.hook.ts` — camelCase matching the
+export, with the `.hook.ts` suffix. This is the library's own convention (NOT the docs site's
+kebab-case rule — the two repos differ on purpose). The export is the same `use<Name>`.
+
+```
+✅ src/hooks/useToggle.hook.ts        (export const useToggle = …)
+✅ src/hooks/useLocalStorage.hook.ts
+❌ src/hooks/use-toggle.ts   src/hooks/useToggle.ts   src/hooks/Toggle.hook.ts
+```
+
+### 2 — Register every hook in the barrel
+
+Add each new file to `src/hooks/index.ts` (which `src/index.ts` re-exports). A hook that isn't
+re-exported ships to nobody — the most common miss.
+
+```ts
+✅ export * from "./useToggle.hook";      ❌ // file added but not exported from the barrel
+```
+
+### 3 — Type the public API explicitly
+
+Prefer a named `interface`/`type` for the return shape over an inferred anonymous object.
+Use generics where the hook is data-shaped (`useFetch<T>`, `useLocalStorage<T>`).
+
+```ts
+✅ interface UseFetchResponse<T> { data: T | null; error: Error | null; loading: boolean }
+❌ export const useFetch = (url) => ({ data, error, loading })  // untyped, no generic
+```
+
+### 4 — SSR-safety is mandatory
+
+Consumers render on the server (Next.js). Never touch `window` / `document` / `navigator` /
+`localStorage` at module scope or during the initial render without a guard. Browser access
+belongs inside `useEffect` (client-only) or behind `typeof window !== "undefined"`.
+
+```ts
+✅ const [v] = useState(() => typeof window === "undefined" ? init : read());
+❌ const [v] = useState(() => localStorage.getItem(key));   // crashes on the server
+```
+
+### 5 — Clean up every subscription
+
+`addEventListener` / `setTimeout` / observers must be removed in the effect's cleanup return.
+
+### 6 — Document it in `README.md`
+
+Add the hook to the "Available hooks" list with a one-line description. Public API changes go in
+the README (and, once it exists, the docs site's `hook-docs` entry in `../hookli-docs`).
+
+### Build & typecheck stay green
+
+`bash ralph/check.sh` (`tsc --noEmit` + `tsup`) must pass before any commit — there is no test suite.
 
 ## Releasing (human-gated — do NOT automate)
 
