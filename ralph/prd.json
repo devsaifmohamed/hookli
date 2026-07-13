@@ -225,17 +225,34 @@
     },
     {
       "id": "T18",
-      "title": "Engineering conventions — port the Nzmly CLAUDE.md style, align the codebase",
-      "priority": 17,
-      "notes": "READ-ONLY reference: /Users/s-m/Developer/platform/CLAUDE.md plus any frontend/*/CLAUDE.md there (reading is allowed; never modify that repo or ../rehooks-app). Saif wants the STYLE of that conventions doc — not its Nzmly content: file-name casing rules, code structure, folder structure, module organization, component conventions. Author the equivalent for THIS app, then make the codebase actually comply.",
+      "title": "Align file names to conventions — kebab-case (per AGENTS.md)",
+      "priority": 16,
+      "notes": "AGENTS.md now has the authoritative Conventions (Nzmly kebab-case style, authored by hand). The demos/ and lib/ files ALREADY comply (kebab-case). The ONLY drift is root components/*.tsx which are PascalCase and must become kebab-case. This is a pure mechanical rename — do NOT redesign, do NOT touch demos/ or lib/. Keep every export name PascalCase; only the FILE names change. IMPORTANT: an earlier pass wrongly renamed toward PascalCase — that was reverted; kebab-case is correct.",
       "acceptance": [
-        "AGENTS.md (referenced by CLAUDE.md) gains a Conventions section in the Nzmly doc style: explicit rules with examples for file-name case, folder structure (modules/feature grouping), component file anatomy (props type, export style, client/server placement), hooks/lib/registry organization, import order, and styling-token usage",
-        "Rules are DECISIVE (one convention per topic, no maybes) and each rule shows a right/wrong example",
-        "Codebase aligned to the written rules: files renamed to the chosen casing, folders regrouped per the module structure, imports updated — repo passes its own conventions",
-        "ralph/prompt.md quality bar references the conventions so later iterations follow them",
+        "Every file in components/*.tsx renamed to kebab-case (HookPage.tsx->hook-page.tsx, CodeBlock.tsx->code-block.tsx, LiveProofSection.tsx->live-proof-section.tsx, Icons.tsx->icons.tsx, etc.) via git mv; exports stay PascalCase",
+        "All imports across app/, components/, lib/ updated to the new @/components/<kebab> paths — no broken import remains",
+        "demos/ and lib/ are left as-is (already kebab); do not rename them",
+        "ralph/prompt.md Quality bar references AGENTS.md Conventions so future iterations comply",
+        "grep for PascalCase component imports/paths (@/components/[A-Z]) returns nothing",
         "bash ralph/check.sh is green"
       ],
       "status": "todo"
+    },
+    {
+      "id": "T19",
+      "priority": 17,
+      "status": "todo",
+      "title": "Fix dark-theme depth — proper tonal scale (ground/surface/border)",
+      "notes": "DESIGN FIX (Saif): --color-ground is #003748 used as BOTH full-page bg AND cards (raised only one step, #0a4557), so the site reads as a bright saturated teal-blue with cards that barely separate. #003748 is a brand MID-tone, not a dark neutral — make it the SURFACE, and give the page a much darker near-black-blue ground. Token-only change; keep brand hues.",
+      "acceptance": [
+        "App ground token becomes a much darker near-black blue in the #003748 hue family (e.g. ~#04191F/#051D25), distinctly darker than surfaces",
+        "Cards/panels = #003748 so they visibly lift off the ground; a second elevation (#0A4557) for nested/hover",
+        "Borders a step lighter than their surface (~#12586B) so edges read on both ground and surface",
+        "Accent #30C5CA + text (#FFFFFF/#8FB6C2) unchanged; white body text >=4.5:1 on BOTH new ground and #003748 surface",
+        "Token-only: header/hero/cards/sidebar/code frames/search/footer inherit the new depth, no per-component color edits",
+        "Landing + a docs page show clear ground->card->border separation",
+        "bash ralph/check.sh is green"
+      ]
     },
     {
       "id": "T15",

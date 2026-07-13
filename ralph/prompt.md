@@ -19,10 +19,13 @@ it exists, `docs/DESIGN.md` (T1's research output) — it is the design source o
    task explicitly says "placeholder". Real copy, real demos, polished UI.
 
 ## Quality bar (non-negotiable)
-- **Brand**: solid `#0B1120` ground, React-cyan `#61DAFB` accent, syntax-slate `#475569`,
-  gray `#94A3B8` for secondary text. Monospace for headings/wordmark (`use(hookli)` style),
-  system sans for body. Dark-first design. NO gradients on brand surfaces, no emoji icons —
-  use inline SVG (lucide-style) icons.
+- **Conventions**: follow `AGENTS.md` → Conventions EXACTLY. Files & folders are **kebab-case**
+  (components too: `hook-page.tsx`, not `HookPage.tsx`); exports stay PascalCase. Never rename a
+  file toward PascalCase. Named exports only; token-only styling; import order; barrels.
+- **Brand** (v3, dark-first, solid — no gradients): ground `#003748`, accent `#30C5CA`, ink
+  `#FFFFFF`, muted `#8FB6C2`. Reference `@theme` tokens (`bg-ground`, `text-accent`), never raw
+  hexes. `hookli.` wordmark + hook mark; Plus Jakarta Sans (headings/body), monospace only for
+  code. No emoji icons — inline SVG (lucide-style) only.
 - **UX**: visible focus states, 44px touch targets, `prefers-reduced-motion` respected,
   WCAG AA contrast (4.5:1 body text), responsive at 375 / 768 / 1024 / 1440.
 - **Interactive demos import from `hookli`** (installed from npm) — the point of the site
