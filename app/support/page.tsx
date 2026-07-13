@@ -5,7 +5,7 @@ import {
   GitPullRequestIcon,
   HeartIcon,
   StarIcon,
-} from "@/components/Icons";
+} from "@/components/icons";
 import { GITHUB_URL } from "@/lib/site";
 
 export const metadata: Metadata = {

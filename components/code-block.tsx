@@ -1,4 +1,4 @@
-import { CopyButton } from "@/components/CopyButton";
+import { CopyButton } from "@/components/copy-button";
 import { highlight, type CodeLang } from "@/lib/shiki";
 
 /* Frameless highlighted code — the pane inside CodeBlock, also used bare as the

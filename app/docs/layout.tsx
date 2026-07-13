@@ -1,4 +1,4 @@
-import { MobileDocsNav, Sidebar } from "@/components/Sidebar";
+import { MobileDocsNav, Sidebar } from "@/components/sidebar";
 
 export default function DocsLayout({
   children,

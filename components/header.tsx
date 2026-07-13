@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { HookMark, Wordmark } from "./Wordmark";
-import { GitHubIcon } from "./Icons";
-import { SearchPalette } from "./SearchPalette";
+import { HookMark, Wordmark } from "./wordmark";
+import { GitHubIcon } from "./icons";
+import { SearchPalette } from "./search-palette";
 import { GITHUB_URL } from "@/lib/site";
 
 export function Header() {

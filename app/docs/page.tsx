@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { CodeBlock } from "@/components/CodeBlock";
-import { HookCard } from "@/components/HookCard";
-import { InstallCommand } from "@/components/InstallCommand";
+import { CodeBlock } from "@/components/code-block";
+import { HookCard } from "@/components/hook-card";
+import { InstallCommand } from "@/components/install-command";
 import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,

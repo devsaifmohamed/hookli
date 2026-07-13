@@ -236,7 +236,7 @@
         "grep for PascalCase component imports/paths (@/components/[A-Z]) returns nothing",
         "bash ralph/check.sh is green"
       ],
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T19",

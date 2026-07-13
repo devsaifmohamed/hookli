@@ -4,7 +4,7 @@ import { useToggle } from "hookli";
 import { DemoButton } from "./ui";
 
 /* Live proof for the landing page: same logic as the LightSwitch sample shown
-   beside it (components/LiveProofSection.tsx), imported from the published
+   beside it (components/live-proof-section.tsx), imported from the published
    `hookli` package — styling classes are the only addition. */
 export function UseToggleDemo() {
   const [on, toggle] = useToggle(false);

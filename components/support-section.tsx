@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRightIcon,
-  GitPullRequestIcon,
-  HeartIcon,
-  StarIcon,
-} from "@/components/Icons";
+import { ArrowRightIcon, GitPullRequestIcon, HeartIcon, StarIcon } from "@/components/icons";
 import { GITHUB_URL } from "@/lib/site";
 
 const CARDS = [
@@ -38,37 +33,23 @@ export function SupportSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
       <h2 className="text-center text-2xl">Support hookli</h2>
-      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">
-        hookli is free and ISC-licensed. It runs on stars, issues, and pull
-        requests.
-      </p>
+      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">hookli is free and ISC-licensed. It runs on stars, issues, and pull requests.</p>
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {CARDS.map((card) => {
           const inner = (
             <>
               <span className="text-accent">{card.icon}</span>
-              <h3 className="mt-4 text-lg font-semibold">
-                {card.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-body">
-                {card.body}
-              </p>
+              <h3 className="mt-4 text-lg font-semibold">{card.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-body">{card.body}</p>
               <span className="mt-4 flex min-h-11 items-center gap-2 text-sm text-accent">
                 {card.label}
                 <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </span>
             </>
           );
-          const className =
-            "group flex flex-col rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 transition-colors duration-200 hover:border-slate-syntax";
+          const className = "group flex flex-col rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 transition-colors duration-200 hover:border-slate-syntax";
           return card.external ? (
-            <a
-              key={card.title}
-              href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={className}
-            >
+            <a key={card.title} href={card.href} target="_blank" rel="noopener noreferrer" className={className}>
               {inner}
             </a>
           ) : (

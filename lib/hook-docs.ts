@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { ApiRow } from "@/components/ApiTable";
+import type { ApiRow } from "@/components/api-table";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";

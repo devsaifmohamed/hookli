@@ -1,4 +1,4 @@
-import { HookCard } from "@/components/HookCard";
+import { HookCard } from "@/components/hook-card";
 import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,

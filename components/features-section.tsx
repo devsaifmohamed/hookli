@@ -1,12 +1,5 @@
-import { FeatureCard } from "@/components/FeatureCard";
-import {
-  BlocksIcon,
-  BracesIcon,
-  FeatherIcon,
-  LeafIcon,
-  PackageIcon,
-  ServerIcon,
-} from "@/components/Icons";
+import { FeatureCard } from "@/components/feature-card";
+import { BlocksIcon, BracesIcon, FeatherIcon, LeafIcon, PackageIcon, ServerIcon } from "@/components/icons";
 import { HOOKS } from "@/lib/hooks-registry";
 
 const FEATURES = [
@@ -46,9 +39,7 @@ export function FeaturesSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
       <h2 className="text-center text-2xl">Why hookli</h2>
-      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">
-        Small enough to read in an afternoon, solid enough to ship everywhere.
-      </p>
+      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">Small enough to read in an afternoon, solid enough to ship everywhere.</p>
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((feature) => (
           <FeatureCard key={feature.title} {...feature} />

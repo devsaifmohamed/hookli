@@ -1,5 +1,5 @@
 import { Fragment, type ReactNode } from "react";
-import { ExternalLinkIcon } from "@/components/Icons";
+import { ExternalLinkIcon } from "@/components/icons";
 
 /* Web-API mentions inside hook descriptions become linked MDN chips (T16
    usehooks-ts anatomy). Curated term → MDN map; matching is case-insensitive

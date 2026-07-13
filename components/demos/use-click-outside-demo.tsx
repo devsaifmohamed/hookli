@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useClickOutside } from "hookli";
-import { ChevronDownIcon } from "@/components/Icons";
+import { ChevronDownIcon } from "@/components/icons";
 import { DemoButton, DemoReadout } from "./ui";
 
 const ACTIONS = ["Rename", "Duplicate", "Share"] as const;

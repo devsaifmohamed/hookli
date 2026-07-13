@@ -1,21 +1,10 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
-import {
-  CATEGORY_LABELS,
-  HOOKS,
-  type HookEntry,
-} from "@/lib/hooks-registry";
-import { SearchIcon } from "./Icons";
+import { CATEGORY_LABELS, HOOKS, type HookEntry } from "@/lib/hooks-registry";
+import { SearchIcon } from "./icons";
 
 /* ⌘K command palette over the hook registry (docs/DESIGN.md §7). Client-only —
    lowercase substring match on name/description/category is enough for 11 hooks;
@@ -39,12 +28,7 @@ function useIsApplePlatform() {
 function matches(hook: HookEntry, query: string): boolean {
   const q = query.trim().toLowerCase();
   if (!q) return true;
-  return (
-    hook.name.toLowerCase().includes(q) ||
-    hook.description.toLowerCase().includes(q) ||
-    hook.category.includes(q) ||
-    CATEGORY_LABELS[hook.category].toLowerCase().includes(q)
-  );
+  return hook.name.toLowerCase().includes(q) || hook.description.toLowerCase().includes(q) || hook.category.includes(q) || CATEGORY_LABELS[hook.category].toLowerCase().includes(q);
 }
 
 export function SearchPalette() {
@@ -113,9 +97,7 @@ export function SearchPalette() {
     if (results.length === 0) return;
     const next = (active + delta + results.length) % results.length;
     setActiveIndex(next);
-    document
-      .getElementById(optionId(results[next]))
-      ?.scrollIntoView({ block: "nearest" });
+    document.getElementById(optionId(results[next]))?.scrollIntoView({ block: "nearest" });
   }
 
   function onInputKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -159,17 +141,12 @@ export function SearchPalette() {
       >
         <SearchIcon className="size-5 sm:size-4" />
         <span className="hidden text-sm sm:inline">Search</span>
-        <kbd className="hidden rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax sm:inline">
-          {isApple ? "⌘" : "Ctrl"} K
-        </kbd>
+        <kbd className="hidden rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax sm:inline">{isApple ? "⌘" : "Ctrl"} K</kbd>
       </button>
 
       {open &&
         createPortal(
-          <div
-            className="fixed inset-0 z-50 flex flex-col bg-ground/80 backdrop-blur-sm sm:items-center sm:px-4 sm:pt-[15vh]"
-            onMouseDown={closePalette}
-          >
+          <div className="fixed inset-0 z-50 flex flex-col bg-ground/80 backdrop-blur-sm sm:items-center sm:px-4 sm:pt-[15vh]" onMouseDown={closePalette}>
             <div
               role="dialog"
               aria-modal="true"
@@ -188,9 +165,7 @@ export function SearchPalette() {
                   aria-expanded="true"
                   aria-controls={listboxId}
                   aria-autocomplete="list"
-                  aria-activedescendant={
-                    results[active] ? optionId(results[active]) : undefined
-                  }
+                  aria-activedescendant={results[active] ? optionId(results[active]) : undefined}
                   value={query}
                   onChange={(event) => {
                     setQuery(event.target.value);
@@ -200,25 +175,12 @@ export function SearchPalette() {
                   placeholder="Search hooks…"
                   className="h-full w-full bg-transparent text-sm text-fg outline-none placeholder:text-slate-syntax"
                 />
-                <button
-                  ref={closeButtonRef}
-                  type="button"
-                  onClick={closePalette}
-                  aria-label="Close search"
-                  className="flex min-h-11 shrink-0 items-center rounded-md px-2"
-                >
-                  <kbd className="rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax">
-                    esc
-                  </kbd>
+                <button ref={closeButtonRef} type="button" onClick={closePalette} aria-label="Close search" className="flex min-h-11 shrink-0 items-center rounded-md px-2">
+                  <kbd className="rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax">esc</kbd>
                 </button>
               </div>
 
-              <ul
-                id={listboxId}
-                role="listbox"
-                aria-label="Hooks"
-                className="flex-1 overflow-y-auto p-2 sm:max-h-80 sm:flex-none"
-              >
+              <ul id={listboxId} role="listbox" aria-label="Hooks" className="flex-1 overflow-y-auto p-2 sm:max-h-80 sm:flex-none">
                 {results.map((hook, index) => (
                   <li
                     key={hook.slug}
@@ -227,26 +189,15 @@ export function SearchPalette() {
                     aria-selected={index === active}
                     onMouseMove={() => setActiveIndex(index)}
                     onClick={() => select(hook)}
-                    className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-3 transition-colors duration-150 ${
-                      index === active
-                        ? "bg-ground/70 text-accent"
-                        : "text-gray-body"
-                    }`}
+                    className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-3 transition-colors duration-150 ${index === active ? "bg-ground/70 text-accent" : "text-gray-body"}`}
                   >
-                    <span className="shrink-0 text-sm">
-                      {hook.name}
-                    </span>
+                    <span className="shrink-0 text-sm">{hook.name}</span>
                     <span className="truncate text-xs">{hook.description}</span>
-                    <span className="ml-auto shrink-0 text-xs uppercase tracking-wider text-slate-syntax">
-                      {CATEGORY_LABELS[hook.category]}
-                    </span>
+                    <span className="ml-auto shrink-0 text-xs uppercase tracking-wider text-slate-syntax">{CATEGORY_LABELS[hook.category]}</span>
                   </li>
                 ))}
                 {results.length === 0 && (
-                  <li
-                    role="presentation"
-                    className="px-3 py-10 text-center text-sm text-slate-syntax"
-                  >
+                  <li role="presentation" className="px-3 py-10 text-center text-sm text-slate-syntax">
                     No hooks match &ldquo;{query.trim()}&rdquo;
                   </li>
                 )}

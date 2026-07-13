@@ -10,7 +10,7 @@ import {
   getHook,
   hooksByCategory,
 } from "@/lib/hooks-registry";
-import { MenuIcon, XIcon } from "./Icons";
+import { MenuIcon, XIcon } from "./icons";
 
 /* Docs sidebar (docs/DESIGN.md §2, §5): sticky under the h-14 header, grouped
    by category, active state from the pathname. Below md it collapses to

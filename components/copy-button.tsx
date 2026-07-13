@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckIcon, CopyIcon } from "@/components/Icons";
+import { CheckIcon, CopyIcon } from "@/components/icons";
 
 export function CopyButton({
   text,

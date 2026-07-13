@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { DemoErrorBoundary } from "@/components/DemoErrorBoundary";
+import { DemoErrorBoundary } from "@/components/demo-error-boundary";
 
 const TABS = [
   { id: "preview", label: "Preview" },

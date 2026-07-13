@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRightIcon } from "@/components/Icons";
-import { InstallCommand } from "@/components/InstallCommand";
+import { ArrowRightIcon } from "@/components/icons";
+import { InstallCommand } from "@/components/install-command";
 
 /* Landing bottom CTA (docs/DESIGN.md §3.6): repeat the install command and
    the docs CTA for readers who scrolled the whole page. */

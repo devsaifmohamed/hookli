@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { HookPage } from "@/components/HookPage";
+import { HookPage } from "@/components/hook-page";
 import { HOOKS, getHook } from "@/lib/hooks-registry";
 
 /* Thin route wrapper — all layout lives in the single data-driven HookPage

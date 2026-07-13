@@ -1,6 +1,6 @@
 "use client";
 
-import { CopyButton } from "@/components/CopyButton";
+import { CopyButton } from "@/components/copy-button";
 
 const COMMAND = "npm i hookli";
 

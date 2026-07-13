@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { HookMark, Wordmark } from "@/components/Wordmark";
-import { InstallCommand } from "@/components/InstallCommand";
-import { ArrowRightIcon, GitHubIcon } from "@/components/Icons";
-import { FeaturesSection } from "@/components/FeaturesSection";
-import { LiveProofSection } from "@/components/LiveProofSection";
-import { HooksIndexSection } from "@/components/HooksIndexSection";
-import { SupportSection } from "@/components/SupportSection";
-import { BottomCtaSection } from "@/components/BottomCtaSection";
+import { HookMark, Wordmark } from "@/components/wordmark";
+import { InstallCommand } from "@/components/install-command";
+import { ArrowRightIcon, GitHubIcon } from "@/components/icons";
+import { FeaturesSection } from "@/components/features-section";
+import { LiveProofSection } from "@/components/live-proof-section";
+import { HooksIndexSection } from "@/components/hooks-index-section";
+import { SupportSection } from "@/components/support-section";
+import { BottomCtaSection } from "@/components/bottom-cta-section";
 import { GITHUB_URL, TAGLINE } from "@/lib/site";
 
 export default function Home() {

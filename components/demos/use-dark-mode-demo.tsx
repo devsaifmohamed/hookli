@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { useDarkMode } from "hookli";
-import { MoonIcon, SunIcon } from "@/components/Icons";
+import { MoonIcon, SunIcon } from "@/components/icons";
 import { DemoReadout } from "./ui";
 
 /* Hydration gate: false on the server and during hydration, true after. */

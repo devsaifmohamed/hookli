@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wordmark } from "./Wordmark";
+import { Wordmark } from "./wordmark";
 import { GITHUB_URL, NPM_URL } from "@/lib/site";
 
 export function Footer() {

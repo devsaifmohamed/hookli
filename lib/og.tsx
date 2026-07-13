@@ -85,7 +85,7 @@ export function OgMark({ height }: { height: number }) {
   );
 }
 
-/* hookli. lockup — brand v3, same as components/Wordmark. */
+/* hookli. lockup — brand v3, same as components/wordmark. */
 export function OgWordmark({
   fontSize,
   withMark = false,
