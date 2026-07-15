@@ -22,7 +22,6 @@ describe("useCountdown", () => {
     act(() => void vi.advanceTimersByTime(2000));
     expect(result.current[0]).toBe(0);
 
-    // reached countStop → stays put even after more time
     act(() => void vi.advanceTimersByTime(3000));
     expect(result.current[0]).toBe(0);
   });

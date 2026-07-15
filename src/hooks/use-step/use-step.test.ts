@@ -17,14 +17,12 @@ describe("useStep", () => {
     expect(result.current[0]).toBe(2);
     expect(result.current[1].canGoToNextStep).toBe(false);
 
-    // already at max — no-op
     act(() => result.current[1].goToNextStep());
     expect(result.current[0]).toBe(2);
 
     act(() => result.current[1].goToPrevStep());
     expect(result.current[0]).toBe(1);
 
-    // already at min — no-op
     act(() => result.current[1].goToPrevStep());
     expect(result.current[0]).toBe(1);
   });

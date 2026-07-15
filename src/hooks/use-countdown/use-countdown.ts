@@ -52,13 +52,11 @@ export const useCountdown = ({
     setCount(countStart);
   }, [countStart]);
 
-  // Keep the latest tick logic in a ref so the interval isn't torn down each tick.
   const tick = useRef<() => void>(() => {});
   tick.current = () => {
     setCount((prev) => (isIncrement ? prev + 1 : prev - 1));
   };
 
-  // Stop automatically once the target is reached.
   useEffect(() => {
     if (isRunning && count === countStop) {
       setIsRunning(false);
