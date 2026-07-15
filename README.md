@@ -110,6 +110,9 @@ function Component() {
 - **[`useResizeObserver`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-resize-observer/use-resize-observer.ts)** — measures an element's `{ width, height }` reactively via `ResizeObserver`.
 - **[`useScrollLock`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-scroll-lock/use-scroll-lock.ts)** — locks/unlocks scrolling on the body or a target, compensating for the scrollbar.
 - **[`useClickAnyWhere`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-click-any-where/use-click-any-where.ts)** — fires a handler on every click anywhere in the document.
+- **[`useMediaQuery`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-media-query/use-media-query.ts)** — tracks whether a CSS media query matches, SSR-safe via `matchMedia`.
+- **[`useWindowSize`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-window-size/use-window-size.ts)** — tracks the viewport's `{ width, height }`, updating on resize.
+- **[`useScreen`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-screen/use-screen.ts)** — tracks the `window.screen` object, refreshing on resize.
 
 ## 🧪 TypeScript
 
