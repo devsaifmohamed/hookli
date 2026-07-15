@@ -142,7 +142,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
 
           {/* Support slot — placeholder consistent with T12 (no real payment
               links; the real donation surface lives on /support). */}
-          <div className="rounded-xl border border-slate-syntax/40 bg-ground-raised p-4">
+          <div className="surface rounded-xl p-4">
             <p className="text-sm font-semibold text-fg">Support hookli</p>
             <p className="mt-1 text-xs leading-relaxed text-gray-body">Free and open source. Star it or help it grow.</p>
             <Link href="/support" className="mt-3 inline-flex min-h-11 items-center gap-1 text-sm text-accent underline-offset-4 hover:underline">

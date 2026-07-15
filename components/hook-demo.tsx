@@ -51,7 +51,7 @@ export function HookDemo({
 
   return (
     <div
-      className={`overflow-hidden rounded-xl border border-slate-syntax/40 bg-ground-raised ${className}`}
+      className={`surface overflow-hidden rounded-xl ${className}`}
     >
       <div className="flex items-center justify-between border-b border-slate-syntax/40 px-2">
         <div

@@ -38,8 +38,10 @@ export function SupportSection() {
         {CARDS.map((card) => {
           const inner = (
             <>
-              <span className="text-accent">{card.icon}</span>
-              <h3 className="mt-4 text-lg font-semibold">{card.title}</h3>
+              <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
+                {card.icon}
+              </span>
+              <h3 className="mt-5 text-lg font-semibold">{card.title}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-body">{card.body}</p>
               <span className="mt-4 flex min-h-11 items-center gap-2 text-sm text-accent">
                 {card.label}
@@ -47,7 +49,7 @@ export function SupportSection() {
               </span>
             </>
           );
-          const className = "group flex flex-col rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 transition-colors duration-200 hover:border-slate-syntax";
+          const className = "surface surface-lift group flex flex-col rounded-xl p-6";
           return card.external ? (
             <a key={card.title} href={card.href} target="_blank" rel="noopener noreferrer" className={className}>
               {inner}

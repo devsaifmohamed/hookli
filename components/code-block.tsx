@@ -48,19 +48,33 @@ export function CodeBlock({
 }) {
   return (
     <figure
-      className={`overflow-hidden rounded-xl border border-slate-syntax/40 bg-ground-raised ${className}`}
+      className={`surface overflow-hidden rounded-xl ${className}`}
     >
-      <figcaption className="flex items-center justify-between border-b border-slate-syntax/40 py-1 pl-4 pr-1">
-        <span className="font-mono text-xs text-gray-body">
-          {title ?? lang}
+      <figcaption className="flex items-center justify-between gap-2 border-b border-slate-syntax/40 py-1 pl-4 pr-1">
+        <span className="flex min-w-0 items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="size-1.5 shrink-0 rounded-full bg-accent/70"
+          />
+          <span className="truncate font-mono text-xs text-gray-body">
+            {title ?? lang}
+          </span>
         </span>
-        <CopyButton text={code.trim()} label={`Copy ${title ?? "code"}`} />
+        <span className="flex shrink-0 items-center gap-1">
+          {title && (
+            <span className="rounded border border-slate-syntax/40 px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-slate-syntax">
+              {lang}
+            </span>
+          )}
+          <CopyButton text={code.trim()} label={`Copy ${title ?? "code"}`} />
+        </span>
       </figcaption>
       <HighlightedCode
         code={code}
         lang={lang}
         lineNumbers={lineNumbers}
         highlightLine={highlightLine}
+        className="code-pane"
       />
     </figure>
   );

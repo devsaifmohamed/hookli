@@ -5,7 +5,7 @@ export function HookCard({ hook }: { hook: HookEntry }) {
   return (
     <Link
       href={`/docs/${hook.slug}`}
-      className="group flex flex-col gap-1 rounded-xl border border-slate-syntax/40 bg-ground-raised p-4 transition-colors duration-200 hover:border-accent/60"
+      className="surface surface-lift group flex flex-col gap-1 rounded-xl p-4"
     >
       <span className="text-sm font-semibold transition-colors duration-200 group-hover:text-accent">
         {hook.name}

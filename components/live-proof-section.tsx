@@ -26,8 +26,11 @@ export function LiveProofSection() {
       </p>
       <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-2">
         <CodeBlock code={SAMPLE} title="light-switch.tsx" />
-        <div className="flex min-h-[180px] flex-col overflow-hidden rounded-xl border border-slate-syntax/40 bg-ground-raised">
-          <p className="border-b border-slate-syntax/40 px-4 py-[15px] text-xs text-gray-body">live · imported from hookli</p>
+        <div className="surface flex min-h-[180px] flex-col overflow-hidden rounded-xl">
+          <p className="flex items-center gap-2 border-b border-slate-syntax/40 px-4 py-[15px] text-xs text-gray-body">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-accent/70" />
+            live · imported from hookli
+          </p>
           <div className="flex flex-1 items-center justify-center p-8">
             <UseToggleDemo />
           </div>
