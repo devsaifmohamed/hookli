@@ -150,19 +150,23 @@ function DocsNavList({
 }) {
   return (
     <>
-      <SidebarLink
-        href="/docs"
-        active={pathname === "/docs"}
-        onNavigate={onNavigate}
-      >
-        Overview
-      </SidebarLink>
+      <ul className="flex flex-col border-l border-slate-syntax/40">
+        <li>
+          <SidebarLink
+            href="/docs"
+            active={pathname === "/docs"}
+            onNavigate={onNavigate}
+          >
+            Overview
+          </SidebarLink>
+        </li>
+      </ul>
       {CATEGORY_ORDER.map((category) => (
-        <div key={category} className="mt-6">
-          <h3 className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-syntax">
+        <div key={category} className="mt-7">
+          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-syntax">
             {CATEGORY_LABELS[category]}
           </h3>
-          <ul className="mt-2 flex flex-col gap-0.5">
+          <ul className="flex flex-col border-l border-slate-syntax/40">
             {hooksByCategory(category).map((hook) => {
               const href = `/docs/${hook.slug}`;
               return (
@@ -200,10 +204,10 @@ function SidebarLink({
       href={href}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
-      className={`flex min-h-11 items-center rounded-md px-3 text-sm transition-colors duration-200 md:min-h-9 ${
+      className={`-ml-px flex min-h-11 items-center border-l-2 pl-4 text-sm transition-colors duration-200 md:min-h-9 ${
         active
-          ? "bg-accent/10 text-accent"
-          : "text-gray-body hover:bg-fg/5 hover:text-fg"
+          ? "border-accent font-medium text-fg"
+          : "border-transparent text-gray-body hover:border-slate-syntax hover:text-fg"
       }`}
     >
       {children}
