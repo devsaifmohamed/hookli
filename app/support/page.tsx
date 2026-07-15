@@ -56,9 +56,9 @@ export default function SupportPage() {
       <section
         id="star"
         aria-labelledby="star-heading"
-        className="mt-12 scroll-mt-20 rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 sm:p-8"
+        className="surface mt-12 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="text-accent">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
           <StarIcon className="size-6" />
         </span>
         <h2 id="star-heading" className="mt-4 text-xl">
@@ -82,9 +82,9 @@ export default function SupportPage() {
       <section
         id="contribute"
         aria-labelledby="contribute-heading"
-        className="mt-8 scroll-mt-20 rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 sm:p-8"
+        className="surface mt-8 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="text-accent">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
           <GitPullRequestIcon className="size-6" />
         </span>
         <h2 id="contribute-heading" className="mt-4 text-xl">
@@ -118,9 +118,9 @@ export default function SupportPage() {
       <section
         id="sponsor"
         aria-labelledby="sponsor-heading"
-        className="mt-8 scroll-mt-20 rounded-xl border border-slate-syntax/40 bg-ground-raised p-6 sm:p-8"
+        className="surface mt-8 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="text-accent">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
           <HeartIcon className="size-6" />
         </span>
         <h2 id="sponsor-heading" className="mt-4 text-xl">

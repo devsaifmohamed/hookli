@@ -32,7 +32,7 @@ export default function Home() {
             <HookMark className="h-16 w-auto sm:h-20" />
             <Wordmark size="xl" />
           </h1>
-          <p className="reveal reveal-d2 mt-6 max-w-md text-lg text-gray-body">{TAGLINE}</p>
+          <p className="reveal reveal-d2 mt-6 w-full max-w-md text-lg text-gray-body">{TAGLINE}</p>
           <InstallCommand className="reveal reveal-d3 mt-9" />
           <div className="reveal reveal-d3 mt-6 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <Link

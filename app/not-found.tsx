@@ -16,7 +16,7 @@ export default function NotFound() {
       <h1 className="mt-4 text-4xl sm:text-5xl">
         not found<span className="text-accent">.</span>
       </h1>
-      <p className="mt-6 max-w-md text-lg text-gray-body">
+      <p className="mt-6 w-full max-w-md text-lg text-gray-body">
         Nothing renders at this URL. The hooks all exist, though — and every
         one runs live in the docs.
       </p>
