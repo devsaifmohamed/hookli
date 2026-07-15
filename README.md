@@ -78,6 +78,10 @@ function Component() {
 > now, each hook links to its source.
 
 - **[`useToggle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-toggle/use-toggle.ts)** — boolean state with a `toggle()` and an explicit setter.
+- **[`useBoolean`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-boolean/use-boolean.ts)** — boolean state with `setTrue` / `setFalse` / `toggle` helpers.
+- **[`useCounter`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-counter/use-counter.ts)** — numeric counter with `increment` / `decrement` / `reset` / `setCount`.
+- **[`useStep`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-step/use-step.ts)** — 1-indexed step counter for wizards, with next/prev guards.
+- **[`useCountdown`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-countdown/use-countdown.ts)** — self-stopping countdown/count-up timer with start/stop/reset.
 - **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
 - **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
