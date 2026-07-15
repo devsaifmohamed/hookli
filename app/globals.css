@@ -116,6 +116,23 @@ body {
   box-shadow: inset 2px 0 0 0 var(--color-accent);
 }
 
+/* Floating donate button (components/donate-button.tsx): a gentle idle bob so
+   the support CTA quietly draws the eye. Neutralised by the reduced-motion
+   guard below. */
+@keyframes donate-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.donate-float {
+  animation: donate-bob 3.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

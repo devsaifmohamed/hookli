@@ -3,6 +3,7 @@ import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { DonateButton } from "@/components/donate-button";
 import { SITE_URL, TAGLINE } from "@/lib/site";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -62,6 +63,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <DonateButton />
       </body>
     </html>
   );
