@@ -84,6 +84,10 @@ function Component() {
 - **[`useCountdown`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-countdown/use-countdown.ts)** — self-stopping countdown/count-up timer with start/stop/reset.
 - **[`useInterval`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-interval/use-interval.ts)** — run a callback on a fixed interval; pass `null` delay to pause.
 - **[`useTimeout`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-timeout/use-timeout.ts)** — run a callback once after a delay; pass `null` delay to cancel.
+- **[`useIsomorphicLayoutEffect`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-isomorphic-layout-effect/use-isomorphic-layout-effect.ts)** — `useLayoutEffect` on the client, `useEffect` on the server.
+- **[`useEventCallback`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-event-callback/use-event-callback.ts)** — a stable callback identity that always calls the latest function.
+- **[`useEventListener`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-event-listener/use-event-listener.ts)** — typed `addEventListener` for window/document/element/media-query targets.
+- **[`useUnmount`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-unmount/use-unmount.ts)** — run a cleanup function once, on unmount.
 - **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
 - **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
