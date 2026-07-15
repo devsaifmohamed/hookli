@@ -125,3 +125,18 @@ export function getHook(slug: string): HookEntry | undefined {
 export function hooksByCategory(category: HookCategory): HookEntry[] {
   return HOOKS.filter((hook) => hook.category === category);
 }
+
+/* Sibling hooks to surface at the bottom of a hook page: same category first,
+   topped up in registry order so every page always shows `limit` suggestions. */
+export function relatedHooks(slug: string, limit = 3): HookEntry[] {
+  const current = getHook(slug);
+  if (!current) return [];
+  const sameCategory = HOOKS.filter(
+    (hook) => hook.category === current.category && hook.slug !== slug,
+  );
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
+  const fill = HOOKS.filter(
+    (hook) => hook.slug !== slug && !sameCategory.includes(hook),
+  );
+  return [...sameCategory, ...fill].slice(0, limit);
+}

@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { ApiTable } from "@/components/api-table";
 import { CodeBlock, HighlightedCode } from "@/components/code-block";
+import { HookCard } from "@/components/hook-card";
 import { HookDemo } from "@/components/hook-demo";
 import { ArrowRightIcon, ExternalLinkIcon } from "@/components/icons";
 import { OnThisPage, type TocItem } from "@/components/on-this-page";
 import { getHookDoc } from "@/lib/hook-docs";
 import { getHookSource, hookSourceUrl } from "@/lib/hook-sources";
-import { CATEGORY_LABELS, HOOKS, type HookEntry } from "@/lib/hooks-registry";
+import { CATEGORY_LABELS, HOOKS, relatedHooks, type HookEntry } from "@/lib/hooks-registry";
 import { GITHUB_URL } from "@/lib/site";
 import { linkifyWebApis } from "@/lib/web-apis";
 
@@ -29,6 +30,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
   const index = HOOKS.findIndex((entry) => entry.slug === hook.slug);
   const prev = index > 0 ? HOOKS[index - 1] : undefined;
   const next = index < HOOKS.length - 1 ? HOOKS[index + 1] : undefined;
+  const related = relatedHooks(hook.slug);
 
   /* Highlight the line that actually calls the hook in the Usage snippet. */
   const usageLines = doc?.usage.trim().split("\n") ?? [];
@@ -114,6 +116,17 @@ export function HookPage({ hook }: { hook: HookEntry }) {
               <ExternalLinkIcon className="size-4" aria-hidden="true" />
             </a>
           </p>
+        )}
+
+        {related.length > 0 && (
+          <section aria-label="Related hooks" className="mt-14">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-syntax">Related hooks</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {related.map((entry) => (
+                <HookCard key={entry.slug} hook={entry} />
+              ))}
+            </div>
+          </section>
         )}
 
         <nav aria-label="Adjacent hooks" className="mt-12 flex items-center justify-between gap-4 border-t border-slate-syntax/40 pt-6">
