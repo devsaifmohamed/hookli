@@ -17,6 +17,7 @@
   <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=003748&label=total%20downloads" alt="total npm downloads" /></a>
   <a href="https://bundlephobia.com/package/hookli"><img src="https://img.shields.io/bundlephobia/minzip/hookli?style=flat-square&color=30C5CA" alt="minzipped size" /></a>
   <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=003748" alt="GitHub stars" /></a>
+  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-30C5CA?style=flat-square&logo=githubsponsors&logoColor=white" alt="Sponsor" /></a>
   <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=8FB6C2" alt="license" />
 </p>
 
@@ -98,11 +99,20 @@ const { data } = useFetch<Product[]>("/api/products"); // data: Product[] | null
 const debounced = useDebounce(query, 300);              // debounced: typeof query
 ```
 
+## 💖 Support hookli
+
+hookli is free and open source, built and maintained in the open. If it saves you time:
+
+- ⭐ **[Star the repo](https://github.com/saifmohamedsv/hookli)** — it's the #1 way to help others find it.
+- 💖 **[Become a sponsor](https://github.com/sponsors/saifmohamedsv)** — fund ongoing maintenance and new hooks.
+
+Every star and sponsorship genuinely helps keep this going. Thank you! 🙏
+
 ## 🤝 Contributing
 
-Issues and PRs are welcome. Add a hook as `src/hooks/use<Name>.hook.ts`, export it from
-`src/hooks/index.ts`, keep it SSR-safe, and make sure `npx tsc --noEmit` and `yarn build`
-are both green.
+Contributions of any size are welcome — see **[CONTRIBUTING.md](./CONTRIBUTING.md)**. In short:
+each hook lives in its own folder under `src/hooks/use-<name>/` (hook + colocated vitest test +
+barrel), keep it SSR-safe, and make sure `bash ralph/check.sh` (typecheck + tests + build) is green.
 
 ## 📄 License
 

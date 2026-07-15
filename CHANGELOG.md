@@ -2,6 +2,9 @@
 
 All notable changes are documented here. This project follows semantic-ish versioning.
 
+## 1.3.20 — 2026-07-15
+- README: add a Sponsor badge + "Support hookli" section (star + sponsor).
+
 ## 1.3.19 — 2026-07-13
 - Packaging: `sideEffects: false` + `exports` map for better tree-shaking.
 - Repo: per-hook folder structure (usehooks-ts style), vitest test suite, CI, and community-health files.
