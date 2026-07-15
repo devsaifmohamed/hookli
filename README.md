@@ -105,6 +105,11 @@ function Component() {
 - **[`useMousePosition`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-mouse-position/use-mouse-position.ts)** — tracks the cursor `{ x, y }` within an element.
 - **[`useInfiniteScroll`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-infinite-scroll/use-infinite-scroll.ts)** — runs a loader when the page nears the bottom.
 - **[`useGeoLocation`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-geo-location/use-geo-location.ts)** — reads the user's coordinates via the Geolocation API.
+- **[`useHover`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-hover/use-hover.ts)** — tracks whether the pointer is over a ref'd element.
+- **[`useIntersectionObserver`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-intersection-observer/use-intersection-observer.ts)** — observes an element's viewport intersection via a `ref` callback, with `freezeOnceVisible`.
+- **[`useResizeObserver`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-resize-observer/use-resize-observer.ts)** — measures an element's `{ width, height }` reactively via `ResizeObserver`.
+- **[`useScrollLock`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-scroll-lock/use-scroll-lock.ts)** — locks/unlocks scrolling on the body or a target, compensating for the scrollbar.
+- **[`useClickAnyWhere`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-click-any-where/use-click-any-where.ts)** — fires a handler on every click anywhere in the document.
 
 ## 🧪 TypeScript
 
