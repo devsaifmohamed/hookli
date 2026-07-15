@@ -239,6 +239,45 @@ export const HOOKS: readonly HookEntry[] = [
       "useInfiniteScroll(fetchMoreData: () => Promise<void>): boolean",
   },
   {
+    slug: "use-hover",
+    name: "useHover",
+    description: "Tracks whether the pointer is hovering an element.",
+    category: "dom",
+    signature:
+      "useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean",
+  },
+  {
+    slug: "use-intersection-observer",
+    name: "useIntersectionObserver",
+    description: "Observe an element's viewport intersection reactively.",
+    category: "dom",
+    signature:
+      "useIntersectionObserver(options?: UseIntersectionObserverOptions): UseIntersectionObserverReturn",
+  },
+  {
+    slug: "use-resize-observer",
+    name: "useResizeObserver",
+    description: "Measure an element's size reactively via ResizeObserver.",
+    category: "dom",
+    signature:
+      "useResizeObserver<T extends HTMLElement = HTMLElement>(ref: RefObject<T>, options?: UseResizeObserverOptions): ResizeObserverSize",
+  },
+  {
+    slug: "use-scroll-lock",
+    name: "useScrollLock",
+    description: "Lock and restore scrolling on the body or an element.",
+    category: "dom",
+    signature: "useScrollLock(options?: UseScrollLockOptions): UseScrollLockReturn",
+  },
+  {
+    slug: "use-click-any-where",
+    name: "useClickAnyWhere",
+    description: "Run a handler on every click anywhere in the document.",
+    category: "dom",
+    signature:
+      "useClickAnyWhere(handler: (event: MouseEvent) => void): void",
+  },
+  {
     slug: "use-fetch",
     name: "useFetch",
     description: "Declarative fetch with loading and error status.",

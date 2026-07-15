@@ -1039,6 +1039,259 @@ export const useInfiniteScroll = (fetchMoreData: FetchMoreData): boolean => {
 };
 `,
   },
+  "use-hover": {
+    path: "src/hooks/use-hover/use-hover.ts",
+    source: `import { RefObject, useState } from "react";
+import { useEventListener } from "../use-event-listener/use-event-listener";
+
+export const useHover = <T extends HTMLElement = HTMLElement>(
+  elementRef: RefObject<T>,
+): boolean => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEventListener("mouseenter", () => setIsHovered(true), elementRef);
+  useEventListener("mouseleave", () => setIsHovered(false), elementRef);
+
+  return isHovered;
+};
+`,
+  },
+  "use-intersection-observer": {
+    path: "src/hooks/use-intersection-observer/use-intersection-observer.ts",
+    source: `import { useCallback, useEffect, useRef, useState } from "react";
+
+interface UseIntersectionObserverOptions {
+  threshold?: number | number[];
+  root?: Element | Document | null;
+  rootMargin?: string;
+  freezeOnceVisible?: boolean;
+  initialIsIntersecting?: boolean;
+  onChange?: (
+    isIntersecting: boolean,
+    entry: IntersectionObserverEntry,
+  ) => void;
+}
+
+interface UseIntersectionObserverReturn {
+  ref: (node: Element | null) => void;
+  isIntersecting: boolean;
+  entry: IntersectionObserverEntry | null;
+}
+
+export const useIntersectionObserver = ({
+  threshold = 0,
+  root = null,
+  rootMargin = "0%",
+  freezeOnceVisible = false,
+  initialIsIntersecting = false,
+  onChange,
+}: UseIntersectionObserverOptions = {}): UseIntersectionObserverReturn => {
+  const [element, setElement] = useState<Element | null>(null);
+  const [isIntersecting, setIsIntersecting] = useState(initialIsIntersecting);
+  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
+
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  const frozen = entry?.isIntersecting && freezeOnceVisible;
+
+  const ref = useCallback((node: Element | null) => {
+    setElement(node);
+  }, []);
+
+  useEffect(() => {
+    if (!element) return;
+    if (frozen) return;
+    if (typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([observerEntry]) => {
+        setEntry(observerEntry);
+        setIsIntersecting(observerEntry.isIntersecting);
+        onChangeRef.current?.(observerEntry.isIntersecting, observerEntry);
+      },
+      { threshold, root, rootMargin },
+    );
+
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+    };
+  }, [element, JSON.stringify(threshold), root, rootMargin, frozen]);
+
+  return { ref, isIntersecting, entry };
+};
+`,
+  },
+  "use-resize-observer": {
+    path: "src/hooks/use-resize-observer/use-resize-observer.ts",
+    source: `import { RefObject, useEffect, useRef, useState } from "react";
+
+interface ResizeObserverSize {
+  width: number | undefined;
+  height: number | undefined;
+}
+
+interface UseResizeObserverOptions {
+  box?: ResizeObserverBoxOptions;
+  onResize?: (size: ResizeObserverSize) => void;
+}
+
+export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T>,
+  options: UseResizeObserverOptions = {},
+): ResizeObserverSize => {
+  const { box = "content-box" } = options;
+  const [size, setSize] = useState<ResizeObserverSize>({
+    width: undefined,
+    height: undefined,
+  });
+
+  const onResizeRef = useRef(options.onResize);
+  onResizeRef.current = options.onResize;
+
+  const previous = useRef<ResizeObserverSize>({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    if (typeof ResizeObserver === "undefined") return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      if (!entry) return;
+
+      const boxSize =
+        box === "border-box"
+          ? entry.borderBoxSize
+          : box === "device-pixel-content-box"
+            ? entry.devicePixelContentBoxSize
+            : entry.contentBoxSize;
+
+      const measured = Array.isArray(boxSize) ? boxSize[0] : boxSize;
+      const width = measured ? measured.inlineSize : entry.contentRect.width;
+      const height = measured ? measured.blockSize : entry.contentRect.height;
+
+      if (
+        previous.current.width === width &&
+        previous.current.height === height
+      ) {
+        return;
+      }
+
+      const next = { width, height };
+      previous.current = next;
+      setSize(next);
+      onResizeRef.current?.(next);
+    });
+
+    observer.observe(element, { box });
+    return () => {
+      observer.disconnect();
+    };
+  }, [ref, box]);
+
+  return size;
+};
+`,
+  },
+  "use-scroll-lock": {
+    path: "src/hooks/use-scroll-lock/use-scroll-lock.ts",
+    source: `import { useCallback, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+interface UseScrollLockOptions {
+  autoLock?: boolean;
+  lockTarget?: HTMLElement | string;
+  widthReflow?: boolean;
+}
+
+interface UseScrollLockReturn {
+  isLocked: boolean;
+  lock: () => void;
+  unlock: () => void;
+}
+
+interface OriginalStyle {
+  overflow: string;
+  paddingRight: string;
+}
+
+export const useScrollLock = (
+  options: UseScrollLockOptions = {},
+): UseScrollLockReturn => {
+  const { autoLock = true, lockTarget, widthReflow = true } = options;
+  const [isLocked, setIsLocked] = useState(false);
+  const target = useRef<HTMLElement | null>(null);
+  const originalStyle = useRef<OriginalStyle | null>(null);
+
+  const resolveTarget = useCallback((): HTMLElement | null => {
+    if (typeof document === "undefined") return null;
+    if (lockTarget instanceof HTMLElement) return lockTarget;
+    if (typeof lockTarget === "string") {
+      return document.querySelector<HTMLElement>(lockTarget);
+    }
+    return document.body;
+  }, [lockTarget]);
+
+  const lock = useCallback(() => {
+    const node = resolveTarget();
+    if (!node) return;
+
+    target.current = node;
+    originalStyle.current = {
+      overflow: node.style.overflow,
+      paddingRight: node.style.paddingRight,
+    };
+
+    if (widthReflow && typeof window !== "undefined") {
+      const scrollbarWidth = window.innerWidth - node.clientWidth;
+      if (scrollbarWidth > 0) {
+        const currentPadding =
+          parseInt(window.getComputedStyle(node).paddingRight, 10) || 0;
+        node.style.paddingRight = \`\${currentPadding + scrollbarWidth}px\`;
+      }
+    }
+
+    node.style.overflow = "hidden";
+    setIsLocked(true);
+  }, [resolveTarget, widthReflow]);
+
+  const unlock = useCallback(() => {
+    const node = target.current;
+    if (!node || !originalStyle.current) return;
+
+    node.style.overflow = originalStyle.current.overflow;
+    node.style.paddingRight = originalStyle.current.paddingRight;
+    originalStyle.current = null;
+    setIsLocked(false);
+  }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!autoLock) return;
+    lock();
+    return () => {
+      unlock();
+    };
+  }, [autoLock, lock, unlock]);
+
+  return { isLocked, lock, unlock };
+};
+`,
+  },
+  "use-click-any-where": {
+    path: "src/hooks/use-click-any-where/use-click-any-where.ts",
+    source: `import { useEventListener } from "../use-event-listener/use-event-listener";
+
+export const useClickAnyWhere = (
+  handler: (event: MouseEvent) => void,
+): void => {
+  useEventListener("click", handler);
+};
+`,
+  },
   "use-fetch": {
     path: "src/hooks/useFetch.hook.ts",
     source: `import { useEffect, useState } from "react";

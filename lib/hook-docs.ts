@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { ApiRow } from "@/components/api-table";
 import { UseBooleanDocDemo } from "@/components/demos/use-boolean-demo";
+import { UseClickAnyWhereDocDemo } from "@/components/demos/use-click-any-where-demo";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
 import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
 import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
@@ -14,7 +15,9 @@ import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-d
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
+import { UseHoverDocDemo } from "@/components/demos/use-hover-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
+import { UseIntersectionObserverDocDemo } from "@/components/demos/use-intersection-observer-demo";
 import { UseIntervalDocDemo } from "@/components/demos/use-interval-demo";
 import { UseIsClientDocDemo } from "@/components/demos/use-is-client-demo";
 import { UseIsMountedDocDemo } from "@/components/demos/use-is-mounted-demo";
@@ -24,6 +27,8 @@ import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-s
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
 import { UseReadLocalStorageDocDemo } from "@/components/demos/use-read-local-storage-demo";
+import { UseResizeObserverDocDemo } from "@/components/demos/use-resize-observer-demo";
+import { UseScrollLockDocDemo } from "@/components/demos/use-scroll-lock-demo";
 import { UseSessionStorageDocDemo } from "@/components/demos/use-session-storage-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
@@ -1360,6 +1365,335 @@ export function Demo() {
         description: "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
       },
     ],
+  },
+  "use-hover": {
+    demo: UseHoverDocDemo,
+    usage: `
+import { useRef } from "react";
+import { useHover } from "hookli";
+
+export function Demo() {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const isHovered = useHover(boxRef);
+
+  return (
+    <div ref={boxRef}>
+      {isHovered ? "Pointer is over me" : "Hover this panel"}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "elementRef",
+        type: "RefObject<T>",
+        description: "Ref to the element whose hover state to track. mouseenter/mouseleave are attached to it and cleaned up automatically.",
+      },
+    ],
+    returns: [
+      {
+        name: "isHovered",
+        type: "boolean",
+        description: "True while the pointer is over the element, false otherwise. Starts false on the server and until the first mouseenter.",
+      },
+    ],
+  },
+  "use-intersection-observer": {
+    demo: UseIntersectionObserverDocDemo,
+    usage: `
+import { useIntersectionObserver } from "hookli";
+
+export function Demo() {
+  const { ref, isIntersecting } = useIntersectionObserver({
+    threshold: 0.5,
+  });
+
+  return (
+    <div ref={ref}>
+      {isIntersecting ? "In view" : "Scroll me into view"}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseIntersectionObserverOptions",
+        defaultValue: "{}",
+        description: "Observer thresholds, root, and behaviour flags. All optional.",
+      },
+    ],
+    returns: [
+      {
+        name: "ref",
+        type: "(node: Element | null) => void",
+        description: "Ref callback to attach to the element you want to observe.",
+      },
+      {
+        name: "isIntersecting",
+        type: "boolean",
+        description: "Whether the observed element currently intersects the root.",
+      },
+      {
+        name: "entry",
+        type: "IntersectionObserverEntry | null",
+        description: "The most recent observer entry (intersectionRatio, boundingClientRect…), or null before the first report.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseIntersectionObserverOptions",
+        description: "Configures the underlying IntersectionObserver.",
+        rows: [
+          {
+            name: "threshold",
+            type: "number | number[]",
+            defaultValue: "0",
+            description: "One or more visibility ratios at which to fire.",
+          },
+          {
+            name: "root",
+            type: "Element | Document | null",
+            defaultValue: "null",
+            description: "The element used as the viewport. Defaults to the browser viewport.",
+          },
+          {
+            name: "rootMargin",
+            type: "string",
+            defaultValue: '"0%"',
+            description: "Margin around the root, in CSS-margin syntax — grows or shrinks the trigger area.",
+          },
+          {
+            name: "freezeOnceVisible",
+            type: "boolean",
+            defaultValue: "false",
+            description: "Once the target is visible, stop observing and keep the visible state.",
+          },
+          {
+            name: "initialIsIntersecting",
+            type: "boolean",
+            defaultValue: "false",
+            description: "isIntersecting value used before the observer first reports.",
+          },
+          {
+            name: "onChange",
+            type: "(isIntersecting: boolean, entry: IntersectionObserverEntry) => void",
+            description: "Called with the latest entry whenever intersection changes.",
+          },
+        ],
+      },
+      {
+        name: "UseIntersectionObserverReturn",
+        description: "The ref callback plus the current intersection state.",
+        rows: [
+          {
+            name: "ref",
+            type: "(node: Element | null) => void",
+            description: "Attach to the element you want to observe.",
+          },
+          {
+            name: "isIntersecting",
+            type: "boolean",
+            description: "Whether the target currently intersects the root.",
+          },
+          {
+            name: "entry",
+            type: "IntersectionObserverEntry | null",
+            description: "The most recent observer entry, or null before the first report.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-resize-observer": {
+    demo: UseResizeObserverDocDemo,
+    usage: `
+import { useRef } from "react";
+import { useResizeObserver } from "hookli";
+
+export function Demo() {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const { width, height } = useResizeObserver(boxRef);
+
+  return (
+    <div ref={boxRef}>
+      {width === undefined ? "Measuring…" : \`\${Math.round(width)} × \${Math.round(height ?? 0)}\`}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "ref",
+        type: "RefObject<T>",
+        description: "Ref to the element to measure. The observer attaches to ref.current.",
+      },
+      {
+        name: "options",
+        type: "UseResizeObserverOptions",
+        defaultValue: "{}",
+        description: "Which box to measure and an optional resize callback.",
+      },
+    ],
+    returns: [
+      {
+        name: "width",
+        type: "number | undefined",
+        description: "The element's measured width; undefined until the first observed layout.",
+      },
+      {
+        name: "height",
+        type: "number | undefined",
+        description: "The element's measured height; undefined until the first observed layout.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseResizeObserverOptions",
+        description: "Configures the underlying ResizeObserver.",
+        rows: [
+          {
+            name: "box",
+            type: "ResizeObserverBoxOptions",
+            defaultValue: '"content-box"',
+            description: "Which box model to measure: content-box, border-box or device-pixel-content-box.",
+          },
+          {
+            name: "onResize",
+            type: "(size: ResizeObserverSize) => void",
+            description: "Called with the freshly measured size on every resize.",
+          },
+        ],
+      },
+      {
+        name: "ResizeObserverSize",
+        description: "The size the hook returns; both values are undefined until the first measurement.",
+        rows: [
+          {
+            name: "width",
+            type: "number | undefined",
+            description: "Measured width in pixels.",
+          },
+          {
+            name: "height",
+            type: "number | undefined",
+            description: "Measured height in pixels.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-scroll-lock": {
+    demo: UseScrollLockDocDemo,
+    usage: `
+import { useScrollLock } from "hookli";
+
+export function Modal({ onClose }: { onClose: () => void }) {
+  // Locks <body> scroll on mount, restores it on unmount.
+  useScrollLock();
+
+  return (
+    <div role="dialog" onClick={onClose}>
+      Scrolling behind this modal is frozen.
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseScrollLockOptions",
+        defaultValue: "{}",
+        description: "Auto-lock behaviour, the lock target, and scrollbar compensation.",
+      },
+    ],
+    returns: [
+      {
+        name: "isLocked",
+        type: "boolean",
+        description: "Whether the target's scroll is currently locked.",
+      },
+      {
+        name: "lock",
+        type: "() => void",
+        description: "Lock the target's scroll (sets overflow: hidden, optionally padding-compensated).",
+      },
+      {
+        name: "unlock",
+        type: "() => void",
+        description: "Restore the target's original scroll behaviour.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseScrollLockOptions",
+        description: "Controls what is locked and when.",
+        rows: [
+          {
+            name: "autoLock",
+            type: "boolean",
+            defaultValue: "true",
+            description: "Lock automatically on mount and restore on unmount.",
+          },
+          {
+            name: "lockTarget",
+            type: "HTMLElement | string",
+            defaultValue: "<body>",
+            description: "Element (or CSS selector) whose scroll to lock. Defaults to the document body.",
+          },
+          {
+            name: "widthReflow",
+            type: "boolean",
+            defaultValue: "true",
+            description: "Compensate for the removed scrollbar with padding so the layout does not shift.",
+          },
+        ],
+      },
+      {
+        name: "UseScrollLockReturn",
+        description: "The current lock state plus manual controls.",
+        rows: [
+          {
+            name: "isLocked",
+            type: "boolean",
+            description: "Whether the target's scroll is currently locked.",
+          },
+          {
+            name: "lock",
+            type: "() => void",
+            description: "Lock the target's scroll.",
+          },
+          {
+            name: "unlock",
+            type: "() => void",
+            description: "Restore the target's original scroll behaviour.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-click-any-where": {
+    demo: UseClickAnyWhereDocDemo,
+    usage: `
+import { useState } from "react";
+import { useClickAnyWhere } from "hookli";
+
+export function Demo() {
+  const [clicks, setClicks] = useState(0);
+
+  useClickAnyWhere(() => setClicks((prev) => prev + 1));
+
+  return <p>Document clicks: {clicks}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "handler",
+        type: "(event: MouseEvent) => void",
+        description: "Called with the MouseEvent on every document-wide click. The latest handler is always used — no stale closure.",
+      },
+    ],
+    returns: [],
   },
   "use-fetch": {
     demo: UseFetchDocDemo,
