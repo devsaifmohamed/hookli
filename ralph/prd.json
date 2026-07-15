@@ -165,7 +165,7 @@
     {
       "id": "NH9",
       "priority": 12,
-      "status": "todo",
+      "status": "done",
       "title": "Misc utilities",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useCopyToClipboard()→[copiedText,copy] (Clipboard API, returns Promise<boolean>); useScript(src, options?)→'idle'|'loading'|'ready'|'error'; useMap(initial?)→[Omit<Map>, {set,setAll,remove,reset}]; useTernaryDarkMode({defaultValue?,localStorageKey?})→{isDarkMode,ternaryDarkMode,setTernaryDarkMode,toggleTernaryDarkMode}",
       "acceptance": [

@@ -113,6 +113,10 @@ function Component() {
 - **[`useMediaQuery`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-media-query/use-media-query.ts)** — tracks whether a CSS media query matches, SSR-safe via `matchMedia`.
 - **[`useWindowSize`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-window-size/use-window-size.ts)** — tracks the viewport's `{ width, height }`, updating on resize.
 - **[`useScreen`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-screen/use-screen.ts)** — tracks the `window.screen` object, refreshing on resize.
+- **[`useCopyToClipboard`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-copy-to-clipboard/use-copy-to-clipboard.ts)** — copies text via the Clipboard API and tracks the last copied value.
+- **[`useScript`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-script/use-script.ts)** — loads an external script and reports `idle`/`loading`/`ready`/`error` status.
+- **[`useMap`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-map/use-map.ts)** — a `Map` as immutable state with `set`/`setAll`/`remove`/`reset` helpers.
+- **[`useTernaryDarkMode`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-ternary-dark-mode/use-ternary-dark-mode.ts)** — three-state (`system`/`dark`/`light`) dark-mode preference, persisted and OS-aware.
 
 ## 🧪 TypeScript
 
