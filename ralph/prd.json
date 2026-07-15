@@ -266,6 +266,132 @@
         "Don't push or deploy — leave that to the human"
       ],
       "status": "done"
+    },
+    {
+      "id": "DH1",
+      "priority": 101,
+      "status": "todo",
+      "title": "Docs: state primitives",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useBoolean, useCounter, useStep, useCountdown, useMap. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH2",
+      "priority": 102,
+      "status": "todo",
+      "title": "Docs: timers",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useInterval, useTimeout. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH3",
+      "priority": 103,
+      "status": "todo",
+      "title": "Docs: effect & lifecycle utilities",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useIsomorphicLayoutEffect, useEventCallback, useEventListener, useUnmount. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH4",
+      "priority": 104,
+      "status": "todo",
+      "title": "Docs: SSR/mount helpers",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useIsClient, useIsMounted, useDocumentTitle. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH5",
+      "priority": 105,
+      "status": "todo",
+      "title": "Docs: debounce family",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useDebounceValue, useDebounceCallback. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH6",
+      "priority": 106,
+      "status": "todo",
+      "title": "Docs: storage",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useSessionStorage, useReadLocalStorage. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH7",
+      "priority": 107,
+      "status": "todo",
+      "title": "Docs: DOM & observers",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useHover, useIntersectionObserver, useResizeObserver, useScrollLock, useClickAnyWhere. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH8",
+      "priority": 108,
+      "status": "todo",
+      "title": "Docs: viewport & device",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useMediaQuery, useScreen, useWindowSize. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
+    },
+    {
+      "id": "DH9",
+      "priority": 109,
+      "status": "todo",
+      "title": "Docs: misc utilities",
+      "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useCopyToClipboard, useScript, useTernaryDarkMode. Match the existing use-toggle page template exactly.",
+      "acceptance": [
+        "For EACH hook in the batch: (a) add a HookEntry to lib/hooks-registry.ts (slug kebab, name, one-line description, best-fit existing category state/effects/dom/data, signature copied accurately from hookli@1.4.0 .d.ts in node_modules/hookli); (b) add a live demo client component components/demos/use-<name>-demo.tsx importing the hook from 'hookli'; (c) add a HOOK_DOCS entry in lib/hook-docs.ts (demo, usage snippet, parameters, returns); (d) add a vendored source snapshot to lib/hook-sources.ts (accurate to hookli@1.4.0)",
+        "Demos are genuinely interactive and SSR-safe (next build prerenders — guard browser APIs); no auto-permission prompts (geolocation-style) on load",
+        "Any hardcoded hook counts (e.g. '11 hooks') derive from HOOKS.length instead",
+        "Follow AGENTS.md exactly: kebab-case files, PascalCase exports, token-only styling, import order, a11y (reduced-motion, focus, aria)",
+        "bash ralph/check.sh is green (lint + tsc + next build)"
+      ]
     }
   ]
 }
