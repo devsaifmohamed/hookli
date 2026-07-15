@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRightIcon, GitPullRequestIcon, HeartIcon, StarIcon } from "@/components/icons";
+import { ArrowRightIcon, GitHubSponsorsIcon, GitPullRequestIcon, StarIcon } from "@/components/icons";
 import { GITHUB_URL, SPONSOR_URL } from "@/lib/site";
 
 const CARDS = [
@@ -20,7 +20,7 @@ const CARDS = [
     external: false,
   },
   {
-    icon: <HeartIcon className="size-6" />,
+    icon: <GitHubSponsorsIcon className="size-6" />,
     title: "Sponsor",
     body: "Back ongoing maintenance and new hooks through GitHub Sponsors — any amount helps.",
     label: "Become a sponsor",

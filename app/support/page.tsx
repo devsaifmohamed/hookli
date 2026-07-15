@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import {
   ArrowRightIcon,
   GitHubIcon,
+  GitHubSponsorsIcon,
   GitPullRequestIcon,
   HeartIcon,
+  KofiIcon,
   StarIcon,
 } from "@/components/icons";
-import { GITHUB_URL, SPONSOR_URL } from "@/lib/site";
+import { GITHUB_URL, KOFI_URL, SPONSOR_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Support",
@@ -135,8 +137,17 @@ export default function SupportPage() {
             rel="noopener noreferrer"
             className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-medium text-ground transition-opacity duration-200 hover:opacity-90"
           >
-            <HeartIcon className="size-4" aria-hidden="true" />
-            Sponsor on GitHub
+            <GitHubSponsorsIcon className="size-4" />
+            GitHub Sponsors
+          </a>
+          <a
+            href={KOFI_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-fg transition-colors duration-200 hover:border-slate-syntax hover:bg-ground-overlay"
+          >
+            <KofiIcon className="size-4" aria-hidden="true" />
+            Buy me a coffee
           </a>
         </div>
       </section>
