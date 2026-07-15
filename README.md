@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/badge/SSR--safe-30C5CA?style=for-the-badge" alt="SSR-safe" />
   <img src="https://img.shields.io/badge/tree--shakable-003748?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-30C5CA?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/11_hooks-003748?style=for-the-badge" alt="11 hooks" />
+  <img src="https://img.shields.io/badge/40_hooks-003748?style=for-the-badge" alt="40 hooks" />
 </p>
 
 <p align="center">
