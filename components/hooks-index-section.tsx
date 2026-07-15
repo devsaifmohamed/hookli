@@ -1,4 +1,5 @@
 import { HookCard } from "@/components/hook-card";
+import { SectionHeading } from "@/components/section-heading";
 import {
   CATEGORY_LABELS,
   CATEGORY_ORDER,
@@ -11,12 +12,13 @@ import {
 export function HooksIndexSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
-      <h2 className="text-center text-2xl">All {HOOKS.length} hooks</h2>
-      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">
-        Each one documented with a live demo — try it before you install it.
-      </p>
+      <SectionHeading
+        eyebrow="The library"
+        title={`All ${HOOKS.length} hooks`}
+        subtitle="Each one documented with a live demo — try it before you install it."
+      />
       {CATEGORY_ORDER.map((category) => (
-        <div key={category} className="mt-10">
+        <div key={category} className="mt-12">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">
             {CATEGORY_LABELS[category]}
           </h3>

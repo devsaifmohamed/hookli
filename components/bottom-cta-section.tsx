@@ -8,7 +8,7 @@ export function BottomCtaSection() {
   return (
     <section className="border-t border-slate-syntax/40">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-4 py-20 text-center sm:px-6">
-        <h2 className="text-2xl">Stop rewriting the same hooks.</h2>
+        <h2 className="text-3xl">Stop rewriting the same hooks.</h2>
         <InstallCommand className="mt-8" />
         <Link
           href="/docs"

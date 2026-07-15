@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/components/code-block";
+import { SectionHeading } from "@/components/section-heading";
 import { UseToggleDemo } from "@/components/demos/use-toggle-demo";
 
 /* The demo component mirrors this sample line for line (plus styling classes) —
@@ -20,11 +21,16 @@ export function LightSwitch() {
 export function LiveProofSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
-      <h2 className="text-center text-2xl">This demo is running the code beside it.</h2>
-      <p className="mx-auto mt-3 max-w-lg text-center text-gray-body">
-        The preview imports <code className="text-sm">useToggle</code> straight from the published npm package — the same code you&apos;d ship.
-      </p>
-      <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-2">
+      <SectionHeading
+        eyebrow="Live proof"
+        title="This demo runs the code beside it"
+        subtitle={
+          <>
+            The preview imports <code className="text-sm">useToggle</code> straight from the published npm package — the same code you&apos;d ship.
+          </>
+        }
+      />
+      <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-2">
         <CodeBlock code={SAMPLE} title="light-switch.tsx" />
         <div className="surface flex min-h-[180px] flex-col overflow-hidden rounded-xl">
           <p className="flex items-center gap-2 border-b border-slate-syntax/40 px-4 py-[15px] text-xs text-gray-body">

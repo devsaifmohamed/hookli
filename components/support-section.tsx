@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SectionHeading } from "@/components/section-heading";
 import { ArrowRightIcon, GitHubSponsorsIcon, GitPullRequestIcon, StarIcon } from "@/components/icons";
 import { GITHUB_URL, SPONSOR_URL } from "@/lib/site";
 
@@ -32,9 +33,12 @@ const CARDS = [
 export function SupportSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
-      <h2 className="text-center text-2xl">Support hookli</h2>
-      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">hookli is free and ISC-licensed. It runs on stars, issues, pull requests, and sponsorships.</p>
-      <div className="mt-10 grid gap-4 sm:grid-cols-3">
+      <SectionHeading
+        eyebrow="Get involved"
+        title="Support hookli"
+        subtitle="hookli is free and ISC-licensed. It runs on stars, issues, pull requests, and sponsorships."
+      />
+      <div className="mt-12 grid gap-4 sm:grid-cols-3">
         {CARDS.map((card) => {
           const inner = (
             <>
