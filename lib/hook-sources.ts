@@ -482,6 +482,72 @@ export const useUnmount = (fn: () => void) => {
 };
 `,
   },
+  "use-is-client": {
+    path: "src/hooks/use-is-client/use-is-client.ts",
+    source: `import { useEffect, useState } from "react";
+
+export const useIsClient = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient;
+};
+`,
+  },
+  "use-is-mounted": {
+    path: "src/hooks/use-is-mounted/use-is-mounted.ts",
+    source: `import { useCallback, useEffect, useRef } from "react";
+
+export const useIsMounted = () => {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  return useCallback(() => isMounted.current, []);
+};
+`,
+  },
+  "use-document-title": {
+    path: "src/hooks/use-document-title/use-document-title.ts",
+    source: `import { useRef } from "react";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+import { useUnmount } from "../use-unmount/use-unmount";
+
+interface UseDocumentTitleOptions {
+  preserveTitleOnUnmount?: boolean;
+}
+
+export const useDocumentTitle = (
+  title: string,
+  options: UseDocumentTitleOptions = {},
+) => {
+  const { preserveTitleOnUnmount = true } = options;
+  const defaultTitle = useRef<string | null>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    defaultTitle.current = window.document.title;
+  }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    window.document.title = title;
+  }, [title]);
+
+  useUnmount(() => {
+    if (!preserveTitleOnUnmount && defaultTitle.current !== null) {
+      window.document.title = defaultTitle.current;
+    }
+  });
+};
+`,
+  },
   "use-event-listener": {
     path: "src/hooks/use-event-listener/use-event-listener.ts",
     source: `import { RefObject, useEffect, useRef } from "react";

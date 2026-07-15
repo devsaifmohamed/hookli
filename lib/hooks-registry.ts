@@ -153,6 +153,28 @@ export const HOOKS: readonly HookEntry[] = [
     signature: "useUnmount(fn: () => void): void",
   },
   {
+    slug: "use-is-client",
+    name: "useIsClient",
+    description: "Reports false on the server and true after hydration.",
+    category: "effects",
+    signature: "useIsClient(): boolean",
+  },
+  {
+    slug: "use-is-mounted",
+    name: "useIsMounted",
+    description: "A stable getter for whether the component is still mounted.",
+    category: "effects",
+    signature: "useIsMounted(): () => boolean",
+  },
+  {
+    slug: "use-document-title",
+    name: "useDocumentTitle",
+    description: "Keeps document.title in sync with a value, SSR-safe.",
+    category: "effects",
+    signature:
+      "useDocumentTitle(title: string, options?: UseDocumentTitleOptions): void",
+  },
+  {
     slug: "use-event-listener",
     name: "useEventListener",
     description: "Subscribe to a window, document or element event with cleanup.",

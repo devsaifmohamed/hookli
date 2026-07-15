@@ -6,6 +6,7 @@ import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
 import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
+import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
 import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
@@ -13,6 +14,8 @@ import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseIntervalDocDemo } from "@/components/demos/use-interval-demo";
+import { UseIsClientDocDemo } from "@/components/demos/use-is-client-demo";
+import { UseIsMountedDocDemo } from "@/components/demos/use-is-mounted-demo";
 import { UseIsomorphicLayoutEffectDocDemo } from "@/components/demos/use-isomorphic-layout-effect-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
@@ -287,6 +290,95 @@ export function Demo() {
       },
     ],
     returns: [],
+  },
+  "use-is-client": {
+    demo: UseIsClientDocDemo,
+    usage: `
+import { useIsClient } from "hookli";
+
+export function Demo() {
+  const isClient = useIsClient();
+
+  if (!isClient) return <p>Rendering on the server…</p>;
+
+  return <p>Now running in the browser.</p>;
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "isClient",
+        type: "boolean",
+        description: "false during server rendering and the first hydration pass, then true once mounted in the browser. Gate browser-only UI on it to keep both renders identical.",
+      },
+    ],
+  },
+  "use-is-mounted": {
+    demo: UseIsMountedDocDemo,
+    usage: `
+import { useIsMounted } from "hookli";
+
+export function Demo() {
+  const isMounted = useIsMounted();
+
+  async function load() {
+    const data = await fetchData();
+    if (isMounted()) setData(data);
+  }
+
+  return <button onClick={load}>Load</button>;
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "isMounted",
+        type: "() => boolean",
+        description: "A stable getter that returns true while mounted and false after unmount. Call it inside async callbacks before setting state; its identity never changes, so it is safe to omit from dependency arrays.",
+      },
+    ],
+  },
+  "use-document-title": {
+    demo: UseDocumentTitleDocDemo,
+    usage: `
+import { useDocumentTitle } from "hookli";
+
+export function Demo() {
+  useDocumentTitle("Dashboard — hookli", {
+    preserveTitleOnUnmount: false,
+  });
+
+  return <h1>Dashboard</h1>;
+}
+`,
+    parameters: [
+      {
+        name: "title",
+        type: "string",
+        description: "The document title to apply. Written to document.title in a layout effect on the client and skipped during server rendering.",
+      },
+      {
+        name: "options",
+        type: "UseDocumentTitleOptions",
+        defaultValue: "{}",
+        description: "Behaviour options (see below).",
+      },
+    ],
+    returns: [],
+    typeAliases: [
+      {
+        name: "UseDocumentTitleOptions",
+        description: "Options controlling unmount behaviour.",
+        rows: [
+          {
+            name: "preserveTitleOnUnmount",
+            type: "boolean",
+            defaultValue: "true",
+            description: "When false, the title captured on mount is restored when the component unmounts. Defaults to true, which leaves the title in place.",
+          },
+        ],
+      },
+    ],
   },
   "use-event-listener": {
     demo: UseEventListenerDocDemo,
