@@ -150,7 +150,7 @@
     {
       "id": "NH8",
       "priority": 11,
-      "status": "todo",
+      "status": "done",
       "title": "Viewport & device",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useMediaQuery(query, {defaultValue?,initializeWithValue?})→boolean (SSR-safe, matchMedia); useScreen({initializeWithValue?})→Screen|null; useWindowSize({initializeWithValue?})→{width,height}",
       "acceptance": [
