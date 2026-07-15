@@ -5,3 +5,6 @@
 
 2026-07-11T00:00Z · seeded · backlog created from initial code scan (T1–T4). Gate = ralph/check.sh (tsc --noEmit + tsup build).
 2026-07-11T00:00Z · fixed · T1 useDarkMode (persist current value, SSR-safe) + T2 useLocalStorageWithExpiry (return inner value, honor expiry in state, drop useLocalStorage coupling). Gate green. T3 (broader SSR audit) still todo; effect-based hooks are already client-only.
+2026-07-15T14:26Z · feat · NH1 boolean/counter primitives: useBoolean, useCounter, useStep (1-indexed), useCountdown (self-stopping, SSR-safe timer via effect+ref). 30 tests green, committed 3d5c434. Note: NH2 (useInterval/useTimeout) is next todo — useCountdown inlined its own interval, so NH2 remains independent. prd.json also carries an unrelated pre-existing working-tree change (not staged by this task).
+2026-07-15T11:29Z · b7c0588 · 7m00s · 0 file(s) · gate:green · done 4/12 · review 0 · style: drop inline comments from NH1 hooks (per updated prd 'never' rule)
+2026-07-15T14:32Z · feat · NH2 timers: useInterval + useTimeout (latest-callback ref, null delay pauses/cancels, SSR-safe via effect + cleanup). 8 tests green, 38 total. Note: NH3 (effect/lifecycle utils — useIsomorphicLayoutEffect, useEventCallback, useEventListener, useUnmount) is next todo. prd.json still carries the pre-existing constraints/format reformat from NH1's tree.

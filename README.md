@@ -82,6 +82,8 @@ function Component() {
 - **[`useCounter`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-counter/use-counter.ts)** — numeric counter with `increment` / `decrement` / `reset` / `setCount`.
 - **[`useStep`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-step/use-step.ts)** — 1-indexed step counter for wizards, with next/prev guards.
 - **[`useCountdown`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-countdown/use-countdown.ts)** — self-stopping countdown/count-up timer with start/stop/reset.
+- **[`useInterval`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-interval/use-interval.ts)** — run a callback on a fixed interval; pass `null` delay to pause.
+- **[`useTimeout`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-timeout/use-timeout.ts)** — run a callback once after a delay; pass `null` delay to cancel.
 - **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
 - **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
