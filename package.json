@@ -28,7 +28,7 @@
   ],
   "author": "Saif Mohamed <saifmohamed.dev@gmail.com> (https://linkedin.com/in/saifmohamedsv/)",
   "license": "ISC",
-  "homepage": "https://github.com/saifmohamedsv/hookli#readme",
+  "homepage": "https://hookli.vercel.app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/saifmohamedsv/hookli.git"
