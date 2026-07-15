@@ -76,46 +76,46 @@ function Component() {
 
 > 📚 Full docs with a **page per hook** and **live demos**: <https://hookli.vercel.app/docs>
 
-- **[`useToggle`](https://hookli.vercel.app/docs/use-toggle/use-toggle.ts)** — boolean state with a `toggle()` and an explicit setter.
-- **[`useBoolean`](https://hookli.vercel.app/docs/use-boolean/use-boolean.ts)** — boolean state with `setTrue` / `setFalse` / `toggle` helpers.
-- **[`useCounter`](https://hookli.vercel.app/docs/use-counter/use-counter.ts)** — numeric counter with `increment` / `decrement` / `reset` / `setCount`.
-- **[`useStep`](https://hookli.vercel.app/docs/use-step/use-step.ts)** — 1-indexed step counter for wizards, with next/prev guards.
-- **[`useCountdown`](https://hookli.vercel.app/docs/use-countdown/use-countdown.ts)** — self-stopping countdown/count-up timer with start/stop/reset.
-- **[`useInterval`](https://hookli.vercel.app/docs/use-interval/use-interval.ts)** — run a callback on a fixed interval; pass `null` delay to pause.
-- **[`useTimeout`](https://hookli.vercel.app/docs/use-timeout/use-timeout.ts)** — run a callback once after a delay; pass `null` delay to cancel.
-- **[`useIsomorphicLayoutEffect`](https://hookli.vercel.app/docs/use-isomorphic-layout-effect/use-isomorphic-layout-effect.ts)** — `useLayoutEffect` on the client, `useEffect` on the server.
-- **[`useEventCallback`](https://hookli.vercel.app/docs/use-event-callback/use-event-callback.ts)** — a stable callback identity that always calls the latest function.
-- **[`useEventListener`](https://hookli.vercel.app/docs/use-event-listener/use-event-listener.ts)** — typed `addEventListener` for window/document/element/media-query targets.
-- **[`useUnmount`](https://hookli.vercel.app/docs/use-unmount/use-unmount.ts)** — run a cleanup function once, on unmount.
-- **[`useIsClient`](https://hookli.vercel.app/docs/use-is-client/use-is-client.ts)** — `false` on the server and first render, `true` after mount.
-- **[`useIsMounted`](https://hookli.vercel.app/docs/use-is-mounted/use-is-mounted.ts)** — a stable getter reporting whether the component is still mounted.
-- **[`useDocumentTitle`](https://hookli.vercel.app/docs/use-document-title/use-document-title.ts)** — syncs `document.title`, SSR-safe, with optional restore on unmount.
-- **[`useDebounce`](https://hookli.vercel.app/docs/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
-- **[`useDebounceValue`](https://hookli.vercel.app/docs/use-debounce-value/use-debounce-value.ts)** — state whose debounced copy updates only after a period of inactivity, with a `cancel`/`flush`/`isPending` setter.
-- **[`useDebounceCallback`](https://hookli.vercel.app/docs/use-debounce-callback/use-debounce-callback.ts)** — debounced callback with leading/trailing/`maxWait` options and `cancel`/`flush`/`isPending` control.
-- **[`useFetch`](https://hookli.vercel.app/docs/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
-- **[`useForm`](https://hookli.vercel.app/docs/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
-- **[`useLocalStorage`](https://hookli.vercel.app/docs/use-local-storage/use-local-storage.ts)** — persists state to `localStorage`, `useState`-style.
-- **[`useLocalStorageWithExpiry`](https://hookli.vercel.app/docs/use-local-storage-with-expiry/use-local-storage-with-expiry.ts)** — persisted state that expires after a TTL.
-- **[`useSessionStorage`](https://hookli.vercel.app/docs/use-session-storage/use-session-storage.ts)** — `useState` backed by `sessionStorage`, synced across hooks and tabs, with a `removeValue`.
-- **[`useReadLocalStorage`](https://hookli.vercel.app/docs/use-read-local-storage/use-read-local-storage.ts)** — read-only `localStorage` value that re-renders on cross-tab and in-tab changes.
-- **[`useDarkMode`](https://hookli.vercel.app/docs/use-dark-mode/use-dark-mode.ts)** — toggles a `dark` class on `<body>` and persists the theme.
-- **[`useClickOutside`](https://hookli.vercel.app/docs/use-click-outside/use-click-outside.ts)** — fires a callback on clicks outside a ref'd element.
-- **[`useMousePosition`](https://hookli.vercel.app/docs/use-mouse-position/use-mouse-position.ts)** — tracks the cursor `{ x, y }` within an element.
-- **[`useInfiniteScroll`](https://hookli.vercel.app/docs/use-infinite-scroll/use-infinite-scroll.ts)** — runs a loader when the page nears the bottom.
-- **[`useGeoLocation`](https://hookli.vercel.app/docs/use-geo-location/use-geo-location.ts)** — reads the user's coordinates via the Geolocation API.
-- **[`useHover`](https://hookli.vercel.app/docs/use-hover/use-hover.ts)** — tracks whether the pointer is over a ref'd element.
-- **[`useIntersectionObserver`](https://hookli.vercel.app/docs/use-intersection-observer/use-intersection-observer.ts)** — observes an element's viewport intersection via a `ref` callback, with `freezeOnceVisible`.
-- **[`useResizeObserver`](https://hookli.vercel.app/docs/use-resize-observer/use-resize-observer.ts)** — measures an element's `{ width, height }` reactively via `ResizeObserver`.
-- **[`useScrollLock`](https://hookli.vercel.app/docs/use-scroll-lock/use-scroll-lock.ts)** — locks/unlocks scrolling on the body or a target, compensating for the scrollbar.
-- **[`useClickAnyWhere`](https://hookli.vercel.app/docs/use-click-any-where/use-click-any-where.ts)** — fires a handler on every click anywhere in the document.
-- **[`useMediaQuery`](https://hookli.vercel.app/docs/use-media-query/use-media-query.ts)** — tracks whether a CSS media query matches, SSR-safe via `matchMedia`.
-- **[`useWindowSize`](https://hookli.vercel.app/docs/use-window-size/use-window-size.ts)** — tracks the viewport's `{ width, height }`, updating on resize.
-- **[`useScreen`](https://hookli.vercel.app/docs/use-screen/use-screen.ts)** — tracks the `window.screen` object, refreshing on resize.
-- **[`useCopyToClipboard`](https://hookli.vercel.app/docs/use-copy-to-clipboard/use-copy-to-clipboard.ts)** — copies text via the Clipboard API and tracks the last copied value.
-- **[`useScript`](https://hookli.vercel.app/docs/use-script/use-script.ts)** — loads an external script and reports `idle`/`loading`/`ready`/`error` status.
-- **[`useMap`](https://hookli.vercel.app/docs/use-map/use-map.ts)** — a `Map` as immutable state with `set`/`setAll`/`remove`/`reset` helpers.
-- **[`useTernaryDarkMode`](https://hookli.vercel.app/docs/use-ternary-dark-mode/use-ternary-dark-mode.ts)** — three-state (`system`/`dark`/`light`) dark-mode preference, persisted and OS-aware.
+- **[`useToggle`](https://hookli.vercel.app/docs/use-toggle)** — boolean state with a `toggle()` and an explicit setter.
+- **[`useBoolean`](https://hookli.vercel.app/docs/use-boolean)** — boolean state with `setTrue` / `setFalse` / `toggle` helpers.
+- **[`useCounter`](https://hookli.vercel.app/docs/use-counter)** — numeric counter with `increment` / `decrement` / `reset` / `setCount`.
+- **[`useStep`](https://hookli.vercel.app/docs/use-step)** — 1-indexed step counter for wizards, with next/prev guards.
+- **[`useCountdown`](https://hookli.vercel.app/docs/use-countdown)** — self-stopping countdown/count-up timer with start/stop/reset.
+- **[`useInterval`](https://hookli.vercel.app/docs/use-interval)** — run a callback on a fixed interval; pass `null` delay to pause.
+- **[`useTimeout`](https://hookli.vercel.app/docs/use-timeout)** — run a callback once after a delay; pass `null` delay to cancel.
+- **[`useIsomorphicLayoutEffect`](https://hookli.vercel.app/docs/use-isomorphic-layout-effect/use-isomorphic)** — `useLayoutEffect` on the client, `useEffect` on the server.
+- **[`useEventCallback`](https://hookli.vercel.app/docs/use-event-callback/use)** — a stable callback identity that always calls the latest function.
+- **[`useEventListener`](https://hookli.vercel.app/docs/use-event-listener/use)** — typed `addEventListener` for window/document/element/media-query targets.
+- **[`useUnmount`](https://hookli.vercel.app/docs/use-unmount)** — run a cleanup function once, on unmount.
+- **[`useIsClient`](https://hookli.vercel.app/docs/use-is-client/use)** — `false` on the server and first render, `true` after mount.
+- **[`useIsMounted`](https://hookli.vercel.app/docs/use-is-mounted/use)** — a stable getter reporting whether the component is still mounted.
+- **[`useDocumentTitle`](https://hookli.vercel.app/docs/use-document-title/use)** — syncs `document.title`, SSR-safe, with optional restore on unmount.
+- **[`useDebounce`](https://hookli.vercel.app/docs/use-debounce)** — returns a debounced version of a fast-changing value.
+- **[`useDebounceValue`](https://hookli.vercel.app/docs/use-debounce-value/use)** — state whose debounced copy updates only after a period of inactivity, with a `cancel`/`flush`/`isPending` setter.
+- **[`useDebounceCallback`](https://hookli.vercel.app/docs/use-debounce-callback/use)** — debounced callback with leading/trailing/`maxWait` options and `cancel`/`flush`/`isPending` control.
+- **[`useFetch`](https://hookli.vercel.app/docs/use-fetch)** — fetches JSON and tracks `data` / `error` / `loading` state.
+- **[`useForm`](https://hookli.vercel.app/docs/use-form)** — minimal controlled-form state with a generic change handler.
+- **[`useLocalStorage`](https://hookli.vercel.app/docs/use-local-storage/use)** — persists state to `localStorage`, `useState`-style.
+- **[`useLocalStorageWithExpiry`](https://hookli.vercel.app/docs/use-local-storage-with-expiry/use-local-storage)** — persisted state that expires after a TTL.
+- **[`useSessionStorage`](https://hookli.vercel.app/docs/use-session-storage/use)** — `useState` backed by `sessionStorage`, synced across hooks and tabs, with a `removeValue`.
+- **[`useReadLocalStorage`](https://hookli.vercel.app/docs/use-read-local-storage/use-read)** — read-only `localStorage` value that re-renders on cross-tab and in-tab changes.
+- **[`useDarkMode`](https://hookli.vercel.app/docs/use-dark-mode/use)** — toggles a `dark` class on `<body>` and persists the theme.
+- **[`useClickOutside`](https://hookli.vercel.app/docs/use-click-outside/use)** — fires a callback on clicks outside a ref'd element.
+- **[`useMousePosition`](https://hookli.vercel.app/docs/use-mouse-position/use)** — tracks the cursor `{ x, y }` within an element.
+- **[`useInfiniteScroll`](https://hookli.vercel.app/docs/use-infinite-scroll/use)** — runs a loader when the page nears the bottom.
+- **[`useGeoLocation`](https://hookli.vercel.app/docs/use-geo-location/use)** — reads the user's coordinates via the Geolocation API.
+- **[`useHover`](https://hookli.vercel.app/docs/use-hover)** — tracks whether the pointer is over a ref'd element.
+- **[`useIntersectionObserver`](https://hookli.vercel.app/docs/use-intersection-observer/use)** — observes an element's viewport intersection via a `ref` callback, with `freezeOnceVisible`.
+- **[`useResizeObserver`](https://hookli.vercel.app/docs/use-resize-observer/use)** — measures an element's `{ width, height }` reactively via `ResizeObserver`.
+- **[`useScrollLock`](https://hookli.vercel.app/docs/use-scroll-lock/use)** — locks/unlocks scrolling on the body or a target, compensating for the scrollbar.
+- **[`useClickAnyWhere`](https://hookli.vercel.app/docs/use-click-any-where/use-click)** — fires a handler on every click anywhere in the document.
+- **[`useMediaQuery`](https://hookli.vercel.app/docs/use-media-query/use)** — tracks whether a CSS media query matches, SSR-safe via `matchMedia`.
+- **[`useWindowSize`](https://hookli.vercel.app/docs/use-window-size/use)** — tracks the viewport's `{ width, height }`, updating on resize.
+- **[`useScreen`](https://hookli.vercel.app/docs/use-screen)** — tracks the `window.screen` object, refreshing on resize.
+- **[`useCopyToClipboard`](https://hookli.vercel.app/docs/use-copy-to-clipboard/use-copy)** — copies text via the Clipboard API and tracks the last copied value.
+- **[`useScript`](https://hookli.vercel.app/docs/use-script)** — loads an external script and reports `idle`/`loading`/`ready`/`error` status.
+- **[`useMap`](https://hookli.vercel.app/docs/use-map)** — a `Map` as immutable state with `set`/`setAll`/`remove`/`reset` helpers.
+- **[`useTernaryDarkMode`](https://hookli.vercel.app/docs/use-ternary-dark-mode/use-ternary)** — three-state (`system`/`dark`/`light`) dark-mode preference, persisted and OS-aware.
 
 ## 🧪 TypeScript
 
@@ -124,7 +124,7 @@ so inference flows through:
 
 ```tsx
 const { data } = useFetch<Product[]>("/api/products"); // data: Product[] | null
-const debounced = useDebounce(query, 300);              // debounced: typeof query
+const debounced = useDebounce(query, 300); // debounced: typeof query
 ```
 
 ## 💖 Support hookli
