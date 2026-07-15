@@ -120,7 +120,7 @@
     {
       "id": "NH6",
       "priority": 9,
-      "status": "todo",
+      "status": "done",
       "title": "Storage",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useSessionStorage(key, initial, options?)→[value,setValue,removeValue] (sessionStorage sibling of useLocalStorage, cross-tab via storage event, SSR-safe); useReadLocalStorage(key, options?)→value|null (read-only, reactive to storage events)",
       "acceptance": [

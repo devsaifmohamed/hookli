@@ -20,6 +20,8 @@ export * from "./use-isomorphic-layout-effect";
 export * from "./use-local-storage";
 export * from "./use-local-storage-with-expiry";
 export * from "./use-mouse-position";
+export * from "./use-read-local-storage";
+export * from "./use-session-storage";
 export * from "./use-step";
 export * from "./use-timeout";
 export * from "./use-toggle";

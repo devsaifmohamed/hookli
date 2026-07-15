@@ -98,6 +98,8 @@ function Component() {
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
 - **[`useLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage/use-local-storage.ts)** — persists state to `localStorage`, `useState`-style.
 - **[`useLocalStorageWithExpiry`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage-with-expiry/use-local-storage-with-expiry.ts)** — persisted state that expires after a TTL.
+- **[`useSessionStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-session-storage/use-session-storage.ts)** — `useState` backed by `sessionStorage`, synced across hooks and tabs, with a `removeValue`.
+- **[`useReadLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-read-local-storage/use-read-local-storage.ts)** — read-only `localStorage` value that re-renders on cross-tab and in-tab changes.
 - **[`useDarkMode`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-dark-mode/use-dark-mode.ts)** — toggles a `dark` class on `<body>` and persists the theme.
 - **[`useClickOutside`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-click-outside/use-click-outside.ts)** — fires a callback on clicks outside a ref'd element.
 - **[`useMousePosition`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-mouse-position/use-mouse-position.ts)** — tracks the cursor `{ x, y }` within an element.
