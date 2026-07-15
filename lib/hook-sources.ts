@@ -2,9 +2,9 @@ import { GITHUB_URL } from "@/lib/site";
 
 /* Vendored implementation snapshots for the "Hook" section on every doc page
    (T16 usehooks-ts anatomy). Reconstructed faithfully from the installed
-   hookli@1.3.16 bundle (node_modules/hookli/dist/index.mjs) with the exported
+   hookli@1.4.0 bundle (node_modules/hookli/dist/index.mjs) with the exported
    type signatures from index.d.ts — bundler artifacts (helper prelude, aliased
-   imports) removed so each entry reads as its original src/hooks/*.hook.ts.
+   imports) removed so each entry reads as its original src/hooks/*.ts.
    Keep in sync when the pinned hookli version changes. */
 
 export type HookSource = {
@@ -171,6 +171,210 @@ export const useDarkMode = (): UseDarkModeState => {
 
   return { isDarkMode, toggleDarkMode };
 };
+`,
+  },
+  "use-boolean": {
+    path: "src/hooks/use-boolean/use-boolean.ts",
+    source: `import { useCallback, useState } from "react";
+
+export interface UseBooleanReturn {
+  value: boolean;
+  setValue: (value: boolean) => void;
+  setTrue: () => void;
+  setFalse: () => void;
+  toggle: () => void;
+}
+
+export const useBoolean = (defaultValue = false): UseBooleanReturn => {
+  const [value, setValue] = useState(defaultValue);
+
+  const setTrue = useCallback(() => setValue(true), []);
+  const setFalse = useCallback(() => setValue(false), []);
+  const toggle = useCallback(() => setValue((prev) => !prev), []);
+
+  return { value, setValue, setTrue, setFalse, toggle };
+};
+`,
+  },
+  "use-counter": {
+    path: "src/hooks/use-counter/use-counter.ts",
+    source: `import { Dispatch, SetStateAction, useCallback, useState } from "react";
+
+export interface UseCounterReturn {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+  reset: () => void;
+  setCount: Dispatch<SetStateAction<number>>;
+}
+
+export const useCounter = (initialValue = 0): UseCounterReturn => {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = useCallback(() => setCount((prev) => prev + 1), []);
+  const decrement = useCallback(() => setCount((prev) => prev - 1), []);
+  const reset = useCallback(() => setCount(initialValue), [initialValue]);
+
+  return { count, increment, decrement, reset, setCount };
+};
+`,
+  },
+  "use-step": {
+    path: "src/hooks/use-step/use-step.ts",
+    source: `import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
+
+export interface UseStepActions {
+  goToNextStep: () => void;
+  goToPrevStep: () => void;
+  reset: () => void;
+  canGoToNextStep: boolean;
+  canGoToPrevStep: boolean;
+  setStep: Dispatch<SetStateAction<number>>;
+}
+
+export const useStep = (maxStep: number): [number, UseStepActions] => {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const canGoToNextStep = useMemo(
+    () => currentStep + 1 <= maxStep,
+    [currentStep, maxStep],
+  );
+  const canGoToPrevStep = useMemo(() => currentStep - 1 >= 1, [currentStep]);
+
+  const setStep = useCallback<Dispatch<SetStateAction<number>>>(
+    (step) => {
+      setCurrentStep((prev) => {
+        const newStep = step instanceof Function ? step(prev) : step;
+        if (newStep >= 1 && newStep <= maxStep) {
+          return newStep;
+        }
+        throw new Error("Step not valid");
+      });
+    },
+    [maxStep],
+  );
+
+  const goToNextStep = useCallback(() => {
+    setCurrentStep((prev) => (prev + 1 <= maxStep ? prev + 1 : prev));
+  }, [maxStep]);
+
+  const goToPrevStep = useCallback(() => {
+    setCurrentStep((prev) => (prev - 1 >= 1 ? prev - 1 : prev));
+  }, []);
+
+  const reset = useCallback(() => {
+    setCurrentStep(1);
+  }, []);
+
+  return [
+    currentStep,
+    { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, setStep, reset },
+  ];
+};
+`,
+  },
+  "use-countdown": {
+    path: "src/hooks/use-countdown/use-countdown.ts",
+    source: `import { useCallback, useEffect, useRef, useState } from "react";
+
+export interface UseCountdownOptions {
+  countStart: number;
+  intervalMs?: number;
+  isIncrement?: boolean;
+  countStop?: number;
+}
+
+export interface UseCountdownActions {
+  startCountdown: () => void;
+  stopCountdown: () => void;
+  resetCountdown: () => void;
+}
+
+export const useCountdown = ({
+  countStart,
+  intervalMs = 1000,
+  isIncrement = false,
+  countStop = 0,
+}: UseCountdownOptions): [number, UseCountdownActions] => {
+  const [count, setCount] = useState(countStart);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const startCountdown = useCallback(() => setIsRunning(true), []);
+  const stopCountdown = useCallback(() => setIsRunning(false), []);
+  const resetCountdown = useCallback(() => {
+    setIsRunning(false);
+    setCount(countStart);
+  }, [countStart]);
+
+  const tick = useRef(() => {});
+  tick.current = () => {
+    setCount((prev) => (isIncrement ? prev + 1 : prev - 1));
+  };
+
+  useEffect(() => {
+    if (isRunning && count === countStop) {
+      setIsRunning(false);
+    }
+  }, [count, countStop, isRunning]);
+
+  useEffect(() => {
+    if (!isRunning) return;
+    const id = setInterval(() => tick.current(), intervalMs);
+    return () => clearInterval(id);
+  }, [isRunning, intervalMs]);
+
+  return [count, { startCountdown, stopCountdown, resetCountdown }];
+};
+`,
+  },
+  "use-map": {
+    path: "src/hooks/use-map/use-map.ts",
+    source: `import { useCallback, useState } from "react";
+
+export type MapOrEntries<K, V> = Map<K, V> | [K, V][];
+
+export interface UseMapActions<K, V> {
+  set: (key: K, value: V) => void;
+  setAll: (entries: MapOrEntries<K, V>) => void;
+  remove: (key: K) => void;
+  reset: () => void;
+}
+
+export type ReadOnlyMap<K, V> = Omit<Map<K, V>, "set" | "clear" | "delete">;
+
+export type UseMapReturn<K, V> = [ReadOnlyMap<K, V>, UseMapActions<K, V>];
+
+export function useMap<K, V>(
+  initialState: MapOrEntries<K, V> = new Map(),
+): UseMapReturn<K, V> {
+  const [map, setMap] = useState(() => new Map(initialState));
+
+  const set = useCallback((key: K, value: V) => {
+    setMap((prev) => {
+      const next = new Map(prev);
+      next.set(key, value);
+      return next;
+    });
+  }, []);
+
+  const setAll = useCallback((entries: MapOrEntries<K, V>) => {
+    setMap(new Map(entries));
+  }, []);
+
+  const remove = useCallback((key: K) => {
+    setMap((prev) => {
+      const next = new Map(prev);
+      next.delete(key);
+      return next;
+    });
+  }, []);
+
+  const reset = useCallback(() => {
+    setMap(new Map());
+  }, []);
+
+  return [map, { set, setAll, remove, reset }];
+}
 `,
   },
   "use-debounce": {

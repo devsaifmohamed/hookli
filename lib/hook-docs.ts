@@ -1,6 +1,9 @@
 import type { ComponentType } from "react";
 import type { ApiRow } from "@/components/api-table";
+import { UseBooleanDocDemo } from "@/components/demos/use-boolean-demo";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
+import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
+import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
@@ -9,7 +12,9 @@ import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo"
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
+import { UseMapDocDemo } from "@/components/demos/use-map-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
+import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
@@ -278,6 +283,355 @@ export function Demo() {
         name: "toggleDarkMode",
         type: "() => void",
         description: 'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
+      },
+    ],
+  },
+  "use-boolean": {
+    demo: UseBooleanDocDemo,
+    usage: `
+import { useBoolean } from "hookli";
+
+export function Demo() {
+  const { value, setTrue, setFalse, toggle } = useBoolean(false);
+
+  return (
+    <div>
+      <p>{value ? "On" : "Off"}</p>
+      <button onClick={toggle}>Toggle</button>
+      <button onClick={setTrue}>On</button>
+      <button onClick={setFalse}>Off</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "defaultValue",
+        type: "boolean",
+        defaultValue: "false",
+        description: "The value the boolean starts from.",
+      },
+    ],
+    returns: [
+      {
+        name: "value",
+        type: "boolean",
+        description: "The current boolean value.",
+      },
+      {
+        name: "setValue",
+        type: "(value: boolean) => void",
+        description: "Sets the value directly.",
+      },
+      {
+        name: "setTrue",
+        type: "() => void",
+        description: "Sets the value to true.",
+      },
+      {
+        name: "setFalse",
+        type: "() => void",
+        description: "Sets the value to false.",
+      },
+      {
+        name: "toggle",
+        type: "() => void",
+        description: "Flips the value.",
+      },
+    ],
+  },
+  "use-counter": {
+    demo: UseCounterDocDemo,
+    usage: `
+import { useCounter } from "hookli";
+
+export function Demo() {
+  const { count, increment, decrement, reset, setCount } = useCounter(0);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={decrement}>-1</button>
+      <button onClick={increment}>+1</button>
+      <button onClick={() => setCount(10)}>Set 10</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initialValue",
+        type: "number",
+        defaultValue: "0",
+        description: "The count the hook starts from; reset returns here.",
+      },
+    ],
+    returns: [
+      {
+        name: "count",
+        type: "number",
+        description: "The current count.",
+      },
+      {
+        name: "increment",
+        type: "() => void",
+        description: "Adds one to the count.",
+      },
+      {
+        name: "decrement",
+        type: "() => void",
+        description: "Subtracts one from the count.",
+      },
+      {
+        name: "reset",
+        type: "() => void",
+        description: "Restores the count to initialValue.",
+      },
+      {
+        name: "setCount",
+        type: "Dispatch<SetStateAction<number>>",
+        description: "Sets the count directly; accepts a value or an updater function.",
+      },
+    ],
+  },
+  "use-step": {
+    demo: UseStepDocDemo,
+    usage: `
+import { useStep } from "hookli";
+
+export function Demo() {
+  const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, reset }] =
+    useStep(4);
+
+  return (
+    <div>
+      <p>Step {step} of 4</p>
+      <button onClick={goToPrevStep} disabled={!canGoToPrevStep}>Back</button>
+      <button onClick={goToNextStep} disabled={!canGoToNextStep}>Next</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "maxStep",
+        type: "number",
+        description: "The highest reachable step (inclusive). Steps run from 1 to maxStep.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] step",
+        type: "number",
+        description: "The current step, 1-indexed.",
+      },
+      {
+        name: "[1] actions",
+        type: "UseStepActions",
+        description: "Controls for moving between steps — see below.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseStepActions",
+        description: "The second tuple element — the stepper controls.",
+        rows: [
+          {
+            name: "goToNextStep",
+            type: "() => void",
+            description: "Advances to the next step; a no-op at maxStep.",
+          },
+          {
+            name: "goToPrevStep",
+            type: "() => void",
+            description: "Goes back one step; a no-op at step 1.",
+          },
+          {
+            name: "reset",
+            type: "() => void",
+            description: "Resets back to step 1.",
+          },
+          {
+            name: "canGoToNextStep",
+            type: "boolean",
+            description: "Whether a next step is available.",
+          },
+          {
+            name: "canGoToPrevStep",
+            type: "boolean",
+            description: "Whether a previous step is available.",
+          },
+          {
+            name: "setStep",
+            type: "Dispatch<SetStateAction<number>>",
+            description: "Sets the step directly (1-indexed); throws if outside the 1..maxStep range.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-countdown": {
+    demo: UseCountdownDocDemo,
+    usage: `
+import { useCountdown } from "hookli";
+
+export function Demo() {
+  const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({
+    countStart: 10,
+    intervalMs: 1000,
+  });
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={startCountdown}>Start</button>
+      <button onClick={stopCountdown}>Pause</button>
+      <button onClick={resetCountdown}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseCountdownOptions",
+        description: "Configures the timer — start value, tick interval, direction and stop value. See below.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] count",
+        type: "number",
+        description: "The current count. Ticks by ±1 every intervalMs while running.",
+      },
+      {
+        name: "[1] actions",
+        type: "UseCountdownActions",
+        description: "Start, pause and reset controls — see below.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseCountdownOptions",
+        description: "The single options argument.",
+        rows: [
+          {
+            name: "countStart",
+            type: "number",
+            description: "The value the countdown starts from.",
+          },
+          {
+            name: "intervalMs",
+            type: "number",
+            description: "Milliseconds between ticks. Defaults to 1000.",
+          },
+          {
+            name: "isIncrement",
+            type: "boolean",
+            description: "Count up instead of down. Defaults to false.",
+          },
+          {
+            name: "countStop",
+            type: "number",
+            description: "The value at which the timer stops itself. Defaults to 0.",
+          },
+        ],
+      },
+      {
+        name: "UseCountdownActions",
+        description: "The second tuple element — the timer controls.",
+        rows: [
+          {
+            name: "startCountdown",
+            type: "() => void",
+            description: "Starts (or resumes) the timer.",
+          },
+          {
+            name: "stopCountdown",
+            type: "() => void",
+            description: "Pauses the timer without resetting the count.",
+          },
+          {
+            name: "resetCountdown",
+            type: "() => void",
+            description: "Stops the timer and resets the count to countStart.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-map": {
+    demo: UseMapDocDemo,
+    usage: `
+import { useMap } from "hookli";
+
+export function Demo() {
+  const [map, { set, remove, reset }] = useMap<string, string>([
+    ["theme", "dark"],
+  ]);
+
+  return (
+    <div>
+      <button onClick={() => set("lang", "en")}>Set lang</button>
+      <button onClick={() => remove("theme")}>Remove theme</button>
+      <button onClick={reset}>Reset</button>
+      <ul>
+        {[...map.entries()].map(([key, value]) => (
+          <li key={key}>{key}: {value}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initialState",
+        type: "MapOrEntries<K, V>",
+        defaultValue: "new Map()",
+        description: "Initial entries as a Map or an array of [key, value] pairs.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] map",
+        type: "ReadOnlyMap<K, V>",
+        description: "A read-only view of the map — the mutating set/clear/delete methods are omitted; use the actions instead. get, has, size and iteration remain.",
+      },
+      {
+        name: "[1] actions",
+        type: "UseMapActions<K, V>",
+        description: "Stable helpers that replace the map with a fresh copy so React re-renders — see below.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseMapActions",
+        description: "The second tuple element — the map mutation helpers.",
+        rows: [
+          {
+            name: "set",
+            type: "(key: K, value: V) => void",
+            description: "Adds or updates one entry.",
+          },
+          {
+            name: "setAll",
+            type: "(entries: MapOrEntries<K, V>) => void",
+            description: "Replaces every entry with the given Map or [key, value] pairs.",
+          },
+          {
+            name: "remove",
+            type: "(key: K) => void",
+            description: "Deletes the entry for the given key.",
+          },
+          {
+            name: "reset",
+            type: "() => void",
+            description: "Empties the map.",
+          },
+        ],
       },
     ],
   },

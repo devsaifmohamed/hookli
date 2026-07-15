@@ -1,6 +1,6 @@
 /* Single source of truth for every hook page, the sidebar, search, sitemap and
    landing counts (docs/DESIGN.md §2, §6). Signatures verified against the
-   hookli@1.3.16 type declarations. Adding a hook = one entry here + one demo
+   hookli@1.4.0 type declarations. Adding a hook = one entry here + one demo
    component in components/demos/. */
 
 export type HookCategory = "state" | "effects" | "dom" | "data";
@@ -68,6 +68,45 @@ export const HOOKS: readonly HookEntry[] = [
     category: "state",
     signature:
       "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }",
+  },
+  {
+    slug: "use-boolean",
+    name: "useBoolean",
+    description: "Boolean state with setTrue, setFalse, toggle and set.",
+    category: "state",
+    signature:
+      "useBoolean(defaultValue?: boolean): { value: boolean; setValue: (value: boolean) => void; setTrue: () => void; setFalse: () => void; toggle: () => void }",
+  },
+  {
+    slug: "use-counter",
+    name: "useCounter",
+    description: "Numeric counter with increment, decrement and reset.",
+    category: "state",
+    signature:
+      "useCounter(initialValue?: number): { count: number; increment: () => void; decrement: () => void; reset: () => void; setCount: Dispatch<SetStateAction<number>> }",
+  },
+  {
+    slug: "use-step",
+    name: "useStep",
+    description: "1-indexed step counter for wizards and steppers.",
+    category: "state",
+    signature: "useStep(maxStep: number): [number, UseStepActions]",
+  },
+  {
+    slug: "use-countdown",
+    name: "useCountdown",
+    description: "Self-stopping countdown or count-up timer.",
+    category: "state",
+    signature:
+      "useCountdown(options: UseCountdownOptions): [number, UseCountdownActions]",
+  },
+  {
+    slug: "use-map",
+    name: "useMap",
+    description: "Manage a Map as immutable React state.",
+    category: "state",
+    signature:
+      "useMap<K, V>(initialState?: MapOrEntries<K, V>): [ReadOnlyMap<K, V>, UseMapActions<K, V>]",
   },
   {
     slug: "use-debounce",
