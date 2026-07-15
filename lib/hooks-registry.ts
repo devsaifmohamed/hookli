@@ -86,6 +86,14 @@ export const HOOKS: readonly HookEntry[] = [
       "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }",
   },
   {
+    slug: "use-ternary-dark-mode",
+    name: "useTernaryDarkMode",
+    description: "Three-state dark mode — system, dark or light — persisted.",
+    category: "state",
+    signature:
+      "useTernaryDarkMode(options?: UseTernaryDarkModeOptions): UseTernaryDarkModeReturn",
+  },
+  {
     slug: "use-boolean",
     name: "useBoolean",
     description: "Boolean state with setTrue, setFalse, toggle and set.",
@@ -298,6 +306,22 @@ export const HOOKS: readonly HookEntry[] = [
     description: "Tracks the viewport's { width, height }, updated on resize.",
     category: "dom",
     signature: "useWindowSize(options?: UseWindowSizeOptions): WindowSize",
+  },
+  {
+    slug: "use-copy-to-clipboard",
+    name: "useCopyToClipboard",
+    description: "Copy text to the clipboard, tracking the last copied value.",
+    category: "dom",
+    signature:
+      "useCopyToClipboard(): [CopiedValue, CopyFn]",
+  },
+  {
+    slug: "use-script",
+    name: "useScript",
+    description: "Load an external script and report its load status.",
+    category: "dom",
+    signature:
+      "useScript(src: string | null, options?: UseScriptOptions): UseScriptStatus",
   },
   {
     slug: "use-fetch",

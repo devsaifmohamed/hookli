@@ -382,7 +382,7 @@
     {
       "id": "DH9",
       "priority": 109,
-      "status": "todo",
+      "status": "done",
       "title": "Docs: misc utilities",
       "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useCopyToClipboard, useScript, useTernaryDarkMode. Match the existing use-toggle page template exactly.",
       "acceptance": [

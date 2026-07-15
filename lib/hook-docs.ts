@@ -3,6 +3,7 @@ import type { ApiRow } from "@/components/api-table";
 import { UseBooleanDocDemo } from "@/components/demos/use-boolean-demo";
 import { UseClickAnyWhereDocDemo } from "@/components/demos/use-click-any-where-demo";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
+import { UseCopyToClipboardDocDemo } from "@/components/demos/use-copy-to-clipboard-demo";
 import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
 import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
@@ -30,9 +31,11 @@ import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-d
 import { UseReadLocalStorageDocDemo } from "@/components/demos/use-read-local-storage-demo";
 import { UseResizeObserverDocDemo } from "@/components/demos/use-resize-observer-demo";
 import { UseScreenDocDemo } from "@/components/demos/use-screen-demo";
+import { UseScriptDocDemo } from "@/components/demos/use-script-demo";
 import { UseScrollLockDocDemo } from "@/components/demos/use-scroll-lock-demo";
 import { UseSessionStorageDocDemo } from "@/components/demos/use-session-storage-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
+import { UseTernaryDarkModeDocDemo } from "@/components/demos/use-ternary-dark-mode-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 import { UseUnmountDocDemo } from "@/components/demos/use-unmount-demo";
@@ -152,6 +155,73 @@ const READ_LOCAL_STORAGE_OPTIONS_ALIAS: TypeAlias = {
       type: "boolean",
       defaultValue: "true",
       description: "Read localStorage synchronously on mount. Set false to defer to after hydration and avoid SSR mismatches.",
+    },
+  ],
+};
+
+/* Options + return shape for the three-state dark-mode hook (DH9). */
+const TERNARY_DARK_MODE_OPTIONS_ALIAS: TypeAlias = {
+  name: "UseTernaryDarkModeOptions",
+  description: "Optional starting mode and persistence key.",
+  rows: [
+    {
+      name: "defaultValue",
+      type: "TernaryDarkMode",
+      defaultValue: '"system"',
+      description: "The mode before anything is stored: \"system\", \"dark\" or \"light\".",
+    },
+    {
+      name: "localStorageKey",
+      type: "string",
+      defaultValue: '"hookli-ternary-dark-mode"',
+      description: "The localStorage key the choice is persisted under.",
+    },
+  ],
+};
+
+const TERNARY_DARK_MODE_RETURN_ALIAS: TypeAlias = {
+  name: "UseTernaryDarkModeReturn",
+  description: "The resolved mode plus setters.",
+  rows: [
+    {
+      name: "isDarkMode",
+      type: "boolean",
+      description: 'True when the mode is "dark", or "system" while the OS prefers dark.',
+    },
+    {
+      name: "ternaryDarkMode",
+      type: "TernaryDarkMode",
+      description: 'The stored preference: "system" | "dark" | "light".',
+    },
+    {
+      name: "setTernaryDarkMode",
+      type: "(value: TernaryDarkMode | ((prev: TernaryDarkMode) => TernaryDarkMode)) => void",
+      description: "Set the preference directly; accepts a value or an updater.",
+    },
+    {
+      name: "toggleTernaryDarkMode",
+      type: "() => void",
+      description: "Cycle the preference: light → system → dark → light.",
+    },
+  ],
+};
+
+/* Options for the external-script loader (DH9). */
+const SCRIPT_OPTIONS_ALIAS: TypeAlias = {
+  name: "UseScriptOptions",
+  description: "Flags controlling when the script loads and unloads.",
+  rows: [
+    {
+      name: "shouldPreventLoad",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Keep the status \"idle\" without injecting the script — useful for deferring a load.",
+    },
+    {
+      name: "removeOnUnmount",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Remove the injected <script> tag when the component unmounts.",
     },
   ],
 };
@@ -886,6 +956,60 @@ export function Demo() {
         type: "() => void",
         description: 'Flips the mode. An effect persists it to localStorage("theme") and toggles a "dark" class on <body>.',
       },
+    ],
+  },
+  "use-ternary-dark-mode": {
+    demo: UseTernaryDarkModeDocDemo,
+    usage: `
+import { useTernaryDarkMode } from "hookli";
+
+export function Demo() {
+  const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } =
+    useTernaryDarkMode();
+
+  return (
+    <div className={isDarkMode ? "panel-dark" : "panel-light"}>
+      <select
+        value={ternaryDarkMode}
+        onChange={(e) => setTernaryDarkMode(e.target.value)}
+      >
+        <option value="light">Light</option>
+        <option value="system">System</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseTernaryDarkModeOptions",
+        defaultValue: "{}",
+        description: "Optional starting mode and localStorage key.",
+      },
+    ],
+    returns: [
+      {
+        name: "{ … }",
+        type: "UseTernaryDarkModeReturn",
+        description: "The resolved isDarkMode boolean, the stored ternary preference, and its setters.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "TernaryDarkMode",
+        description: "The three possible preferences.",
+        rows: [
+          {
+            name: "value",
+            type: '"system" | "dark" | "light"',
+            description: '"system" resolves against the OS; "dark"/"light" force a mode.',
+          },
+        ],
+      },
+      TERNARY_DARK_MODE_OPTIONS_ALIAS,
+      TERNARY_DARK_MODE_RETURN_ALIAS,
     ],
   },
   "use-boolean": {
@@ -1851,6 +1975,103 @@ export function Demo() {
           },
         ],
       },
+    ],
+  },
+  "use-copy-to-clipboard": {
+    demo: UseCopyToClipboardDocDemo,
+    usage: `
+import { useCopyToClipboard } from "hookli";
+
+export function Demo() {
+  const [copiedText, copy] = useCopyToClipboard();
+
+  return (
+    <button type="button" onClick={() => copy("npm i hookli")}>
+      {copiedText ? "Copied!" : "Copy"}
+    </button>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "[0] copiedText",
+        type: "CopiedValue",
+        description: "The last successfully-copied string, or null before any copy or after a failed one.",
+      },
+      {
+        name: "[1] copy",
+        type: "CopyFn",
+        description: "Writes text to the clipboard. Resolves true on success, false when the API is unavailable or the write is rejected.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "CopiedValue",
+        rows: [
+          {
+            name: "value",
+            type: "string | null",
+            description: "The tracked copied text, or null.",
+          },
+        ],
+      },
+      {
+        name: "CopyFn",
+        rows: [
+          {
+            name: "value",
+            type: "(text: string) => Promise<boolean>",
+            description: "Copies text and reports whether the write succeeded.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-script": {
+    demo: UseScriptDocDemo,
+    usage: `
+import { useScript } from "hookli";
+
+export function Demo() {
+  const status = useScript("https://example.com/widget.js");
+
+  if (status === "ready") return <p>Widget loaded.</p>;
+  return <p>Loading… ({status})</p>;
+}
+`,
+    parameters: [
+      {
+        name: "src",
+        type: "string | null",
+        description: "The script URL to load, or null to skip loading and stay idle.",
+      },
+      {
+        name: "options",
+        type: "UseScriptOptions",
+        defaultValue: "{}",
+        description: "Optional shouldPreventLoad and removeOnUnmount flags.",
+      },
+    ],
+    returns: [
+      {
+        name: "status",
+        type: "UseScriptStatus",
+        description: 'The current load status: "idle" | "loading" | "ready" | "error".',
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseScriptStatus",
+        rows: [
+          {
+            name: "value",
+            type: '"idle" | "loading" | "ready" | "error"',
+            description: "Lifecycle of the injected script tag.",
+          },
+        ],
+      },
+      SCRIPT_OPTIONS_ALIAS,
     ],
   },
   "use-fetch": {

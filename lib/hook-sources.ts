@@ -1419,6 +1419,164 @@ export function useWindowSize(options: UseWindowSizeOptions = {}): WindowSize {
 }
 `,
   },
+  "use-ternary-dark-mode": {
+    path: "src/hooks/use-ternary-dark-mode/use-ternary-dark-mode.ts",
+    source: `import { useCallback } from "react";
+import { useLocalStorage } from "../use-local-storage/use-local-storage";
+import { useMediaQuery } from "../use-media-query/use-media-query";
+
+type TernaryDarkMode = "system" | "dark" | "light";
+
+interface UseTernaryDarkModeOptions {
+  defaultValue?: TernaryDarkMode;
+  localStorageKey?: string;
+}
+
+interface UseTernaryDarkModeReturn {
+  isDarkMode: boolean;
+  ternaryDarkMode: TernaryDarkMode;
+  setTernaryDarkMode: (
+    value: TernaryDarkMode | ((prev: TernaryDarkMode) => TernaryDarkMode),
+  ) => void;
+  toggleTernaryDarkMode: () => void;
+}
+
+const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
+const DEFAULT_STORAGE_KEY = "hookli-ternary-dark-mode";
+
+export function useTernaryDarkMode(
+  options: UseTernaryDarkModeOptions = {},
+): UseTernaryDarkModeReturn {
+  const { defaultValue = "system", localStorageKey = DEFAULT_STORAGE_KEY } =
+    options;
+  const isDarkOS = useMediaQuery(COLOR_SCHEME_QUERY);
+  const { value: ternaryDarkMode, setStoredValue: setTernaryDarkMode } =
+    useLocalStorage<TernaryDarkMode>(localStorageKey, defaultValue);
+
+  const isDarkMode =
+    ternaryDarkMode === "dark" || (ternaryDarkMode === "system" && isDarkOS);
+
+  const toggleTernaryDarkMode = useCallback(() => {
+    const cycle: TernaryDarkMode[] = ["light", "system", "dark"];
+    setTernaryDarkMode((prev) => {
+      const nextIndex = (cycle.indexOf(prev) + 1) % cycle.length;
+      return cycle[nextIndex];
+    });
+  }, [setTernaryDarkMode]);
+
+  return {
+    isDarkMode,
+    ternaryDarkMode,
+    setTernaryDarkMode,
+    toggleTernaryDarkMode,
+  };
+}
+`,
+  },
+  "use-copy-to-clipboard": {
+    path: "src/hooks/use-copy-to-clipboard/use-copy-to-clipboard.ts",
+    source: `import { useCallback, useState } from "react";
+
+type CopiedValue = string | null;
+type CopyFn = (text: string) => Promise<boolean>;
+type UseCopyToClipboardReturn = [CopiedValue, CopyFn];
+
+export function useCopyToClipboard(): UseCopyToClipboardReturn {
+  const [copiedText, setCopiedText] = useState<CopiedValue>(null);
+
+  const copy: CopyFn = useCallback(async (text) => {
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      return false;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedText(text);
+      return true;
+    } catch {
+      setCopiedText(null);
+      return false;
+    }
+  }, []);
+
+  return [copiedText, copy];
+}
+`,
+  },
+  "use-script": {
+    path: "src/hooks/use-script/use-script.ts",
+    source: `import { useEffect, useState } from "react";
+
+type UseScriptStatus = "idle" | "loading" | "ready" | "error";
+
+interface UseScriptOptions {
+  shouldPreventLoad?: boolean;
+  removeOnUnmount?: boolean;
+}
+
+export function useScript(
+  src: string | null,
+  options?: UseScriptOptions,
+): UseScriptStatus {
+  const [status, setStatus] = useState<UseScriptStatus>(() => {
+    if (!src || options?.shouldPreventLoad) return "idle";
+    return "loading";
+  });
+
+  useEffect(() => {
+    if (!src || options?.shouldPreventLoad) {
+      setStatus("idle");
+      return;
+    }
+
+    let script = document.querySelector<HTMLScriptElement>(
+      \`script[src="\${src}"]\`,
+    );
+
+    if (script === null) {
+      script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.setAttribute("data-status", "loading");
+      document.body.appendChild(script);
+
+      const setAttributeFromEvent = (event: Event) => {
+        script?.setAttribute(
+          "data-status",
+          event.type === "load" ? "ready" : "error",
+        );
+      };
+
+      script.addEventListener("load", setAttributeFromEvent);
+      script.addEventListener("error", setAttributeFromEvent);
+    } else {
+      setStatus(
+        (script.getAttribute("data-status") as UseScriptStatus) ?? "loading",
+      );
+    }
+
+    const setStateFromEvent = (event: Event) => {
+      setStatus(event.type === "load" ? "ready" : "error");
+    };
+
+    script.addEventListener("load", setStateFromEvent);
+    script.addEventListener("error", setStateFromEvent);
+
+    return () => {
+      if (script) {
+        script.removeEventListener("load", setStateFromEvent);
+        script.removeEventListener("error", setStateFromEvent);
+        if (options?.removeOnUnmount) {
+          script.remove();
+        }
+      }
+    };
+  }, [src, options?.shouldPreventLoad, options?.removeOnUnmount]);
+
+  return status;
+}
+`,
+  },
   "use-fetch": {
     path: "src/hooks/useFetch.hook.ts",
     source: `import { useEffect, useState } from "react";
