@@ -278,6 +278,28 @@ export const HOOKS: readonly HookEntry[] = [
       "useClickAnyWhere(handler: (event: MouseEvent) => void): void",
   },
   {
+    slug: "use-media-query",
+    name: "useMediaQuery",
+    description: "Tracks whether a CSS media query currently matches.",
+    category: "dom",
+    signature:
+      "useMediaQuery(query: string, options?: UseMediaQueryOptions): boolean",
+  },
+  {
+    slug: "use-screen",
+    name: "useScreen",
+    description: "Tracks window.screen, refreshing it on every resize.",
+    category: "dom",
+    signature: "useScreen(options?: UseScreenOptions): Screen | null",
+  },
+  {
+    slug: "use-window-size",
+    name: "useWindowSize",
+    description: "Tracks the viewport's { width, height }, updated on resize.",
+    category: "dom",
+    signature: "useWindowSize(options?: UseWindowSizeOptions): WindowSize",
+  },
+  {
     slug: "use-fetch",
     name: "useFetch",
     description: "Declarative fetch with loading and error status.",

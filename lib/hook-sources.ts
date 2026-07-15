@@ -1292,6 +1292,133 @@ export const useClickAnyWhere = (
 };
 `,
   },
+  "use-media-query": {
+    path: "src/hooks/use-media-query/use-media-query.ts",
+    source: `import { useState } from "react";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+interface UseMediaQueryOptions {
+  defaultValue?: boolean;
+  initializeWithValue?: boolean;
+}
+
+const IS_SERVER = typeof window === "undefined";
+
+export function useMediaQuery(
+  query: string,
+  options: UseMediaQueryOptions = {},
+): boolean {
+  const { defaultValue = false, initializeWithValue = true } = options;
+
+  const getMatches = (mediaQuery: string): boolean => {
+    if (IS_SERVER) return defaultValue;
+    return window.matchMedia(mediaQuery).matches;
+  };
+
+  const [matches, setMatches] = useState<boolean>(() => {
+    if (initializeWithValue) return getMatches(query);
+    return defaultValue;
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    if (IS_SERVER) return;
+    const matchMedia = window.matchMedia(query);
+    const handleChange = () => setMatches(matchMedia.matches);
+    handleChange();
+    matchMedia.addEventListener("change", handleChange);
+    return () => {
+      matchMedia.removeEventListener("change", handleChange);
+    };
+  }, [query]);
+
+  return matches;
+}
+`,
+  },
+  "use-screen": {
+    path: "src/hooks/use-screen/use-screen.ts",
+    source: `import { useState } from "react";
+import { useEventListener } from "../use-event-listener/use-event-listener";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+interface UseScreenOptions {
+  initializeWithValue?: boolean;
+}
+
+const IS_SERVER = typeof window === "undefined";
+
+export function useScreen(options: UseScreenOptions = {}): Screen | null {
+  const { initializeWithValue = true } = options;
+
+  const readScreen = (): Screen | null => {
+    if (IS_SERVER) return null;
+    return window.screen;
+  };
+
+  const [screen, setScreen] = useState<Screen | null>(() => {
+    if (initializeWithValue) return readScreen();
+    return null;
+  });
+
+  const handleSize = () => {
+    setScreen(readScreen());
+  };
+
+  useEventListener("resize", handleSize);
+
+  useIsomorphicLayoutEffect(() => {
+    handleSize();
+  }, []);
+
+  return screen;
+}
+`,
+  },
+  "use-window-size": {
+    path: "src/hooks/use-window-size/use-window-size.ts",
+    source: `import { useState } from "react";
+import { useEventListener } from "../use-event-listener/use-event-listener";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+interface WindowSize {
+  width: number;
+  height: number;
+}
+
+interface UseWindowSizeOptions {
+  initializeWithValue?: boolean;
+}
+
+const IS_SERVER = typeof window === "undefined";
+
+export function useWindowSize(options: UseWindowSizeOptions = {}): WindowSize {
+  const { initializeWithValue = true } = options;
+
+  const readSize = (): WindowSize => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const [windowSize, setWindowSize] = useState<WindowSize>(() => {
+    if (initializeWithValue && !IS_SERVER) return readSize();
+    return { width: 0, height: 0 };
+  });
+
+  const handleSize = () => {
+    if (IS_SERVER) return;
+    setWindowSize(readSize());
+  };
+
+  useEventListener("resize", handleSize);
+
+  useIsomorphicLayoutEffect(() => {
+    handleSize();
+  }, []);
+
+  return windowSize;
+}
+`,
+  },
   "use-fetch": {
     path: "src/hooks/useFetch.hook.ts",
     source: `import { useEffect, useState } from "react";

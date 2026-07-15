@@ -25,15 +25,18 @@ import { UseIsomorphicLayoutEffectDocDemo } from "@/components/demos/use-isomorp
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
+import { UseMediaQueryDocDemo } from "@/components/demos/use-media-query-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
 import { UseReadLocalStorageDocDemo } from "@/components/demos/use-read-local-storage-demo";
 import { UseResizeObserverDocDemo } from "@/components/demos/use-resize-observer-demo";
+import { UseScreenDocDemo } from "@/components/demos/use-screen-demo";
 import { UseScrollLockDocDemo } from "@/components/demos/use-scroll-lock-demo";
 import { UseSessionStorageDocDemo } from "@/components/demos/use-session-storage-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 import { UseUnmountDocDemo } from "@/components/demos/use-unmount-demo";
+import { UseWindowSizeDocDemo } from "@/components/demos/use-window-size-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
    §4): live demo component, usage snippet (shown in the HookDemo Code tab AND
@@ -1694,6 +1697,161 @@ export function Demo() {
       },
     ],
     returns: [],
+  },
+  "use-media-query": {
+    demo: UseMediaQueryDocDemo,
+    usage: `
+import { useMediaQuery } from "hookli";
+
+export function Demo() {
+  const isWide = useMediaQuery("(min-width: 768px)");
+
+  return <p>{isWide ? "Desktop layout" : "Mobile layout"}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "query",
+        type: "string",
+        description: "A CSS media query string, e.g. \"(min-width: 768px)\" or \"(prefers-color-scheme: dark)\".",
+      },
+      {
+        name: "options",
+        type: "UseMediaQueryOptions",
+        defaultValue: "{}",
+        description: "SSR default and hydration behaviour. Optional.",
+      },
+    ],
+    returns: [
+      {
+        name: "matches",
+        type: "boolean",
+        description: "Whether the query currently matches. Re-renders on every matchMedia change event, and starts from defaultValue on the server.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseMediaQueryOptions",
+        description: "Configures the server value and mount behaviour.",
+        rows: [
+          {
+            name: "defaultValue",
+            type: "boolean",
+            defaultValue: "false",
+            description: "Value returned on the server and before hydration.",
+          },
+          {
+            name: "initializeWithValue",
+            type: "boolean",
+            defaultValue: "true",
+            description: "Read the real match synchronously on mount. Set false to always start from defaultValue and avoid a hydration mismatch.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-screen": {
+    demo: UseScreenDocDemo,
+    usage: `
+import { useScreen } from "hookli";
+
+export function Demo() {
+  const screen = useScreen();
+
+  return <p>Screen: {screen ? \`\${screen.width}×\${screen.height}\` : "…"}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseScreenOptions",
+        defaultValue: "{}",
+        description: "Hydration behaviour. Optional.",
+      },
+    ],
+    returns: [
+      {
+        name: "screen",
+        type: "Screen | null",
+        description: "The current window.screen (width, height, availWidth, colorDepth, orientation…), refreshed on every resize. null on the server and until hydration.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseScreenOptions",
+        description: "Configures mount behaviour.",
+        rows: [
+          {
+            name: "initializeWithValue",
+            type: "boolean",
+            defaultValue: "true",
+            description: "Read the real screen synchronously on mount. Set false to start as null and populate after hydration.",
+          },
+        ],
+      },
+    ],
+  },
+  "use-window-size": {
+    demo: UseWindowSizeDocDemo,
+    usage: `
+import { useWindowSize } from "hookli";
+
+export function Demo() {
+  const { width, height } = useWindowSize();
+
+  return <p>{width} × {height}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseWindowSizeOptions",
+        defaultValue: "{}",
+        description: "Hydration behaviour. Optional.",
+      },
+    ],
+    returns: [
+      {
+        name: "width",
+        type: "number",
+        description: "The viewport's inner width in pixels. 0 on the server and until hydration.",
+      },
+      {
+        name: "height",
+        type: "number",
+        description: "The viewport's inner height in pixels. 0 on the server and until hydration.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "WindowSize",
+        description: "The viewport size reported by useWindowSize.",
+        rows: [
+          {
+            name: "width",
+            type: "number",
+            description: "The viewport's inner width in pixels.",
+          },
+          {
+            name: "height",
+            type: "number",
+            description: "The viewport's inner height in pixels.",
+          },
+        ],
+      },
+      {
+        name: "UseWindowSizeOptions",
+        description: "Configures mount behaviour.",
+        rows: [
+          {
+            name: "initializeWithValue",
+            type: "boolean",
+            defaultValue: "true",
+            description: "Read the real size synchronously on mount. Set false to start at 0 and populate after hydration.",
+          },
+        ],
+      },
+    ],
   },
   "use-fetch": {
     demo: UseFetchDocDemo,
