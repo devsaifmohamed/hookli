@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon, GitPullRequestIcon, HeartIcon, StarIcon } from "@/components/icons";
-import { GITHUB_URL } from "@/lib/site";
+import { GITHUB_URL, SPONSOR_URL } from "@/lib/site";
 
 const CARDS = [
   {
@@ -22,10 +22,10 @@ const CARDS = [
   {
     icon: <HeartIcon className="size-6" />,
     title: "Sponsor",
-    body: "Sponsorships are coming soon. For now, a star and a bug report go a long way.",
-    label: "Support hookli",
-    href: "/support#sponsor",
-    external: false,
+    body: "Back ongoing maintenance and new hooks through GitHub Sponsors — any amount helps.",
+    label: "Become a sponsor",
+    href: SPONSOR_URL,
+    external: true,
   },
 ];
 
@@ -33,7 +33,7 @@ export function SupportSection() {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
       <h2 className="text-center text-2xl">Support hookli</h2>
-      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">hookli is free and ISC-licensed. It runs on stars, issues, and pull requests.</p>
+      <p className="mx-auto mt-3 max-w-md text-center text-gray-body">hookli is free and ISC-licensed. It runs on stars, issues, pull requests, and sponsorships.</p>
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {CARDS.map((card) => {
           const inner = (

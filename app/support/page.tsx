@@ -6,7 +6,7 @@ import {
   HeartIcon,
   StarIcon,
 } from "@/components/icons";
-import { GITHUB_URL } from "@/lib/site";
+import { GITHUB_URL, SPONSOR_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Support",
@@ -125,31 +125,18 @@ export default function SupportPage() {
           Sponsor
         </h2>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-gray-body">
-          Sponsorships aren&apos;t set up yet. When they are, the links below
-          go live — until then they lead nowhere, on purpose.
+          If hookli saves you time, consider sponsoring — it funds ongoing
+          maintenance and new hooks. Any amount genuinely helps.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
-          {/* TODO: replace '#' with the real GitHub Sponsors URL once the account exists. */}
           <a
-            href="#"
-            aria-disabled="true"
-            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-gray-body"
+            href={SPONSOR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-medium text-ground transition-opacity duration-200 hover:opacity-90"
           >
-            GitHub Sponsors
-            <span className="rounded-full border border-slate-syntax/40 px-2 py-0.5 text-xs">
-              coming soon
-            </span>
-          </a>
-          {/* TODO: replace '#' with the real Ko-fi URL once the account exists. */}
-          <a
-            href="#"
-            aria-disabled="true"
-            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-gray-body"
-          >
-            Ko-fi
-            <span className="rounded-full border border-slate-syntax/40 px-2 py-0.5 text-xs">
-              coming soon
-            </span>
+            <HeartIcon className="size-4" aria-hidden="true" />
+            Sponsor on GitHub
           </a>
         </div>
       </section>
