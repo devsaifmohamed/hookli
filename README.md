@@ -74,8 +74,7 @@ function Component() {
 
 ## 🪝 Available hooks
 
-> 📚 A dedicated docs site with a **page per hook** and **live demos** is on the way. For
-> now, each hook links to its source.
+> 📚 Full docs with a **page per hook** and **live demos**: <https://hookli.vercel.app/docs>
 
 - **[`useToggle`](https://hookli.vercel.app/docs/use-toggle/use-toggle.ts)** — boolean state with a `toggle()` and an explicit setter.
 - **[`useBoolean`](https://hookli.vercel.app/docs/use-boolean/use-boolean.ts)** — boolean state with `setTrue` / `setFalse` / `toggle` helpers.
