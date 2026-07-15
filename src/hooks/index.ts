@@ -4,6 +4,8 @@ export * from "./use-counter";
 export * from "./use-countdown";
 export * from "./use-dark-mode";
 export * from "./use-debounce";
+export * from "./use-debounce-callback";
+export * from "./use-debounce-value";
 export * from "./use-document-title";
 export * from "./use-event-callback";
 export * from "./use-event-listener";

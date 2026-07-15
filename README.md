@@ -92,6 +92,8 @@ function Component() {
 - **[`useIsMounted`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-is-mounted/use-is-mounted.ts)** — a stable getter reporting whether the component is still mounted.
 - **[`useDocumentTitle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-document-title/use-document-title.ts)** — syncs `document.title`, SSR-safe, with optional restore on unmount.
 - **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
+- **[`useDebounceValue`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce-value/use-debounce-value.ts)** — state whose debounced copy updates only after a period of inactivity, with a `cancel`/`flush`/`isPending` setter.
+- **[`useDebounceCallback`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce-callback/use-debounce-callback.ts)** — debounced callback with leading/trailing/`maxWait` options and `cancel`/`flush`/`isPending` control.
 - **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
 - **[`useLocalStorage`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-local-storage/use-local-storage.ts)** — persists state to `localStorage`, `useState`-style.

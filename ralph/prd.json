@@ -75,7 +75,7 @@
     {
       "id": "NH3",
       "priority": 6,
-      "status": "todo",
+      "status": "done",
       "title": "Effect & lifecycle utilities",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useIsomorphicLayoutEffect (useLayoutEffect on client, useEffect on server); useEventCallback(fn) — stable identity, always-latest; useEventListener(eventName, handler, element?, options?) — window/document/element/media-query targets, typed event maps; useUnmount(fn) — run once on unmount",
       "acceptance": [
@@ -90,7 +90,7 @@
     {
       "id": "NH4",
       "priority": 7,
-      "status": "todo",
+      "status": "done",
       "title": "SSR / mount helpers",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useIsClient()→boolean (false on server, true after mount); useIsMounted()→()=>boolean; useDocumentTitle(title, {preserveTitleOnUnmount?}) — sets document.title, SSR-safe",
       "acceptance": [
@@ -105,7 +105,7 @@
     {
       "id": "NH5",
       "priority": 8,
-      "status": "todo",
+      "status": "done",
       "title": "Debounce family",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useDebounceValue(initialValue, delayMs, options?)→[debounced,setValue]; useDebounceCallback(fn, delayMs, options?)→debounced fn with .cancel()/.flush()/.isPending()",
       "acceptance": [
