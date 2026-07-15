@@ -88,6 +88,9 @@ function Component() {
 - **[`useEventCallback`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-event-callback/use-event-callback.ts)** — a stable callback identity that always calls the latest function.
 - **[`useEventListener`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-event-listener/use-event-listener.ts)** — typed `addEventListener` for window/document/element/media-query targets.
 - **[`useUnmount`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-unmount/use-unmount.ts)** — run a cleanup function once, on unmount.
+- **[`useIsClient`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-is-client/use-is-client.ts)** — `false` on the server and first render, `true` after mount.
+- **[`useIsMounted`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-is-mounted/use-is-mounted.ts)** — a stable getter reporting whether the component is still mounted.
+- **[`useDocumentTitle`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-document-title/use-document-title.ts)** — syncs `document.title`, SSR-safe, with optional restore on unmount.
 - **[`useDebounce`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-debounce/use-debounce.ts)** — returns a debounced version of a fast-changing value.
 - **[`useFetch`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-fetch/use-fetch.ts)** — fetches JSON and tracks `data` / `error` / `loading` state.
 - **[`useForm`](https://github.com/saifmohamedsv/hookli/blob/main/src/hooks/use-form/use-form.ts)** — minimal controlled-form state with a generic change handler.
