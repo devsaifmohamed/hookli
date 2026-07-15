@@ -135,7 +135,7 @@
     {
       "id": "NH7",
       "priority": 10,
-      "status": "todo",
+      "status": "done",
       "title": "DOM & observers",
       "notes": "Implement, per usehooks-ts semantics but standalone in hookli's style: useHover(ref)→boolean; useIntersectionObserver(options?)→{ref,isIntersecting,entry} (ref-callback API); useResizeObserver(ref, options?)→{width,height}; useScrollLock({autoLock?,lockTarget?})→{isLocked,lock,unlock}; useClickAnyWhere(handler) — document-wide click",
       "acceptance": [
