@@ -62,6 +62,22 @@ export const HOOKS: readonly HookEntry[] = [
       "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T | null; setStoredValue: (value: T) => void }",
   },
   {
+    slug: "use-session-storage",
+    name: "useSessionStorage",
+    description: "useState backed by sessionStorage, synced across tabs.",
+    category: "state",
+    signature:
+      "useSessionStorage<T>(key: string, initialValue: T | (() => T), options?: UseSessionStorageOptions<T>): [T, (value: T | ((prev: T) => T)) => void, () => void]",
+  },
+  {
+    slug: "use-read-local-storage",
+    name: "useReadLocalStorage",
+    description: "Read a localStorage key without writing it, reactively.",
+    category: "state",
+    signature:
+      "useReadLocalStorage<T>(key: string, options?: UseReadLocalStorageOptions<T>): T | null",
+  },
+  {
     slug: "use-dark-mode",
     name: "useDarkMode",
     description: "Dark-mode boolean with toggle.",

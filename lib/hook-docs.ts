@@ -23,6 +23,8 @@ import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-dem
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
+import { UseReadLocalStorageDocDemo } from "@/components/demos/use-read-local-storage-demo";
+import { UseSessionStorageDocDemo } from "@/components/demos/use-session-storage-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
@@ -99,6 +101,49 @@ const DEBOUNCED_STATE_ALIAS: TypeAlias = {
       name: "isPending",
       type: "() => boolean",
       description: "Whether a trailing invocation is currently scheduled.",
+    },
+  ],
+};
+
+/* Options for the sessionStorage hook (serializer/deserializer + hydration). */
+const SESSION_STORAGE_OPTIONS_ALIAS: TypeAlias = {
+  name: "UseSessionStorageOptions<T>",
+  description: "Custom (de)serialization and hydration behaviour.",
+  rows: [
+    {
+      name: "serializer",
+      type: "(value: T) => string",
+      description: "Turn the value into the string stored under the key. Defaults to JSON.stringify.",
+    },
+    {
+      name: "deserializer",
+      type: "(value: string) => T",
+      description: "Parse the stored string back into a value. Defaults to JSON.parse.",
+    },
+    {
+      name: "initializeWithValue",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Read sessionStorage synchronously on mount. Set false to defer to after hydration and avoid SSR mismatches.",
+    },
+  ],
+};
+
+/* Options for the read-only localStorage hook (deserializer + hydration). */
+const READ_LOCAL_STORAGE_OPTIONS_ALIAS: TypeAlias = {
+  name: "UseReadLocalStorageOptions<T>",
+  description: "Custom deserialization and hydration behaviour.",
+  rows: [
+    {
+      name: "deserializer",
+      type: "(value: string) => T",
+      description: "Parse the stored string into a value. Defaults to JSON.parse, falling back to the raw string.",
+    },
+    {
+      name: "initializeWithValue",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Read localStorage synchronously on mount. Set false to defer to after hydration and avoid SSR mismatches.",
     },
   ],
 };
@@ -717,6 +762,92 @@ export function Demo() {
         description: "Persists the value to localStorage with a new expiry of now + expiryMs.",
       },
     ],
+  },
+  "use-session-storage": {
+    demo: UseSessionStorageDocDemo,
+    usage: `
+import { useSessionStorage } from "hookli";
+
+export function Demo() {
+  const [draft, setDraft, removeDraft] = useSessionStorage("draft", "");
+
+  return (
+    <div>
+      <input value={draft} onChange={(e) => setDraft(e.target.value)} />
+      <button type="button" onClick={removeDraft}>Clear</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "key",
+        type: "string",
+        description: "The sessionStorage key to read and write.",
+      },
+      {
+        name: "initialValue",
+        type: "T | (() => T)",
+        description: "Value used before hydration and when the key is empty. Pass a function to compute it lazily.",
+      },
+      {
+        name: "options",
+        type: "UseSessionStorageOptions<T>",
+        defaultValue: "{}",
+        description: "Optional custom serializer/deserializer and hydration flag.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] value",
+        type: "T",
+        description: "The stored value. Server-rendered as initialValue, then hydrated from sessionStorage after mount.",
+      },
+      {
+        name: "[1] setValue",
+        type: "(value: T | ((prev: T) => T)) => void",
+        description: "Persists to sessionStorage and updates state; accepts a value or an updater. Syncs every hook using the key in this tab.",
+      },
+      {
+        name: "[2] removeValue",
+        type: "() => void",
+        description: "Removes the key from sessionStorage and resets state to initialValue.",
+      },
+    ],
+    typeAliases: [SESSION_STORAGE_OPTIONS_ALIAS],
+  },
+  "use-read-local-storage": {
+    demo: UseReadLocalStorageDocDemo,
+    usage: `
+import { useReadLocalStorage } from "hookli";
+
+export function Demo() {
+  const theme = useReadLocalStorage<string>("theme");
+
+  return <p>Saved theme: {theme ?? "none"}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "key",
+        type: "string",
+        description: "The localStorage key to observe.",
+      },
+      {
+        name: "options",
+        type: "UseReadLocalStorageOptions<T>",
+        defaultValue: "{}",
+        description: "Optional custom deserializer and hydration flag.",
+      },
+    ],
+    returns: [
+      {
+        name: "value",
+        type: "T | null",
+        description: "The parsed value, or null when the key is absent. Re-renders when the key changes in another tab (storage event) or via a local-storage event dispatched in this tab.",
+      },
+    ],
+    typeAliases: [READ_LOCAL_STORAGE_OPTIONS_ALIAS],
   },
   "use-dark-mode": {
     demo: UseDarkModeDocDemo,

@@ -138,6 +138,180 @@ export const useLocalStorageWithExpiry = <T>(
 };
 `,
   },
+  "use-session-storage": {
+    path: "src/hooks/use-session-storage/use-session-storage.ts",
+    source: `import { useCallback, useEffect, useState } from "react";
+import { useEventCallback } from "../use-event-callback/use-event-callback";
+import { useEventListener } from "../use-event-listener/use-event-listener";
+
+interface UseSessionStorageOptions<T> {
+  serializer?: (value: T) => string;
+  deserializer?: (value: string) => T;
+  initializeWithValue?: boolean;
+}
+
+type UseSessionStorageReturn<T> = [
+  T,
+  (value: T | ((prev: T) => T)) => void,
+  () => void,
+];
+
+const IS_SERVER = typeof window === "undefined";
+
+export function useSessionStorage<T>(
+  key: string,
+  initialValue: T | (() => T),
+  options: UseSessionStorageOptions<T> = {},
+): UseSessionStorageReturn<T> {
+  const { initializeWithValue = true } = options;
+
+  const serializer = useCallback(
+    (value: T) => {
+      if (options.serializer) return options.serializer(value);
+      return JSON.stringify(value);
+    },
+    [options],
+  );
+
+  const deserializer = useCallback(
+    (value: string): T => {
+      if (options.deserializer) return options.deserializer(value);
+      const defaultValue =
+        initialValue instanceof Function ? initialValue() : initialValue;
+      if (value === "undefined") return defaultValue;
+      try {
+        return JSON.parse(value);
+      } catch {
+        return defaultValue;
+      }
+    },
+    [options, initialValue],
+  );
+
+  const readValue = useCallback((): T => {
+    const initial =
+      initialValue instanceof Function ? initialValue() : initialValue;
+    if (IS_SERVER) return initial;
+    try {
+      const raw = window.sessionStorage.getItem(key);
+      return raw ? deserializer(raw) : initial;
+    } catch {
+      return initial;
+    }
+  }, [initialValue, key, deserializer]);
+
+  const [storedValue, setStoredValue] = useState<T>(() =>
+    initializeWithValue
+      ? readValue()
+      : initialValue instanceof Function
+        ? initialValue()
+        : initialValue,
+  );
+
+  const setValue = useEventCallback((value: T | ((prev: T) => T)) => {
+    if (IS_SERVER) return;
+    try {
+      const newValue = value instanceof Function ? value(readValue()) : value;
+      window.sessionStorage.setItem(key, serializer(newValue));
+      setStoredValue(newValue);
+      window.dispatchEvent(new StorageEvent("session-storage", { key }));
+    } catch {
+      return;
+    }
+  });
+
+  const removeValue = useEventCallback(() => {
+    if (IS_SERVER) return;
+    const defaultValue =
+      initialValue instanceof Function ? initialValue() : initialValue;
+    window.sessionStorage.removeItem(key);
+    setStoredValue(defaultValue);
+    window.dispatchEvent(new StorageEvent("session-storage", { key }));
+  });
+
+  useEffect(() => {
+    setStoredValue(readValue());
+  }, [key]);
+
+  const handleStorageChange = useCallback(
+    (event: StorageEvent) => {
+      if (event.key && event.key !== key) return;
+      setStoredValue(readValue());
+    },
+    [key, readValue],
+  );
+
+  useEventListener("storage", handleStorageChange);
+  useEventListener("session-storage", handleStorageChange);
+
+  return [storedValue, setValue, removeValue];
+}
+`,
+  },
+  "use-read-local-storage": {
+    path: "src/hooks/use-read-local-storage/use-read-local-storage.ts",
+    source: `import { useCallback, useEffect, useState } from "react";
+import { useEventListener } from "../use-event-listener/use-event-listener";
+
+interface UseReadLocalStorageOptions<T> {
+  deserializer?: (value: string) => T;
+  initializeWithValue?: boolean;
+}
+
+const IS_SERVER = typeof window === "undefined";
+
+export function useReadLocalStorage<T>(
+  key: string,
+  options: UseReadLocalStorageOptions<T> = {},
+): T | null {
+  const { initializeWithValue = true } = options;
+
+  const deserializer = useCallback(
+    (value: string): T | undefined => {
+      if (options.deserializer) return options.deserializer(value);
+      if (value === "undefined") return undefined;
+      try {
+        return JSON.parse(value);
+      } catch {
+        return value as unknown as T;
+      }
+    },
+    [options],
+  );
+
+  const readValue = useCallback((): T | null => {
+    if (IS_SERVER) return null;
+    try {
+      const raw = window.localStorage.getItem(key);
+      return raw ? (deserializer(raw) as T) : null;
+    } catch {
+      return null;
+    }
+  }, [key, deserializer]);
+
+  const [storedValue, setStoredValue] = useState<T | null>(() =>
+    initializeWithValue ? readValue() : null,
+  );
+
+  useEffect(() => {
+    setStoredValue(readValue());
+  }, [key]);
+
+  const handleStorageChange = useCallback(
+    (event: StorageEvent) => {
+      if (event.key && event.key !== key) return;
+      setStoredValue(readValue());
+    },
+    [key, readValue],
+  );
+
+  useEventListener("storage", handleStorageChange);
+  useEventListener("local-storage", handleStorageChange);
+
+  return storedValue;
+}
+`,
+  },
   "use-dark-mode": {
     path: "src/hooks/useDarkMode.hook.ts",
     source: `import { useEffect, useState } from "react";
