@@ -116,6 +116,22 @@ export const HOOKS: readonly HookEntry[] = [
     signature: "useDebounce<T>(value: T, delay: number): T",
   },
   {
+    slug: "use-debounce-value",
+    name: "useDebounceValue",
+    description: "State whose debounced copy updates after a pause.",
+    category: "effects",
+    signature:
+      "useDebounceValue<T>(initialValue: T | (() => T), delayMs?: number, options?: DebounceOptions & { equalityFn?: (left: T, right: T) => boolean }): [T, DebouncedState<[T | ((prev: T) => T)], void>]",
+  },
+  {
+    slug: "use-debounce-callback",
+    name: "useDebounceCallback",
+    description: "Debounces a callback, with cancel, flush and isPending.",
+    category: "effects",
+    signature:
+      "useDebounceCallback<Args, R>(fn: (...args: Args) => R, delayMs?: number, options?: DebounceOptions): DebouncedState<Args, R>",
+  },
+  {
     slug: "use-interval",
     name: "useInterval",
     description: "Runs a callback on a fixed interval; pause by passing null.",

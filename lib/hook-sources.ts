@@ -398,6 +398,166 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 `,
   },
+  "use-debounce-callback": {
+    path: "src/hooks/use-debounce-callback/use-debounce-callback.ts",
+    source: `import { useEffect, useMemo, useRef } from "react";
+import { useEventCallback } from "../use-event-callback/use-event-callback";
+import { useUnmount } from "../use-unmount/use-unmount";
+
+export interface DebounceOptions {
+  /** Invoke on the leading edge of the timeout. Defaults to \`false\`. */
+  leading?: boolean;
+  /** Invoke on the trailing edge of the timeout. Defaults to \`true\`. */
+  trailing?: boolean;
+  /** Maximum time the callback may be delayed before it is forced to run. */
+  maxWait?: number;
+}
+
+export interface DebouncedState<Args extends unknown[], R> {
+  (...args: Args): R | undefined;
+  cancel: () => void;
+  flush: () => R | undefined;
+  isPending: () => boolean;
+}
+
+export const useDebounceCallback = <Args extends unknown[], R>(
+  fn: (...args: Args) => R,
+  delayMs = 500,
+  options: DebounceOptions = {},
+): DebouncedState<Args, R> => {
+  const timeoutId = useRef<ReturnType<typeof setTimeout>>();
+  const maxTimeoutId = useRef<ReturnType<typeof setTimeout>>();
+  const lastArgs = useRef<Args>();
+  const lastResult = useRef<R>();
+  const lastInvokeTime = useRef(0);
+
+  const { leading = false, trailing = true, maxWait } = options;
+  const latestFn = useEventCallback(fn);
+
+  useEffect(() => {
+    lastInvokeTime.current = 0;
+  }, [delayMs, leading, trailing, maxWait]);
+
+  const debounced = useMemo(() => {
+    const invoke = (): R | undefined => {
+      const args = lastArgs.current;
+      if (!args) return undefined;
+      lastArgs.current = undefined;
+      lastInvokeTime.current = Date.now();
+      lastResult.current = latestFn(...args);
+      return lastResult.current;
+    };
+
+    const clearTimers = () => {
+      if (timeoutId.current !== undefined) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = undefined;
+      }
+      if (maxTimeoutId.current !== undefined) {
+        clearTimeout(maxTimeoutId.current);
+        maxTimeoutId.current = undefined;
+      }
+    };
+
+    const trailingEdge = () => {
+      clearTimers();
+      if (trailing && lastArgs.current) invoke();
+      else lastArgs.current = undefined;
+    };
+
+    const state = Object.assign(
+      (...args: Args): R | undefined => {
+        lastArgs.current = args;
+        const isFirstCall =
+          timeoutId.current === undefined && maxTimeoutId.current === undefined;
+        if (timeoutId.current !== undefined) clearTimeout(timeoutId.current);
+        if (leading && isFirstCall) invoke();
+        timeoutId.current = setTimeout(trailingEdge, delayMs);
+        if (maxWait !== undefined && maxTimeoutId.current === undefined) {
+          maxTimeoutId.current = setTimeout(() => {
+            clearTimers();
+            if (lastArgs.current) invoke();
+          }, maxWait);
+        }
+        return lastResult.current;
+      },
+      {
+        cancel: () => {
+          clearTimers();
+          lastArgs.current = undefined;
+        },
+        flush: (): R | undefined => {
+          if (timeoutId.current === undefined) return lastResult.current;
+          clearTimers();
+          return lastArgs.current ? invoke() : lastResult.current;
+        },
+        isPending: () =>
+          timeoutId.current !== undefined && lastArgs.current !== undefined,
+      },
+    );
+
+    return state;
+  }, [delayMs, leading, trailing, maxWait, latestFn]);
+
+  useUnmount(() => {
+    debounced.cancel();
+  });
+
+  return debounced;
+};
+`,
+  },
+  "use-debounce-value": {
+    path: "src/hooks/use-debounce-value/use-debounce-value.ts",
+    source: `import { useEffect, useRef, useState } from "react";
+import {
+  useDebounceCallback,
+  type DebounceOptions,
+  type DebouncedState,
+} from "../use-debounce-callback/use-debounce-callback";
+
+export type UseDebounceValueReturn<T> = [
+  T,
+  DebouncedState<[value: T | ((prev: T) => T)], void>,
+];
+
+export const useDebounceValue = <T>(
+  initialValue: T | (() => T),
+  delayMs = 500,
+  options: DebounceOptions & { equalityFn?: (left: T, right: T) => boolean } = {},
+): UseDebounceValueReturn<T> => {
+  const eq = options.equalityFn ?? ((left, right) => left === right);
+  const unwrap = (v: T | (() => T)): T =>
+    typeof v === "function" ? (v as () => T)() : v;
+
+  const [debouncedValue, setDebouncedValue] = useState<T>(() =>
+    unwrap(initialValue),
+  );
+  const previousValue = useRef(debouncedValue);
+
+  const updateDebouncedValue = useDebounceCallback(
+    (value: T | ((prev: T) => T)) => {
+      const next =
+        typeof value === "function"
+          ? (value as (prev: T) => T)(previousValue.current)
+          : value;
+      if (!eq(previousValue.current, next)) {
+        previousValue.current = next;
+        setDebouncedValue(next);
+      }
+    },
+    delayMs,
+    options,
+  );
+
+  useEffect(() => {
+    return () => updateDebouncedValue.cancel();
+  }, [updateDebouncedValue]);
+
+  return [debouncedValue, updateDebouncedValue];
+};
+`,
+  },
   "use-interval": {
     path: "src/hooks/use-interval/use-interval.ts",
     source: `import { useEffect, useRef } from "react";

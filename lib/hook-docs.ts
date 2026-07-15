@@ -6,6 +6,8 @@ import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
 import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
+import { UseDebounceCallbackDocDemo } from "@/components/demos/use-debounce-callback-demo";
+import { UseDebounceValueDocDemo } from "@/components/demos/use-debounce-value-demo";
 import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
 import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
@@ -46,6 +48,59 @@ export type HookDoc = {
   parameters: readonly ApiRow[];
   returns: readonly ApiRow[];
   typeAliases?: readonly TypeAlias[];
+};
+
+/* Shared by the two debounce hooks (useDebounceValue + useDebounceCallback),
+   which both take DebounceOptions and return a DebouncedState. */
+const DEBOUNCE_OPTIONS_ALIAS: TypeAlias = {
+  name: "DebounceOptions",
+  description: "Controls how the debounced invocation is scheduled.",
+  rows: [
+    {
+      name: "leading",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Invoke on the leading edge — run once immediately on the first call of a burst.",
+    },
+    {
+      name: "trailing",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Invoke on the trailing edge — run after the burst settles.",
+    },
+    {
+      name: "maxWait",
+      type: "number",
+      description: "The maximum time the callback may be delayed before it is forced to run, even during a continuous burst.",
+    },
+  ],
+};
+
+const DEBOUNCED_STATE_ALIAS: TypeAlias = {
+  name: "DebouncedState<Args, R>",
+  description: "The debounced function, plus manual control methods.",
+  rows: [
+    {
+      name: "(...args)",
+      type: "(...args: Args) => R | undefined",
+      description: "Calling it schedules an invocation and returns the last computed result — undefined before the first run.",
+    },
+    {
+      name: "cancel",
+      type: "() => void",
+      description: "Cancels any pending trailing invocation.",
+    },
+    {
+      name: "flush",
+      type: "() => R | undefined",
+      description: "Immediately runs any pending invocation and returns its result.",
+    },
+    {
+      name: "isPending",
+      type: "() => boolean",
+      description: "Whether a trailing invocation is currently scheduled.",
+    },
+  ],
 };
 
 const HOOK_DOCS: Partial<Record<string, HookDoc>> = {
@@ -130,6 +185,115 @@ export function Demo() {
         description: "Trails the input value, updating only after delay ms without a change.",
       },
     ],
+  },
+  "use-debounce-value": {
+    demo: UseDebounceValueDocDemo,
+    usage: `
+import { useState } from "react";
+import { useDebounceValue } from "hookli";
+
+export function Demo() {
+  const [text, setText] = useState("");
+  const [debounced, setValue] = useDebounceValue("", 500);
+
+  return (
+    <div>
+      <input
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+          setValue(e.target.value);
+        }}
+      />
+      <p>Debounced: {debounced}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initialValue",
+        type: "T | (() => T)",
+        description: "The starting value, or a factory evaluated once on mount — the same lazy-initializer contract as useState.",
+      },
+      {
+        name: "delayMs",
+        type: "number",
+        defaultValue: "500",
+        description: "Milliseconds of inactivity before the debounced value catches up to the latest set value.",
+      },
+      {
+        name: "options",
+        type: "DebounceOptions & { equalityFn? }",
+        defaultValue: "{}",
+        description: "DebounceOptions plus an optional equalityFn (left, right) => boolean — when it reports the values equal, the debounced update is skipped. See the tables below.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] debouncedValue",
+        type: "T",
+        description: "The value that trails the setter, updating only after delayMs of quiet.",
+      },
+      {
+        name: "[1] setValue",
+        type: "DebouncedState<[T | ((prev: T) => T)], void>",
+        description: "A debounced setter accepting a value or updater; it also carries cancel, flush and isPending (see DebouncedState).",
+      },
+    ],
+    typeAliases: [DEBOUNCE_OPTIONS_ALIAS, DEBOUNCED_STATE_ALIAS],
+  },
+  "use-debounce-callback": {
+    demo: UseDebounceCallbackDocDemo,
+    usage: `
+import { useState } from "react";
+import { useDebounceCallback } from "hookli";
+
+export function Demo() {
+  const [query, setQuery] = useState("");
+
+  const search = useDebounceCallback((q: string) => {
+    console.log("searching", q);
+  }, 600);
+
+  return (
+    <input
+      value={query}
+      onChange={(e) => {
+        setQuery(e.target.value);
+        search(e.target.value);
+      }}
+    />
+  );
+}
+`,
+    parameters: [
+      {
+        name: "fn",
+        type: "(...args: Args) => R",
+        description: "The function to debounce. The returned function keeps a stable identity across renders but always invokes the latest fn.",
+      },
+      {
+        name: "delayMs",
+        type: "number",
+        defaultValue: "500",
+        description: "Milliseconds to wait after the last call before fn runs.",
+      },
+      {
+        name: "options",
+        type: "DebounceOptions",
+        defaultValue: "{}",
+        description: "Leading/trailing edge and maxWait behaviour. See the table below.",
+      },
+    ],
+    returns: [
+      {
+        name: "debounced",
+        type: "DebouncedState<Args, R>",
+        description: "A debounced version of fn with a stable identity, carrying cancel, flush and isPending. Any pending call is cancelled on unmount.",
+      },
+    ],
+    typeAliases: [DEBOUNCE_OPTIONS_ALIAS, DEBOUNCED_STATE_ALIAS],
   },
   "use-interval": {
     demo: UseIntervalDocDemo,
