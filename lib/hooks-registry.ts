@@ -130,6 +130,37 @@ export const HOOKS: readonly HookEntry[] = [
     signature: "useTimeout(callback: () => void, delay: number | null): void",
   },
   {
+    slug: "use-isomorphic-layout-effect",
+    name: "useIsomorphicLayoutEffect",
+    description: "useLayoutEffect on the client, useEffect on the server.",
+    category: "effects",
+    signature:
+      "useIsomorphicLayoutEffect(effect: EffectCallback, deps?: DependencyList): void",
+  },
+  {
+    slug: "use-event-callback",
+    name: "useEventCallback",
+    description: "A stable callback that always calls the latest closure.",
+    category: "effects",
+    signature:
+      "useEventCallback<Args extends unknown[], R>(fn: (...args: Args) => R): (...args: Args) => R",
+  },
+  {
+    slug: "use-unmount",
+    name: "useUnmount",
+    description: "Runs a cleanup function once, when the component unmounts.",
+    category: "effects",
+    signature: "useUnmount(fn: () => void): void",
+  },
+  {
+    slug: "use-event-listener",
+    name: "useEventListener",
+    description: "Subscribe to a window, document or element event with cleanup.",
+    category: "dom",
+    signature:
+      "useEventListener<K>(eventName: K, handler: (event: Event) => void, element?: RefObject<T>, options?: boolean | AddEventListenerOptions): void",
+  },
+  {
     slug: "use-click-outside",
     name: "useClickOutside",
     description: "Runs a callback on outside click.",

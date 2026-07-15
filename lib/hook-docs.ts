@@ -6,11 +6,14 @@ import { UseCountdownDocDemo } from "@/components/demos/use-countdown-demo";
 import { UseCounterDocDemo } from "@/components/demos/use-counter-demo";
 import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
+import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
+import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseIntervalDocDemo } from "@/components/demos/use-interval-demo";
+import { UseIsomorphicLayoutEffectDocDemo } from "@/components/demos/use-isomorphic-layout-effect-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
@@ -18,6 +21,7 @@ import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-d
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
+import { UseUnmountDocDemo } from "@/components/demos/use-unmount-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
    §4): live demo component, usage snippet (shown in the HookDemo Code tab AND
@@ -193,6 +197,134 @@ export function Demo() {
         name: "delay",
         type: "number | null",
         description: "Milliseconds to wait before firing. Pass null to disable — a change to null before the delay elapses cancels the pending timeout.",
+      },
+    ],
+    returns: [],
+  },
+  "use-isomorphic-layout-effect": {
+    demo: UseIsomorphicLayoutEffectDocDemo,
+    usage: `
+import { useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "hookli";
+
+export function Demo() {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+
+  useIsomorphicLayoutEffect(() => {
+    setWidth(boxRef.current?.offsetWidth ?? 0);
+  }, []);
+
+  return <div ref={boxRef}>Measured: {width}px</div>;
+}
+`,
+    parameters: [
+      {
+        name: "effect",
+        type: "EffectCallback",
+        description: "The effect to run — same contract as React's useLayoutEffect, including an optional cleanup return.",
+      },
+      {
+        name: "deps",
+        type: "DependencyList",
+        description: "Dependency array controlling when the effect re-runs. Omit to run after every render.",
+      },
+    ],
+    returns: [],
+  },
+  "use-event-callback": {
+    demo: UseEventCallbackDocDemo,
+    usage: `
+import { useState } from "react";
+import { useEventCallback } from "hookli";
+
+export function Demo() {
+  const [count, setCount] = useState(0);
+
+  const readLatest = useEventCallback(() => count);
+
+  return (
+    <div>
+      <button onClick={() => setCount((prev) => prev + 1)}>{count}</button>
+      <button onClick={() => alert(readLatest())}>Read latest</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "fn",
+        type: "(...args: Args) => R",
+        description: "The function to keep current behind a stable reference. Calling during render throws — it is meant for event handlers and effects.",
+      },
+    ],
+    returns: [
+      {
+        name: "callback",
+        type: "(...args: Args) => R",
+        description: "A memoized callback with an unchanging identity that always forwards to the latest fn.",
+      },
+    ],
+  },
+  "use-unmount": {
+    demo: UseUnmountDocDemo,
+    usage: `
+import { useUnmount } from "hookli";
+
+export function Demo() {
+  useUnmount(() => {
+    console.log("cleanup on unmount");
+  });
+
+  return <p>Watch the console when I unmount.</p>;
+}
+`,
+    parameters: [
+      {
+        name: "fn",
+        type: "() => void",
+        description: "Called exactly once when the component unmounts. The latest closure is captured in a ref, so it always sees fresh values.",
+      },
+    ],
+    returns: [],
+  },
+  "use-event-listener": {
+    demo: UseEventListenerDocDemo,
+    usage: `
+import { useRef, useState } from "react";
+import { useEventListener } from "hookli";
+
+export function Demo() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [lastKey, setLastKey] = useState("");
+
+  useEventListener("keydown", (event) => setLastKey(event.key));
+  useEventListener("click", () => console.log("clicked"), ref);
+
+  return <div ref={ref}>Last key: {lastKey}</div>;
+}
+`,
+    parameters: [
+      {
+        name: "eventName",
+        type: "K",
+        description: "The event to listen for, typed against the target's event map (window, document, media query, or element).",
+      },
+      {
+        name: "handler",
+        type: "(event) => void",
+        description: "Called with the typed event on every dispatch. Held in a ref, so updating it never detaches and re-attaches the listener.",
+      },
+      {
+        name: "element",
+        type: "RefObject<T>",
+        defaultValue: "window",
+        description: "Optional ref to the target. Defaults to window when omitted.",
+      },
+      {
+        name: "options",
+        type: "boolean | AddEventListenerOptions",
+        description: "Standard addEventListener options (capture, passive, once).",
       },
     ],
     returns: [],

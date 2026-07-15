@@ -436,6 +436,113 @@ export const useTimeout = (callback: () => void, delay: number | null) => {
 };
 `,
   },
+  "use-isomorphic-layout-effect": {
+    path: "src/hooks/use-isomorphic-layout-effect/use-isomorphic-layout-effect.ts",
+    source: `import { useEffect, useLayoutEffect } from "react";
+
+/**
+ * useLayoutEffect that safely falls back to useEffect on the server, where
+ * useLayoutEffect would warn. Picks the layout effect only when a DOM exists.
+ */
+export const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+`,
+  },
+  "use-event-callback": {
+    path: "src/hooks/use-event-callback/use-event-callback.ts",
+    source: `import { useCallback, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+export const useEventCallback = <Args extends unknown[], R>(
+  fn: (...args: Args) => R,
+) => {
+  const ref = useRef<(...args: Args) => R>(() => {
+    throw new Error("Cannot call an event handler while rendering.");
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    ref.current = fn;
+  }, [fn]);
+
+  return useCallback((...args: Args) => ref.current(...args), [ref]);
+};
+`,
+  },
+  "use-unmount": {
+    path: "src/hooks/use-unmount/use-unmount.ts",
+    source: `import { useEffect, useRef } from "react";
+
+export const useUnmount = (fn: () => void) => {
+  const fnRef = useRef(fn);
+
+  // The latest closure every render, but only invoked on unmount.
+  fnRef.current = fn;
+
+  useEffect(() => () => fnRef.current(), []);
+};
+`,
+  },
+  "use-event-listener": {
+    path: "src/hooks/use-event-listener/use-event-listener.ts",
+    source: `import { RefObject, useEffect, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect/use-isomorphic-layout-effect";
+
+function useEventListener<K extends keyof MediaQueryListEventMap>(
+  eventName: K,
+  handler: (event: MediaQueryListEventMap[K]) => void,
+  element: RefObject<MediaQueryList>,
+  options?: boolean | AddEventListenerOptions,
+): void;
+function useEventListener<K extends keyof WindowEventMap>(
+  eventName: K,
+  handler: (event: WindowEventMap[K]) => void,
+  element?: undefined,
+  options?: boolean | AddEventListenerOptions,
+): void;
+function useEventListener<K extends keyof DocumentEventMap>(
+  eventName: K,
+  handler: (event: DocumentEventMap[K]) => void,
+  element: RefObject<Document>,
+  options?: boolean | AddEventListenerOptions,
+): void;
+function useEventListener<
+  K extends keyof HTMLElementEventMap & keyof SVGElementEventMap,
+  T extends HTMLElement | SVGElement = HTMLDivElement,
+>(
+  eventName: K,
+  handler: (event: HTMLElementEventMap[K] | SVGElementEventMap[K]) => void,
+  element: RefObject<T>,
+  options?: boolean | AddEventListenerOptions,
+): void;
+function useEventListener(
+  eventName: string,
+  handler: (event: Event) => void,
+  element?: RefObject<HTMLElement | MediaQueryList | Document>,
+  options?: boolean | AddEventListenerOptions,
+) {
+  // Hold the handler in a ref so updating it never detaches the listener.
+  const savedHandler = useRef(handler);
+
+  useIsomorphicLayoutEffect(() => {
+    savedHandler.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    const targetElement = element?.current ?? window;
+    if (!targetElement?.addEventListener) return;
+
+    const listener = (event: Event) => savedHandler.current(event);
+    targetElement.addEventListener(eventName, listener, options);
+
+    return () => {
+      targetElement.removeEventListener(eventName, listener, options);
+    };
+  }, [eventName, element, options]);
+}
+
+export { useEventListener };
+`,
+  },
   "use-click-outside": {
     path: "src/hooks/useClickOutside.hook.ts",
     source: `import { Ref, useEffect } from "react";

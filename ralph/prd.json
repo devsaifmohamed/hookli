@@ -298,7 +298,7 @@
     {
       "id": "DH3",
       "priority": 103,
-      "status": "todo",
+      "status": "done",
       "title": "Docs: effect & lifecycle utilities",
       "notes": "Full doc pages (registry + demo + HOOK_DOCS + vendored source) for: useIsomorphicLayoutEffect, useEventCallback, useEventListener, useUnmount. Match the existing use-toggle page template exactly.",
       "acceptance": [
