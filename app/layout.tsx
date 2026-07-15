@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -11,27 +10,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-/* Brand v3 sans (Avenir-class geometric). Served from the @fontsource package so
-   the build never needs a Google Fonts download — same reasoning as lib/og.tsx. */
-const plusJakarta = localFont({
-  variable: "--font-plus-jakarta",
-  src: [
-    {
-      path: "../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-700-normal.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
+/* Premium UI/body face: Geist — Vercel's typeface, purpose-built for developer
+   products. Professional and precise (replaces the friendlier Plus Jakarta).
+   Code stays on JetBrains Mono. */
+const geist = Geist({
+  variable: "--font-geist",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -72,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${jetbrainsMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-ground font-sans text-fg">
         <Header />
         {children}
