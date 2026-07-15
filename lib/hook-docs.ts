@@ -10,11 +10,13 @@ import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
+import { UseIntervalDocDemo } from "@/components/demos/use-interval-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
+import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
@@ -121,6 +123,79 @@ export function Demo() {
         description: "Trails the input value, updating only after delay ms without a change.",
       },
     ],
+  },
+  "use-interval": {
+    demo: UseIntervalDocDemo,
+    usage: `
+import { useState } from "react";
+import { useInterval } from "hookli";
+
+export function Demo() {
+  const [count, setCount] = useState(0);
+  const [running, setRunning] = useState(true);
+
+  useInterval(() => setCount((prev) => prev + 1), running ? 1000 : null);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setRunning((prev) => !prev)}>
+        {running ? "Pause" : "Resume"}
+      </button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "callback",
+        type: "() => void",
+        description: "Runs on every tick. Always fires the latest callback — the hook keeps a ref, so you never re-arm the timer just to close over fresh state.",
+      },
+      {
+        name: "delay",
+        type: "number | null",
+        description: "Milliseconds between ticks. Pass null to pause — the interval is cleared, so nothing runs until you set a number again.",
+      },
+    ],
+    returns: [],
+  },
+  "use-timeout": {
+    demo: UseTimeoutDocDemo,
+    usage: `
+import { useState } from "react";
+import { useTimeout } from "hookli";
+
+export function Demo() {
+  const [visible, setVisible] = useState(false);
+  const [delay, setDelay] = useState<number | null>(null);
+
+  useTimeout(() => {
+    setVisible(true);
+    setDelay(null);
+  }, delay);
+
+  return (
+    <div>
+      <button onClick={() => setDelay(2000)}>Reveal in 2s</button>
+      {visible && <p>Here!</p>}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "callback",
+        type: "() => void",
+        description: "Runs once after the delay elapses. The hook keeps a ref to the latest callback, so it always fires with fresh state.",
+      },
+      {
+        name: "delay",
+        type: "number | null",
+        description: "Milliseconds to wait before firing. Pass null to disable — a change to null before the delay elapses cancels the pending timeout.",
+      },
+    ],
+    returns: [],
   },
   "use-form": {
     demo: UseFormDocDemo,

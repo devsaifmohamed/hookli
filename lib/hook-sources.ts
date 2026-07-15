@@ -398,6 +398,44 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 `,
   },
+  "use-interval": {
+    path: "src/hooks/use-interval/use-interval.ts",
+    source: `import { useEffect, useRef } from "react";
+
+export const useInterval = (callback: () => void, delay: number | null) => {
+  const savedCallback = useRef(callback);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (delay === null) return;
+    const id = setInterval(() => savedCallback.current(), delay);
+    return () => clearInterval(id);
+  }, [delay]);
+};
+`,
+  },
+  "use-timeout": {
+    path: "src/hooks/use-timeout/use-timeout.ts",
+    source: `import { useEffect, useRef } from "react";
+
+export const useTimeout = (callback: () => void, delay: number | null) => {
+  const savedCallback = useRef(callback);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (delay === null) return;
+    const id = setTimeout(() => savedCallback.current(), delay);
+    return () => clearTimeout(id);
+  }, [delay]);
+};
+`,
+  },
   "use-click-outside": {
     path: "src/hooks/useClickOutside.hook.ts",
     source: `import { Ref, useEffect } from "react";

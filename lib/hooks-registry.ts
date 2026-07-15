@@ -116,6 +116,20 @@ export const HOOKS: readonly HookEntry[] = [
     signature: "useDebounce<T>(value: T, delay: number): T",
   },
   {
+    slug: "use-interval",
+    name: "useInterval",
+    description: "Runs a callback on a fixed interval; pause by passing null.",
+    category: "effects",
+    signature: "useInterval(callback: () => void, delay: number | null): void",
+  },
+  {
+    slug: "use-timeout",
+    name: "useTimeout",
+    description: "Runs a callback once after a delay; cancel by passing null.",
+    category: "effects",
+    signature: "useTimeout(callback: () => void, delay: number | null): void",
+  },
+  {
     slug: "use-click-outside",
     name: "useClickOutside",
     description: "Runs a callback on outside click.",
