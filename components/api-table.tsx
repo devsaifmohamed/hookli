@@ -18,7 +18,7 @@ export function ApiTable({
 }) {
   return (
     <div
-      className={`overflow-x-auto rounded-xl border border-slate-syntax/40 bg-ground-raised ${className}`}
+      className={`surface overflow-x-auto rounded-xl ${className}`}
     >
       <table className="w-full text-left text-sm">
         <thead>
