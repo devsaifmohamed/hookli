@@ -39,7 +39,7 @@ function Switch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
       <span
         aria-hidden="true"
         className={`flex h-7 w-12 items-center rounded-full p-1 transition-colors duration-200 ${
-          on ? "bg-accent" : "bg-slate-syntax/60"
+          on ? "bg-accent" : "bg-gray-body/40"
         }`}
       >
         <span

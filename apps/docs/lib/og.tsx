@@ -10,11 +10,10 @@ import { join } from "node:path";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_COLORS = {
-  ground: "#003748",
-  accent: "#30c5ca",
-  slate: "#4a7a8c",
-  gray: "#8fb6c2",
-  fg: "#ffffff",
+  ground: "#23272f",
+  accent: "#61dafb",
+  gray: "#bcc1cd",
+  fg: "#f6f7f9",
 } as const;
 
 const FONT_FILES = join(process.cwd(), "node_modules/@fontsource");
@@ -85,7 +84,7 @@ export function OgMark({ height }: { height: number }) {
   );
 }
 
-/* hookli. lockup — brand v3, same as components/wordmark. */
+/* hookli. lockup — brand v4 (React palette), same as components/wordmark. */
 export function OgWordmark({
   fontSize,
   withMark = false,

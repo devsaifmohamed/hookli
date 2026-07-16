@@ -30,7 +30,7 @@ export default async function Image() {
             bottom: 48,
             fontFamily: "JetBrains Mono",
             fontSize: 26,
-            color: OG_COLORS.slate,
+            color: OG_COLORS.gray,
           }}
         >
           npm i hookli

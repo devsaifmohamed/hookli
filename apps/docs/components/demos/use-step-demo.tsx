@@ -21,7 +21,7 @@ export function UseStepDocDemo() {
           <span
             key={i}
             className={`size-3 rounded-full transition-colors duration-200 ${
-              i + 1 <= step ? "bg-accent" : "bg-slate-syntax/50"
+              i + 1 <= step ? "bg-accent" : "bg-gray-body/40"
             }`}
           />
         ))}
