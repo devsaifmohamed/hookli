@@ -17,6 +17,11 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 > **Brand v4 (2026-07-16).** The verified official React palette — from `colors.js` in
 > github.com/reactjs/react.dev. Assets in `public/` (gray-90 tile, React-cyan hook cradling
 > a white state dot, `hookli.` wordmark) are the source; the token values below match them.
+> The banner (`hookli-banner.svg/.png`, mirrored in root `assets/`) bakes the hook count in
+> at authoring time from `packages/hookli/hooks.manifest.json` — regenerate the banner (SVG
+> text + PNG re-render) whenever the hook count changes. Its sans stack leads with the brand
+> font **Plus Jakarta Sans** (embedded in the SVG as data-URI woff2 so the PNG render and
+> standalone SVG match the site), falling back to the previous Geist/Avenir stack.
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
@@ -31,9 +36,15 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 | Accent-ink | `#23272F` | — | `ground` | Text on accent-filled buttons (9.22:1 on accent) |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
-theme in v1. Borders are `--color-slate-syntax` at 40% opacity (`border-slate-syntax/40`).
+theme in v1. Borders are two-tier: `.surface` card outlines use **full-strength**
+`--color-slate-syntax` (gray-70 sits right next to gray-80 on the ramp — a 26% mix
+would vanish; see `app/globals.css`), while subtle hairlines use `border-slate-syntax/40`
+(decorative, intentionally faint on the React ramp — they composite to ~1.2–1.3:1).
 Accent is used sparingly: one primary CTA per viewport, links, active nav states.
 `#61DAFB` is the only text-grade brand hue; `#087EA4` never carries text or small UI.
+Slate-syntax is chrome, never text — with one carve-out: on the light `bg-slate-50`
+demo panels (the dark-mode demos), `text-slate-syntax` is the correct copy color
+(~9:1 there; gray-body would be ~1.7:1). Those call sites are commented — don't sweep them.
 `#BCC1CD` (gray-body) is the copy floor — never go darker than that for copy
 (react.dev gray-30 `#99A1B3` is only 4.4:1 on raised — chrome, not copy).
 

@@ -57,6 +57,7 @@ export function UseTernaryDarkModeDocDemo() {
         <p className={`font-mono text-sm ${dark ? "text-fg" : "text-ground"}`}>
           {dark ? "Resolved: dark" : "Resolved: light"}
         </p>
+        {/* light-panel exception: slate-syntax is text-grade on slate-50 (~9:1); gray-body would be ~1.7:1 */}
         <p className={`mt-2 text-xs ${dark ? "text-gray-body" : "text-slate-syntax"}`}>
           &ldquo;system&rdquo; follows your OS setting — the other two force a mode.
         </p>

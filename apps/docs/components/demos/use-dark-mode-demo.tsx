@@ -58,6 +58,7 @@ export function UseDarkModeDocDemo() {
             )}
           </button>
         </div>
+        {/* light-panel exception: slate-syntax is text-grade on slate-50 (~9:1); gray-body would be ~1.7:1 */}
         <p
           className={`mt-2 text-xs ${
             dark ? "text-gray-body" : "text-slate-syntax"

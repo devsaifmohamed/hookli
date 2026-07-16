@@ -20,6 +20,8 @@ the **published `hookli` package** (in node_modules), not from relative paths.
   hairline borders, and the brand hues are **accents, not backgrounds**: ground `#23272F` (page,
   gray-90) → raised `#343A46` (cards, gray-80) → overlay `#16181D` (hover/nested, gray-95); hairline
   borders via `border-slate-syntax/40` (`#404756`, gray-70 — structural chrome only, never text).
+  One carve-out: on the light `bg-slate-50` demo panels (dark-mode demos), `text-slate-syntax`
+  IS the correct copy color (~9:1 there; gray-body would be ~1.7:1) — don't "fix" those call sites.
   Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active — **text-grade** (9.22:1 on ground).
   Brand `#087EA4` (react.dev teal, `--color-brand`) = **large decorative fills only** — 3.23:1 on
   ground fails AA for text/small UI. Body/ink `#F6F7F9` (gray-5), muted `#BCC1CD` (gray-20).
