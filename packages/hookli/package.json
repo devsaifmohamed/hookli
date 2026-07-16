@@ -6,14 +6,16 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "hooks.manifest.json"
   ],
   "scripts": {
     "build": "tsup",
-    "prepublishOnly": "tsup",
+    "prepublishOnly": "node scripts/gen-readme.mjs && tsup",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen:manifest": "node scripts/gen-readme.mjs"
   },
   "keywords": [
     "hookli",
@@ -32,7 +34,8 @@
   "homepage": "https://hookli.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saifmohamedsv/hookli.git"
+    "url": "git+https://github.com/saifmohamedsv/hookli.git",
+    "directory": "packages/hookli"
   },
   "bugs": {
     "url": "https://github.com/saifmohamedsv/hookli/issues"
@@ -61,7 +64,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    }
+    },
+    "./manifest": "./hooks.manifest.json"
   },
   "engines": {
     "node": ">=16"
