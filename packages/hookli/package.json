@@ -1,0 +1,72 @@
+{
+  "name": "hookli",
+  "version": "1.4.3",
+  "description": "hookli — all the React.js custom hooks you frequently use.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "hookli",
+    "react-hooks",
+    "hooks",
+    "react.js",
+    "custom-hooks",
+    "Custom Hooks",
+    "node.js",
+    "Javascript",
+    "Frontend Development",
+    "Productivity"
+  ],
+  "author": "Saif Mohamed <saifmohamed.dev@gmail.com> (https://linkedin.com/in/saifmohamedsv/)",
+  "license": "ISC",
+  "homepage": "https://hookli.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saifmohamedsv/hookli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/saifmohamedsv/hookli/issues"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "jsdom": "^29.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vitest": "^2"
+  },
+  "dependencies": {},
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
