@@ -1,0 +1,693 @@
+# Instincts generated from https://github.com/saifmohamedsv/hookli
+# Generated: 2026-07-16T12:44:33.493Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: hookli-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat, chore, design
+
+## Evidence
+
+- 63 commits analyzed
+- Detected conventional commit pattern
+- Examples: chore: seed hookli-docs — scaffold + ralph harness + T1-T15 backlog, feat(site): T1 — research benchmarks, write docs/DESIGN.md design source of truth
+
+---
+id: hookli-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Commit Length
+
+## Action
+
+Write moderate-length commit messages (~78 characters)
+
+## Evidence
+
+- Average commit message length: 78 chars
+- Based on 63 commits
+
+---
+id: hookli-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: hookli-import-alias
+trigger: "when importing modules"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Import Alias
+
+## Action
+
+Use path aliases (@/, ~/) instead of relative imports
+
+## Evidence
+
+- Import analysis shows alias pattern
+- Example: import { x } from '@/lib/x'
+
+---
+id: hookli-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Export Style
+
+## Action
+
+Prefer mixed exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: mixed
+
+---
+id: hookli-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: 
+
+---
+id: hookli-test-framework
+trigger: "when writing tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Test Framework
+
+## Action
+
+Use vitest as the test framework
+
+## Evidence
+
+- Test framework detected: vitest
+- File pattern: *.test.ts
+
+---
+id: hookli-test-naming
+trigger: "when creating a test file"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Test Naming
+
+## Action
+
+Name test files using the pattern: *.test.ts
+
+## Evidence
+
+- File pattern: *.test.ts
+- Consistent across test files
+
+---
+id: hookli-test-types
+trigger: "when planning tests for a feature"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Test Types
+
+## Action
+
+Write unit, integration tests to match project standards
+
+## Evidence
+
+- Test types detected: unit, integration
+- Coverage config: no
+
+---
+id: hookli-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~20x per month
+- Files: app/*, components/*, lib/*
+
+---
+id: hookli-workflow-add-new-hook-doc-page
+trigger: "when doing add new hook doc page"
+confidence: 0.75
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Add New Hook Doc Page
+
+## Action
+
+Follow the add-new-hook-doc-page workflow:
+1. Create demo component in components/demos/{hook-name}-demo.tsx
+2. Add hook entry to lib/hook-docs.ts
+3. Add hook source to lib/hook-sources.ts
+4. Add hook to lib/hooks-registry.ts
+5. Update ralph/prd.json to mark the task done
+6. Update ralph/progress.txt
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~5x per month
+- Files: components/demos/{hook-name}-demo.tsx, lib/hook-docs.ts, lib/hook-sources.ts
+
+---
+id: hookli-workflow-batch-add-multiple-hook-doc-pages
+trigger: "when doing batch add multiple hook doc pages"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Batch Add Multiple Hook Doc Pages
+
+## Action
+
+Follow the batch-add-multiple-hook-doc-pages workflow:
+1. For each hook: create demo component in components/demos/{hook-name}-demo.tsx
+2. For each hook: add entry to lib/hook-docs.ts
+3. For each hook: add source to lib/hook-sources.ts
+4. For each hook: add to lib/hooks-registry.ts
+5. Update ralph/prd.json to mark all related tasks done
+6. Update ralph/progress.txt
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: components/demos/{hook-name}-demo.tsx, lib/hook-docs.ts, lib/hook-sources.ts
+
+---
+id: hookli-workflow-feature-development-with-prd-tracking
+trigger: "when doing feature development with prd tracking"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Feature Development With Prd Tracking
+
+## Action
+
+Follow the feature-development-with-prd-tracking workflow:
+1. Implement feature (code in app/, components/, lib/ as needed)
+2. Update ralph/prd.json to mark the task done
+3. Update ralph/progress.txt
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~15x per month
+- Files: app/**/*.tsx, components/**/*.tsx, lib/**/*.ts
+
+---
+id: hookli-workflow-design-system-token-update
+trigger: "when doing design system token update"
+confidence: 0.65
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Design System Token Update
+
+## Action
+
+Follow the design-system-token-update workflow:
+1. Edit app/globals.css to update tokens
+2. Update docs/DESIGN.md and/or AGENTS.md to reflect changes
+3. Optionally update public/ assets if branding changes
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~3x per month
+- Files: app/globals.css, docs/DESIGN.md, AGENTS.md
+
+---
+id: hookli-workflow-component-file-naming-convention-enforcement
+trigger: "when doing component file naming convention enforcement"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Component File Naming Convention Enforcement
+
+## Action
+
+Follow the component-file-naming-convention-enforcement workflow:
+1. Rename components/*.tsx files to kebab-case
+2. Update all imports in app/, components/, and related files to match new names
+3. Update AGENTS.md and/or conventions documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: components/*.tsx, app/**/*.tsx, AGENTS.md
+
+---
+id: hookli-workflow-ralph-progress-logging
+trigger: "when doing ralph progress logging"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/saifmohamedsv/hookli
+---
+
+# Hookli Workflow Ralph Progress Logging
+
+## Action
+
+Follow the ralph-progress-logging workflow:
+1. Edit ralph/progress.txt to log progress
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~10x per month
+- Files: ralph/progress.txt
+
+---
+id: hookli-kebab-case-file-names
+trigger: "When creating or renaming a file in components/ or app/"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Kebab Case File Names
+
+## Action
+
+Name the file using kebab-case (e.g., my-component.tsx)
+
+## Evidence
+
+- docs(conventions): correct to Nzmly kebab-case style; fix T18/T19 backlog
+- Pattern in namingConventions.files = kebab-case
+- component-file-naming-convention-enforcement workflow
+
+---
+id: hookli-camel-case-functions
+trigger: "When defining a function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Camel Case Functions
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in namingConventions.functions = camelCase
+
+---
+id: hookli-pascal-case-classes
+trigger: "When defining a class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Pascal Case Classes
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in namingConventions.classes = PascalCase
+
+---
+id: hookli-screaming-snake-case-constants
+trigger: "When defining a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Screaming Snake Case Constants
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in namingConventions.constants = SCREAMING_SNAKE_CASE
+
+---
+id: hookli-alias-imports
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Alias Imports
+
+## Action
+
+Use import aliases as defined in tsconfig.json or project config
+
+## Evidence
+
+- Pattern in importStyle = alias
+- Presence of tsconfig.json paths
+
+---
+id: hookli-mixed-export-style
+trigger: "When exporting modules"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Mixed Export Style
+
+## Action
+
+Use both default and named exports as appropriate
+
+## Evidence
+
+- Pattern in exportStyle = mixed
+
+---
+id: hookli-vitest-test-pattern
+trigger: "When writing tests for TypeScript code"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Vitest Test Pattern
+
+## Action
+
+Place tests in files matching *.test.ts and use Vitest framework
+
+## Evidence
+
+- Pattern in testing.framework = vitest
+- Pattern in testing.filePattern = *.test.ts
+
+---
+id: hookli-unit-and-integration-tests
+trigger: "When testing a feature or module"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Unit And Integration Tests
+
+## Action
+
+Write both unit and integration tests as appropriate
+
+## Evidence
+
+- Pattern in testing.testTypes = unit, integration
+
+---
+id: hookli-no-coverage-config
+trigger: "When configuring test coverage"
+confidence: 0.6
+domain: testing
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli No Coverage Config
+
+## Action
+
+Do not enforce coverage configuration (coverageConfig: false)
+
+## Evidence
+
+- Pattern in testing.coverageConfig = false
+
+---
+id: hookli-conventional-commits
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Conventional Commits
+
+## Action
+
+Use conventional commit prefixes (feat, chore, design, docs) and format
+
+## Evidence
+
+- Pattern in commits.type = conventional
+- Examples: feat(site): ..., chore: ..., design: ...
+
+---
+id: hookli-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Commit Length
+
+## Action
+
+Keep the commit message concise (~78 characters on average)
+
+## Evidence
+
+- Pattern in commits.averageLength = 78
+
+---
+id: hookli-add-new-hook-doc-page
+trigger: "When someone wants to document a new hook for the site"
+confidence: 0.98
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Add New Hook Doc Page
+
+## Action
+
+Create demo in components/demos/{hook-name}-demo.tsx, update lib/hook-docs.ts, lib/hook-sources.ts, lib/hooks-registry.ts, ralph/prd.json, and ralph/progress.txt
+
+## Evidence
+
+- add-new-hook-doc-page workflow
+- Multiple batches in commit history
+
+---
+id: hookli-batch-add-multiple-hook-doc-pages
+trigger: "When someone wants to document a group of new hooks together"
+confidence: 0.97
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Batch Add Multiple Hook Doc Pages
+
+## Action
+
+For each hook: create demo, update docs, sources, registry, and tracking files in a batch
+
+## Evidence
+
+- batch-add-multiple-hook-doc-pages workflow
+- Batch commits in history
+
+---
+id: hookli-feature-development-with-prd-tracking
+trigger: "When working on a new feature or task tracked in the product requirements doc"
+confidence: 0.92
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Feature Development With Prd Tracking
+
+## Action
+
+Implement feature in app/, components/, lib/ and update ralph/prd.json and ralph/progress.txt
+
+## Evidence
+
+- feature-development-with-prd-tracking workflow
+- Seen in commit sequences for features
+
+---
+id: hookli-design-system-token-update
+trigger: "When changing the design system's core tokens or visual style"
+confidence: 0.88
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Design System Token Update
+
+## Action
+
+Edit app/globals.css, update docs/DESIGN.md and/or AGENTS.md, and update public/ assets if branding changes
+
+## Evidence
+
+- design-system-token-update workflow
+- Commits referencing globals.css and DESIGN.md
+
+---
+id: hookli-component-file-naming-convention-enforcement
+trigger: "When enforcing or migrating to kebab-case for component files"
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Component File Naming Convention Enforcement
+
+## Action
+
+Rename components/*.tsx to kebab-case, update imports, and update AGENTS.md or conventions docs
+
+## Evidence
+
+- component-file-naming-convention-enforcement workflow
+- docs(conventions): correct to Nzmly kebab-case style; fix T18/T19 backlog
+
+---
+id: hookli-ralph-progress-logging
+trigger: "Whenever a tracked task is finished or a batch of work is completed"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: saifmohamedsv/hookli
+---
+
+# Hookli Ralph Progress Logging
+
+## Action
+
+Edit ralph/progress.txt to log progress
+
+## Evidence
+
+- ralph-progress-logging workflow
+- Frequent commits updating ralph/progress.txt
+
