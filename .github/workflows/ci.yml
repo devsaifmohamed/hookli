@@ -6,18 +6,32 @@ on:
   pull_request:
 
 jobs:
+  # Job name kept as "build" — it's the required status check on the main branch.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4 # reads packageManager (pnpm@11) from package.json
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
-      - run: yarn install --frozen-lockfile
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Turborepo runs each task across both workspaces (docs waits for the library build).
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Lint
+        run: pnpm lint
+
       - name: Typecheck
-        run: npx tsc --noEmit
-      - name: Test (vitest)
-        run: yarn test
-      - name: Build (tsup)
-        run: yarn build
+        run: pnpm typecheck
