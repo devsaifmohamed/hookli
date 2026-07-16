@@ -2,11 +2,15 @@ packages:
   - "packages/*"
   - "apps/*"
 
-# pnpm 11: don't hard-fail scripts on the pre-run deps check (esbuild/sharp ship
-# prebuilt binaries via optional deps, so their postinstall scripts aren't needed).
+# pnpm 11: don't hard-fail scripts on the pre-run deps check.
 verifyDepsBeforeRun: false
 
+# pnpm 11 build-script approval (esbuild/sharp/unrs-resolver postinstalls).
 onlyBuiltDependencies:
   - esbuild
   - sharp
   - unrs-resolver
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
