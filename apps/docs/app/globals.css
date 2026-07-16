@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/* Brand v3 tokens — docs/DESIGN.md §1. Solid colors only, dark-first, no light theme.
+   Tonal depth (T19): #003748 is a brand MID-tone, so it's the SURFACE, not the page.
+   The page ground is a much darker near-black blue in the same hue family, letting
+   cards/panels visibly lift; a third step lifts nested/hover surfaces above the card. */
+@theme {
+  /* Near-black neutral base with a faint teal undertone — surfaces are defined by
+     subtle elevation + hairline borders, NOT by saturated fills. Prussian (#003748)
+     and Scooter (#30c5ca) are reserved as ACCENTS, not backgrounds. */
+  --color-ground: #0a1315;         /* page */
+  --color-ground-raised: #101d21;  /* cards / panels — a subtle lift off the page */
+  --color-ground-overlay: #17282e; /* hover / nested / code-line highlight */
+  --color-brand: #003748;          /* Prussian — for select brand moments only */
+  --color-accent: #30c5ca;         /* Scooter — links, focus, CTA, active state */
+  --color-slate-syntax: #4a7a8c;   /* hairline borders (used at /40) + code comments */
+  --color-gray-body: #94b0b8;      /* secondary text */
+  --color-fg: #ffffff;
+}
+
+/* Referenced at runtime from the next/font variables on <html>. */
+@theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo,
+    Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Shiki css-variables theme → brand tokens (docs/DESIGN.md §1, §5 CodeBlock).
+     Background stays transparent — the CodeBlock frame owns the surface. */
+  --shiki-foreground: var(--color-fg);
+  --shiki-background: transparent;
+  --shiki-token-keyword: var(--color-accent);
+  --shiki-token-function: var(--color-fg);
+  --shiki-token-constant: var(--color-fg);
+  --shiki-token-string: var(--color-gray-body);
+  --shiki-token-string-expression: var(--color-gray-body);
+  --shiki-token-parameter: var(--color-gray-body);
+  --shiki-token-punctuation: var(--color-gray-body);
+  --shiki-token-comment: var(--color-slate-syntax);
+  --shiki-token-link: var(--color-accent);
+}
+
+body {
+  background-color: var(--color-ground);
+  color: var(--color-fg);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.021em;
+    text-wrap: balance;
+  }
+
+  /* Larger headings get tighter tracking — the premium display-type look. */
+  h1 {
+    letter-spacing: -0.035em;
+  }
+  h2 {
+    letter-spacing: -0.028em;
+  }
+
+  body {
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv01", "ss01";
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+
+  code {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ── Elevation system ─────────────────────────────────────────────────────
+   Near-black-on-near-black means depth can't come from a drop shadow alone —
+   it comes from a hairline border, a 1px top highlight (light catching the top
+   edge), and a soft ambient shadow. `.surface` is the static card treatment;
+   `.surface-lift` adds a 150–200ms ease-out hover raise for interactive cards. */
+@layer components {
+  .surface {
+    background-color: var(--color-ground-raised);
+    border: 1px solid color-mix(in srgb, var(--color-slate-syntax) 26%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 6%, transparent),
+      0 1px 2px 0 color-mix(in srgb, black 40%, transparent),
+      0 12px 28px -18px color-mix(in srgb, black 70%, transparent);
+  }
+
+  .surface-lift {
+    transition:
+      transform 180ms ease-out,
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out;
+  }
+
+  .surface-lift:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 9%, transparent),
+      0 2px 4px 0 color-mix(in srgb, black 40%, transparent),
+      0 20px 44px -20px color-mix(in srgb, black 85%, transparent);
+  }
+}
+
+/* ── Load reveal ──────────────────────────────────────────────────────────
+   A subtle fade-and-rise for hero + landing sections. `both` fill holds the
+   start state before the (optional) delay and the end state after, so there's
+   no flash. The reduced-motion guard zeroes duration AND delay, snapping
+   straight to the visible end state. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-d1 {
+  animation-delay: 80ms;
+}
+.reveal-d2 {
+  animation-delay: 160ms;
+}
+.reveal-d3 {
+  animation-delay: 240ms;
+}
+.reveal-d4 {
+  animation-delay: 320ms;
+}
+
+/* Copy-button feedback: the check icon pops in when the copy succeeds
+   (components/copy-button.tsx). Neutralised under reduced-motion. */
+@keyframes copy-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.copy-pop {
+  animation: copy-pop 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Subtle inner shadow at the top of a code pane, separating it from the
+   filename caption above (premium code-block chrome). */
+.code-pane {
+  box-shadow: inset 0 10px 12px -12px color-mix(in srgb, black 85%, transparent);
+}
+
+/* Hero backdrop: a faint radial glow behind the mark + a hairline grid, both
+   token-derived and masked so they fade out toward the edges. Decorative only
+   (aria-hidden on the element). */
+.hero-glow {
+  background: radial-gradient(
+    60% 55% at 50% 38%,
+    color-mix(in srgb, var(--color-accent) 14%, transparent),
+    transparent 70%
+  );
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-slate-syntax) 12%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-slate-syntax) 12%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px;
+  mask-image: radial-gradient(60% 60% at 50% 40%, black, transparent 75%);
+}
+
+/* Usage-snippet gutter + highlighted hook-call line (T16 usehooks-ts anatomy).
+   `display: grid` on <code> drops shiki's inter-line "\n" text nodes so each
+   .line is a full-width row — line numbers and the call-line tint align. */
+.line-numbers code {
+  display: grid;
+  counter-reset: line;
+}
+
+.line-numbers .line {
+  counter-increment: line;
+}
+
+.line-numbers .line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: var(--color-slate-syntax);
+  user-select: none;
+}
+
+.highlighted-line {
+  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  box-shadow: inset 2px 0 0 0 var(--color-accent);
+}
+
+/* Floating donate button (components/donate-button.tsx): a gentle idle bob so
+   the support CTA quietly draws the eye. Neutralised by the reduced-motion
+   guard below. */
+@keyframes donate-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.donate-float {
+  animation: donate-bob 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
