@@ -105,8 +105,8 @@ and one demo component:
 ## Conventions & brand
 
 Engineering conventions (kebab-case files, named exports, token-only styling, import order,
-barrels) are documented in [`AGENTS.md`](./AGENTS.md). The visual system (brand v3: dark-first
-Prussian/Scooter palette, tonal depth scale, typography) lives in
+barrels) are documented in [`AGENTS.md`](./AGENTS.md). The visual system (brand v4: the official
+React palette — dark neutral grays + React cyan — tonal depth scale, typography) lives in
 [`docs/DESIGN.md`](./docs/DESIGN.md) and is implemented purely through the `@theme` tokens in
 `app/globals.css` — components reference tokens (`bg-ground`, `text-accent`), never raw hex.
 

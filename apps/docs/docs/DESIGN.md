@@ -14,24 +14,28 @@ what all three lack on brand: a code-first hero that proves the library live.
 Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 `@theme` directive (Tailwind 4 has no `tailwind.config.ts` theme — tokens live in CSS).
 
-> **Brand v3 (2026-07-12).** Assets in `public/` (Prussian tile, teal hook cradling a
-> white state dot, `hookli.` wordmark) are the source; the token values below match them.
+> **Brand v4 (2026-07-16).** The verified official React palette — from `colors.js` in
+> github.com/reactjs/react.dev. Assets in `public/` (gray-90 tile, React-cyan hook cradling
+> a white state dot, `hookli.` wordmark) are the source; the token values below match them.
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#04191F` | `--color-ground` | `ground` | Page background (near-black blue — the darkest step) |
-| Ground raised | `#003748` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar (Prussian Blue surface) |
-| Ground overlay | `#0A4557` | `--color-ground-overlay` | `ground-overlay` | Second elevation: nested / hover / active surfaces |
-| Accent | `#30C5CA` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (Scooter) |
-| Syntax slate | `#4A7A8C` | `--color-slate-syntax` | `slate-syntax` | Borders, code comments, muted chrome |
-| Gray | `#8FB6C2` | `--color-gray-body` | `gray-body` | Secondary/body text (mist) |
-| Foreground | `#FFFFFF` | `--color-fg` | `fg` | Primary text/ink (AA on ground: 12.8:1) |
-| Accent-ink | `#003748` | — | `ground` | Text on accent-filled buttons (6.1:1 on accent) |
+| Ground | `#23272F` | `--color-ground` | `ground` | Page background (react.dev gray-90 / wash-dark) |
+| Ground raised | `#343A46` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar (gray-80 / card-dark) |
+| Ground overlay | `#16181D` | `--color-ground-overlay` | `ground-overlay` | Hover / nested wash (gray-95 — the deepest step) |
+| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (3.23:1 on ground, fails AA for text/small UI) |
+| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade, 9.22:1 on ground) |
+| Syntax slate | `#404756` | `--color-slate-syntax` | `slate-syntax` | Hairline borders (at /40) + structural chrome — never text |
+| Gray | `#BCC1CD` | `--color-gray-body` | `gray-body` | Secondary/muted text (gray-20 — 8.3:1 on ground, 6.3:1 on raised) |
+| Foreground | `#F6F7F9` | `--color-fg` | `fg` | Primary/body text (gray-5 — 13.9:1 on ground) |
+| Accent-ink | `#23272F` | — | `ground` | Text on accent-filled buttons (9.22:1 on accent) |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
 theme in v1. Borders are `--color-slate-syntax` at 40% opacity (`border-slate-syntax/40`).
 Accent is used sparingly: one primary CTA per viewport, links, active nav states.
-`#8FB6C2` on `#003748` is 5.9:1 — safe for body text; never go darker than that for copy.
+`#61DAFB` is the only text-grade brand hue; `#087EA4` never carries text or small UI.
+`#BCC1CD` (gray-body) is the copy floor — never go darker than that for copy
+(react.dev gray-30 `#99A1B3` is only 4.4:1 on raised — chrome, not copy).
 
 ### Typography
 - **Headings + wordmark + UI:** Plus Jakarta Sans (Avenir-class geometric) via
@@ -40,8 +44,8 @@ Accent is used sparingly: one primary CTA per viewport, links, active nav states
 - **Code only:** JetBrains Mono (`--font-mono`) — code blocks, commands, identifiers,
   signatures, API type cells, kbd. Monospace is never used for UI copy, nav, buttons,
   or headings.
-- Wordmark treatment (component `Wordmark`): `hookli` lowercase in ink `#FFFFFF` +
-  full stop in accent `#30C5CA`, sans 600, `tracking-tight`. The mark (`HookMark`,
+- Wordmark treatment (component `Wordmark`): `hookli` lowercase in ink `#F6F7F9` +
+  full stop in accent `#61DAFB`, sans 600, `tracking-tight`. The mark (`HookMark`,
   same file) is the icon's hook + dot without the tile. The old `use(hookli)` mono
   lockup is retired.
 - Scale: h1 `text-4xl/5xl` sans 600 · h2 `text-2xl` sans 600 · h3 `text-lg` sans 600 ·
@@ -185,7 +189,8 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 - Touch targets ≥44×44px; icon buttons get padding to reach it.
 - Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills all
   animations and transitions (global CSS guard).
-- Contrast: body `#8FB6C2`+ on `#003748` (≥4.5:1); UI chrome may use slate.
+- Contrast: body `#F6F7F9` / muted `#BCC1CD` on every surface (≥4.5:1); accent `#61DAFB`
+  is text-grade (9.22:1 on ground); `#087EA4` is decorative only; slate is chrome, not text.
 - Breakpoints checked every task: 375 / 768 / 1024 / 1440. No horizontal scroll at 375.
 - Code blocks: `overflow-x-auto`, never wrap-break code.
 

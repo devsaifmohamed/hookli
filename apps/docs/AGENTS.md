@@ -14,16 +14,19 @@ repo (`../rehooks-app`), which is **read-only context** — never modify it from
 Next.js (App Router, TypeScript, Tailwind, npm). Hooks for live demos are imported from
 the **published `hookli` package** (in node_modules), not from relative paths.
 
-## Brand (v3 — dark-first, solid, no gradients)
-- The base is a **near-black neutral** (faint teal undertone), NOT a saturated fill. Surfaces are
-  defined by subtle elevation + hairline borders, and the brand hues are **accents, not backgrounds**:
-  ground `#0A1315` (page) → raised `#101D21` (cards) → overlay `#17282E` (hover/nested); hairline
-  borders via `border-slate-syntax/40`. Accent `#30C5CA` (Scooter) = links/focus/CTA/active; Prussian
-  `#003748` (`--color-brand`) = select brand moments only; ink `#FFFFFF`, muted `#94B0B8`.
+## Brand (v4 — the official React palette, dark-first, solid, no gradients)
+- Colors are the verified react.dev values (`colors.js` in github.com/reactjs/react.dev). The base
+  is React's dark neutral grays, NOT a saturated fill. Surfaces are defined by subtle elevation +
+  hairline borders, and the brand hues are **accents, not backgrounds**: ground `#23272F` (page,
+  gray-90) → raised `#343A46` (cards, gray-80) → overlay `#16181D` (hover/nested, gray-95); hairline
+  borders via `border-slate-syntax/40` (`#404756`, gray-70 — structural chrome only, never text).
+  Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active — **text-grade** (9.22:1 on ground).
+  Brand `#087EA4` (react.dev teal, `--color-brand`) = **large decorative fills only** — 3.23:1 on
+  ground fails AA for text/small UI. Body/ink `#F6F7F9` (gray-5), muted `#BCC1CD` (gray-20).
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
   resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,
   `text-fg`, `text-gray-body`, `border-*`) — **never** a raw hex or arbitrary value.
-- Wordmark: `hookli.` (lowercase, teal full stop) beside the hook mark (inline SVG from
+- Wordmark: `hookli.` (lowercase, cyan full stop) beside the hook mark (inline SVG from
   `public/hookli-icon.svg`). Assets in `public/` (`hookli-banner.svg/.png`, `hookli-icon.svg`).
 - **Plus Jakarta Sans** for headings + body; monospace ONLY inside code surfaces (code block,
   install command, API value/type cells, demo inputs). Inline SVG icons — never emoji as icons.
@@ -100,7 +103,7 @@ App Router files keep their framework names (`page.tsx`, `layout.tsx`, `not-foun
 
 Style with Tailwind utilities bound to the `@theme` tokens (`bg-ground`, `bg-ground-raised`, `text-accent`,
 `text-fg`, `text-gray-body`, `border-*`, `font-sans`, `font-mono`). **Never** a hardcoded hex, an arbitrary
-color (`text-[#30c5ca]`), or an inline `style` color — add a token to `globals.css` first, then reference it.
+color (`text-[#61dafb]`), or an inline `style` color — add a token to `globals.css` first, then reference it.
 
 ### 7 — Accessibility
 
