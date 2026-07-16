@@ -22,7 +22,7 @@ export function DemoInput({
       <input
         id={id}
         {...props}
-        className="min-h-11 w-full rounded-md border border-slate-syntax/40 bg-ground px-3 font-mono text-sm text-fg transition-colors duration-200 placeholder:text-slate-syntax focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+        className="min-h-11 w-full rounded-md border border-slate-syntax/40 bg-ground px-3 font-mono text-sm text-fg transition-colors duration-200 placeholder:text-gray-body focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
       />
     </div>
   );

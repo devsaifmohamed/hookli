@@ -37,7 +37,7 @@ export function UseMousePositionDocDemo() {
             />
           </>
         ) : (
-          <p className="absolute inset-0 flex items-center justify-center font-mono text-xs text-slate-syntax">
+          <p className="absolute inset-0 flex items-center justify-center font-mono text-xs text-gray-body">
             move your cursor over this panel
           </p>
         )}
@@ -50,7 +50,7 @@ export function UseMousePositionDocDemo() {
           {y === null ? "—" : `${Math.round(y)}px`}
         </DemoReadout>
       </dl>
-      <p className="font-mono text-xs text-slate-syntax">
+      <p className="font-mono text-xs text-gray-body">
         Coordinates are measured from the panel&apos;s top-left corner.
       </p>
     </div>

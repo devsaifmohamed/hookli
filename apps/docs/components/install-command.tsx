@@ -10,7 +10,7 @@ export function InstallCommand({ className = "" }: { className?: string }) {
       className={`surface flex items-center gap-2 rounded-lg py-1 pl-4 pr-1 font-mono text-sm ${className}`}
     >
       <code className="whitespace-nowrap">
-        <span aria-hidden="true" className="select-none text-slate-syntax">
+        <span aria-hidden="true" className="select-none text-gray-body">
           ${" "}
         </span>
         {COMMAND}

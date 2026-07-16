@@ -41,7 +41,7 @@ export function UseDebounceValueDocDemo() {
         {pending ? (
           <span className="text-accent">pending — waiting for a pause…</span>
         ) : (
-          <span className="text-slate-syntax">settled</span>
+          <span className="text-gray-body">settled</span>
         )}
       </p>
     </div>

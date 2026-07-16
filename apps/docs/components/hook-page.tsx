@@ -47,7 +47,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
   return (
     <div className="flex gap-10">
       <article className="min-w-0 max-w-3xl flex-1">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">{CATEGORY_LABELS[hook.category]}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-gray-body">{CATEGORY_LABELS[hook.category]}</p>
         <h1 className="mt-2 text-3xl sm:text-4xl">{hook.name}</h1>
         <p className="mt-4 leading-relaxed text-gray-body">{linkifyWebApis(hook.description)}</p>
 
@@ -120,7 +120,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
 
         {related.length > 0 && (
           <section aria-label="Related hooks" className="mt-14">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-syntax">Related hooks</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-gray-body">Related hooks</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {related.map((entry) => (
                 <HookCard key={entry.slug} hook={entry} />

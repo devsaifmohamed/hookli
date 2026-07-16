@@ -62,7 +62,7 @@ export function CodeBlock({
         </span>
         <span className="flex shrink-0 items-center gap-1">
           {title && (
-            <span className="rounded border border-slate-syntax/40 px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-slate-syntax">
+            <span className="rounded border border-slate-syntax/40 px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-gray-body">
               {lang}
             </span>
           )}

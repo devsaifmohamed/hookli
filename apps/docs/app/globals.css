@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* Brand v3 tokens — docs/DESIGN.md §1. Solid colors only, dark-first, no light theme.
-   Tonal depth (T19): #003748 is a brand MID-tone, so it's the SURFACE, not the page.
-   The page ground is a much darker near-black blue in the same hue family, letting
-   cards/panels visibly lift; a third step lifts nested/hover surfaces above the card. */
+/* Brand v4 tokens — the official React palette, from colors.js in
+   github.com/reactjs/react.dev. Dark-first on the react.dev gray ramp: the page
+   is gray-90, cards lift to gray-80, and hover/nested washes drop to the deepest
+   gray-95. #61DAFB (classic React cyan) is the TEXT-GRADE accent; #087EA4
+   (react.dev brand teal) is decorative-only — 3.2:1 on the page fails AA for text. */
 @theme {
-  /* Near-black neutral base with a faint teal undertone — surfaces are defined by
-     subtle elevation + hairline borders, NOT by saturated fills. Prussian (#003748)
-     and Scooter (#30c5ca) are reserved as ACCENTS, not backgrounds. */
-  --color-ground: #0a1315;         /* page */
-  --color-ground-raised: #101d21;  /* cards / panels — a subtle lift off the page */
-  --color-ground-overlay: #17282e; /* hover / nested / code-line highlight */
-  --color-brand: #003748;          /* Prussian — for select brand moments only */
-  --color-accent: #30c5ca;         /* Scooter — links, focus, CTA, active state */
-  --color-slate-syntax: #4a7a8c;   /* hairline borders (used at /40) + code comments */
-  --color-gray-body: #94b0b8;      /* secondary text */
-  --color-fg: #ffffff;
+  /* Neutral react.dev grays — surfaces are defined by subtle elevation +
+     hairline borders, NOT by saturated fills. The React hues stay accents. */
+  --color-ground: #23272f;         /* page — gray-90 (react.dev wash-dark) */
+  --color-ground-raised: #343a46;  /* cards / panels — gray-80 (card-dark) */
+  --color-ground-overlay: #16181d; /* hover / nested wash — gray-95, the deepest step */
+  --color-brand: #087ea4;          /* react.dev brand teal — LARGE DECORATIVE use only, never text/small UI */
+  --color-accent: #61dafb;         /* classic React cyan — links, focus, CTA, active (9.2:1 on ground) */
+  --color-slate-syntax: #404756;   /* gray-70 — hairline borders (used at /40) + structural chrome, NOT text */
+  --color-gray-body: #bcc1cd;      /* gray-20 — secondary/muted text (gray-30 #99a1b3 is only 4.4:1 on raised) */
+  --color-fg: #f6f7f9;             /* gray-5 (react.dev primary-dark) — near-white body text */
 }
 
 /* Referenced at runtime from the next/font variables on <html>. */
@@ -40,7 +40,9 @@
   --shiki-token-string-expression: var(--color-gray-body);
   --shiki-token-parameter: var(--color-gray-body);
   --shiki-token-punctuation: var(--color-gray-body);
-  --shiki-token-comment: var(--color-slate-syntax);
+  /* Comments are text — slate (gray-70) is border-grade on the react.dev ramp
+     and fails AA on code surfaces, so comments read in the muted text gray. */
+  --shiki-token-comment: var(--color-gray-body);
   --shiki-token-link: var(--color-accent);
 }
 
@@ -97,7 +99,9 @@ body {
 @layer components {
   .surface {
     background-color: var(--color-ground-raised);
-    border: 1px solid color-mix(in srgb, var(--color-slate-syntax) 26%, transparent);
+    /* gray-70 sits right next to gray-80 on the ramp, so the hairline runs at
+       full strength — a 26% mix (the old brighter slate) would vanish here. */
+    border: 1px solid var(--color-slate-syntax);
     box-shadow:
       inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 6%, transparent),
       0 1px 2px 0 color-mix(in srgb, black 40%, transparent),
@@ -222,7 +226,7 @@ body {
   width: 1rem;
   margin-right: 1.25rem;
   text-align: right;
-  color: var(--color-slate-syntax);
+  color: var(--color-gray-body);
   user-select: none;
 }
 

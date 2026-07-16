@@ -141,7 +141,7 @@ export function SearchPalette() {
       >
         <SearchIcon className="size-5 sm:size-4" />
         <span className="hidden text-sm sm:inline">Search</span>
-        <kbd className="hidden rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax sm:inline">{isApple ? "⌘" : "Ctrl"} K</kbd>
+        <kbd className="hidden rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-gray-body sm:inline">{isApple ? "⌘" : "Ctrl"} K</kbd>
       </button>
 
       {open &&
@@ -156,7 +156,7 @@ export function SearchPalette() {
               className="flex h-full w-full flex-col bg-ground-raised sm:h-auto sm:max-w-lg sm:rounded-xl sm:border sm:border-slate-syntax/60 sm:shadow-2xl sm:shadow-black/40"
             >
               <div className="flex h-14 shrink-0 items-center gap-3 border-b border-slate-syntax/40 px-4">
-                <SearchIcon className="size-4 shrink-0 text-slate-syntax" />
+                <SearchIcon className="size-4 shrink-0 text-gray-body" />
                 <input
                   ref={inputRef}
                   autoFocus
@@ -173,10 +173,10 @@ export function SearchPalette() {
                   }}
                   onKeyDown={onInputKeyDown}
                   placeholder="Search hooks…"
-                  className="h-full w-full bg-transparent text-sm text-fg outline-none placeholder:text-slate-syntax"
+                  className="h-full w-full bg-transparent text-sm text-fg outline-none placeholder:text-gray-body"
                 />
                 <button ref={closeButtonRef} type="button" onClick={closePalette} aria-label="Close search" className="flex min-h-11 shrink-0 items-center rounded-md px-2">
-                  <kbd className="rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-slate-syntax">esc</kbd>
+                  <kbd className="rounded border border-slate-syntax/60 px-1.5 py-0.5 font-mono text-xs text-gray-body">esc</kbd>
                 </button>
               </div>
 
@@ -193,17 +193,17 @@ export function SearchPalette() {
                   >
                     <span className="shrink-0 text-sm">{hook.name}</span>
                     <span className="truncate text-xs">{hook.description}</span>
-                    <span className="ml-auto shrink-0 text-xs uppercase tracking-wider text-slate-syntax">{CATEGORY_LABELS[hook.category]}</span>
+                    <span className="ml-auto shrink-0 text-xs uppercase tracking-wider text-gray-body">{CATEGORY_LABELS[hook.category]}</span>
                   </li>
                 ))}
                 {results.length === 0 && (
-                  <li role="presentation" className="px-3 py-10 text-center text-sm text-slate-syntax">
+                  <li role="presentation" className="px-3 py-10 text-center text-sm text-gray-body">
                     No hooks match &ldquo;{query.trim()}&rdquo;
                   </li>
                 )}
               </ul>
 
-              <p className="hidden shrink-0 items-center gap-4 border-t border-slate-syntax/40 px-4 py-2.5 text-xs text-slate-syntax sm:flex">
+              <p className="hidden shrink-0 items-center gap-4 border-t border-slate-syntax/40 px-4 py-2.5 text-xs text-gray-body sm:flex">
                 <span>↑↓ navigate</span>
                 <span>↵ open</span>
                 <span>esc close</span>

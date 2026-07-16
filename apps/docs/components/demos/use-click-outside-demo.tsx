@@ -67,7 +67,7 @@ export function UseClickOutsideDocDemo() {
         <DemoReadout label="menu">{open ? "open" : "closed"}</DemoReadout>
         <DemoReadout label="last event">{lastEvent}</DemoReadout>
       </dl>
-      <p className="font-mono text-xs text-slate-syntax">
+      <p className="font-mono text-xs text-gray-body">
         Open the menu, then click anywhere outside it.
       </p>
     </div>

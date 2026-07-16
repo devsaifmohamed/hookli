@@ -35,7 +35,7 @@ export function UseGeoLocationDocDemo() {
       {requested ? (
         <CoordinatesReader />
       ) : (
-        <p className="font-mono text-xs leading-relaxed text-slate-syntax">
+        <p className="font-mono text-xs leading-relaxed text-gray-body">
           Nothing runs until you click — your browser may then ask for
           permission. Denying it is part of the demo: the hook reports it via
           error instead of throwing.

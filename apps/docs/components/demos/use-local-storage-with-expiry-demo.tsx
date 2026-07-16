@@ -94,11 +94,11 @@ function ExpiryDemo({ onExpire }: { onExpire: () => void }) {
             expired — item removed from localStorage
           </span>
         ) : remainingMs !== null ? (
-          <span className="text-slate-syntax">
+          <span className="text-gray-body">
             persisted under {KEY} with a 10s TTL
           </span>
         ) : (
-          <span className="text-slate-syntax">nothing stored yet</span>
+          <span className="text-gray-body">nothing stored yet</span>
         )}
       </p>
     </div>

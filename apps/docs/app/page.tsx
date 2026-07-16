@@ -52,7 +52,7 @@ export default function Home() {
               Star on GitHub
             </a>
           </div>
-          <ul className="reveal reveal-d4 mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-syntax">
+          <ul className="reveal reveal-d4 mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-gray-body">
             {HERO_FACTS.map((fact) => (
               <li key={fact} className="flex items-center gap-2">
                 <span aria-hidden="true" className="size-1 rounded-full bg-slate-syntax" />

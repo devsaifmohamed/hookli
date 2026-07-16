@@ -26,7 +26,7 @@ export function UseIntersectionObserverDocDemo() {
         ref={setRoot}
         className="h-40 overflow-y-auto rounded-md border border-slate-syntax/40 bg-ground p-4"
       >
-        <p className="pb-40 text-center text-xs text-slate-syntax">
+        <p className="pb-40 text-center text-xs text-gray-body">
           scroll down ↓
         </p>
         <div
@@ -39,7 +39,7 @@ export function UseIntersectionObserverDocDemo() {
         >
           {isIntersecting ? "In view" : "Target"}
         </div>
-        <p className="pt-40 text-center text-xs text-slate-syntax">
+        <p className="pt-40 text-center text-xs text-gray-body">
           ↑ scroll up
         </p>
       </div>

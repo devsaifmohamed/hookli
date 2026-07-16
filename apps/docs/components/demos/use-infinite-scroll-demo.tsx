@@ -71,11 +71,11 @@ export function UseInfiniteScrollDocDemo() {
         {isFetching ? (
           <span className="text-accent">loading next batch…</span>
         ) : done ? (
-          <span className="text-slate-syntax">
+          <span className="text-gray-body">
             all {MAX_ITEMS} items loaded — reset to go again
           </span>
         ) : (
-          <span className="text-slate-syntax">
+          <span className="text-gray-body">
             scroll the page toward its bottom to load more
           </span>
         )}

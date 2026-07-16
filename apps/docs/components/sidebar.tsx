@@ -92,7 +92,7 @@ export function MobileDocsNav() {
         className="flex min-h-11 w-full items-center gap-2 text-sm text-gray-body transition-colors duration-200 hover:text-fg"
       >
         <MenuIcon className="size-4 shrink-0" />
-        <span className="text-slate-syntax">docs /</span>
+        <span className="text-gray-body">docs /</span>
         <span className="truncate text-fg">{currentLabel}</span>
       </button>
 
@@ -163,7 +163,7 @@ function DocsNavList({
       </ul>
       {CATEGORY_ORDER.map((category) => (
         <div key={category} className="mt-7">
-          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-syntax">
+          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-body">
             {CATEGORY_LABELS[category]}
           </h3>
           <ul className="flex flex-col border-l border-slate-syntax/40">

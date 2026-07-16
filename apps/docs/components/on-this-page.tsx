@@ -28,7 +28,7 @@ export function OnThisPage({ items }: { items: readonly TocItem[] }) {
 
   return (
     <nav aria-label="On this page">
-      <p className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">On this page</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-gray-body">On this page</p>
       <ul className="mt-3 flex flex-col border-l border-slate-syntax/40">
         {items.map((item) => (
           <li key={item.id}>

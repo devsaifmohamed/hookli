@@ -55,7 +55,7 @@ export function UseMapDocDemo() {
             >
               <span className="min-w-0 truncate font-mono text-sm text-fg">
                 <span className="text-accent">{entryKey}</span>
-                <span className="text-slate-syntax"> : </span>
+                <span className="text-gray-body"> : </span>
                 <span className="text-gray-body">{entryValue || "—"}</span>
               </span>
               <button
