@@ -58,7 +58,7 @@ export default function SupportPage() {
         aria-labelledby="star-heading"
         className="surface mt-12 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent">
           <StarIcon className="size-6" />
         </span>
         <h2 id="star-heading" className="mt-4 text-xl">
@@ -84,7 +84,7 @@ export default function SupportPage() {
         aria-labelledby="contribute-heading"
         className="surface mt-8 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent">
           <GitPullRequestIcon className="size-6" />
         </span>
         <h2 id="contribute-heading" className="mt-4 text-xl">
@@ -120,7 +120,7 @@ export default function SupportPage() {
         aria-labelledby="sponsor-heading"
         className="surface mt-8 scroll-mt-20 rounded-xl p-6 sm:p-8"
       >
-        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
+        <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent">
           <HeartIcon className="size-6" />
         </span>
         <h2 id="sponsor-heading" className="mt-4 text-xl">
@@ -144,7 +144,7 @@ export default function SupportPage() {
             href={KOFI_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-11 items-center gap-2 rounded-md border border-slate-syntax/40 px-5 text-sm text-fg transition-colors duration-200 hover:border-slate-syntax hover:bg-ground-overlay"
+            className="flex min-h-11 items-center gap-2 rounded-md border border-gray-outline px-5 text-sm text-fg transition-colors duration-200 hover:border-gray-body hover:bg-ground-overlay"
           >
             <KofiIcon className="size-4" aria-hidden="true" />
             Buy me a coffee

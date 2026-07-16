@@ -50,12 +50,12 @@ export function UseInfiniteScrollDocDemo() {
     <div className="flex w-full max-w-sm flex-col gap-4">
       <ul
         ref={listRef}
-        className="max-h-48 overflow-y-auto rounded-md border border-slate-syntax/40 bg-ground p-2"
+        className="max-h-48 overflow-y-auto rounded-md border border-slate-syntax bg-ground p-2"
       >
         {items.map((item) => (
           <li
             key={item}
-            className="border-b border-slate-syntax/20 px-2 py-2.5 font-mono text-sm text-gray-body last:border-b-0"
+            className="border-b border-slate-syntax px-2 py-2.5 font-mono text-sm text-gray-body last:border-b-0"
           >
             {item}
           </li>

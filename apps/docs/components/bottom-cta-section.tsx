@@ -6,7 +6,7 @@ import { InstallCommand } from "@/components/install-command";
    the docs CTA for readers who scrolled the whole page. */
 export function BottomCtaSection() {
   return (
-    <section className="border-t border-slate-syntax/40">
+    <section className="border-t border-slate-syntax">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-4 py-20 text-center sm:px-6">
         <h2 className="text-3xl">Stop rewriting the same hooks.</h2>
         <InstallCommand className="mt-8" />

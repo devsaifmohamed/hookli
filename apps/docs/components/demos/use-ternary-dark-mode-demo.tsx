@@ -41,7 +41,7 @@ export function UseTernaryDarkModeDocDemo() {
             type="button"
             onClick={() => setTernaryDarkMode(mode)}
             aria-pressed={ternaryDarkMode === mode}
-            className="min-h-11 flex-1 rounded-md border border-slate-syntax/40 px-3 font-mono text-sm capitalize text-gray-body transition-colors duration-200 hover:border-slate-syntax hover:text-fg aria-pressed:border-accent/60 aria-pressed:bg-accent/10 aria-pressed:text-accent"
+            className="min-h-11 flex-1 rounded-md border border-gray-outline px-3 font-mono text-sm capitalize text-gray-body transition-colors duration-200 hover:border-gray-body hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent/10 aria-pressed:text-accent"
           >
             {mode}
           </button>
@@ -50,7 +50,7 @@ export function UseTernaryDarkModeDocDemo() {
       <div
         className={`rounded-lg border p-4 transition-colors duration-200 ${
           dark
-            ? "border-slate-syntax/40 bg-ground"
+            ? "border-slate-syntax bg-ground"
             : "border-slate-300 bg-slate-50"
         }`}
       >

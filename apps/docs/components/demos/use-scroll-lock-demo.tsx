@@ -25,13 +25,13 @@ export function UseScrollLockDocDemo() {
       </DemoButton>
       <div
         ref={setPanel}
-        className="h-40 overflow-y-auto rounded-md border border-slate-syntax/40 bg-ground p-4"
+        className="h-40 overflow-y-auto rounded-md border border-slate-syntax bg-ground p-4"
       >
         <ul className="flex flex-col gap-2 text-sm text-gray-body">
           {Array.from({ length: 12 }, (_, i) => (
             <li
               key={i}
-              className="rounded border border-slate-syntax/20 px-3 py-2"
+              className="rounded border border-slate-syntax px-3 py-2"
             >
               Row {i + 1}
             </li>

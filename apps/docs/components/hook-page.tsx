@@ -129,7 +129,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
           </section>
         )}
 
-        <nav aria-label="Adjacent hooks" className="mt-12 flex items-center justify-between gap-4 border-t border-slate-syntax/40 pt-6">
+        <nav aria-label="Adjacent hooks" className="mt-12 flex items-center justify-between gap-4 border-t border-slate-syntax pt-6">
           {prev ? (
             <Link href={`/docs/${prev.slug}`} className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm text-gray-body transition-colors duration-200 hover:text-fg">
               <ArrowRightIcon className="size-4 rotate-180" aria-hidden="true" />

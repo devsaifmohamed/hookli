@@ -16,7 +16,7 @@ export function UseMousePositionDocDemo() {
     <div className="flex w-full max-w-sm flex-col gap-4">
       <div
         ref={panelRef}
-        className="relative h-40 overflow-hidden rounded-md border border-slate-syntax/40 bg-ground"
+        className="relative h-40 overflow-hidden rounded-md border border-slate-syntax bg-ground"
       >
         {x !== null && y !== null ? (
           <>

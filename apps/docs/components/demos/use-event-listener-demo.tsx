@@ -33,7 +33,7 @@ export function UseEventListenerDocDemo() {
       <div
         ref={panelRef}
         tabIndex={0}
-        className="flex h-28 w-full max-w-md cursor-pointer items-center justify-center rounded-md border border-slate-syntax/40 bg-ground px-4 text-center font-mono text-sm text-gray-body transition-colors duration-200 hover:border-slate-syntax focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+        className="flex h-28 w-full max-w-md cursor-pointer items-center justify-center rounded-md border border-gray-outline bg-ground px-4 text-center font-mono text-sm text-gray-body transition-colors duration-200 hover:border-gray-body focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
       >
         Click here, or press any key
       </div>

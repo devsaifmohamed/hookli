@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // Mobile browser chrome — matches --color-ground (globals.css). A theme-color
   // meta tag requires a literal hex; keep this in sync with the ground token.
-  themeColor: "#23272f",
+  themeColor: "#16181d",
   colorScheme: "dark",
 };
 

@@ -49,21 +49,21 @@ export default function DocsIndexPage() {
       <h2 className="mt-12 text-2xl">Quick start</h2>
       <ol className="mt-4 grid gap-3 sm:grid-cols-3">
         <li className="surface flex flex-col rounded-xl p-5">
-          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent/20">1</span>
+          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent">1</span>
           <h3 className="mt-4 text-base font-semibold">Install</h3>
           <p className="mt-1 text-sm leading-relaxed text-gray-body">Add hookli to your React app.</p>
           <InstallCommand className="mt-3" />
         </li>
         <li className="surface flex flex-col rounded-xl p-5">
-          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent/20">2</span>
+          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent">2</span>
           <h3 className="mt-4 text-base font-semibold">Import</h3>
           <p className="mt-1 text-sm leading-relaxed text-gray-body">Pull in exactly the hook you need.</p>
-          <code className="surface mt-3 block overflow-x-auto rounded-lg px-3 py-2 font-mono text-xs">
+          <code className="mt-3 block overflow-x-auto rounded-lg border border-slate-syntax bg-ground px-3 py-2 font-mono text-xs">
             <span className="text-accent">import</span> {"{ useToggle }"} <span className="text-accent">from</span> <span className="text-gray-body">&quot;hookli&quot;</span>
           </code>
         </li>
         <li className="surface flex flex-col rounded-xl p-5">
-          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent/20">3</span>
+          <span className="flex size-7 items-center justify-center rounded-full bg-accent/10 text-sm font-semibold text-accent ring-1 ring-inset ring-accent">3</span>
           <h3 className="mt-4 text-base font-semibold">Use it</h3>
           <p className="mt-1 text-sm leading-relaxed text-gray-body">Call it in a component — no providers, no config.</p>
         </li>

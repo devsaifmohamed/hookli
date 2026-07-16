@@ -24,7 +24,7 @@ export function UseIntersectionObserverDocDemo() {
     <div className="flex w-full max-w-sm flex-col gap-4">
       <div
         ref={setRoot}
-        className="h-40 overflow-y-auto rounded-md border border-slate-syntax/40 bg-ground p-4"
+        className="h-40 overflow-y-auto rounded-md border border-slate-syntax bg-ground p-4"
       >
         <p className="pb-40 text-center text-xs text-gray-body">
           scroll down ↓
@@ -34,7 +34,7 @@ export function UseIntersectionObserverDocDemo() {
           className={`flex h-20 items-center justify-center rounded-md border text-sm transition-colors duration-200 ${
             isIntersecting
               ? "border-accent/60 bg-accent/10 text-accent"
-              : "border-slate-syntax/40 text-gray-body"
+              : "border-slate-syntax text-gray-body"
           }`}
         >
           {isIntersecting ? "In view" : "Target"}

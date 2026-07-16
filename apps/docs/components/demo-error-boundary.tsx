@@ -26,7 +26,7 @@ export class DemoErrorBoundary extends Component<
           <button
             type="button"
             onClick={() => this.setState({ hasError: false })}
-            className="min-h-11 rounded-md border border-slate-syntax/40 px-4 text-sm text-fg transition-colors duration-200 hover:border-slate-syntax"
+            className="min-h-11 rounded-md border border-gray-outline px-4 text-sm text-fg transition-colors duration-200 hover:border-gray-body"
           >
             Re-run demo
           </button>

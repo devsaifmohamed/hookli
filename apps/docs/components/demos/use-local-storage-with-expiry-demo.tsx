@@ -80,7 +80,7 @@ function ExpiryDemo({ onExpire }: { onExpire: () => void }) {
       {remainingMs !== null && (
         <div
           aria-hidden="true"
-          className="h-1 overflow-hidden rounded-full bg-slate-syntax/20"
+          className="h-1 overflow-hidden rounded-full bg-slate-syntax"
         >
           <div
             className="h-full bg-accent"

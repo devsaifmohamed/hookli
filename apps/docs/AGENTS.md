@@ -16,14 +16,18 @@ the **published `hookli` package** (in node_modules), not from relative paths.
 
 ## Brand (v4 — the official React palette, dark-first, solid, no gradients)
 - Colors are the verified react.dev values (`colors.js` in github.com/reactjs/react.dev). The base
-  is React's dark neutral grays, NOT a saturated fill. Surfaces are defined by subtle elevation +
-  hairline borders, and the brand hues are **accents, not backgrounds**: ground `#23272F` (page,
-  gray-90) → raised `#343A46` (cards, gray-80) → overlay `#16181D` (hover/nested, gray-95); hairline
-  borders via `border-slate-syntax/40` (`#404756`, gray-70 — structural chrome only, never text).
+  is React's dark neutral grays, NOT a saturated fill. Surfaces are defined by elevation + crisp
+  solid borders, and the brand hues are **accents, not backgrounds**: ground `#16181D` (page +
+  inset wells, gray-95) → raised `#23272F` (cards, gray-90) → overlay `#343A46` (hover/nested/
+  elevated, gray-80). Insets (code interiors, in-card inputs) cut back to `bg-ground`. Borders are
+  **solid, never alpha-faded**: structural chrome uses `border-slate-syntax` (`#404756`, gray-70,
+  full strength — never text); interactive outlines (outline buttons, inputs, toggles) use
+  `border-gray-outline` (`#99A1B3`, gray-30 — ≥3:1 non-text on every surface, chrome never copy),
+  stepping to `border-gray-body` on hover / `border-accent` when active.
   One carve-out: on the light `bg-slate-50` demo panels (dark-mode demos), `text-slate-syntax`
   IS the correct copy color (~9:1 there; gray-body would be ~1.7:1) — don't "fix" those call sites.
-  Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active — **text-grade** (9.22:1 on ground).
-  Brand `#087EA4` (react.dev teal, `--color-brand`) = **large decorative fills only** — 3.23:1 on
+  Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active — **text-grade** (10.93:1 on ground).
+  Brand `#087EA4` (react.dev teal, `--color-brand`) = **large decorative fills only** — 3.83:1 on
   ground fails AA for text/small UI. Body/ink `#F6F7F9` (gray-5), muted `#BCC1CD` (gray-20).
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
   resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,

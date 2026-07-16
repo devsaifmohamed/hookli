@@ -20,11 +20,11 @@ const HERO_FACTS = [
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
-      <section className="relative overflow-hidden border-b border-slate-syntax/40">
+      <section className="relative overflow-hidden border-b border-slate-syntax">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 hero-grid" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 hero-glow" />
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
-          <p className="reveal inline-flex items-center gap-2 rounded-full border border-slate-syntax/40 bg-ground-raised/60 px-3 py-1 text-xs font-medium text-gray-body backdrop-blur">
+          <p className="reveal inline-flex items-center gap-2 rounded-full border border-slate-syntax bg-ground-raised/60 px-3 py-1 text-xs font-medium text-gray-body backdrop-blur">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
             Zero-dependency React hooks
           </p>

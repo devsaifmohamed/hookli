@@ -25,28 +25,32 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#23272F` | `--color-ground` | `ground` | Page background (react.dev gray-90 / wash-dark) |
-| Ground raised | `#343A46` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar (gray-80 / card-dark) |
-| Ground overlay | `#16181D` | `--color-ground-overlay` | `ground-overlay` | Hover / nested wash (gray-95 — the deepest step) |
-| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (3.23:1 on ground, fails AA for text/small UI) |
-| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade, 9.22:1 on ground) |
-| Syntax slate | `#404756` | `--color-slate-syntax` | `slate-syntax` | Hairline borders (at /40) + structural chrome — never text |
-| Gray | `#BCC1CD` | `--color-gray-body` | `gray-body` | Secondary/muted text (gray-20 — 8.3:1 on ground, 6.3:1 on raised) |
-| Foreground | `#F6F7F9` | `--color-fg` | `fg` | Primary/body text (gray-5 — 13.9:1 on ground) |
-| Accent-ink | `#23272F` | — | `ground` | Text on accent-filled buttons (9.22:1 on accent) |
+| Ground | `#16181D` | `--color-ground` | `ground` | Page background + inset wells (react.dev gray-95 — the anchor; code interiors and in-card inputs cut back to it) |
+| Ground raised | `#23272F` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar drawer (gray-90 — visibly lifted off the page) |
+| Ground overlay | `#343A46` | `--color-ground-overlay` | `ground-overlay` | Hover / nested / elevated states on raised (gray-80 — the top step) |
+| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (3.83:1 on ground, fails AA for text/small UI) |
+| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade, 10.93:1 on ground) |
+| Syntax slate | `#404756` | `--color-slate-syntax` | `slate-syntax` | Solid 1px card/frame borders + structural chrome — never text |
+| Gray outline | `#99A1B3` | `--color-gray-outline` | `gray-outline` | Interactive outlines only — outline buttons, inputs, toggles (gray-30 — ≥3:1 non-text on every surface; chrome, never copy) |
+| Gray | `#BCC1CD` | `--color-gray-body` | `gray-body` | Secondary/muted text (gray-20 — 9.9:1 on ground, 8.3:1 on raised, 6.3:1 on overlay) |
+| Foreground | `#F6F7F9` | `--color-fg` | `fg` | Primary/body text (gray-5 — 16.6:1 on ground) |
+| Accent-ink | `#16181D` | — | `ground` | Text on accent-filled buttons (10.93:1 on accent) |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
-theme in v1. Borders are two-tier: `.surface` card outlines use **full-strength**
-`--color-slate-syntax` (gray-70 sits right next to gray-80 on the ramp — a 26% mix
-would vanish; see `app/globals.css`), while subtle hairlines use `border-slate-syntax/40`
-(decorative, intentionally faint on the React ramp — they composite to ~1.2–1.3:1).
+theme in v1. Borders are **solid, never alpha-faded** (faded hairlines composited to
+~1.2:1 on this ramp and vanished), two roles: **structural chrome** (cards, frames,
+dividers, section rules, kbd chips) uses full-strength `border-slate-syntax` (gray-70,
+react.dev-style crisp 1px); **interactive outlines** (outline buttons, inputs, toggle
+frames, the search trigger) use `border-gray-outline` (gray-30 — 5.8:1 on raised,
+4.4:1 on overlay, comfortably over the 3:1 non-text floor), stepping up to
+`border-gray-body` on hover and `border-accent` for active/pressed states.
 Accent is used sparingly: one primary CTA per viewport, links, active nav states.
 `#61DAFB` is the only text-grade brand hue; `#087EA4` never carries text or small UI.
-Slate-syntax is chrome, never text — with one carve-out: on the light `bg-slate-50`
-demo panels (the dark-mode demos), `text-slate-syntax` is the correct copy color
-(~9:1 there; gray-body would be ~1.7:1). Those call sites are commented — don't sweep them.
-`#BCC1CD` (gray-body) is the copy floor — never go darker than that for copy
-(react.dev gray-30 `#99A1B3` is only 4.4:1 on raised — chrome, not copy).
+Slate-syntax and gray-outline are chrome, never text — with one carve-out: on the light
+`bg-slate-50` demo panels (the dark-mode demos), `text-slate-syntax` is the correct copy
+color (~9:1 there; gray-body would be ~1.7:1). Those call sites are commented — don't sweep
+them. `#BCC1CD` (gray-body) is the copy floor — never go darker than that for copy
+(gray-30 `#99A1B3` is outline chrome, not copy).
 
 ### Typography
 - **Headings + wordmark + UI:** Plus Jakarta Sans (Avenir-class geometric) via
@@ -119,8 +123,9 @@ Modeled on usehooks-ts's progressive disclosure + Mantine's demo-first ordering:
 1. **Breadcrumb-lite**: category label (small, gray).
 2. **Title**: hook name, mono h1. **Description**: 1–2 sentences, gray.
 3. **Live demo** (`HookDemo` frame): Preview/Code tabs, demo first. Frame =
-   `ground-raised` card, slate/40 border, 12px radius, min-height 180px. Error
-   boundary inside so a crashing demo never kills the page.
+   `ground-raised` card, solid slate border, 12px radius, min-height 180px; the
+   Code tab pane is an inset well (`bg-ground`). Error boundary inside so a
+   crashing demo never kills the page.
 4. **Usage**: heading + `CodeBlock` with the copyable snippet (same code as the
    demo's Code tab).
 5. **API**: signature line in a code strip, then Parameters table
@@ -200,8 +205,10 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 - Touch targets ≥44×44px; icon buttons get padding to reach it.
 - Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills all
   animations and transitions (global CSS guard).
-- Contrast: body `#F6F7F9` / muted `#BCC1CD` on every surface (≥4.5:1); accent `#61DAFB`
-  is text-grade (9.22:1 on ground); `#087EA4` is decorative only; slate is chrome, not text.
+- Contrast: body `#F6F7F9` / muted `#BCC1CD` on every surface (≥4.5:1 — the tightest pair
+  is gray-body on overlay at 6.3:1); accent `#61DAFB` is text-grade (10.93:1 on ground);
+  `#087EA4` is decorative only; slate and gray-outline are chrome, not text; interactive
+  outlines (`gray-outline`) hit ≥3:1 non-text on every surface.
 - Breakpoints checked every task: 375 / 768 / 1024 / 1440. No horizontal scroll at 375.
 - Code blocks: `overflow-x-auto`, never wrap-break code.
 
