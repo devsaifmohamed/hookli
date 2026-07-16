@@ -4,8 +4,10 @@ import { join } from "node:path";
 /* Shared machinery for the generated OG images (app/opengraph-image.tsx,
    app/docs/[slug]/opengraph-image.tsx) and app/apple-icon.tsx. Satori can't
    reach next/font's build cache (and doesn't read woff2), so the woffs come
-   from the @fontsource devDependencies. Brand tokens mirror app/globals.css
-   @theme — keep in sync. */
+   from the @fontsource devDependencies. NOTE — intentional divergence: OG images
+   and the brand assets keep the gray-90 (#23272f) ground so they work standalone,
+   while the SITE's page ground is one step darker (gray-95 #16181d) per the
+   surface re-tier. Do not "sync" OG_COLORS.ground to the site ground. */
 
 export const OG_SIZE = { width: 1200, height: 630 };
 

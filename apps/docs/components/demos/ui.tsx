@@ -55,7 +55,7 @@ export function DemoReadout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-slate-syntax py-2 last:border-b-0">
+    <div className="flex items-baseline justify-between gap-4 border-b border-ground-overlay py-2 last:border-b-0">
       <dt className="shrink-0 font-mono text-xs text-gray-body">{label}</dt>
       <dd className="truncate font-mono text-sm text-fg">{children}</dd>
     </div>

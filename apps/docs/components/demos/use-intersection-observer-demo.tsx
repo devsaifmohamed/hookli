@@ -33,7 +33,7 @@ export function UseIntersectionObserverDocDemo() {
           ref={ref}
           className={`flex h-20 items-center justify-center rounded-md border text-sm transition-colors duration-200 ${
             isIntersecting
-              ? "border-accent/60 bg-accent/10 text-accent"
+              ? "border-accent bg-accent/10 text-accent"
               : "border-slate-syntax text-gray-body"
           }`}
         >

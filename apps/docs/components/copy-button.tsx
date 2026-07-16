@@ -37,7 +37,7 @@ export function CopyButton({
       type="button"
       onClick={copy}
       aria-label={label}
-      className={`flex size-11 items-center justify-center rounded-md text-gray-body transition-colors duration-200 hover:bg-slate-syntax/20 hover:text-fg ${className}`}
+      className={`flex size-11 items-center justify-center rounded-md text-gray-body transition-colors duration-200 hover:bg-ground-overlay hover:text-fg ${className}`}
     >
       {copied ? (
         <CheckIcon className="copy-pop size-4 text-accent" />

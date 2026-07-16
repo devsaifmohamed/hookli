@@ -16,7 +16,10 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 
 > **Brand v4 (2026-07-16).** The verified official React palette — from `colors.js` in
 > github.com/reactjs/react.dev. Assets in `public/` (gray-90 tile, React-cyan hook cradling
-> a white state dot, `hookli.` wordmark) are the source; the token values below match them.
+> a white state dot, `hookli.` wordmark) are the source. **Intentional divergence:** the
+> assets and OG images hold the gray-90 (`#23272F`) ground so they work standalone; the
+> site's page ground sits one step darker (gray-95 `#16181D`) per the surface re-tier —
+> don't "sync" them.
 > The banner (`hookli-banner.svg/.png`, mirrored in root `assets/`) bakes the hook count in
 > at authoring time from `packages/hookli/hooks.manifest.json` — regenerate the banner (SVG
 > text + PNG re-render) whenever the hook count changes. Its sans stack leads with the brand
@@ -38,9 +41,11 @@ Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
 theme in v1. Borders are **solid, never alpha-faded** (faded hairlines composited to
-~1.2:1 on this ramp and vanished), two roles: **structural chrome** (cards, frames,
-dividers, section rules, kbd chips) uses full-strength `border-slate-syntax` (gray-70,
-react.dev-style crisp 1px); **interactive outlines** (outline buttons, inputs, toggle
+~1.2:1 on this ramp and vanished), three roles: **structural chrome** (card/frame edges,
+section rules, kbd chips) uses full-strength `border-slate-syntax` (gray-70,
+react.dev-style crisp 1px); **row dividers inside a card** (readout rows, list rows) use
+solid `border-ground-overlay` (gray-80) — quiet but still solid, so dividers never carry
+frame weight; **interactive outlines** (outline buttons, inputs, toggle
 frames, the search trigger) use `border-gray-outline` (gray-30 — 5.8:1 on raised,
 4.4:1 on overlay, comfortably over the 3:1 non-text floor), stepping up to
 `border-gray-body` on hover and `border-accent` for active/pressed states.
