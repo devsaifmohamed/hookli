@@ -25,4 +25,13 @@ if (!block.test(md)) throw new Error("gen-readme: could not find the hook bullet
 md = md.replace(block, list + "\n");
 
 writeFileSync(readmePath, md);
-console.log(`README regenerated from manifest — ${count} hooks.`);
+
+// 3) mirror to the REPO ROOT — the GitHub repo page should show the package README
+//    (the repo IS the package). Generated copy, never hand-edited: edit
+//    packages/hookli/README.md and re-run this script.
+const repoRootReadme = join(root, "..", "..", "README.md");
+const banner =
+  "<!-- GENERATED — do not edit. Source: packages/hookli/README.md (run `pnpm gen:manifest`). -->\n\n";
+writeFileSync(repoRootReadme, banner + md);
+
+console.log(`README regenerated from manifest — ${count} hooks (package + repo root).`);

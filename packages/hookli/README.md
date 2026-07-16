@@ -138,7 +138,7 @@ Every star and sponsorship genuinely helps keep this going. Thank you! 🙏
 
 ## 🤝 Contributing
 
-Contributions of any size are welcome — see **[CONTRIBUTING.md](./CONTRIBUTING.md)**. In short:
+Contributions of any size are welcome — see **[CONTRIBUTING.md](https://github.com/saifmohamedsv/hookli/blob/main/CONTRIBUTING.md)**. In short:
 each hook lives in its own folder under `src/hooks/use-<name>/` (hook + colocated vitest test +
 barrel), keep it SSR-safe, and make sure `bash ralph/check.sh` (typecheck + tests + build) is green.
 
