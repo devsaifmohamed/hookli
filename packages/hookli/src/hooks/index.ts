@@ -18,6 +18,7 @@ export * from "./use-debounce-value";
 export * from "./use-document-title";
 export * from "./use-event-callback";
 export * from "./use-event-listener";
+export * from "./use-expandable-text";
 export * from "./use-fetch";
 export * from "./use-form";
 export * from "./use-geo-location";

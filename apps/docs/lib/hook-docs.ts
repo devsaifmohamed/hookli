@@ -13,6 +13,7 @@ import { UseDebounceValueDocDemo } from "@/components/demos/use-debounce-value-d
 import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
 import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
+import { UseExpandableTextDocDemo } from "@/components/demos/use-expandable-text-demo";
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
@@ -1490,6 +1491,111 @@ export function Demo() {
         name: "isFetching",
         type: "boolean",
         description: "True while a triggered fetchMoreData promise is pending; blocks re-triggering until it resolves.",
+      },
+    ],
+  },
+  "use-expandable-text": {
+    demo: UseExpandableTextDocDemo,
+    usage: `
+import { useExpandableText } from "hookli";
+
+export function Review({ body }: { body: string }) {
+  const { text, isExpanded, isTruncated, toggle, ref, clampStyle } =
+    useExpandableText<HTMLParagraphElement>(body, { maxChars: 180, maxLines: 3 });
+
+  return (
+    <div>
+      <p ref={ref} style={clampStyle}>{text}</p>
+      {isTruncated && (
+        <button onClick={toggle}>{isExpanded ? "Show less" : "Show more"}</button>
+      )}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "text",
+        type: "string",
+        description: "The full text to (maybe) collapse.",
+      },
+      {
+        name: "options",
+        type: "UseExpandableTextOptions",
+        defaultValue: "{}",
+        description: "Character and/or line budgets and display options. Whichever limit clips first wins.",
+      },
+    ],
+    returns: [
+      {
+        name: "text",
+        type: "string",
+        description: "The text to render — character-capped when collapsed and maxChars is set, otherwise the full text.",
+      },
+      {
+        name: "isExpanded",
+        type: "boolean",
+        description: "Whether the full text is currently shown.",
+      },
+      {
+        name: "isTruncated",
+        type: "boolean",
+        description: "True when either limit actually clips the text — use it to hide the toggle when the text fits.",
+      },
+      {
+        name: "toggle",
+        type: "() => void",
+        description: "Flip between expanded and collapsed.",
+      },
+      {
+        name: "expand",
+        type: "() => void",
+        description: "Show the full text.",
+      },
+      {
+        name: "collapse",
+        type: "() => void",
+        description: "Collapse back to the limit.",
+      },
+      {
+        name: "ref",
+        type: "RefCallback<T>",
+        description: "Attach to the text element. Required for the maxLines clamp and its overflow measurement.",
+      },
+      {
+        name: "clampStyle",
+        type: "CSSProperties",
+        description: "Spread onto the text element; applies the CSS line-clamp while collapsed and maxLines is set.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseExpandableTextOptions",
+        description: "Character and line budgets — provide either, or both.",
+        rows: [
+          {
+            name: "maxChars",
+            type: "number",
+            description: "Max characters shown while collapsed. Pure string logic (SSR-safe), trimmed to a word boundary.",
+          },
+          {
+            name: "maxLines",
+            type: "number",
+            description: "Max lines shown while collapsed. Applied as a CSS line-clamp and measured in the DOM, so it re-clips on resize.",
+          },
+          {
+            name: "ellipsis",
+            type: "string",
+            defaultValue: '"…"',
+            description: "Appended to character-truncated text.",
+          },
+          {
+            name: "defaultExpanded",
+            type: "boolean",
+            defaultValue: "false",
+            description: "Whether the text starts expanded.",
+          },
+        ],
       },
     ],
   },

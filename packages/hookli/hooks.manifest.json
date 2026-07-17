@@ -198,6 +198,13 @@
       "signature": "useInfiniteScroll(fetchMoreData: () => Promise<void>): boolean"
     },
     {
+      "slug": "use-expandable-text",
+      "name": "useExpandableText",
+      "description": "Collapse long text by a character and/or line budget with a show-more toggle.",
+      "category": "dom",
+      "signature": "useExpandableText<T extends HTMLElement = HTMLElement>(text: string, options?: UseExpandableTextOptions): UseExpandableTextResult<T>"
+    },
+    {
       "slug": "use-hover",
       "name": "useHover",
       "description": "Tracks whether the pointer is hovering an element.",

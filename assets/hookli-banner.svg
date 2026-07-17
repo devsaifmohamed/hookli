@@ -1,4 +1,4 @@
-<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli — type-safe React hooks. SSR-safe, tree-shakable, zero dependencies. 40 hooks.">
+<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="hookli — type-safe React hooks. SSR-safe, tree-shakable, zero dependencies. 41 hooks.">
   <!-- hook count is baked in at authoring time from packages/hookli/hooks.manifest.json — re-render this banner when the count changes -->
   <!-- brand font Plus Jakarta Sans (latin 500/600/700) embedded as data-URI woff2 so the SVG is self-contained -->
   <style>
@@ -41,7 +41,7 @@
   <!-- hook-count outline pill -->
   <rect x="84" y="312" width="122" height="34" rx="17" fill="none" stroke="#61DAFB" stroke-opacity="0.65" stroke-width="1.5"/>
   <text x="145" y="334" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace"
-        font-size="13" font-weight="600" letter-spacing="2.5" fill="#61DAFB">40 HOOKS</text>
+        font-size="13" font-weight="600" letter-spacing="2.5" fill="#61DAFB">41 HOOKS</text>
 
   <!-- RIGHT: code window -->
   <rect x="656" y="132" width="480" height="136" rx="12" fill="#10151D" stroke="#354355" stroke-width="1"/>

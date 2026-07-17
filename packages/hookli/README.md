@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
   <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/40_hooks-0A0D12?style=for-the-badge" alt="40 hooks" />
+  <img src="https://img.shields.io/badge/41_hooks-0A0D12?style=for-the-badge" alt="41 hooks" />
 </p>
 
 <p align="center">
@@ -104,6 +104,7 @@ function Component() {
 - **[`useClickOutside`](https://hookli.vercel.app/docs/use-click-outside)** — Runs a callback on outside click.
 - **[`useMousePosition`](https://hookli.vercel.app/docs/use-mouse-position)** — Cursor coordinates within an element.
 - **[`useInfiniteScroll`](https://hookli.vercel.app/docs/use-infinite-scroll)** — Triggers loading near the scroll end.
+- **[`useExpandableText`](https://hookli.vercel.app/docs/use-expandable-text)** — Collapse long text by a character and/or line budget with a show-more toggle.
 - **[`useHover`](https://hookli.vercel.app/docs/use-hover)** — Tracks whether the pointer is hovering an element.
 - **[`useIntersectionObserver`](https://hookli.vercel.app/docs/use-intersection-observer)** — Observe an element's viewport intersection reactively.
 - **[`useResizeObserver`](https://hookli.vercel.app/docs/use-resize-observer)** — Measure an element's size reactively via ResizeObserver.

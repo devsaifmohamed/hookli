@@ -1683,6 +1683,118 @@ function getCurrentPosition(): Promise<globalThis.GeolocationPosition> {
 }
 `,
   },
+  "use-expandable-text": {
+    path: "src/hooks/use-expandable-text/use-expandable-text.ts",
+    source: `import {
+  useCallback,
+  useEffect,
+  useState,
+  type CSSProperties,
+  type RefCallback,
+} from "react";
+
+export interface UseExpandableTextOptions {
+  maxChars?: number;
+  maxLines?: number;
+  ellipsis?: string;
+  defaultExpanded?: boolean;
+}
+
+export interface UseExpandableTextResult<T extends HTMLElement = HTMLElement> {
+  text: string;
+  isExpanded: boolean;
+  isTruncated: boolean;
+  toggle: () => void;
+  expand: () => void;
+  collapse: () => void;
+  ref: RefCallback<T>;
+  clampStyle: CSSProperties;
+}
+
+const truncateChars = (
+  text: string,
+  maxChars: number,
+  ellipsis: string,
+): string => {
+  if (text.length <= maxChars) return text;
+  const slice = text.slice(0, maxChars);
+  const lastSpace = slice.lastIndexOf(" ");
+  const cut = lastSpace > 0 ? slice.slice(0, lastSpace) : slice;
+  return cut.trimEnd() + ellipsis;
+};
+
+export const useExpandableText = <T extends HTMLElement = HTMLElement>(
+  text: string,
+  options: UseExpandableTextOptions = {},
+): UseExpandableTextResult<T> => {
+  const { maxChars, maxLines, ellipsis = "…", defaultExpanded = false } = options;
+
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [node, setNode] = useState<T | null>(null);
+  const [lineOverflow, setLineOverflow] = useState(false);
+
+  const charTruncated = maxChars !== undefined && text.length > maxChars;
+  const collapsedText = charTruncated
+    ? truncateChars(text, maxChars, ellipsis)
+    : text;
+  const displayText = isExpanded ? text : collapsedText;
+
+  const ref = useCallback<RefCallback<T>>((el) => setNode(el), []);
+
+  // scrollHeight reflects the full content height regardless of the clamp, so
+  // the overflow read is accurate in both states; the char cap alone drives
+  // isTruncated when it has already shortened the string.
+  useEffect(() => {
+    if (!node || maxLines === undefined) {
+      setLineOverflow(false);
+      return;
+    }
+    const measure = () => {
+      const style = window.getComputedStyle(node);
+      let lineHeight = Number.parseFloat(style.lineHeight);
+      if (!Number.isFinite(lineHeight)) {
+        lineHeight = Number.parseFloat(style.fontSize) * 1.2;
+      }
+      const padding =
+        Number.parseFloat(style.paddingTop) +
+        Number.parseFloat(style.paddingBottom);
+      const maxHeight = lineHeight * maxLines + (padding || 0);
+      setLineOverflow(node.scrollHeight > maxHeight + 1);
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [node, maxLines, text, isExpanded]);
+
+  const toggle = useCallback(() => setIsExpanded((value) => !value), []);
+  const expand = useCallback(() => setIsExpanded(true), []);
+  const collapse = useCallback(() => setIsExpanded(false), []);
+
+  const clampStyle: CSSProperties =
+    !isExpanded && maxLines !== undefined
+      ? {
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: maxLines,
+          overflow: "hidden",
+        }
+      : {};
+
+  return {
+    text: displayText,
+    isExpanded,
+    isTruncated: charTruncated || lineOverflow,
+    toggle,
+    expand,
+    collapse,
+    ref,
+    clampStyle,
+  };
+};
+`,
+  },
 };
 
 export function getHookSource(slug: string): HookSource | undefined {
