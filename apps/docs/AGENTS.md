@@ -14,21 +14,25 @@ repo (`../rehooks-app`), which is **read-only context** — never modify it from
 Next.js (App Router, TypeScript, Tailwind, npm). Hooks for live demos are imported from
 the **published `hookli` package** (in node_modules), not from relative paths.
 
-## Brand (v4 — the official React palette, dark-first, solid, no gradients)
-- Colors are the verified react.dev values (`colors.js` in github.com/reactjs/react.dev). The base
-  is React's dark neutral grays, NOT a saturated fill. Surfaces are defined by elevation + crisp
-  solid borders, and the brand hues are **accents, not backgrounds**: ground `#16181D` (page +
-  inset wells, gray-95) → raised `#23272F` (cards, gray-90) → overlay `#343A46` (hover/nested/
-  elevated, gray-80). Insets (code interiors, in-card inputs) cut back to `bg-ground`. Borders are
-  **solid, never alpha-faded**: structural chrome uses `border-slate-syntax` (`#404756`, gray-70,
-  full strength — never text); interactive outlines (outline buttons, inputs, toggles) use
-  `border-gray-outline` (`#99A1B3`, gray-30 — ≥3:1 non-text on every surface, chrome never copy),
-  stepping to `border-gray-body` on hover / `border-accent` when active.
-  One carve-out: on the light `bg-slate-50` demo panels (dark-mode demos), `text-slate-syntax`
-  IS the correct copy color (~9:1 there; gray-body would be ~1.7:1) — don't "fix" those call sites.
-  Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active — **text-grade** (10.93:1 on ground).
-  Brand `#087EA4` (react.dev teal, `--color-brand`) = **large decorative fills only** — 3.83:1 on
-  ground fails AA for text/small UI. Body/ink `#F6F7F9` (gray-5), muted `#BCC1CD` (gray-20).
+## Brand (Premium Dark v1.0 — cool near-black ramp, dark-first, solid, no gradients)
+- A cool near-black refinement of the React palette. The base is a near-black neutral ramp, NOT a
+  saturated fill, and the brand hues are **accents, not backgrounds**: ground `#0A0D12` (page +
+  inset wells) → raised `#10151D` (cards, ~6% lift) → overlay `#151C27` (hover/nested/elevated
+  **surface** wash). Insets (code interiors, in-card inputs) cut back to `bg-ground`.
+  **Elevation comes from an edge, not a fill** — adjacent surfaces are only ~6% apart, so depth is
+  a solid frame border + a 1px top highlight + an ambient shadow (`.surface`/`.surface-lift` in
+  `globals.css`), never a lighter fill. Borders have **three roles** (solid, never alpha-faded):
+  the FRAME edge uses `border-slate-syntax` (`#354355` — the visible card/code-window/major-chrome
+  edge, never text); QUIET row dividers inside a card use `border-divider` (`#242D3A` — near-
+  invisible; NOTE `ground-overlay` is now a surface fill tone, never a border); interactive
+  outlines (outline buttons, inputs, toggles) use `border-gray-outline` (`#697586` — ≥3:1 non-text
+  on every surface, chrome never copy), stepping to `border-gray-body` on hover / `border-accent`
+  when active. One carve-out: on the light `bg-slate-50` demo panels (dark-mode demos),
+  `text-slate-syntax` IS the correct copy color (~9:1 there; gray-body would be too faint) — don't
+  "fix" those call sites. Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active —
+  **text-grade**, lifting to `#7CE2FF` (`accent-hover`) on hover. Brand `#087EA4` (react.dev teal,
+  `--color-brand`) = **large decorative fills only** — fails AA for text/small UI. Body/ink
+  `#FFFFFF` (pure white), muted `#9BA8B8` (gray-body — the copy floor).
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
   resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,
   `text-fg`, `text-gray-body`, `border-*`) — **never** a raw hex or arbitrary value.

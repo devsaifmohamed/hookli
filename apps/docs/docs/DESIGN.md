@@ -14,48 +14,55 @@ what all three lack on brand: a code-first hero that proves the library live.
 Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 `@theme` directive (Tailwind 4 has no `tailwind.config.ts` theme — tokens live in CSS).
 
-> **Brand v4 (2026-07-16).** The verified official React palette — from `colors.js` in
-> github.com/reactjs/react.dev. Assets in `public/` (gray-90 tile, React-cyan hook cradling
-> a white state dot, `hookli.` wordmark) are the source. **Intentional divergence:** the
-> assets and OG images hold the gray-90 (`#23272F`) ground so they work standalone; the
-> site's page ground sits one step darker (gray-95 `#16181D`) per the surface re-tier —
-> don't "sync" them.
+> **Premium Dark v1.0 (2026-07-17).** A cool near-black refinement of the React palette. The
+> page drops to a near-black, slightly cool `#0A0D12`; cards lift only ~6% to `#10151D` and
+> hover/nested washes rise a further step to `#151C27`. Because adjacent surfaces are so close,
+> **elevation comes from an edge, not a fill** — a solid frame border + a 1px top highlight +
+> an ambient shadow (see §Elevation). The accent stays classic React cyan `#61DAFB`, lifting to
+> `#7CE2FF` on hover. Assets in `public/` (lifted `#151C27` chip tile w/ 1px top-edge highlight,
+> React-cyan hook cradling a white state dot, `hookli.` wordmark) are the source.
+> **Intentional divergence:** OG / apple-icon use a slight surface-1 lift (`#10151D`, apple-icon
+> `#151C27`) so social embeds aren't a pure-black void when a client crops/shadows the card; the
+> site's page ground is the true near-black `#0A0D12` — don't "sync" them.
 > The banner (`hookli-banner.svg/.png`, mirrored in root `assets/`) bakes the hook count in
 > at authoring time from `packages/hookli/hooks.manifest.json` — regenerate the banner (SVG
-> text + PNG re-render) whenever the hook count changes. Its sans stack leads with the brand
-> font **Plus Jakarta Sans** (embedded in the SVG as data-URI woff2 so the PNG render and
+> text + PNG re-render at 2400×800) whenever the hook count changes. Its sans stack leads with the
+> brand font **Plus Jakarta Sans** (embedded in the SVG as data-URI woff2 so the PNG render and
 > standalone SVG match the site), falling back to the previous Geist/Avenir stack.
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#16181D` | `--color-ground` | `ground` | Page background + inset wells (react.dev gray-95 — the anchor; code interiors and in-card inputs cut back to it) |
-| Ground raised | `#23272F` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar drawer (gray-90 — visibly lifted off the page) |
-| Ground overlay | `#343A46` | `--color-ground-overlay` | `ground-overlay` | Hover / nested / elevated states on raised (gray-80 — the top step) |
-| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (3.83:1 on ground, fails AA for text/small UI) |
-| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade, 10.93:1 on ground) |
-| Syntax slate | `#404756` | `--color-slate-syntax` | `slate-syntax` | Solid 1px card/frame borders + structural chrome — never text |
-| Gray outline | `#99A1B3` | `--color-gray-outline` | `gray-outline` | Interactive outlines only — outline buttons, inputs, toggles (gray-30 — ≥3:1 non-text on every surface; chrome, never copy) |
-| Gray | `#BCC1CD` | `--color-gray-body` | `gray-body` | Secondary/muted text (gray-20 — 9.9:1 on ground, 8.3:1 on raised, 6.3:1 on overlay) |
-| Foreground | `#F6F7F9` | `--color-fg` | `fg` | Primary/body text (gray-5 — 16.6:1 on ground) |
-| Accent-ink | `#16181D` | — | `ground` | Text on accent-filled buttons (10.93:1 on accent) |
+| Ground | `#0A0D12` | `--color-ground` | `ground` | Page background + inset wells (near-black, cool — the anchor; code interiors and in-card inputs cut back to it) |
+| Ground raised | `#10151D` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar drawer (~6% lift off the page) |
+| Ground overlay | `#151C27` | `--color-ground-overlay` | `ground-overlay` | Hover / nested / elevated **surface** wash on raised (the top step — a fill tone, NOT a border) |
+| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade) |
+| Accent hover | `#7CE2FF` | `--color-accent-hover` | `accent-hover` | CTA / link hover — brighter cyan |
+| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (fails AA for text/small UI); currently unused |
+| Syntax slate | `#354355` | `--color-slate-syntax` | `slate-syntax` | **FRAME edge** — solid 1px card / code-window / major-chrome borders (the visible edge); never text |
+| Divider | `#242D3A` | `--color-divider` | `divider` | **QUIET row divider** — near-invisible rules inside dense lists/tables (readout rows, list rows) |
+| Gray outline | `#697586` | `--color-gray-outline` | `gray-outline` | **INTERACTIVE outline** — outline buttons, inputs, toggles (the only tier ≥3:1 non-text on every surface; chrome, never copy) |
+| Gray | `#9BA8B8` | `--color-gray-body` | `gray-body` | Secondary/muted text (AA on every surface, min 6.5:1) |
+| Foreground | `#FFFFFF` | `--color-fg` | `fg` | Primary/body text (pure white) |
+| Accent-ink | `#0A0D12` | — | `ground` | Text on accent-filled buttons |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
-theme in v1. Borders are **solid, never alpha-faded** (faded hairlines composited to
-~1.2:1 on this ramp and vanished), three roles: **structural chrome** (card/frame edges,
-section rules, kbd chips) uses full-strength `border-slate-syntax` (gray-70,
-react.dev-style crisp 1px); **row dividers inside a card** (readout rows, list rows) use
-solid `border-ground-overlay` (gray-80) — quiet but still solid, so dividers never carry
-frame weight; **interactive outlines** (outline buttons, inputs, toggle
-frames, the search trigger) use `border-gray-outline` (gray-30 — 5.8:1 on raised,
-4.4:1 on overlay, comfortably over the 3:1 non-text floor), stepping up to
+theme in v1. Elevation is carried by an **edge + 1px top highlight + ambient shadow**, not a
+fill — adjacent surfaces are only ~6% apart, so a solid frame border is what separates a card
+from the page. Borders have **three roles**: **FRAME** (card/code-window edges, section rules,
+kbd chips, major chrome) uses full-strength `border-slate-syntax` (`#354355`, crisp 1px — the
+visible structural edge, never text); **QUIET row dividers inside a card** (readout rows, list
+rows) use `border-divider` (`#242D3A` — near-invisible, so dividers never carry frame weight;
+NOTE `ground-overlay` is now a surface *fill* tone and must never be used as a border);
+**INTERACTIVE outlines** (outline buttons, inputs, toggle frames, the search trigger) use
+`border-gray-outline` (`#697586` — ≥3:1 non-text on every surface), stepping up to
 `border-gray-body` on hover and `border-accent` for active/pressed states.
-Accent is used sparingly: one primary CTA per viewport, links, active nav states.
-`#61DAFB` is the only text-grade brand hue; `#087EA4` never carries text or small UI.
-Slate-syntax and gray-outline are chrome, never text — with one carve-out: on the light
-`bg-slate-50` demo panels (the dark-mode demos), `text-slate-syntax` is the correct copy
-color (~9:1 there; gray-body would be ~1.7:1). Those call sites are commented — don't sweep
-them. `#BCC1CD` (gray-body) is the copy floor — never go darker than that for copy
-(gray-30 `#99A1B3` is outline chrome, not copy).
+Accent is used sparingly: one primary CTA per viewport, links, active nav states — hover lifts
+to `accent-hover` (`#7CE2FF`). `#61DAFB` is the only text-grade brand hue; `#087EA4` never
+carries text or small UI. Slate-syntax, divider, and gray-outline are chrome, never text —
+with one carve-out: on the light `bg-slate-50` demo panels (the dark-mode demos),
+`text-slate-syntax` is the correct copy color (~9:1 there; gray-body would be too faint).
+Those call sites are commented — don't sweep them. `#9BA8B8` (gray-body) is the copy floor —
+never go darker than that for copy (gray-outline `#697586` is chrome, not copy).
 
 ### Typography
 - **Headings + wordmark + UI:** Plus Jakarta Sans (Avenir-class geometric) via
@@ -210,10 +217,10 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 - Touch targets ≥44×44px; icon buttons get padding to reach it.
 - Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills all
   animations and transitions (global CSS guard).
-- Contrast: body `#F6F7F9` / muted `#BCC1CD` on every surface (≥4.5:1 — the tightest pair
-  is gray-body on overlay at 6.3:1); accent `#61DAFB` is text-grade (10.93:1 on ground);
-  `#087EA4` is decorative only; slate and gray-outline are chrome, not text; interactive
-  outlines (`gray-outline`) hit ≥3:1 non-text on every surface.
+- Contrast: body `#FFFFFF` / muted `#9BA8B8` on every surface (≥4.5:1 — gray-body clears
+  6.5:1 on the darkest surface); accent `#61DAFB` is text-grade on ground; `#087EA4` is
+  decorative only; slate-syntax (frame), divider (row rules), and gray-outline are chrome,
+  not text; interactive outlines (`gray-outline` `#697586`) hit ≥3:1 non-text on every surface.
 - Breakpoints checked every task: 375 / 768 / 1024 / 1440. No horizontal scroll at 375.
 - Code blocks: `overflow-x-auto`, never wrap-break code.
 
