@@ -14,22 +14,22 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=23272F" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=0A0D12" alt="npm version" /></a>
   <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=61DAFB&label=downloads%2Fmonth" alt="npm downloads per month" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=23272F&label=total%20downloads" alt="total npm downloads" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=0A0D12&label=total%20downloads" alt="total npm downloads" /></a>
   <a href="https://bundlephobia.com/package/hookli"><img src="https://img.shields.io/bundlephobia/minzip/hookli?style=flat-square&color=61DAFB" alt="minzipped size" /></a>
-  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=23272F" alt="GitHub stars" /></a>
-  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-61DAFB?style=flat-square&logo=githubsponsors&logoColor=23272F" alt="Sponsor" /></a>
-  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=404756" alt="license" />
+  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=0A0D12" alt="GitHub stars" /></a>
+  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-61DAFB?style=flat-square&logo=githubsponsors&logoColor=0A0D12" alt="Sponsor" /></a>
+  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=354355" alt="license" />
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/zero_dependencies-61DAFB?style=for-the-badge" alt="zero dependencies" />
-  <img src="https://img.shields.io/badge/TypeScript-23272F?style=for-the-badge" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/TypeScript-0A0D12?style=for-the-badge" alt="TypeScript" />
   <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
-  <img src="https://img.shields.io/badge/tree--shakable-23272F?style=for-the-badge" alt="tree-shakable" />
+  <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/40_hooks-23272F?style=for-the-badge" alt="40 hooks" />
+  <img src="https://img.shields.io/badge/40_hooks-0A0D12?style=for-the-badge" alt="40 hooks" />
 </p>
 
 <p align="center">
