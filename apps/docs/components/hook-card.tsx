@@ -7,7 +7,7 @@ export function HookCard({ hook }: { hook: HookEntry }) {
       href={`/docs/${hook.slug}`}
       className="surface surface-lift group flex flex-col gap-1 rounded-xl p-4"
     >
-      <span className="text-sm font-semibold transition-colors duration-200 group-hover:text-accent">
+      <span className="text-sm font-semibold transition-colors duration-200 group-hover:text-accent-hover">
         {hook.name}
       </span>
       <span className="text-sm leading-relaxed text-gray-body">

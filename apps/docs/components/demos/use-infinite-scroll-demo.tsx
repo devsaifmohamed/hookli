@@ -55,7 +55,7 @@ export function UseInfiniteScrollDocDemo() {
         {items.map((item) => (
           <li
             key={item}
-            className="border-b border-ground-overlay px-2 py-2.5 font-mono text-sm text-gray-body last:border-b-0"
+            className="border-b border-divider px-2 py-2.5 font-mono text-sm text-gray-body last:border-b-0"
           >
             {item}
           </li>

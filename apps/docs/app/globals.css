@@ -1,27 +1,32 @@
 @import "tailwindcss";
 
-/* Brand v4 tokens — the official React palette, from colors.js in
-   github.com/reactjs/react.dev. Dark-first on the react.dev gray ramp, anchored
-   one step darker than react.dev itself so the tiers separate: the page is
-   gray-95, cards lift to gray-90, and hover/nested/elevated states rise to
-   gray-80. Inset wells (code interiors, inputs inside cards) reuse `ground` —
-   they cut back through to the page for terminal depth. #61DAFB (classic React
-   cyan) is the TEXT-GRADE accent; #087EA4 (react.dev brand teal) is
-   decorative-only — it fails AA for text on every surface here. */
+/* Premium Dark v1.0 — a cool near-black premium-dark ramp (refines the React
+   palette). The page sits at a near-black, slightly cool #0a0d12; cards and
+   panels lift only ~6% to #10151d, and hover/nested washes rise another step to
+   #151c27. Adjacent surfaces are deliberately close, so ELEVATION COMES FROM AN
+   EDGE, NOT A FILL: a solid frame border + a 1px top highlight (light catching
+   the top edge) + a soft ambient shadow. Three border roles keep the chrome
+   legible on this dense ramp — FRAME `slate-syntax` (the visible structural
+   edge on cards, code windows, major chrome), QUIET `divider` (near-invisible
+   row rules inside dense lists/tables), and INTERACTIVE `gray-outline` (the
+   only ≥3:1 tier — inputs, outline buttons, toggles). #61DAFB (classic React
+   cyan) stays the TEXT-GRADE accent, lifting to #7CE2FF on hover; #087EA4
+   (react.dev brand teal) is large-decorative-only and fails AA for text. */
 @theme {
-  /* Neutral react.dev grays — surfaces are defined by elevation + crisp solid
-     borders, NOT by saturated fills. The React hues stay accents.
-     Tier semantics: ground (page + inset wells) → raised (cards/panels) →
-     overlay (hover washes, nested/elevated chrome on raised). */
-  --color-ground: #16181d;         /* page + inset wells — gray-95, the anchor */
-  --color-ground-raised: #23272f;  /* cards / panels — gray-90, visibly lifted */
-  --color-ground-overlay: #343a46; /* hover / nested / elevated — gray-80, the top step */
+  /* Surfaces are defined by elevation + a solid frame edge, NOT by saturated
+     fills — the React hues stay accents. Tier semantics: ground (page + inset
+     wells) → raised (cards/panels) → overlay (hover / nested / elevated wash). */
+  --color-ground: #0a0d12;         /* page + inset wells — near-black, cool */
+  --color-ground-raised: #10151d;  /* cards / panels — ~6% lift off the page */
+  --color-ground-overlay: #151c27; /* hover / nested / elevated wash — the top step */
+  --color-accent: #61dafb;         /* classic React cyan — links, focus, CTA, active (text-grade) */
+  --color-accent-hover: #7ce2ff;   /* accent hover — brighter cyan for CTAs/links on hover */
   --color-brand: #087ea4;          /* react.dev brand teal — LARGE DECORATIVE use only, never text/small UI */
-  --color-accent: #61dafb;         /* classic React cyan — links, focus, CTA, active (10.9:1 on ground) */
-  --color-slate-syntax: #404756;   /* gray-70 — solid 1px card/frame borders + structural chrome, NOT text */
-  --color-gray-outline: #99a1b3;   /* gray-30 — INTERACTIVE outlines only (≥3:1 on every surface); chrome, never copy */
-  --color-gray-body: #bcc1cd;      /* gray-20 — secondary/muted text (6.3:1 on overlay, the tightest pair) */
-  --color-fg: #f6f7f9;             /* gray-5 (react.dev primary-dark) — near-white body text */
+  --color-slate-syntax: #354355;   /* FRAME edge — solid 1px card/code-window/major-chrome borders, NOT text */
+  --color-divider: #242d3a;        /* QUIET row divider — near-invisible rules inside dense lists/tables */
+  --color-gray-outline: #697586;   /* INTERACTIVE outline — inputs, outline buttons, toggles (only tier ≥3:1 on every surface) */
+  --color-gray-body: #9ba8b8;      /* muted/secondary text — AA on every surface (min 6.5:1) */
+  --color-fg: #ffffff;             /* primary ink — pure white */
 }
 
 /* Referenced at runtime from the next/font variables on <html>. */
@@ -110,7 +115,7 @@ body {
        strength; alpha-faded hairlines vanish on this ramp. */
     border: 1px solid var(--color-slate-syntax);
     box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 6%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 8%, transparent),
       0 1px 2px 0 color-mix(in srgb, black 40%, transparent),
       0 12px 28px -18px color-mix(in srgb, black 70%, transparent);
   }
@@ -126,7 +131,7 @@ body {
     transform: translateY(-3px);
     border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
     box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 9%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 11%, transparent),
       0 2px 4px 0 color-mix(in srgb, black 40%, transparent),
       0 20px 44px -20px color-mix(in srgb, black 85%, transparent);
   }
