@@ -28,7 +28,7 @@ function AsyncChild({ onSkip }: { onSkip: () => void }) {
   }
 
   return (
-    <div className="flex w-full flex-col items-center gap-4 rounded-md border border-accent/60 bg-accent/10 p-4">
+    <div className="flex w-full flex-col items-center gap-4 rounded-md border border-accent bg-accent/10 p-4">
       <p className="font-mono text-sm text-accent">child mounted</p>
       <dl className="w-full">
         <DemoReadout label="status">{status}</DemoReadout>

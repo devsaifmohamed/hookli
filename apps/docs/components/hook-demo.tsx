@@ -53,7 +53,7 @@ export function HookDemo({
     <div
       className={`surface overflow-hidden rounded-xl ${className}`}
     >
-      <div className="flex items-center justify-between border-b border-slate-syntax/40 px-2">
+      <div className="flex items-center justify-between border-b border-slate-syntax px-2">
         <div
           role="tablist"
           aria-label="Demo view"
@@ -101,6 +101,7 @@ export function HookDemo({
         id={`${baseId}-panel-code`}
         aria-labelledby={`${baseId}-tab-code`}
         hidden={active !== "code"}
+        className="bg-ground"
       >
         {code}
       </div>

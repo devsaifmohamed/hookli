@@ -2,7 +2,9 @@ import { ImageResponse } from "next/og";
 import { OG_COLORS } from "@/lib/og";
 
 /* Apple-touch-icon variant of public/hookli-icon.svg: the hook mark on a
-   full-bleed ground tile; iOS applies its own corner mask. */
+   full-bleed tile; iOS applies its own corner mask. The tile uses the Premium
+   Dark chip tone (#151c27 — ground-overlay), matching the icon SVG's lifted
+   chip rather than the flatter OG ground. */
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -17,7 +19,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: OG_COLORS.ground,
+          backgroundColor: "#151c27",
         }}
       >
         <svg width={80} height={102} viewBox="-13 -3 110 140" fill="none">

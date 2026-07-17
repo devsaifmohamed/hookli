@@ -14,24 +14,55 @@ what all three lack on brand: a code-first hero that proves the library live.
 Defined as CSS variables in `app/globals.css` and wired into Tailwind v4 via the
 `@theme` directive (Tailwind 4 has no `tailwind.config.ts` theme — tokens live in CSS).
 
-> **Brand v3 (2026-07-12).** Assets in `public/` (Prussian tile, teal hook cradling a
-> white state dot, `hookli.` wordmark) are the source; the token values below match them.
+> **Premium Dark v1.0 (2026-07-17).** A cool near-black refinement of the React palette. The
+> page drops to a near-black, slightly cool `#0A0D12`; cards lift only ~6% to `#10151D` and
+> hover/nested washes rise a further step to `#151C27`. Because adjacent surfaces are so close,
+> **elevation comes from an edge, not a fill** — a solid frame border + a 1px top highlight +
+> an ambient shadow (see §Elevation). The accent stays classic React cyan `#61DAFB`, lifting to
+> `#7CE2FF` on hover. Assets in `public/` (lifted `#151C27` chip tile w/ 1px top-edge highlight,
+> React-cyan hook cradling a white state dot, `hookli.` wordmark) are the source.
+> **Intentional divergence:** OG / apple-icon use a slight surface-1 lift (`#10151D`, apple-icon
+> `#151C27`) so social embeds aren't a pure-black void when a client crops/shadows the card; the
+> site's page ground is the true near-black `#0A0D12` — don't "sync" them.
+> The banner (`hookli-banner.svg/.png`, mirrored in root `assets/`) bakes the hook count in
+> at authoring time from `packages/hookli/hooks.manifest.json` — regenerate the banner (SVG
+> text + PNG re-render at 2400×800) whenever the hook count changes. Its sans stack leads with the
+> brand font **Plus Jakarta Sans** (embedded in the SVG as data-URI woff2 so the PNG render and
+> standalone SVG match the site), falling back to the previous Geist/Avenir stack.
 
 | Token | Value | CSS var | Tailwind name | Use |
 |---|---|---|---|---|
-| Ground | `#04191F` | `--color-ground` | `ground` | Page background (near-black blue — the darkest step) |
-| Ground raised | `#003748` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar (Prussian Blue surface) |
-| Ground overlay | `#0A4557` | `--color-ground-overlay` | `ground-overlay` | Second elevation: nested / hover / active surfaces |
-| Accent | `#30C5CA` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (Scooter) |
-| Syntax slate | `#4A7A8C` | `--color-slate-syntax` | `slate-syntax` | Borders, code comments, muted chrome |
-| Gray | `#8FB6C2` | `--color-gray-body` | `gray-body` | Secondary/body text (mist) |
-| Foreground | `#FFFFFF` | `--color-fg` | `fg` | Primary text/ink (AA on ground: 12.8:1) |
-| Accent-ink | `#003748` | — | `ground` | Text on accent-filled buttons (6.1:1 on accent) |
+| Ground | `#0A0D12` | `--color-ground` | `ground` | Page background + inset wells (near-black, cool — the anchor; code interiors and in-card inputs cut back to it) |
+| Ground raised | `#10151D` | `--color-ground-raised` | `ground-raised` | Cards, code frames, sidebar drawer (~6% lift off the page) |
+| Ground overlay | `#151C27` | `--color-ground-overlay` | `ground-overlay` | Hover / nested / elevated **surface** wash on raised (the top step — a fill tone, NOT a border) |
+| Accent | `#61DAFB` | `--color-accent` | `accent` | Links, CTAs, wordmark full stop, focus rings (classic React cyan — text-grade) |
+| Accent hover | `#7CE2FF` | `--color-accent-hover` | `accent-hover` | CTA / link hover — brighter cyan |
+| Brand | `#087EA4` | `--color-brand` | `brand` | react.dev brand teal — **large decorative fills only** (fails AA for text/small UI); currently unused |
+| Syntax slate | `#354355` | `--color-slate-syntax` | `slate-syntax` | **FRAME edge** — solid 1px card / code-window / major-chrome borders (the visible edge); never text |
+| Divider | `#242D3A` | `--color-divider` | `divider` | **QUIET row divider** — near-invisible rules inside dense lists/tables (readout rows, list rows) |
+| Gray outline | `#697586` | `--color-gray-outline` | `gray-outline` | **INTERACTIVE outline** — outline buttons, inputs, toggles (the only tier ≥3:1 non-text on every surface; chrome, never copy) |
+| Gray | `#9BA8B8` | `--color-gray-body` | `gray-body` | Secondary/muted text (AA on every surface, min 6.5:1) |
+| Foreground | `#FFFFFF` | `--color-fg` | `fg` | Primary/body text (pure white) |
+| Accent-ink | `#0A0D12` | — | `ground` | Text on accent-filled buttons |
 
 Rules: **solid colors only — no gradients** on brand surfaces. Dark-first; no light
-theme in v1. Borders are `--color-slate-syntax` at 40% opacity (`border-slate-syntax/40`).
-Accent is used sparingly: one primary CTA per viewport, links, active nav states.
-`#8FB6C2` on `#003748` is 5.9:1 — safe for body text; never go darker than that for copy.
+theme in v1. Elevation is carried by an **edge + 1px top highlight + ambient shadow**, not a
+fill — adjacent surfaces are only ~6% apart, so a solid frame border is what separates a card
+from the page. Borders have **three roles**: **FRAME** (card/code-window edges, section rules,
+kbd chips, major chrome) uses full-strength `border-slate-syntax` (`#354355`, crisp 1px — the
+visible structural edge, never text); **QUIET row dividers inside a card** (readout rows, list
+rows) use `border-divider` (`#242D3A` — near-invisible, so dividers never carry frame weight;
+NOTE `ground-overlay` is now a surface *fill* tone and must never be used as a border);
+**INTERACTIVE outlines** (outline buttons, inputs, toggle frames, the search trigger) use
+`border-gray-outline` (`#697586` — ≥3:1 non-text on every surface), stepping up to
+`border-gray-body` on hover and `border-accent` for active/pressed states.
+Accent is used sparingly: one primary CTA per viewport, links, active nav states — hover lifts
+to `accent-hover` (`#7CE2FF`). `#61DAFB` is the only text-grade brand hue; `#087EA4` never
+carries text or small UI. Slate-syntax, divider, and gray-outline are chrome, never text —
+with one carve-out: on the light `bg-slate-50` demo panels (the dark-mode demos),
+`text-slate-syntax` is the correct copy color (~9:1 there; gray-body would be too faint).
+Those call sites are commented — don't sweep them. `#9BA8B8` (gray-body) is the copy floor —
+never go darker than that for copy (gray-outline `#697586` is chrome, not copy).
 
 ### Typography
 - **Headings + wordmark + UI:** Plus Jakarta Sans (Avenir-class geometric) via
@@ -40,8 +71,8 @@ Accent is used sparingly: one primary CTA per viewport, links, active nav states
 - **Code only:** JetBrains Mono (`--font-mono`) — code blocks, commands, identifiers,
   signatures, API type cells, kbd. Monospace is never used for UI copy, nav, buttons,
   or headings.
-- Wordmark treatment (component `Wordmark`): `hookli` lowercase in ink `#FFFFFF` +
-  full stop in accent `#30C5CA`, sans 600, `tracking-tight`. The mark (`HookMark`,
+- Wordmark treatment (component `Wordmark`): `hookli` lowercase in ink `#F6F7F9` +
+  full stop in accent `#61DAFB`, sans 600, `tracking-tight`. The mark (`HookMark`,
   same file) is the icon's hook + dot without the tile. The old `use(hookli)` mono
   lockup is retired.
 - Scale: h1 `text-4xl/5xl` sans 600 · h2 `text-2xl` sans 600 · h3 `text-lg` sans 600 ·
@@ -104,8 +135,9 @@ Modeled on usehooks-ts's progressive disclosure + Mantine's demo-first ordering:
 1. **Breadcrumb-lite**: category label (small, gray).
 2. **Title**: hook name, mono h1. **Description**: 1–2 sentences, gray.
 3. **Live demo** (`HookDemo` frame): Preview/Code tabs, demo first. Frame =
-   `ground-raised` card, slate/40 border, 12px radius, min-height 180px. Error
-   boundary inside so a crashing demo never kills the page.
+   `ground-raised` card, solid slate border, 12px radius, min-height 180px; the
+   Code tab pane is an inset well (`bg-ground`). Error boundary inside so a
+   crashing demo never kills the page.
 4. **Usage**: heading + `CodeBlock` with the copyable snippet (same code as the
    demo's Code tab).
 5. **API**: signature line in a code strip, then Parameters table
@@ -185,7 +217,10 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 - Touch targets ≥44×44px; icon buttons get padding to reach it.
 - Micro-interactions 150–300ms ease-out. `prefers-reduced-motion: reduce` kills all
   animations and transitions (global CSS guard).
-- Contrast: body `#8FB6C2`+ on `#003748` (≥4.5:1); UI chrome may use slate.
+- Contrast: body `#FFFFFF` / muted `#9BA8B8` on every surface (≥4.5:1 — gray-body clears
+  6.5:1 on the darkest surface); accent `#61DAFB` is text-grade on ground; `#087EA4` is
+  decorative only; slate-syntax (frame), divider (row rules), and gray-outline are chrome,
+  not text; interactive outlines (`gray-outline` `#697586`) hit ≥3:1 non-text on every surface.
 - Breakpoints checked every task: 375 / 768 / 1024 / 1440. No horizontal scroll at 375.
 - Code blocks: `overflow-x-auto`, never wrap-break code.
 

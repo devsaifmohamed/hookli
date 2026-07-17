@@ -16,7 +16,7 @@ export function UseMousePositionDocDemo() {
     <div className="flex w-full max-w-sm flex-col gap-4">
       <div
         ref={panelRef}
-        className="relative h-40 overflow-hidden rounded-md border border-slate-syntax/40 bg-ground"
+        className="relative h-40 overflow-hidden rounded-md border border-slate-syntax bg-ground"
       >
         {x !== null && y !== null ? (
           <>
@@ -37,7 +37,7 @@ export function UseMousePositionDocDemo() {
             />
           </>
         ) : (
-          <p className="absolute inset-0 flex items-center justify-center font-mono text-xs text-slate-syntax">
+          <p className="absolute inset-0 flex items-center justify-center font-mono text-xs text-gray-body">
             move your cursor over this panel
           </p>
         )}
@@ -50,7 +50,7 @@ export function UseMousePositionDocDemo() {
           {y === null ? "—" : `${Math.round(y)}px`}
         </DemoReadout>
       </dl>
-      <p className="font-mono text-xs text-slate-syntax">
+      <p className="font-mono text-xs text-gray-body">
         Coordinates are measured from the panel&apos;s top-left corner.
       </p>
     </div>

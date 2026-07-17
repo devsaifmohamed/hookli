@@ -7,10 +7,10 @@ const COMMAND = "npm i hookli";
 export function InstallCommand({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`surface flex items-center gap-2 rounded-lg py-1 pl-4 pr-1 font-mono text-sm ${className}`}
+      className={`flex items-center gap-2 rounded-lg border border-slate-syntax bg-ground py-1 pl-4 pr-1 font-mono text-sm ${className}`}
     >
       <code className="whitespace-nowrap">
-        <span aria-hidden="true" className="select-none text-slate-syntax">
+        <span aria-hidden="true" className="select-none text-gray-body">
           ${" "}
         </span>
         {COMMAND}

@@ -29,8 +29,9 @@ export async function HighlightedCode({
 }
 
 /* Server component — highlighting happens at build/render time, zero client JS
-   beyond the CopyButton. Frame per docs/DESIGN.md §4: ground-raised, slate/40
-   border, 12px radius. */
+   beyond the CopyButton. Frame per docs/DESIGN.md §4: ground-raised, solid
+   slate border, 12px radius; the code pane is an inset well (bg-ground via
+   .code-pane). */
 export function CodeBlock({
   code,
   lang = "tsx",
@@ -50,7 +51,7 @@ export function CodeBlock({
     <figure
       className={`surface overflow-hidden rounded-xl ${className}`}
     >
-      <figcaption className="flex items-center justify-between gap-2 border-b border-slate-syntax/40 py-1 pl-4 pr-1">
+      <figcaption className="flex items-center justify-between gap-2 border-b border-slate-syntax py-1 pl-4 pr-1">
         <span className="flex min-w-0 items-center gap-2">
           <span
             aria-hidden="true"
@@ -62,7 +63,7 @@ export function CodeBlock({
         </span>
         <span className="flex shrink-0 items-center gap-1">
           {title && (
-            <span className="rounded border border-slate-syntax/40 px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-slate-syntax">
+            <span className="rounded border border-slate-syntax px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-gray-body">
               {lang}
             </span>
           )}

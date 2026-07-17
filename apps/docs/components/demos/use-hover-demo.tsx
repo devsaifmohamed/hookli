@@ -20,8 +20,8 @@ export function UseHoverDocDemo() {
         ref={boxRef}
         className={`flex h-28 w-full items-center justify-center rounded-md border text-sm transition-colors duration-200 ${
           isHovered
-            ? "border-accent/60 bg-accent/10 text-accent"
-            : "border-slate-syntax/40 bg-ground text-gray-body"
+            ? "border-accent bg-accent/10 text-accent"
+            : "border-gray-outline bg-ground text-gray-body"
         }`}
         aria-live="polite"
       >

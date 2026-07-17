@@ -22,7 +22,7 @@ export function UseClickAnyWhereDocDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col items-center gap-5">
       <div
-        className="flex h-24 w-full items-center justify-center rounded-md border border-slate-syntax/40 bg-ground text-center text-sm text-gray-body"
+        className="flex h-24 w-full items-center justify-center rounded-md border border-slate-syntax bg-ground text-center text-sm text-gray-body"
         aria-live="polite"
       >
         Click anywhere on the page

@@ -27,7 +27,7 @@ export function UseDebounceDocDemo() {
         {settling ? (
           <span className="text-accent">debouncing…</span>
         ) : (
-          <span className="text-slate-syntax">settled</span>
+          <span className="text-gray-body">settled</span>
         )}
       </p>
     </div>

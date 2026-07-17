@@ -27,7 +27,7 @@ export function UseIsomorphicLayoutEffectDocDemo() {
         <div
           ref={boxRef}
           style={{ width: `${pct}%` }}
-          className="h-12 rounded-md border border-accent/60 bg-accent/10"
+          className="h-12 rounded-md border border-accent bg-accent/10"
         />
       </div>
       <dl className="w-full max-w-xs">

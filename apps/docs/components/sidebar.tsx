@@ -19,7 +19,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-56 shrink-0 border-r border-slate-syntax/40 md:block">
+    <aside className="hidden w-56 shrink-0 border-r border-slate-syntax md:block">
       <nav
         aria-label="Docs"
         className="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-6"
@@ -82,7 +82,7 @@ export function MobileDocsNav() {
   }
 
   return (
-    <div className="sticky top-14 z-30 -mx-4 border-b border-slate-syntax/40 bg-ground/90 px-4 backdrop-blur sm:-mx-6 sm:px-6 md:hidden">
+    <div className="sticky top-14 z-30 -mx-4 border-b border-slate-syntax bg-ground/90 px-4 backdrop-blur sm:-mx-6 sm:px-6 md:hidden">
       <button
         ref={triggerRef}
         type="button"
@@ -92,7 +92,7 @@ export function MobileDocsNav() {
         className="flex min-h-11 w-full items-center gap-2 text-sm text-gray-body transition-colors duration-200 hover:text-fg"
       >
         <MenuIcon className="size-4 shrink-0" />
-        <span className="text-slate-syntax">docs /</span>
+        <span className="text-gray-body">docs /</span>
         <span className="truncate text-fg">{currentLabel}</span>
       </button>
 
@@ -109,9 +109,9 @@ export function MobileDocsNav() {
               aria-label="Docs navigation"
               onMouseDown={(event) => event.stopPropagation()}
               onKeyDown={onDrawerKeyDown}
-              className="flex h-full w-72 max-w-[85vw] flex-col border-r border-slate-syntax/40 bg-ground-raised"
+              className="flex h-full w-72 max-w-[85vw] flex-col border-r border-slate-syntax bg-ground-raised"
             >
-              <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-syntax/40 pl-4 pr-2">
+              <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-syntax pl-4 pr-2">
                 <span className="text-sm text-gray-body">Docs</span>
                 <button
                   autoFocus
@@ -150,7 +150,7 @@ function DocsNavList({
 }) {
   return (
     <>
-      <ul className="flex flex-col border-l border-slate-syntax/40">
+      <ul className="flex flex-col border-l border-slate-syntax">
         <li>
           <SidebarLink
             href="/docs"
@@ -163,10 +163,10 @@ function DocsNavList({
       </ul>
       {CATEGORY_ORDER.map((category) => (
         <div key={category} className="mt-7">
-          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-syntax">
+          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-body">
             {CATEGORY_LABELS[category]}
           </h3>
-          <ul className="flex flex-col border-l border-slate-syntax/40">
+          <ul className="flex flex-col border-l border-slate-syntax">
             {hooksByCategory(category).map((hook) => {
               const href = `/docs/${hook.slug}`;
               return (

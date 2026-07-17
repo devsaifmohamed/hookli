@@ -35,7 +35,7 @@ export function UseResizeObserverDocDemo() {
       </div>
       <div
         ref={boxRef}
-        className="flex min-h-20 resize items-center justify-center overflow-auto rounded-md border border-accent/60 bg-accent/10 p-4 text-center text-sm text-accent transition-[width] duration-200"
+        className="flex min-h-20 resize items-center justify-center overflow-auto rounded-md border border-accent bg-accent/10 p-4 text-center text-sm text-accent transition-[width] duration-200"
         style={{ width: `${widthPct}%` }}
       >
         drag my corner ↘

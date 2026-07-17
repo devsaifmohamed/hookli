@@ -40,7 +40,7 @@ function PostReader({ url }: { url: string }) {
             request failed — {error.message}
           </span>
         ) : data ? (
-          <span className="text-slate-syntax">{data.body}</span>
+          <span className="text-gray-body">{data.body}</span>
         ) : null}
       </p>
     </>

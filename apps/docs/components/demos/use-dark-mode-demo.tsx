@@ -30,7 +30,7 @@ export function UseDarkModeDocDemo() {
       <div
         className={`rounded-lg border p-4 transition-colors duration-200 ${
           dark
-            ? "border-slate-syntax/40 bg-ground"
+            ? "border-slate-syntax bg-ground"
             : "border-slate-300 bg-slate-50"
         }`}
       >
@@ -47,7 +47,7 @@ export function UseDarkModeDocDemo() {
             aria-label="Toggle dark mode"
             className={`flex size-11 items-center justify-center rounded-md border transition-colors duration-200 ${
               dark
-                ? "border-slate-syntax/40 text-fg hover:border-slate-syntax"
+                ? "border-gray-outline text-fg hover:border-gray-body"
                 : "border-slate-300 text-ground hover:border-slate-400"
             }`}
           >
@@ -58,6 +58,7 @@ export function UseDarkModeDocDemo() {
             )}
           </button>
         </div>
+        {/* light-panel exception: slate-syntax is text-grade on slate-50 (~9:1); gray-body would be ~1.7:1 */}
         <p
           className={`mt-2 text-xs ${
             dark ? "text-gray-body" : "text-slate-syntax"

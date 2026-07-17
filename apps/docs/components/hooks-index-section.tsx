@@ -19,7 +19,7 @@ export function HooksIndexSection() {
       />
       {CATEGORY_ORDER.map((category) => (
         <div key={category} className="mt-12">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-syntax">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-body">
             {CATEGORY_LABELS[category]}
           </h3>
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

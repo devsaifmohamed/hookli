@@ -13,7 +13,7 @@ export function UseIsClientDocDemo() {
   return (
     <div className="flex w-full max-w-sm flex-col items-center gap-5">
       <div
-        className="flex h-20 w-full items-center justify-center rounded-md border border-accent/60 bg-accent/10 font-mono text-sm text-accent"
+        className="flex h-20 w-full items-center justify-center rounded-md border border-accent bg-accent/10 font-mono text-sm text-accent"
         aria-live="polite"
       >
         {isClient ? "Running in the browser" : "Server / first render"}

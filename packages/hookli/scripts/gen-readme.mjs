@@ -12,7 +12,7 @@ const count = hooks.length;
 const readmePath = join(root, "README.md");
 let md = readFileSync(readmePath, "utf8");
 
-// 1) hook-count badge (e.g. .../badge/40_hooks-003748... alt="40 hooks")
+// 1) hook-count badge (e.g. .../badge/40_hooks-23272F... alt="40 hooks")
 md = md.replace(/badge\/\d+_hooks-/g, `badge/${count}_hooks-`);
 md = md.replace(/alt="\d+ hooks"/g, `alt="${count} hooks"`);
 

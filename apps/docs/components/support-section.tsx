@@ -42,7 +42,7 @@ export function SupportSection() {
         {CARDS.map((card) => {
           const inner = (
             <>
-              <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
+              <span className="flex size-11 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-inset ring-accent">
                 {card.icon}
               </span>
               <h3 className="mt-5 text-lg font-semibold">{card.title}</h3>

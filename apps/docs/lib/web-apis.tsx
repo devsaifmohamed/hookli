@@ -32,7 +32,7 @@ function ApiChip({ label, href }: { label: string; href: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-0.5 whitespace-nowrap rounded border border-accent/40 bg-accent/10 px-1.5 align-baseline text-[0.92em] font-medium text-accent transition-colors duration-200 hover:bg-accent/20"
+      className="inline-flex items-center gap-0.5 whitespace-nowrap rounded border border-accent bg-accent/10 px-1.5 align-baseline text-[0.92em] font-medium text-accent transition-colors duration-200 hover:bg-accent/20"
     >
       {label}
       <ExternalLinkIcon className="size-3 shrink-0" aria-hidden="true" />

@@ -5,7 +5,7 @@ const sizeClasses = {
   xl: "text-5xl sm:text-6xl md:text-7xl",
 } as const;
 
-/* Brand v3 lockup — lowercase name in the brand sans, teal full stop.
+/* Brand v4 lockup — lowercase name in the brand sans, React-cyan full stop.
    Matches public/hookli-banner.svg; the old use(hookli) mono mark is retired. */
 export function Wordmark({
   size = "md",

@@ -43,7 +43,7 @@ export function UseClickOutsideDocDemo() {
           <ul
             role="menu"
             aria-label="Demo actions"
-            className="absolute left-0 top-full z-10 mt-2 w-44 rounded-md border border-slate-syntax/40 bg-ground p-1"
+            className="absolute left-0 top-full z-10 mt-2 w-44 rounded-md border border-slate-syntax bg-ground p-1"
           >
             {ACTIONS.map((action) => (
               <li key={action} role="none">
@@ -67,7 +67,7 @@ export function UseClickOutsideDocDemo() {
         <DemoReadout label="menu">{open ? "open" : "closed"}</DemoReadout>
         <DemoReadout label="last event">{lastEvent}</DemoReadout>
       </dl>
-      <p className="font-mono text-xs text-slate-syntax">
+      <p className="font-mono text-xs text-gray-body">
         Open the menu, then click anywhere outside it.
       </p>
     </div>

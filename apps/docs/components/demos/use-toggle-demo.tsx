@@ -34,12 +34,12 @@ function Switch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
       type="button"
       onClick={onToggle}
       aria-pressed={on}
-      className="group flex min-h-11 items-center gap-3 rounded-full border border-slate-syntax/40 bg-ground py-2 pl-2 pr-5 transition-colors duration-200 hover:border-slate-syntax"
+      className="group flex min-h-11 items-center gap-3 rounded-full border border-gray-outline bg-ground py-2 pl-2 pr-5 transition-colors duration-200 hover:border-gray-body"
     >
       <span
         aria-hidden="true"
         className={`flex h-7 w-12 items-center rounded-full p-1 transition-colors duration-200 ${
-          on ? "bg-accent" : "bg-slate-syntax/60"
+          on ? "bg-accent" : "bg-gray-body/40"
         }`}
       >
         <span

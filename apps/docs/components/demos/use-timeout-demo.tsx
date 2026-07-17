@@ -25,7 +25,7 @@ export function UseTimeoutDocDemo() {
       <p
         role="status"
         aria-live="polite"
-        className="flex min-h-16 w-full max-w-xs items-center justify-center rounded-md border border-slate-syntax/40 bg-ground px-4 text-center font-mono text-sm text-fg"
+        className="flex min-h-16 w-full max-w-xs items-center justify-center rounded-md border border-slate-syntax bg-ground px-4 text-center font-mono text-sm text-fg"
       >
         {fired ? "Timeout fired" : pending ? "Waiting 2s…" : "Idle — arm the timeout"}
       </p>

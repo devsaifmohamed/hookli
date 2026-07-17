@@ -4,16 +4,18 @@ import { join } from "node:path";
 /* Shared machinery for the generated OG images (app/opengraph-image.tsx,
    app/docs/[slug]/opengraph-image.tsx) and app/apple-icon.tsx. Satori can't
    reach next/font's build cache (and doesn't read woff2), so the woffs come
-   from the @fontsource devDependencies. Brand tokens mirror app/globals.css
-   @theme — keep in sync. */
+   from the @fontsource devDependencies. NOTE — intentional divergence (Premium
+   Dark v1.0): OG/apple-icon use a slight surface-1 lift (#10151d, the card
+   tone) as their ground so social embeds aren't a pure-black void when a client
+   crops or shadows the card, while the SITE's page ground is the true near-black
+   #0a0d12. Do not "sync" OG_COLORS.ground to the site page ground. */
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_COLORS = {
-  ground: "#003748",
-  accent: "#30c5ca",
-  slate: "#4a7a8c",
-  gray: "#8fb6c2",
+  ground: "#10151d",
+  accent: "#61dafb",
+  gray: "#9ba8b8",
   fg: "#ffffff",
 } as const;
 
@@ -85,7 +87,7 @@ export function OgMark({ height }: { height: number }) {
   );
 }
 
-/* hookli. lockup — brand v3, same as components/wordmark. */
+/* hookli. lockup — brand v4 (React palette), same as components/wordmark. */
 export function OgWordmark({
   fontSize,
   withMark = false,

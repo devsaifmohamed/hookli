@@ -14,16 +14,29 @@ repo (`../rehooks-app`), which is **read-only context** — never modify it from
 Next.js (App Router, TypeScript, Tailwind, npm). Hooks for live demos are imported from
 the **published `hookli` package** (in node_modules), not from relative paths.
 
-## Brand (v3 — dark-first, solid, no gradients)
-- The base is a **near-black neutral** (faint teal undertone), NOT a saturated fill. Surfaces are
-  defined by subtle elevation + hairline borders, and the brand hues are **accents, not backgrounds**:
-  ground `#0A1315` (page) → raised `#101D21` (cards) → overlay `#17282E` (hover/nested); hairline
-  borders via `border-slate-syntax/40`. Accent `#30C5CA` (Scooter) = links/focus/CTA/active; Prussian
-  `#003748` (`--color-brand`) = select brand moments only; ink `#FFFFFF`, muted `#94B0B8`.
+## Brand (Premium Dark v1.0 — cool near-black ramp, dark-first, solid, no gradients)
+- A cool near-black refinement of the React palette. The base is a near-black neutral ramp, NOT a
+  saturated fill, and the brand hues are **accents, not backgrounds**: ground `#0A0D12` (page +
+  inset wells) → raised `#10151D` (cards, ~6% lift) → overlay `#151C27` (hover/nested/elevated
+  **surface** wash). Insets (code interiors, in-card inputs) cut back to `bg-ground`.
+  **Elevation comes from an edge, not a fill** — adjacent surfaces are only ~6% apart, so depth is
+  a solid frame border + a 1px top highlight + an ambient shadow (`.surface`/`.surface-lift` in
+  `globals.css`), never a lighter fill. Borders have **three roles** (solid, never alpha-faded):
+  the FRAME edge uses `border-slate-syntax` (`#354355` — the visible card/code-window/major-chrome
+  edge, never text); QUIET row dividers inside a card use `border-divider` (`#242D3A` — near-
+  invisible; NOTE `ground-overlay` is now a surface fill tone, never a border); interactive
+  outlines (outline buttons, inputs, toggles) use `border-gray-outline` (`#697586` — ≥3:1 non-text
+  on every surface, chrome never copy), stepping to `border-gray-body` on hover / `border-accent`
+  when active. One carve-out: on the light `bg-slate-50` demo panels (dark-mode demos),
+  `text-slate-syntax` IS the correct copy color (~9:1 there; gray-body would be too faint) — don't
+  "fix" those call sites. Accent `#61DAFB` (classic React cyan) = links/focus/CTA/active —
+  **text-grade**, lifting to `#7CE2FF` (`accent-hover`) on hover. Brand `#087EA4` (react.dev teal,
+  `--color-brand`) = **large decorative fills only** — fails AA for text/small UI. Body/ink
+  `#FFFFFF` (pure white), muted `#9BA8B8` (gray-body — the copy floor).
 - Colors + fonts live as CSS variables in `app/globals.css` (`@theme`). Components reference the
   resulting Tailwind tokens (`bg-ground`, `bg-ground-raised`, `bg-ground-overlay`, `text-accent`,
   `text-fg`, `text-gray-body`, `border-*`) — **never** a raw hex or arbitrary value.
-- Wordmark: `hookli.` (lowercase, teal full stop) beside the hook mark (inline SVG from
+- Wordmark: `hookli.` (lowercase, cyan full stop) beside the hook mark (inline SVG from
   `public/hookli-icon.svg`). Assets in `public/` (`hookli-banner.svg/.png`, `hookli-icon.svg`).
 - **Plus Jakarta Sans** for headings + body; monospace ONLY inside code surfaces (code block,
   install command, API value/type cells, demo inputs). Inline SVG icons — never emoji as icons.
@@ -100,7 +113,7 @@ App Router files keep their framework names (`page.tsx`, `layout.tsx`, `not-foun
 
 Style with Tailwind utilities bound to the `@theme` tokens (`bg-ground`, `bg-ground-raised`, `text-accent`,
 `text-fg`, `text-gray-body`, `border-*`, `font-sans`, `font-mono`). **Never** a hardcoded hex, an arbitrary
-color (`text-[#30c5ca]`), or an inline `style` color — add a token to `globals.css` first, then reference it.
+color (`text-[#61dafb]`), or an inline `style` color — add a token to `globals.css` first, then reference it.
 
 ### 7 — Accessibility
 

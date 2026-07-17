@@ -51,11 +51,11 @@ export function UseMapDocDemo() {
           {entries.map(([entryKey, entryValue]) => (
             <li
               key={entryKey}
-              className="flex items-center justify-between gap-3 rounded-md border border-slate-syntax/40 bg-ground px-3 py-2"
+              className="flex items-center justify-between gap-3 rounded-md border border-slate-syntax bg-ground px-3 py-2"
             >
               <span className="min-w-0 truncate font-mono text-sm text-fg">
                 <span className="text-accent">{entryKey}</span>
-                <span className="text-slate-syntax"> : </span>
+                <span className="text-gray-body"> : </span>
                 <span className="text-gray-body">{entryValue || "—"}</span>
               </span>
               <button

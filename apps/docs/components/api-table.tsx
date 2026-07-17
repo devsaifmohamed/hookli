@@ -22,7 +22,7 @@ export function ApiTable({
     >
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="border-b border-slate-syntax/40">
+          <tr className="border-b border-slate-syntax">
             <th scope="col" className="px-4 py-3 text-xs text-gray-body">
               Name
             </th>
@@ -43,7 +43,7 @@ export function ApiTable({
           {rows.map((row) => (
             <tr
               key={row.name}
-              className="border-b border-slate-syntax/40 align-top last:border-b-0"
+              className="border-b border-slate-syntax align-top last:border-b-0"
             >
               <td className="whitespace-nowrap px-4 py-3 font-mono text-accent">
                 {row.name}
@@ -54,7 +54,7 @@ export function ApiTable({
               {withDefault && (
                 <td className="whitespace-nowrap px-4 py-3">
                   {row.defaultValue ? (
-                    <span className="inline-block rounded border border-slate-syntax/50 bg-ground px-2 py-0.5 font-mono text-xs text-accent">
+                    <span className="inline-block rounded border border-slate-syntax bg-ground px-2 py-0.5 font-mono text-xs text-accent">
                       {row.defaultValue}
                     </span>
                   ) : (

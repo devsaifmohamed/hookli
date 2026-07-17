@@ -12,7 +12,7 @@ function CleanupChild({ onUnmount }: { onUnmount: () => void }) {
   useUnmount(onUnmount);
 
   return (
-    <div className="flex h-16 w-full items-center justify-center rounded-md border border-accent/60 bg-accent/10 font-mono text-sm text-accent">
+    <div className="flex h-16 w-full items-center justify-center rounded-md border border-accent bg-accent/10 font-mono text-sm text-accent">
       mounted — cleanup armed
     </div>
   );

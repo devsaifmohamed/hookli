@@ -1,21 +1,32 @@
 @import "tailwindcss";
 
-/* Brand v3 tokens — docs/DESIGN.md §1. Solid colors only, dark-first, no light theme.
-   Tonal depth (T19): #003748 is a brand MID-tone, so it's the SURFACE, not the page.
-   The page ground is a much darker near-black blue in the same hue family, letting
-   cards/panels visibly lift; a third step lifts nested/hover surfaces above the card. */
+/* Premium Dark v1.0 — a cool near-black premium-dark ramp (refines the React
+   palette). The page sits at a near-black, slightly cool #0a0d12; cards and
+   panels lift only ~6% to #10151d, and hover/nested washes rise another step to
+   #151c27. Adjacent surfaces are deliberately close, so ELEVATION COMES FROM AN
+   EDGE, NOT A FILL: a solid frame border + a 1px top highlight (light catching
+   the top edge) + a soft ambient shadow. Three border roles keep the chrome
+   legible on this dense ramp — FRAME `slate-syntax` (the visible structural
+   edge on cards, code windows, major chrome), QUIET `divider` (near-invisible
+   row rules inside dense lists/tables), and INTERACTIVE `gray-outline` (the
+   only ≥3:1 tier — inputs, outline buttons, toggles). #61DAFB (classic React
+   cyan) stays the TEXT-GRADE accent, lifting to #7CE2FF on hover; #087EA4
+   (react.dev brand teal) is large-decorative-only and fails AA for text. */
 @theme {
-  /* Near-black neutral base with a faint teal undertone — surfaces are defined by
-     subtle elevation + hairline borders, NOT by saturated fills. Prussian (#003748)
-     and Scooter (#30c5ca) are reserved as ACCENTS, not backgrounds. */
-  --color-ground: #0a1315;         /* page */
-  --color-ground-raised: #101d21;  /* cards / panels — a subtle lift off the page */
-  --color-ground-overlay: #17282e; /* hover / nested / code-line highlight */
-  --color-brand: #003748;          /* Prussian — for select brand moments only */
-  --color-accent: #30c5ca;         /* Scooter — links, focus, CTA, active state */
-  --color-slate-syntax: #4a7a8c;   /* hairline borders (used at /40) + code comments */
-  --color-gray-body: #94b0b8;      /* secondary text */
-  --color-fg: #ffffff;
+  /* Surfaces are defined by elevation + a solid frame edge, NOT by saturated
+     fills — the React hues stay accents. Tier semantics: ground (page + inset
+     wells) → raised (cards/panels) → overlay (hover / nested / elevated wash). */
+  --color-ground: #0a0d12;         /* page + inset wells — near-black, cool */
+  --color-ground-raised: #10151d;  /* cards / panels — ~6% lift off the page */
+  --color-ground-overlay: #151c27; /* hover / nested / elevated wash — the top step */
+  --color-accent: #61dafb;         /* classic React cyan — links, focus, CTA, active (text-grade) */
+  --color-accent-hover: #7ce2ff;   /* accent hover — brighter cyan for CTAs/links on hover */
+  --color-brand: #087ea4;          /* react.dev brand teal — LARGE DECORATIVE use only, never text/small UI */
+  --color-slate-syntax: #354355;   /* FRAME edge — solid 1px card/code-window/major-chrome borders, NOT text */
+  --color-divider: #242d3a;        /* QUIET row divider — near-invisible rules inside dense lists/tables */
+  --color-gray-outline: #697586;   /* INTERACTIVE outline — inputs, outline buttons, toggles (only tier ≥3:1 on every surface) */
+  --color-gray-body: #9ba8b8;      /* muted/secondary text — AA on every surface (min 6.5:1) */
+  --color-fg: #ffffff;             /* primary ink — pure white */
 }
 
 /* Referenced at runtime from the next/font variables on <html>. */
@@ -40,7 +51,9 @@
   --shiki-token-string-expression: var(--color-gray-body);
   --shiki-token-parameter: var(--color-gray-body);
   --shiki-token-punctuation: var(--color-gray-body);
-  --shiki-token-comment: var(--color-slate-syntax);
+  /* Comments are text — slate (gray-70) is border-grade on the react.dev ramp
+     and fails AA on code surfaces, so comments read in the muted text gray. */
+  --shiki-token-comment: var(--color-gray-body);
   --shiki-token-link: var(--color-accent);
 }
 
@@ -91,15 +104,18 @@ body {
 
 /* ── Elevation system ─────────────────────────────────────────────────────
    Near-black-on-near-black means depth can't come from a drop shadow alone —
-   it comes from a hairline border, a 1px top highlight (light catching the top
-   edge), and a soft ambient shadow. `.surface` is the static card treatment;
-   `.surface-lift` adds a 150–200ms ease-out hover raise for interactive cards. */
+   it comes from a crisp solid 1px border, a 1px top highlight (light catching
+   the top edge), and a soft ambient shadow. `.surface` is the static card
+   treatment; `.surface-lift` adds a 150–200ms ease-out hover raise for
+   interactive cards. */
 @layer components {
   .surface {
     background-color: var(--color-ground-raised);
-    border: 1px solid color-mix(in srgb, var(--color-slate-syntax) 26%, transparent);
+    /* Solid gray-70, react.dev-style — every card/frame border runs at full
+       strength; alpha-faded hairlines vanish on this ramp. */
+    border: 1px solid var(--color-slate-syntax);
     box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 6%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 8%, transparent),
       0 1px 2px 0 color-mix(in srgb, black 40%, transparent),
       0 12px 28px -18px color-mix(in srgb, black 70%, transparent);
   }
@@ -115,7 +131,7 @@ body {
     transform: translateY(-3px);
     border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
     box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 9%, transparent),
+      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 11%, transparent),
       0 2px 4px 0 color-mix(in srgb, black 40%, transparent),
       0 20px 44px -20px color-mix(in srgb, black 85%, transparent);
   }
@@ -171,9 +187,11 @@ body {
   animation: copy-pop 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Subtle inner shadow at the top of a code pane, separating it from the
-   filename caption above (premium code-block chrome). */
+/* Code-pane interior: an inset well — it cuts through the raised frame back to
+   the page ground for terminal depth, plus a subtle inner shadow at the top
+   separating it from the filename caption above (premium code-block chrome). */
 .code-pane {
+  background-color: var(--color-ground);
   box-shadow: inset 0 10px 12px -12px color-mix(in srgb, black 85%, transparent);
 }
 
@@ -222,7 +240,7 @@ body {
   width: 1rem;
   margin-right: 1.25rem;
   text-align: right;
-  color: var(--color-slate-syntax);
+  color: var(--color-gray-body);
   user-select: none;
 }
 

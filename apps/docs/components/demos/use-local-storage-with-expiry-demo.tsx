@@ -80,7 +80,7 @@ function ExpiryDemo({ onExpire }: { onExpire: () => void }) {
       {remainingMs !== null && (
         <div
           aria-hidden="true"
-          className="h-1 overflow-hidden rounded-full bg-slate-syntax/20"
+          className="h-1 overflow-hidden rounded-full bg-gray-body/40"
         >
           <div
             className="h-full bg-accent"
@@ -94,11 +94,11 @@ function ExpiryDemo({ onExpire }: { onExpire: () => void }) {
             expired — item removed from localStorage
           </span>
         ) : remainingMs !== null ? (
-          <span className="text-slate-syntax">
+          <span className="text-gray-body">
             persisted under {KEY} with a 10s TTL
           </span>
         ) : (
-          <span className="text-slate-syntax">nothing stored yet</span>
+          <span className="text-gray-body">nothing stored yet</span>
         )}
       </p>
     </div>

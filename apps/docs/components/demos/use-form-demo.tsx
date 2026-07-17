@@ -34,7 +34,7 @@ export function UseFormDocDemo() {
           <DemoButton onClick={resetForm}>Reset</DemoButton>
         </div>
       </form>
-      <pre className="overflow-x-auto rounded-md border border-slate-syntax/20 bg-ground p-3 font-mono text-xs leading-relaxed text-gray-body">
+      <pre className="overflow-x-auto rounded-md border border-slate-syntax bg-ground p-3 font-mono text-xs leading-relaxed text-gray-body">
         {JSON.stringify(values, null, 2)}
       </pre>
     </div>
