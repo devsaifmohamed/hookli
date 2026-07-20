@@ -287,6 +287,62 @@
       "description": "Browser geolocation state.",
       "category": "data",
       "signature": "useGeoLocation(): { location: GeolocationPosition | null; error: GeolocationError | Error | null }"
+    },
+    {
+      "slug": "use-previous",
+      "name": "usePrevious",
+      "description": "Track a value from the previous render.",
+      "category": "state",
+      "signature": "usePrevious<T>(value: T): T | undefined"
+    },
+    {
+      "slug": "use-list",
+      "name": "useList",
+      "description": "Array state with push, insert, update, remove, and clear helpers.",
+      "category": "state",
+      "signature": "useList<T>(initial?: T[]): [T[], UseListActions<T>]"
+    },
+    {
+      "slug": "use-set",
+      "name": "useSet",
+      "description": "Set state with add, remove, toggle, has, and clear helpers.",
+      "category": "state",
+      "signature": "useSet<T>(initial?: Iterable<T>): [Set<T>, UseSetActions<T>]"
+    },
+    {
+      "slug": "use-throttle",
+      "name": "useThrottle",
+      "description": "Throttle a fast-changing value to at most one update per interval.",
+      "category": "effects",
+      "signature": "useThrottle<T>(value: T, interval?: number): T"
+    },
+    {
+      "slug": "use-update-effect",
+      "name": "useUpdateEffect",
+      "description": "A useEffect that skips the initial mount and runs only on updates.",
+      "category": "effects",
+      "signature": "useUpdateEffect(effect: EffectCallback, deps?: DependencyList): void"
+    },
+    {
+      "slug": "use-effect-once",
+      "name": "useEffectOnce",
+      "description": "Run an effect exactly once, on mount.",
+      "category": "effects",
+      "signature": "useEffectOnce(effect: EffectCallback): void"
+    },
+    {
+      "slug": "use-key-press",
+      "name": "useKeyPress",
+      "description": "Track whether a specific key is currently held down.",
+      "category": "dom",
+      "signature": "useKeyPress(targetKey: string): boolean"
+    },
+    {
+      "slug": "use-window-scroll",
+      "name": "useWindowScroll",
+      "description": "Track the window scroll position reactively.",
+      "category": "dom",
+      "signature": "useWindowScroll(): { x: number; y: number }"
     }
   ]
 }

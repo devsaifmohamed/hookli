@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
   <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/41_hooks-0A0D12?style=for-the-badge" alt="41 hooks" />
+  <img src="https://img.shields.io/badge/49_hooks-0A0D12?style=for-the-badge" alt="49 hooks" />
 </p>
 
 <p align="center">
@@ -117,6 +117,14 @@ function Component() {
 - **[`useScript`](https://hookli.vercel.app/docs/use-script)** — Load an external script and report its load status.
 - **[`useFetch`](https://hookli.vercel.app/docs/use-fetch)** — Declarative fetch with loading and error status.
 - **[`useGeoLocation`](https://hookli.vercel.app/docs/use-geo-location)** — Browser geolocation state.
+- **[`usePrevious`](https://hookli.vercel.app/docs/use-previous)** — Track a value from the previous render.
+- **[`useList`](https://hookli.vercel.app/docs/use-list)** — Array state with push, insert, update, remove, and clear helpers.
+- **[`useSet`](https://hookli.vercel.app/docs/use-set)** — Set state with add, remove, toggle, has, and clear helpers.
+- **[`useThrottle`](https://hookli.vercel.app/docs/use-throttle)** — Throttle a fast-changing value to at most one update per interval.
+- **[`useUpdateEffect`](https://hookli.vercel.app/docs/use-update-effect)** — A useEffect that skips the initial mount and runs only on updates.
+- **[`useEffectOnce`](https://hookli.vercel.app/docs/use-effect-once)** — Run an effect exactly once, on mount.
+- **[`useKeyPress`](https://hookli.vercel.app/docs/use-key-press)** — Track whether a specific key is currently held down.
+- **[`useWindowScroll`](https://hookli.vercel.app/docs/use-window-scroll)** — Track the window scroll position reactively.
 
 ## 🧪 TypeScript
 
