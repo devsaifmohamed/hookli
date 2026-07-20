@@ -343,6 +343,118 @@
       "description": "Track the window scroll position reactively.",
       "category": "dom",
       "signature": "useWindowScroll(): { x: number; y: number }"
+    },
+    {
+      "slug": "use-async",
+      "name": "useAsync",
+      "description": "Run an async function and track its loading, error, and value state.",
+      "category": "data",
+      "signature": "useAsync<T>(asyncFunction: () => Promise<T>, immediate?: boolean): UseAsyncReturn<T>"
+    },
+    {
+      "slug": "use-mutation",
+      "name": "useMutation",
+      "description": "Run an async write action on demand and track status, data, and error.",
+      "category": "data",
+      "signature": "useMutation<TArgs, TData>(mutationFn: (...args: TArgs) => Promise<TData>): UseMutationReturn<TArgs, TData>"
+    },
+    {
+      "slug": "use-pagination",
+      "name": "usePagination",
+      "description": "Page, page size, total pages, navigation helpers, and the current item range.",
+      "category": "data",
+      "signature": "usePagination(options?: UsePaginationOptions): UsePaginationReturn"
+    },
+    {
+      "slug": "use-network-state",
+      "name": "useNetworkState",
+      "description": "Track online/offline status and connection details.",
+      "category": "data",
+      "signature": "useNetworkState(): NetworkState"
+    },
+    {
+      "slug": "use-page-visibility",
+      "name": "usePageVisibility",
+      "description": "Track whether the page/tab is currently visible.",
+      "category": "effects",
+      "signature": "usePageVisibility(): boolean"
+    },
+    {
+      "slug": "use-idle",
+      "name": "useIdle",
+      "description": "Detect user inactivity after a configurable threshold.",
+      "category": "dom",
+      "signature": "useIdle(ms?: number): boolean"
+    },
+    {
+      "slug": "use-queue",
+      "name": "useQueue",
+      "description": "FIFO queue state with add, remove, clear, and first/last/size.",
+      "category": "state",
+      "signature": "useQueue<T>(initial?: T[]): UseQueueReturn<T>"
+    },
+    {
+      "slug": "use-default",
+      "name": "useDefault",
+      "description": "useState that falls back to a default when the value is nullish.",
+      "category": "state",
+      "signature": "useDefault<T>(initialValue: T | null | undefined, defaultValue: T): [T, (value: T | null | undefined) => void]"
+    },
+    {
+      "slug": "use-raf-state",
+      "name": "useRafState",
+      "description": "useState whose updates are batched to the next animation frame.",
+      "category": "state",
+      "signature": "useRafState<T>(initialState: T | (() => T)): [T, Dispatch<SetStateAction<T>>]"
+    },
+    {
+      "slug": "use-deep-compare-effect",
+      "name": "useDeepCompareEffect",
+      "description": "useEffect that compares dependencies by deep structural equality.",
+      "category": "effects",
+      "signature": "useDeepCompareEffect(effect: EffectCallback, deps: DependencyList): void"
+    },
+    {
+      "slug": "use-text-selection",
+      "name": "useTextSelection",
+      "description": "Track the text the user has currently selected on the page.",
+      "category": "dom",
+      "signature": "useTextSelection(): string"
+    },
+    {
+      "slug": "use-long-press",
+      "name": "useLongPress",
+      "description": "Detect a long press (mouse or touch) via spreadable handlers.",
+      "category": "dom",
+      "signature": "useLongPress(callback: (event: MouseEvent | TouchEvent) => void, options?: UseLongPressOptions): UseLongPressHandlers"
+    },
+    {
+      "slug": "use-hotkeys",
+      "name": "useHotkeys",
+      "description": "Bind a keyboard shortcut combo (e.g. ctrl+k) to a callback.",
+      "category": "dom",
+      "signature": "useHotkeys(keys: string, callback: (event: KeyboardEvent) => void): void"
+    },
+    {
+      "slug": "use-fullscreen",
+      "name": "useFullscreen",
+      "description": "Control the Fullscreen API for an element and track its state.",
+      "category": "dom",
+      "signature": "useFullscreen<T extends HTMLElement>(ref: RefObject<T | null>): UseFullscreenReturn"
+    },
+    {
+      "slug": "use-battery",
+      "name": "useBattery",
+      "description": "Read device battery level and charging state (where supported).",
+      "category": "data",
+      "signature": "useBattery(): BatteryState"
+    },
+    {
+      "slug": "use-permission",
+      "name": "usePermission",
+      "description": "Query a Permissions API permission and track its state.",
+      "category": "data",
+      "signature": "usePermission(name: PermissionName): UsePermissionResult"
     }
   ]
 }

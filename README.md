@@ -29,7 +29,7 @@
   <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
   <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/49_hooks-0A0D12?style=for-the-badge" alt="49 hooks" />
+  <img src="https://img.shields.io/badge/65_hooks-0A0D12?style=for-the-badge" alt="65 hooks" />
 </p>
 
 <p align="center">
@@ -127,6 +127,22 @@ function Component() {
 - **[`useEffectOnce`](https://hookli.vercel.app/docs/use-effect-once)** — Run an effect exactly once, on mount.
 - **[`useKeyPress`](https://hookli.vercel.app/docs/use-key-press)** — Track whether a specific key is currently held down.
 - **[`useWindowScroll`](https://hookli.vercel.app/docs/use-window-scroll)** — Track the window scroll position reactively.
+- **[`useAsync`](https://hookli.vercel.app/docs/use-async)** — Run an async function and track its loading, error, and value state.
+- **[`useMutation`](https://hookli.vercel.app/docs/use-mutation)** — Run an async write action on demand and track status, data, and error.
+- **[`usePagination`](https://hookli.vercel.app/docs/use-pagination)** — Page, page size, total pages, navigation helpers, and the current item range.
+- **[`useNetworkState`](https://hookli.vercel.app/docs/use-network-state)** — Track online/offline status and connection details.
+- **[`usePageVisibility`](https://hookli.vercel.app/docs/use-page-visibility)** — Track whether the page/tab is currently visible.
+- **[`useIdle`](https://hookli.vercel.app/docs/use-idle)** — Detect user inactivity after a configurable threshold.
+- **[`useQueue`](https://hookli.vercel.app/docs/use-queue)** — FIFO queue state with add, remove, clear, and first/last/size.
+- **[`useDefault`](https://hookli.vercel.app/docs/use-default)** — useState that falls back to a default when the value is nullish.
+- **[`useRafState`](https://hookli.vercel.app/docs/use-raf-state)** — useState whose updates are batched to the next animation frame.
+- **[`useDeepCompareEffect`](https://hookli.vercel.app/docs/use-deep-compare-effect)** — useEffect that compares dependencies by deep structural equality.
+- **[`useTextSelection`](https://hookli.vercel.app/docs/use-text-selection)** — Track the text the user has currently selected on the page.
+- **[`useLongPress`](https://hookli.vercel.app/docs/use-long-press)** — Detect a long press (mouse or touch) via spreadable handlers.
+- **[`useHotkeys`](https://hookli.vercel.app/docs/use-hotkeys)** — Bind a keyboard shortcut combo (e.g. ctrl+k) to a callback.
+- **[`useFullscreen`](https://hookli.vercel.app/docs/use-fullscreen)** — Control the Fullscreen API for an element and track its state.
+- **[`useBattery`](https://hookli.vercel.app/docs/use-battery)** — Read device battery level and charging state (where supported).
+- **[`usePermission`](https://hookli.vercel.app/docs/use-permission)** — Query a Permissions API permission and track its state.
 
 ## 🧪 TypeScript
 
