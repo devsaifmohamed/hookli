@@ -1,0 +1,69 @@
+# hookli — Roadmap
+
+Tracking doc for growing the hook catalog and the package DX. Work proceeds in **tiers**;
+check items off as they land. Each hook has three tracks:
+
+- **lib** — hook + colocated vitest test + barrel + manifest entry (ships to npm)
+- **docs** — rich doc-page entry in `apps/docs/lib/hook-docs.ts` (usage, API tables, live demo)
+- *(the docs sidebar/index/count auto-derive from the manifest — a hook appears the moment `lib` lands; `docs` just adds the demo + usage)*
+
+> Count: **41 → 65** (Tiers 1–3 lib all shipped ✅). Next open track: per-hook **docs demos**.
+
+---
+
+## Tier 1 — expected-pair gaps (the "why isn't this here?" hooks)
+
+| hook | category | lib | docs | notes |
+|---|---|:--:|:--:|---|
+| `useThrottle` | effects | ✅ | ⬜ | the twin of `useDebounce` |
+| `usePrevious` | state | ✅ | ⬜ | previous render's value |
+| `useUpdateEffect` | effects | ✅ | ⬜ | effect that skips first render |
+| `useEffectOnce` | effects | ✅ | ⬜ | run-once effect |
+| `useList` | state | ✅ | ⬜ | array state (push/remove/clear) — sibling of `useMap` |
+| `useSet` | state | ✅ | ⬜ | Set state — completes map/set/list trio |
+| `useKeyPress` | dom | ✅ | ⬜ | true while a key is held |
+| `useWindowScroll` | dom | ✅ | ⬜ | reactive `{ x, y }` scroll position |
+
+> **Tier 1 lib: ✅ shipped** (41 → 49 hooks, +20 tests, gate green). Docs demos pending.
+
+## Tier 2 — fill the thin `data` category (2 → 8)
+
+| hook | category | lib | docs | notes |
+|---|---|:--:|:--:|---|
+| `useAsync` | data | ✅ | ⬜ | run an async fn → `{ loading, error, value }` |
+| `useMutation` | data | ✅ | ⬜ | async write action with status |
+| `usePagination` | data | ✅ | ⬜ | page/limit/offset state helper |
+| `useNetworkState` | data | ✅ | ⬜ | online/offline + connection info |
+| `usePageVisibility` | effects | ✅ | ⬜ | tab focus/blur via `visibilitychange` |
+| `useIdle` | dom | ✅ | ⬜ | user-inactivity detection |
+
+> **Tier 2 lib: ✅ shipped** (49 → 55; `data` category 2 → 8).
+
+## Tier 3 — rounding-out
+
+| hook | category | lib | docs | notes |
+|---|---|:--:|:--:|---|
+| `useQueue` | state | ✅ | ⬜ | FIFO queue |
+| `useDefault` | state | ✅ | ⬜ | state with nullish fallback |
+| `useRafState` | state | ✅ | ⬜ | state batched to rAF |
+| `useDeepCompareEffect` | effects | ✅ | ⬜ | effect with deep-equal deps |
+| `useTextSelection` | dom | ✅ | ⬜ | current selected text |
+| `useLongPress` | dom | ✅ | ⬜ | long-press handlers |
+| `useHotkeys` | dom | ✅ | ⬜ | keyboard combos (`ctrl+k`) |
+| `useFullscreen` | dom | ✅ | ⬜ | Fullscreen API control |
+| `useBattery` | data | ✅ | ⬜ | battery level/charging |
+| `usePermission` | data | ✅ | ⬜ | Permissions API state |
+
+> **Tier 3 lib: ✅ shipped** (55 → 65). All three tiers' hooks are on npm-ready `main`
+> once merged; per-hook **docs demos** remain the open `docs` track across all tiers.
+
+---
+
+## Package & DX enhancements (not hooks)
+
+- ⬜ `size-limit` in CI + a per-hook gzipped-size badge ("every hook < 0.5 kB")
+- ⬜ Hook generator script (`pnpm new:hook use-foo`) — scaffolds folder + test + manifest entry
+- ⬜ Per-hook subpath exports (`import { useToggle } from "hookli/use-toggle"`)
+- ⬜ Changesets — automated versioning + changelog (also fixes git-tag ↔ npm drift)
+- ⬜ "Compare vs react-use / usehooks-ts" table in the docs
+- ⬜ StackBlitz "open in playground" per hook page
