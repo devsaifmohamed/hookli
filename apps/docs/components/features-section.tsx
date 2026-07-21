@@ -7,7 +7,7 @@ const FEATURES = [
   {
     icon: <FeatherIcon className="size-6" />,
     title: "Zero dependencies",
-    body: "The only thing you install is the hooks. No runtime deps, no transitive surprises, nothing to audit twice.",
+    body: "No lodash, no debounce utils, no transitive surprises — React is the only thing you install besides the hooks.",
   },
   {
     icon: <BracesIcon className="size-6" />,
@@ -17,7 +17,7 @@ const FEATURES = [
   {
     icon: <ServerIcon className="size-6" />,
     title: "SSR-safe",
-    body: "Browser APIs are guarded behind effects, so Next.js and friends prerender without a single window crash.",
+    body: "Browser APIs stay behind effects by convention — Next.js and Remix prerender without a single window crash.",
   },
   {
     icon: <LeafIcon className="size-6" />,
@@ -32,7 +32,7 @@ const FEATURES = [
   {
     icon: <BlocksIcon className="size-6" />,
     title: `${HOOKS.length} hooks & counting`,
-    body: "State, storage, DOM, and data — the hooks you rewrite in every project, done once and typed.",
+    body: "State, storage, DOM, and light data fetching — the daily-driver set, not a kitchen-sink toolkit.",
   },
 ];
 
@@ -41,8 +41,8 @@ export function FeaturesSection() {
     <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
       <SectionHeading
         eyebrow="Why hookli"
-        title="The hooks you keep rewriting"
-        subtitle="Small enough to read in an afternoon, solid enough to ship everywhere."
+        title="Built for the hooks you copy-paste every project"
+        subtitle="Small enough to read in an afternoon. Solid enough to ship in production."
       />
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map((feature) => (

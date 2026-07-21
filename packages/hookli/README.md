@@ -8,7 +8,7 @@
 
 <p align="center">
   A tiny, typed collection of the React hooks you reach for every day.<br/>
-  <strong>Ready to use · written in TypeScript · zero dependencies.</strong>
+  <strong>Every hook you rewrite — typed, SSR-safe, zero dependencies.</strong>
 </p>
 
 <p align="center">
@@ -50,10 +50,18 @@ pnpm add hookli
 
 ## 💫 Introduction
 
-**hookli** is a React hooks library, written in TypeScript and easy to use. It gives you a
-small, dependency-free set of the hooks you reach for in almost every project — so you stop
-re-writing the same debounce, `localStorage` wrapper, or outside-click listener for the
-hundredth time. The hooks are built on the principle of DRY (Don't Repeat Yourself).
+**hookli** is a React hooks library, written in TypeScript and ready to ship. It gives you a
+small, dependency-free set of the hooks you reach for in almost every project — debounce,
+`localStorage` wrappers, outside-click listeners, and the rest — so you stop rewriting the
+same utilities for the hundredth time.
+
+What sets hookli apart from similar libraries (including [usehooks-ts](https://usehooks-ts.com)):
+
+- **Zero runtime dependencies** — not just "small deps," literally none besides React.
+- **SSR-safe by convention** — every hook guards browser APIs; safe in Next.js and Remix.
+- **Manifest-driven docs** — README, hook count, and the docs site all derive from one source of truth.
+- **Live demos on the real package** — the docs import from npm, not a fork or snapshot.
+- **Every hook tested** — colocated vitest tests and a CI gate on every PR.
 
 The library is designed to be as minimal as possible. It is fully **tree-shakable** (via the
 ESM build), meaning you only ship the hooks you import and the rest is removed from your

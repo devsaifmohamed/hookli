@@ -2,13 +2,14 @@ import Link from "next/link";
 import { HookMark, Wordmark } from "@/components/wordmark";
 import { InstallCommand } from "@/components/install-command";
 import { ArrowRightIcon, GitHubIcon } from "@/components/icons";
+import { ComparisonSection } from "@/components/comparison-section";
 import { FeaturesSection } from "@/components/features-section";
 import { LiveProofSection } from "@/components/live-proof-section";
 import { HooksIndexSection } from "@/components/hooks-index-section";
 import { SupportSection } from "@/components/support-section";
 import { BottomCtaSection } from "@/components/bottom-cta-section";
 import { HOOKS } from "@/lib/hooks-registry";
-import { GITHUB_URL, TAGLINE } from "@/lib/site";
+import { GITHUB_URL, TAGLINE, TAGLINE_SHORT } from "@/lib/site";
 
 const HERO_FACTS = [
   `${HOOKS.length} typed hooks`,
@@ -26,7 +27,7 @@ export default function Home() {
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-slate-syntax bg-ground-raised/60 px-3 py-1 text-xs font-medium text-gray-body backdrop-blur">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
-            Zero-dependency React hooks
+            {TAGLINE_SHORT}
           </p>
           <h1 className="reveal reveal-d1 mt-8 flex flex-col items-center gap-6">
             <HookMark className="h-16 w-auto sm:h-20" />
@@ -63,6 +64,7 @@ export default function Home() {
         </div>
       </section>
       <FeaturesSection />
+      <ComparisonSection />
       <LiveProofSection />
       <HooksIndexSection />
       <SupportSection />

@@ -8,7 +8,10 @@ export function BottomCtaSection() {
   return (
     <section className="border-t border-slate-syntax">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-4 py-20 text-center sm:px-6">
-        <h2 className="text-3xl">Stop rewriting the same hooks.</h2>
+        <h2 className="text-3xl">Every hook you rewrite — one import away.</h2>
+        <p className="mt-3 max-w-md text-gray-body">
+          Typed, SSR-safe, zero dependencies. Import what you need and ship.
+        </p>
         <InstallCommand className="mt-8" />
         <Link
           href="/docs"
