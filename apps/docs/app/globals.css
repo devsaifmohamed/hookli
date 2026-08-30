@@ -266,6 +266,12 @@ body {
   animation: donate-bob 3.5s ease-in-out infinite;
 }
 
+/* Smooth in-page anchor scrolling (e.g. the hero → #ai trigger). The
+   reduced-motion block below forces this back to `auto` when requested. */
+html {
+  scroll-behavior: smooth;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

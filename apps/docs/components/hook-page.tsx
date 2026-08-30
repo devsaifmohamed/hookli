@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ApiTable } from "@/components/api-table";
 import { CodeBlock, HighlightedCode } from "@/components/code-block";
+import { HookAiActions } from "@/components/hook-ai-actions";
 import { HookCard } from "@/components/hook-card";
 import { HookDemo } from "@/components/hook-demo";
 import { ArrowRightIcon, ExternalLinkIcon } from "@/components/icons";
@@ -47,9 +48,13 @@ export function HookPage({ hook }: { hook: HookEntry }) {
   return (
     <div className="flex gap-10">
       <article className="min-w-0 max-w-3xl flex-1">
-        <p className="text-xs font-semibold uppercase tracking-wider text-gray-body">{CATEGORY_LABELS[hook.category]}</p>
-        <h1 className="mt-2 text-3xl sm:text-4xl">{hook.name}</h1>
-        <p className="mt-4 leading-relaxed text-gray-body">{linkifyWebApis(hook.description)}</p>
+        <header>
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-body">{CATEGORY_LABELS[hook.category]}</p>
+          <h1 className="mt-2 text-3xl sm:text-4xl">{hook.name}</h1>
+          <p className="mt-4 leading-relaxed text-gray-body">{linkifyWebApis(hook.description)}</p>
+        </header>
+
+        <HookAiActions hook={hook} />
 
         {doc && (
           <>

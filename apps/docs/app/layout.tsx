@@ -27,6 +27,15 @@ export const metadata: Metadata = {
     default: "hookli — simple React hooks",
   },
   description: TAGLINE,
+  alternates: {
+    // Advertise the machine-readable llmstxt.org representations of the site.
+    types: {
+      "text/plain": [
+        { url: "/llms.txt", title: "hookli llms.txt" },
+        { url: "/llms-full.txt", title: "hookli llms-full.txt" },
+      ],
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "hookli",

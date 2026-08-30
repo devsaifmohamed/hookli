@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CodeBlock } from "@/components/code-block";
 import { HookCard } from "@/components/hook-card";
+import { ArrowRightIcon } from "@/components/icons";
 import { InstallCommand } from "@/components/install-command";
 import {
   CATEGORY_LABELS,
@@ -45,6 +46,39 @@ export default function DocsIndexPage() {
         dependencies. Every hook on this site runs live on its page, so you
         can try it before you install it.
       </p>
+
+      <section
+        aria-label="Use hookli with AI"
+        className="surface mt-8 flex flex-col gap-4 rounded-xl p-5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="min-w-0">
+          <h2 className="text-base font-semibold text-fg">Building with an LLM?</h2>
+          <p className="mt-1 max-w-xl text-sm leading-relaxed text-gray-body">
+            Every hook — signatures, usage and source — as plain Markdown for AI
+            assistants and coding agents, generated from this site so it never
+            drifts.
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <a
+            href="/llms-full.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
+          >
+            Copy all hooks for AI
+            <ArrowRightIcon className="size-4" aria-hidden="true" />
+          </a>
+          <a
+            href="/llms.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center rounded-md px-3 font-mono text-sm text-accent underline-offset-4 transition-colors duration-200 hover:text-accent-hover hover:underline"
+          >
+            llms.txt
+          </a>
+        </div>
+      </section>
 
       <h2 className="mt-12 text-2xl">Quick start</h2>
       <ol className="mt-4 grid gap-3 sm:grid-cols-3">
