@@ -54,7 +54,7 @@ export function AiSection() {
     "inline-flex min-h-11 items-center gap-1.5 text-sm text-gray-body underline-offset-4 transition-colors duration-200 hover:text-fg hover:underline";
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6">
+    <section id="ai" className="mx-auto w-full max-w-5xl scroll-mt-24 px-4 py-20 sm:px-6">
       <SectionHeading
         eyebrow="AI-ready"
         title="Bring your AI — it speaks hookli"
