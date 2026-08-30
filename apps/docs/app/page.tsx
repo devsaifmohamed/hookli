@@ -5,6 +5,7 @@ import { ArrowRightIcon, GitHubIcon } from "@/components/icons";
 import { ComparisonSection } from "@/components/comparison-section";
 import { FeaturesSection } from "@/components/features-section";
 import { LiveProofSection } from "@/components/live-proof-section";
+import { AiSection } from "@/components/ai-section";
 import { HooksIndexSection } from "@/components/hooks-index-section";
 import { SupportSection } from "@/components/support-section";
 import { BottomCtaSection } from "@/components/bottom-cta-section";
@@ -25,7 +26,15 @@ export default function Home() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 hero-grid" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 hero-glow" />
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28">
-          <p className="reveal inline-flex items-center gap-2 rounded-full border border-slate-syntax bg-ground-raised/60 px-3 py-1 text-xs font-medium text-gray-body backdrop-blur">
+          <a
+            href="#ai"
+            className="reveal group mb-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent transition-colors duration-200 hover:bg-accent/15"
+          >
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
+            New — hookli speaks AI
+            <ArrowRightIcon className="size-3 rotate-90 transition-transform duration-200 group-hover:translate-y-0.5" />
+          </a>
+          <p className="reveal reveal-d1 inline-flex items-center gap-2 rounded-full border border-slate-syntax bg-ground-raised/60 px-3 py-1 text-xs font-medium text-gray-body backdrop-blur">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
             {TAGLINE_SHORT}
           </p>
@@ -66,6 +75,7 @@ export default function Home() {
       <FeaturesSection />
       <ComparisonSection />
       <LiveProofSection />
+      <AiSection />
       <HooksIndexSection />
       <SupportSection />
       <BottomCtaSection />
