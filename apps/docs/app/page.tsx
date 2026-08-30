@@ -5,6 +5,7 @@ import { ArrowRightIcon, GitHubIcon } from "@/components/icons";
 import { ComparisonSection } from "@/components/comparison-section";
 import { FeaturesSection } from "@/components/features-section";
 import { LiveProofSection } from "@/components/live-proof-section";
+import { AiSection } from "@/components/ai-section";
 import { HooksIndexSection } from "@/components/hooks-index-section";
 import { SupportSection } from "@/components/support-section";
 import { BottomCtaSection } from "@/components/bottom-cta-section";
@@ -66,6 +67,7 @@ export default function Home() {
       <FeaturesSection />
       <ComparisonSection />
       <LiveProofSection />
+      <AiSection />
       <HooksIndexSection />
       <SupportSection />
       <BottomCtaSection />
