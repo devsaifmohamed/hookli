@@ -32,6 +32,7 @@
   <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
   <img src="https://img.shields.io/badge/65_hooks-0A0D12?style=for-the-badge" alt="65 hooks" />
+  <img src="https://img.shields.io/badge/AI--ready-61DAFB?style=for-the-badge" alt="AI-ready" />
 </p>
 
 <p align="center">
@@ -63,9 +64,25 @@ What sets hookli apart from similar libraries (including [usehooks-ts](https://u
 
 - **Zero runtime dependencies** — not just "small deps," literally none besides React.
 - **SSR-safe by convention** — every hook guards browser APIs; safe in Next.js and Remix.
+- **AI-ready docs** — every hook is published as Markdown for LLMs ([`/llms.txt`](https://hookli.vercel.app/llms.txt), [`/llms-full.txt`](https://hookli.vercel.app/llms-full.txt)) with a **Copy for AI** button on each page.
 - **Manifest-driven docs** — README, hook count, and the docs site all derive from one source of truth.
 - **Live demos on the real package** — the docs import from npm, not a fork or snapshot.
 - **Every hook tested** — colocated vitest tests and a CI gate on every PR.
+
+### hookli vs usehooks-ts
+
+|                                          |      hookli       | usehooks-ts        |
+| ---------------------------------------- | :---------------: | :----------------: |
+| Hooks                                    |      **65**       | ~33                |
+| Runtime dependencies                     |       **0**       | `lodash.debounce`  |
+| Written in TypeScript                    |         ✅         | ✅                  |
+| Tree-shakable (ESM)                      |         ✅         | ✅                  |
+| SSR-safe                                 |         ✅         | ✅                  |
+| AI-ready docs (`llms.txt` + Copy for AI) |         ✅         | —                  |
+| Live demos run the published npm build   |         ✅         | —                  |
+| License                                  |        ISC        | MIT                |
+
+<sub>Counts as of September 2026 (usehooks-ts v3.1.1). Both are solid — pick what fits your project.</sub>
 
 The library is designed to be as minimal as possible. It is fully **tree-shakable** (via the
 ESM build), meaning you only ship the hooks you import and the rest is removed from your
@@ -87,6 +104,8 @@ function Component() {
 ## 🪝 Available hooks
 
 > 📚 Full docs with a **page per hook** and **live demos**: <https://hookli.vercel.app/docs>
+>
+> 🤖 Using an AI assistant? Point it at [`/llms.txt`](https://hookli.vercel.app/llms.txt) or [`/llms-full.txt`](https://hookli.vercel.app/llms-full.txt), or hit **Copy for AI** on any hook page.
 
 <!-- HOOKS:START — generated from hooks.manifest.json (run `node scripts/gen-readme.mjs`); do not edit by hand -->
 
