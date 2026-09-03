@@ -1,6 +1,6 @@
 {
   "name": "hookli",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "description": "Every React hook you rewrite — typed, SSR-safe, zero dependencies, tree-shakable. State, storage, DOM & light data fetching. SSR-safe, ESM + CJS.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
