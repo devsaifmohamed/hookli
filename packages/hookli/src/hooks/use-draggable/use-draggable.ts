@@ -150,6 +150,16 @@ const canAnimate = () => typeof requestAnimationFrame === "function" && !prefers
 const paint = (element: HTMLElement, { x, y }: Position) => {
   element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 };
+// Limits written directly in translate px need no DOM read, so they can be re-read on every move.
+const explicitLimits = (bounds: DragBounds | undefined): Limits | null =>
+  bounds && bounds !== "parent" && !("current" in bounds)
+    ? {
+        minX: bounds.left ?? -Infinity,
+        maxX: bounds.right ?? Infinity,
+        minY: bounds.top ?? -Infinity,
+        maxY: bounds.bottom ?? Infinity,
+      }
+    : null;
 const boundsElement = (element: HTMLElement, bounds: DragBounds | undefined) =>
   bounds === "parent" ? element.parentElement : bounds && "current" in bounds ? bounds.current : null;
 
@@ -191,6 +201,7 @@ export const useDraggable = <
   const targetRef = useRef<Position>(ORIGIN); // translate px the element is heading to
   const renderedRef = useRef<Position>(ORIGIN); // translate px on screen right now
   const pendingRef = useRef<{ position: Position; motion: Motion } | null>(null);
+  const sessionRef = useRef<DragSession | null>(null);
   const tweenRef = useRef<{ from: Position; start: number | null } | null>(null);
   const frameRef = useRef<number | null>(null);
   const lastFrameRef = useRef<number | null>(null);
@@ -270,13 +281,9 @@ export const useDraggable = <
     const origin = { x: rect.left - renderedRef.current.x, y: rect.top - renderedRef.current.y };
     const { bounds } = optionsRef.current;
     const geometry: Geometry = { origin, width: rect.width, height: rect.height, box: null, limits: null };
-    if (bounds && bounds !== "parent" && !("current" in bounds)) {
-      geometry.limits = {
-        minX: bounds.left ?? -Infinity,
-        maxX: bounds.right ?? Infinity,
-        minY: bounds.top ?? -Infinity,
-        maxY: bounds.bottom ?? Infinity,
-      };
+    const explicit = explicitLimits(bounds);
+    if (explicit) {
+      geometry.limits = explicit;
       return geometry;
     }
     const boxElement = boundsElement(node, bounds);
@@ -356,13 +363,17 @@ export const useDraggable = <
 
   // Place the element at the public position, clamped to the current bounds. Runs on
   // mount, on every controlled change, and when the element or the box resizes.
-  const sync = useCallback(() => {
+  // A controlled change right after a request is the owner's answer to it, even when
+  // the owner rounded or converted the value, so it gets the requested motion.
+  const sync = useCallback((answer = false) => {
     const geometry = measure();
     if (!geometry) return;
-    const pending = pendingRef.current;
-    pendingRef.current = null;
+    const session = sessionRef.current;
+    if (session) session.geometry = geometry;
+    const pending = answer ? pendingRef.current : null;
+    if (answer) pendingRef.current = null;
     const value = positionRef.current;
-    const motion = pending && same(pending.position, value) ? pending.motion : "none";
+    const motion = pending ? pending.motion : "none";
     const next = constrain(fromUnit(value, geometry), geometry.limits);
     if (!same(next, targetRef.current)) commit(next, motion);
     // Uncontrolled values follow the clamp, like a range input whose max shrinks.
@@ -377,7 +388,7 @@ export const useDraggable = <
   const controlledX = controlled?.x;
   const controlledY = controlled?.y;
   useIsomorphicLayoutEffect(() => {
-    if (element && controlledX !== undefined) sync();
+    if (element && controlledX !== undefined) sync(true);
   }, [element, controlledX, controlledY, sync]);
 
   // Paint before the first frame so the element never flashes at its layout spot.
@@ -399,19 +410,24 @@ export const useDraggable = <
 
   useEffect(() => {
     if (!element) return;
-    let session: DragSession | null = null;
     let previousUserSelect = "";
 
     const onMove = (event: PointerEvent) => {
+      const session = sessionRef.current;
       if (!session || event.pointerId !== session.pointerId) return;
-      const { axis = "both" } = optionsRef.current;
+      // No button held: it was released somewhere we never heard about.
+      if (event.buttons === 0) {
+        end();
+        return;
+      }
+      const { axis = "both", bounds } = optionsRef.current;
       const { start, startPointer, geometry } = session;
       const next = constrain(
         {
           x: axis === "y" ? start.x : start.x + event.clientX - startPointer.x,
           y: axis === "x" ? start.y : start.y + event.clientY - startPointer.y,
         },
-        geometry.limits,
+        explicitLimits(bounds) ?? geometry.limits,
       );
       if (same(next, session.last)) return;
       session.last = next;
@@ -420,25 +436,31 @@ export const useDraggable = <
     };
 
     const finish = () => {
-      if (!session) return null;
-      const ended = session;
-      session = null;
+      const ended = sessionRef.current;
+      if (!ended) return null;
+      sessionRef.current = null;
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onEnd);
       window.removeEventListener("pointercancel", onEnd);
+      window.removeEventListener("blur", end);
+      element.removeEventListener("lostpointercapture", end);
+      if (element.hasPointerCapture?.(ended.pointerId)) element.releasePointerCapture(ended.pointerId);
       document.body.style.userSelect = previousUserSelect;
       setIsDragging(false);
       return ended;
     };
 
-    const onEnd = (event: PointerEvent) => {
-      if (!session || event.pointerId !== session.pointerId) return;
+    const end = () => {
       const ended = finish();
       if (ended) optionsRef.current.onDragEnd?.(toUnit(ended.last, ended.geometry));
     };
 
+    const onEnd = (event: PointerEvent) => {
+      if (event.pointerId === sessionRef.current?.pointerId) end();
+    };
+
     const begin = (event: PointerEvent, start: Position, geometry: Geometry) => {
-      session = {
+      sessionRef.current = {
         pointerId: event.pointerId,
         start,
         startPointer: { x: event.clientX, y: event.clientY },
@@ -447,21 +469,29 @@ export const useDraggable = <
       };
       previousUserSelect = document.body.style.userSelect;
       document.body.style.userSelect = "none";
+      // Capture keeps pointerup coming even when it happens outside the window.
+      try {
+        element.setPointerCapture?.(event.pointerId);
+      } catch {
+        // Not an active pointer (synthetic event); the window listeners still work.
+      }
       window.addEventListener("pointermove", onMove);
       window.addEventListener("pointerup", onEnd);
       window.addEventListener("pointercancel", onEnd);
+      window.addEventListener("blur", end);
+      element.addEventListener("lostpointercapture", end);
       setIsDragging(true);
       optionsRef.current.onDragStart?.(toUnit(start, geometry));
     };
 
     const onElementDown = (event: PointerEvent) => {
-      if (optionsRef.current.disabled || session || !isPrimary(event)) return;
+      if (optionsRef.current.disabled || sessionRef.current || !isPrimary(event)) return;
       const geometry = measure();
       if (geometry) begin(event, targetRef.current, geometry);
     };
 
     const onContainerDown = (event: PointerEvent) => {
-      if (optionsRef.current.disabled || session || !isPrimary(event)) return;
+      if (optionsRef.current.disabled || sessionRef.current || !isPrimary(event)) return;
       if (element.contains(event.target as Node)) return; // a normal drag, not a jump
       const geometry = measure();
       if (!geometry) return;

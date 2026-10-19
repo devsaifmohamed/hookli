@@ -56,9 +56,16 @@ const stubResizeObserver = () => {
   return () => act(() => callbacks.forEach((cb) => cb()));
 };
 
-const pointer = (target: EventTarget, type: string, clientX: number, clientY: number) =>
+// `buttons` reports the held button, as real pointer events do (released on pointerup).
+const pointer = (
+  target: EventTarget,
+  type: string,
+  clientX: number,
+  clientY: number,
+  buttons = type === "pointerup" ? 0 : 1,
+) =>
   act(() => {
-    target.dispatchEvent(new MouseEvent(type, { clientX, clientY, button: 0, bubbles: true }));
+    target.dispatchEvent(new MouseEvent(type, { clientX, clientY, button: 0, buttons, bubbles: true }));
   });
 
 const drag = (element: HTMLElement, from: [number, number], to: [number, number]) => {
@@ -336,6 +343,89 @@ describe("useDraggable", () => {
     expect(offsetOf(element).x).toBe(260);
     expect(result.current.position.x).toBe(260);
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  describe("ending a drag we never saw released", () => {
+    it("ends when the window loses focus", () => {
+      const onDragEnd = vi.fn();
+      const { result, element } = setup({ onDragEnd });
+      pointer(element, "pointerdown", 120, 70);
+      pointer(window, "pointermove", 150, 90);
+      act(() => {
+        window.dispatchEvent(new Event("blur"));
+      });
+      expect(result.current.isDragging).toBe(false);
+      expect(onDragEnd).toHaveBeenCalledWith({ x: 30, y: 20 });
+      pointer(window, "pointermove", 300, 300);
+      expect(result.current.position).toEqual({ x: 30, y: 20 });
+    });
+
+    it("ends when the pointer comes back with no button held", () => {
+      const onDragEnd = vi.fn();
+      const { result, element } = setup({ onDragEnd });
+      pointer(element, "pointerdown", 120, 70);
+      pointer(window, "pointermove", 150, 90);
+      pointer(window, "pointermove", 400, 200, 0); // released outside the window
+      expect(result.current.isDragging).toBe(false);
+      expect(result.current.position).toEqual({ x: 30, y: 20 });
+      expect(onDragEnd).toHaveBeenCalledTimes(1);
+    });
+
+    it("ends when pointer capture is lost", () => {
+      const { result, element } = setup();
+      pointer(element, "pointerdown", 120, 70);
+      act(() => {
+        element.dispatchEvent(new Event("lostpointercapture"));
+      });
+      expect(result.current.isDragging).toBe(false);
+    });
+  });
+
+  it("gives a controlled owner that rounds the requested follow motion", () => {
+    const frame = stubFrames();
+    const onChange = vi.fn();
+    const { element, rerender } = setup({ position: { x: 0, y: 0 }, onChange, smoothing: 0.5 });
+    pointer(element, "pointerdown", 120, 70);
+    pointer(window, "pointermove", 220.4, 70);
+    expect(onChange).toHaveBeenLastCalledWith({ x: 100.4, y: 0 });
+    // The owner stores whole pixels, so its answer never equals the request.
+    rerender({ position: { x: 100, y: 0 }, onChange, smoothing: 0.5 });
+    expect(offsetOf(element).x).toBe(0); // eased, not snapped
+    frame(1000);
+    expect(offsetOf(element).x).toBeCloseTo(50);
+    for (let i = 1; i < 20; i++) frame(1000 + (i * 1000) / 60);
+    expect(offsetOf(element).x).toBe(100);
+  });
+
+  it("snaps a controlled change that answers no request", () => {
+    stubFrames();
+    const { element, rerender } = setup({ position: { x: 0, y: 0 }, onChange: () => {}, smoothing: 0.5 });
+    rerender({ position: { x: 80, y: 0 }, onChange: () => {}, smoothing: 0.5 });
+    expect(offsetOf(element).x).toBe(80);
+  });
+
+  describe("bounds that change mid-drag", () => {
+    it("clamps the next move to shrunk explicit bounds", () => {
+      const { result, element, rerender } = setup({ bounds: { right: 200 } });
+      pointer(element, "pointerdown", 120, 70);
+      pointer(window, "pointermove", 270, 70);
+      expect(result.current.position.x).toBe(150);
+      rerender({ bounds: { right: 50 } });
+      pointer(window, "pointermove", 280, 70);
+      expect(result.current.position.x).toBe(50);
+    });
+
+    it("clamps the next move when the bounds box shrinks", () => {
+      const resize = stubResizeObserver();
+      const { result, element, size } = setup({ bounds: "parent" });
+      pointer(element, "pointerdown", 120, 70);
+      pointer(window, "pointermove", 320, 70);
+      expect(result.current.position.x).toBe(200);
+      size.canvas = { width: 250, height: 300 };
+      resize();
+      pointer(window, "pointermove", 330, 70);
+      expect(result.current.position.x).toBe(110); // 250 - 40 wide - 100 layout spot
+    });
   });
 
   it("renders on the server without touching the DOM", () => {
