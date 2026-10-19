@@ -11,6 +11,7 @@ import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseDebounceCallbackDocDemo } from "@/components/demos/use-debounce-callback-demo";
 import { UseDebounceValueDocDemo } from "@/components/demos/use-debounce-value-demo";
 import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
+import { UseDraggableDocDemo } from "@/components/demos/use-draggable-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
 import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
 import { UseExpandableTextDocDemo } from "@/components/demos/use-expandable-text-demo";
@@ -2294,6 +2295,175 @@ export function Demo() {
             type: "string",
             description: "Human-readable reason for the failure.",
           },
+        ],
+      },
+    ],
+  },
+  "use-draggable": {
+    demo: UseDraggableDocDemo,
+    usage: `
+import { useDraggable } from "hookli";
+
+export function Demo() {
+  const { ref, containerRef, position, isDragging } = useDraggable<
+    HTMLDivElement,
+    HTMLDivElement
+  >({
+    unit: "ratio",
+    bounds: "parent",
+    initialPosition: { x: 0.5, y: 0.5 },
+    jumpOnClick: true,
+  });
+
+  return (
+    <div ref={containerRef} style={{ position: "relative", height: 224 }}>
+      <div
+        ref={ref}
+        tabIndex={0}
+        aria-label="Draggable puck"
+        style={{ position: "absolute", top: 0, left: 0, width: 44, height: 44 }}
+      >
+        {isDragging ? "●" : "○"}
+      </div>
+      <p>
+        {(position.x * 100).toFixed(1)}% × {(position.y * 100).toFixed(1)}%
+      </p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UseDraggableOptions",
+        defaultValue: "{}",
+        description: "Every option is optional. See the UseDraggableOptions table below.",
+      },
+    ],
+    returns: [
+      {
+        name: "ref",
+        type: "(node: T | null) => void",
+        description: "Callback ref for the draggable element. The hook moves it with transform: translate3d(), so layout is untouched.",
+      },
+      {
+        name: "containerRef",
+        type: "(node: C | null) => void",
+        description: "Callback ref for the canvas that jumpOnClick listens on.",
+      },
+      {
+        name: "position",
+        type: "Position",
+        description: "The current position in unit. In controlled mode it is the position prop.",
+      },
+      {
+        name: "isDragging",
+        type: "boolean",
+        description: "true while a pointer drag is in progress.",
+      },
+      {
+        name: "moveTo",
+        type: "(position: Position, options?: { animate?: boolean }) => void",
+        description: "Move programmatically. Bounds and grid still apply; in controlled mode it calls onChange instead.",
+      },
+      {
+        name: "reset",
+        type: "() => void",
+        description: "Move back to initialPosition.",
+      },
+    ],
+    typeAliases: [
+      {
+        name: "UseDraggableOptions",
+        description: "Pass position + onChange for controlled use, or initialPosition for uncontrolled.",
+        rows: [
+          {
+            name: "unit",
+            type: '"px" | "ratio"',
+            defaultValue: '"px"',
+            description: "px: translate offset from the layout spot. ratio: where the anchor point sits in the bounds box, 0..1 per axis, so it survives resizes. Needs element bounds.",
+          },
+          {
+            name: "position",
+            type: "Position",
+            description: "Controlled position. Input calls onChange; the element moves only when this prop changes.",
+          },
+          {
+            name: "initialPosition",
+            type: "Position",
+            defaultValue: "{ x: 0, y: 0 }",
+            description: "Uncontrolled starting position.",
+          },
+          {
+            name: "onChange",
+            type: "(position: Position) => void",
+            description: "Called when a drag, jump, arrow key or moveTo produces a new position. Not called for prop changes or resize re-clamps.",
+          },
+          {
+            name: "bounds",
+            type: '"parent" | RefObject<HTMLElement> | { left?, top?, right?, bottom? }',
+            description: "Keep the element inside a box. Element bounds are live: re-measured on every gesture and on resize.",
+          },
+          {
+            name: "axis",
+            type: '"x" | "y" | "both"',
+            defaultValue: '"both"',
+            description: "Restrict movement to one axis.",
+          },
+          {
+            name: "grid",
+            type: "[number, number]",
+            description: "Snap the translate offset to a px grid.",
+          },
+          {
+            name: "jumpOnClick",
+            type: "boolean",
+            defaultValue: "false",
+            description: "Pressing an empty spot of the container jumps the element there; holding keeps dragging.",
+          },
+          {
+            name: "anchor",
+            type: '"center" | "top-left"',
+            defaultValue: '"center"',
+            description: "The element point that lands on the pointer when jumping, and that a ratio position describes.",
+          },
+          {
+            name: "transition",
+            type: "number",
+            defaultValue: "200",
+            description: "Jump animation length in ms; 0 snaps instantly.",
+          },
+          {
+            name: "smoothing",
+            type: "number",
+            defaultValue: "0.3",
+            description: "How softly the element trails the pointer, from 0 (glued) to just under 1 (floaty). Reduced motion turns it off.",
+          },
+          {
+            name: "keyboardStep",
+            type: "number | false",
+            defaultValue: "10",
+            description: "Arrow-key step in px when the element is focused; the grid step wins when grid is set.",
+          },
+          {
+            name: "disabled",
+            type: "boolean",
+            defaultValue: "false",
+            description: "Ignore pointer and keyboard input. moveTo still works.",
+          },
+          {
+            name: "onDragStart / onDrag / onDragEnd / onJump",
+            type: "(position: Position) => void",
+            description: "Gesture callbacks, in unit. onDragEnd also fires after each keyboard move.",
+          },
+        ],
+      },
+      {
+        name: "Position",
+        description: "A point in the chosen unit.",
+        rows: [
+          { name: "x", type: "number", description: "Horizontal: px offset, or 0..1 of the bounds box width." },
+          { name: "y", type: "number", description: "Vertical: px offset, or 0..1 of the bounds box height." },
         ],
       },
     ],
