@@ -31,7 +31,7 @@
   <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
   <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
   <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/65_hooks-0A0D12?style=for-the-badge" alt="65 hooks" />
+  <img src="https://img.shields.io/badge/66_hooks-0A0D12?style=for-the-badge" alt="66 hooks" />
   <img src="https://img.shields.io/badge/AI--ready-61DAFB?style=for-the-badge" alt="AI-ready" />
 </p>
 
@@ -150,7 +150,7 @@ function Component() {
 - **[`usePageVisibility`](https://hookli.vercel.app/docs/use-page-visibility)** — Track whether the page/tab is currently visible.
 - **[`useDeepCompareEffect`](https://hookli.vercel.app/docs/use-deep-compare-effect)** — useEffect that compares dependencies by deep structural equality.
 
-### DOM (22)
+### DOM (23)
 
 - **[`useEventListener`](https://hookli.vercel.app/docs/use-event-listener)** — Subscribe to a window, document or element event with cleanup.
 - **[`useClickOutside`](https://hookli.vercel.app/docs/use-click-outside)** — Runs a callback on outside click.
@@ -172,6 +172,7 @@ function Component() {
 - **[`useIdle`](https://hookli.vercel.app/docs/use-idle)** — Detect user inactivity after a configurable threshold.
 - **[`useTextSelection`](https://hookli.vercel.app/docs/use-text-selection)** — Track the text the user has currently selected on the page.
 - **[`useLongPress`](https://hookli.vercel.app/docs/use-long-press)** — Detect a long press (mouse or touch) via spreadable handlers.
+- **[`useDraggable`](https://hookli.vercel.app/docs/use-draggable)** — Drag an element with pointer or keyboard: bounds, grid, axis lock, smoothing, and jump-to-click.
 - **[`useHotkeys`](https://hookli.vercel.app/docs/use-hotkeys)** — Bind a keyboard shortcut combo (e.g. ctrl+k) to a callback.
 - **[`useFullscreen`](https://hookli.vercel.app/docs/use-fullscreen)** — Control the Fullscreen API for an element and track its state.
 

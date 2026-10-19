@@ -429,6 +429,13 @@
       "signature": "useLongPress(callback: (event: MouseEvent | TouchEvent) => void, options?: UseLongPressOptions): UseLongPressHandlers"
     },
     {
+      "slug": "use-draggable",
+      "name": "useDraggable",
+      "description": "Drag an element with pointer or keyboard: bounds, grid, axis lock, smoothing, and jump-to-click.",
+      "category": "dom",
+      "signature": "useDraggable<T extends HTMLElement, C extends HTMLElement>(options?: UseDraggableOptions): UseDraggableReturn<T, C>"
+    },
+    {
       "slug": "use-hotkeys",
       "name": "useHotkeys",
       "description": "Bind a keyboard shortcut combo (e.g. ctrl+k) to a callback.",

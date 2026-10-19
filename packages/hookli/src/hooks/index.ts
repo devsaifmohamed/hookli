@@ -63,3 +63,4 @@ export * from "./use-hotkeys";
 export * from "./use-fullscreen";
 export * from "./use-battery";
 export * from "./use-permission";
+export * from "./use-draggable";
