@@ -44,7 +44,7 @@ check items off as they land. Each hook has three tracks:
 | hook | category | lib | docs | notes |
 |---|---|:--:|:--:|---|
 | `useQueue` | state | ✅ | ⬜ | FIFO queue |
-| `useDefault` | state | ✅ | ⬜ | state with nullish fallback |
+| `useDefaultValue` | state | ✅ | ⬜ | state with nullish fallback |
 | `useRafState` | state | ✅ | ⬜ | state batched to rAF |
 | `useDeepCompareEffect` | effects | ✅ | ⬜ | effect with deep-equal deps |
 | `useTextSelection` | dom | ✅ | ⬜ | current selected text |

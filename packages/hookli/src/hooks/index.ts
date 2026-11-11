@@ -54,7 +54,7 @@ export * from "./use-network-state";
 export * from "./use-page-visibility";
 export * from "./use-idle";
 export * from "./use-queue";
-export * from "./use-default";
+export * from "./use-default-value";
 export * from "./use-raf-state";
 export * from "./use-deep-compare-effect";
 export * from "./use-text-selection";

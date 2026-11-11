@@ -394,11 +394,11 @@
       "signature": "useQueue<T>(initial?: T[]): UseQueueReturn<T>"
     },
     {
-      "slug": "use-default",
-      "name": "useDefault",
-      "description": "useState that falls back to a default when the value is nullish.",
+      "slug": "use-default-value",
+      "name": "useDefaultValue",
+      "description": "Like useState, but falls back to a default when the value is nullish.",
       "category": "state",
-      "signature": "useDefault<T>(initialValue: T | null | undefined, defaultValue: T): [T, (value: T | null | undefined) => void]"
+      "signature": "useDefaultValue<T>(initialValue: T | null | undefined, defaultValue: T): [T, (value: T | null | undefined) => void]"
     },
     {
       "slug": "use-raf-state",

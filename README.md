@@ -128,7 +128,7 @@ function Component() {
 - **[`useList`](https://hookli.vercel.app/docs/use-list)** — Array state with push, insert, update, remove, and clear helpers.
 - **[`useSet`](https://hookli.vercel.app/docs/use-set)** — Set state with add, remove, toggle, has, and clear helpers.
 - **[`useQueue`](https://hookli.vercel.app/docs/use-queue)** — FIFO queue state with add, remove, clear, and first/last/size.
-- **[`useDefault`](https://hookli.vercel.app/docs/use-default)** — useState that falls back to a default when the value is nullish.
+- **[`useDefaultValue`](https://hookli.vercel.app/docs/use-default-value)** — Like useState, but falls back to a default when the value is nullish.
 - **[`useRafState`](https://hookli.vercel.app/docs/use-raf-state)** — useState whose updates are batched to the next animation frame.
 
 ### Effects (16)

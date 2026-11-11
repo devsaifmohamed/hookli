@@ -8,7 +8,7 @@ SSR-safe React hooks. Contributions of any size are welcome.
 ```bash
 git clone https://github.com/saifmohamedsv/hookli.git
 cd hookli
-yarn install
+pnpm install
 ```
 
 ## Repository structure
@@ -51,8 +51,8 @@ Full conventions live in [`CLAUDE.md`](./CLAUDE.md).
 
 ```bash
 npx tsc --noEmit   # 1. typecheck
-yarn test          # 2. vitest — all hooks have colocated tests
-yarn build         # 3. tsup: CJS + ESM + .d.ts must all emit
+pnpm test          # 2. vitest - all hooks have colocated tests
+pnpm build         # 3. tsup: CJS + ESM + .d.ts must all emit
 ```
 
 Or run all three at once: `bash ralph/check.sh`. **CI runs the same gate on every pull request.**

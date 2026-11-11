@@ -10,6 +10,7 @@ import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseDebounceCallbackDocDemo } from "@/components/demos/use-debounce-callback-demo";
 import { UseDebounceValueDocDemo } from "@/components/demos/use-debounce-value-demo";
+import { UseDefaultValueDocDemo } from "@/components/demos/use-default-value-demo";
 import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
 import { UseDraggableDocDemo } from "@/components/demos/use-draggable-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
@@ -170,7 +171,7 @@ const TERNARY_DARK_MODE_OPTIONS_ALIAS: TypeAlias = {
       name: "defaultValue",
       type: "TernaryDarkMode",
       defaultValue: '"system"',
-      description: "The mode before anything is stored: \"system\", \"dark\" or \"light\".",
+      description: 'The mode before anything is stored: "system", "dark" or "light".',
     },
     {
       name: "localStorageKey",
@@ -217,7 +218,7 @@ const SCRIPT_OPTIONS_ALIAS: TypeAlias = {
       name: "shouldPreventLoad",
       type: "boolean",
       defaultValue: "false",
-      description: "Keep the status \"idle\" without injecting the script — useful for deferring a load.",
+      description: 'Keep the status "idle" without injecting the script — useful for deferring a load.',
     },
     {
       name: "removeOnUnmount",
@@ -623,7 +624,8 @@ export function Demo() {
       {
         name: "isMounted",
         type: "() => boolean",
-        description: "A stable getter that returns true while mounted and false after unmount. Call it inside async callbacks before setting state; its identity never changes, so it is safe to omit from dependency arrays.",
+        description:
+          "A stable getter that returns true while mounted and false after unmount. Call it inside async callbacks before setting state; its identity never changes, so it is safe to omit from dependency arrays.",
       },
     ],
   },
@@ -1363,6 +1365,48 @@ export function Demo() {
       },
     ],
   },
+  "use-default-value": {
+    demo: UseDefaultValueDocDemo,
+    usage: `
+import { useDefaultValue } from "hookli";
+
+export function Demo() {
+  const [value, setValue] = useDefaultValue<string>(null, "default");
+
+  return (
+    <div>
+      <p>{value}</p>
+      <button onClick={() => setValue("new value")}>Set new value</button>
+      <button onClick={() => setValue(undefined)}>Set undefined</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initialValue",
+        type: "T | null | undefined",
+        description: "The initial value. If nullish, the defaultValue is returned.",
+      },
+      {
+        name: "defaultValue",
+        type: "T",
+        description: "The value returned when the initial value is nullish.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] value",
+        type: "T",
+        description: "The current value.",
+      },
+      {
+        name: "[1] setValue",
+        type: "(value: T | null | undefined) => void",
+        description: "Sets the value.",
+      },
+    ],
+  },
   "use-click-outside": {
     demo: UseClickOutsideDocDemo,
     usage: `
@@ -1944,7 +1988,7 @@ export function Demo() {
       {
         name: "query",
         type: "string",
-        description: "A CSS media query string, e.g. \"(min-width: 768px)\" or \"(prefers-color-scheme: dark)\".",
+        description: 'A CSS media query string, e.g. "(min-width: 768px)" or "(prefers-color-scheme: dark)".',
       },
       {
         name: "options",
