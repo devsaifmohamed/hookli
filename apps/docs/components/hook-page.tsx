@@ -33,14 +33,8 @@ export function HookPage({ hook }: { hook: HookEntry }) {
   const next = index < HOOKS.length - 1 ? HOOKS[index + 1] : undefined;
   const related = relatedHooks(hook.slug);
 
-  /* Highlight the line that actually calls the hook in the Usage snippet. */
-  const usageLines = doc?.usage.trim().split("\n") ?? [];
-  const callIndex = usageLines.findIndex((line) => line.includes(`${hook.name}(`));
-  const highlightLine = callIndex >= 0 ? callIndex + 1 : undefined;
-
   const toc: TocItem[] = [
     ...(doc ? [{ id: "demo", label: "Demo" }] : []),
-    ...(doc ? [{ id: "usage", label: "Usage" }] : []),
     { id: "api", label: "API" },
     ...(source ? [{ id: "hook", label: "Hook" }] : []),
   ];
@@ -63,10 +57,6 @@ export function HookPage({ hook }: { hook: HookEntry }) {
             </h2>
             <HookDemo className="mt-4" preview={<doc.demo />} code={<HighlightedCode code={doc.usage} />} />
 
-            <h2 id="usage" className={`mt-12 ${headingClass}`}>
-              Usage
-            </h2>
-            <CodeBlock code={doc.usage} lang="tsx" title={`${hook.slug}.tsx`} lineNumbers highlightLine={highlightLine} className="mt-4" />
           </>
         )}
 
