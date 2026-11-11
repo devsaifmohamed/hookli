@@ -1,17 +1,10 @@
 import { CopyButton } from "@/components/copy-button";
-import { ExternalLinkIcon } from "@/components/icons";
+import { ExternalLinkIcon, SparklesIcon } from "@/components/icons";
 import { hookDocUrl, hookToMarkdown } from "@/lib/hook-markdown";
 import type { HookEntry } from "@/lib/hooks-registry";
 
-/* The "Copy for AI" row under each hook's summary. Renders the hook's Markdown
-   (from the shared renderer) into the clipboard via the labeled CopyButton
-   variant — the same single clipboard implementation the code blocks use — and
-   offers to open the same context in ChatGPT or Claude, plus a raw-Markdown
-   link (the /docs/<slug>/llms.txt twin). Server component: the Markdown is built
-   at render time and handed to the client CopyButton leaf as a string. */
-
-const linkClass =
-  "inline-flex min-h-11 items-center gap-1 rounded-md text-accent underline-offset-4 transition-colors duration-200 hover:text-accent-hover hover:underline";
+/* AI actions card — compact surface card sitting below the import snippet.
+   Shows Copy for AI, Open in ChatGPT, Open in Claude. */
 
 export function HookAiActions({ hook }: { hook: HookEntry }) {
   const markdown = hookToMarkdown(hook);
@@ -21,39 +14,48 @@ export function HookAiActions({ hook }: { hook: HookEntry }) {
   const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
 
   return (
-    <div
-      role="group"
-      aria-label={`Use ${hook.name} with AI`}
-      className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2"
-    >
-      <CopyButton
-        text={markdown}
-        copyLabel="Copy for AI"
-        label={`Copy for AI: ${hook.name} documentation as Markdown`}
-      />
-      <span className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-        <a href={`/docs/${hook.slug}/llms.txt`} className={linkClass}>
-          View as Markdown
-        </a>
+    <div className="surface mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl px-4 py-3">
+      {/* Label */}
+      <div className="flex items-center gap-2 text-sm text-gray-body">
+        <SparklesIcon className="size-4 shrink-0 text-accent" aria-hidden="true" />
+        <span>Use with AI</span>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-wrap items-center gap-2">
+        <CopyButton
+          text={markdown}
+          copyLabel="Copy docs"
+          label={`Copy ${hook.name} documentation as Markdown for AI`}
+        />
+
         <a
           href={chatgptUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={linkClass}
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-gray-outline px-3 text-sm text-gray-body transition-colors duration-200 hover:border-accent hover:text-accent"
         >
-          Open in ChatGPT
+          ChatGPT
           <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
         </a>
+
         <a
           href={claudeUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={linkClass}
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-gray-outline px-3 text-sm text-gray-body transition-colors duration-200 hover:border-accent hover:text-accent"
         >
-          Open in Claude
+          Claude
           <ExternalLinkIcon className="size-3.5" aria-hidden="true" />
         </a>
-      </span>
+
+        <a
+          href={`/docs/${hook.slug}/llms.txt`}
+          className="hidden text-sm text-gray-body underline-offset-4 hover:text-fg hover:underline sm:inline"
+        >
+          .txt
+        </a>
+      </div>
     </div>
   );
 }
