@@ -1,5 +1,7 @@
 import type { ComponentType } from "react";
 import type { ApiRow } from "@/components/api-table";
+import { UseAsyncDocDemo } from "@/components/demos/use-async-demo";
+import { UseBatteryDocDemo } from "@/components/demos/use-battery-demo";
 import { UseBooleanDocDemo } from "@/components/demos/use-boolean-demo";
 import { UseClickAnyWhereDocDemo } from "@/components/demos/use-click-any-where-demo";
 import { UseClickOutsideDocDemo } from "@/components/demos/use-click-outside-demo";
@@ -10,38 +12,59 @@ import { UseDarkModeDocDemo } from "@/components/demos/use-dark-mode-demo";
 import { UseDebounceDocDemo } from "@/components/demos/use-debounce-demo";
 import { UseDebounceCallbackDocDemo } from "@/components/demos/use-debounce-callback-demo";
 import { UseDebounceValueDocDemo } from "@/components/demos/use-debounce-value-demo";
+import { UseDeepCompareEffectDocDemo } from "@/components/demos/use-deep-compare-effect-demo";
 import { UseDefaultValueDocDemo } from "@/components/demos/use-default-value-demo";
 import { UseDocumentTitleDocDemo } from "@/components/demos/use-document-title-demo";
 import { UseDraggableDocDemo } from "@/components/demos/use-draggable-demo";
+import { UseEffectOnceDocDemo } from "@/components/demos/use-effect-once-demo";
 import { UseEventCallbackDocDemo } from "@/components/demos/use-event-callback-demo";
 import { UseEventListenerDocDemo } from "@/components/demos/use-event-listener-demo";
 import { UseExpandableTextDocDemo } from "@/components/demos/use-expandable-text-demo";
 import { UseFetchDocDemo } from "@/components/demos/use-fetch-demo";
 import { UseFormDocDemo } from "@/components/demos/use-form-demo";
+import { UseFullscreenDocDemo } from "@/components/demos/use-fullscreen-demo";
 import { UseGeoLocationDocDemo } from "@/components/demos/use-geo-location-demo";
+import { UseHotkeysDocDemo } from "@/components/demos/use-hotkeys-demo";
 import { UseHoverDocDemo } from "@/components/demos/use-hover-demo";
+import { UseIdleDocDemo } from "@/components/demos/use-idle-demo";
 import { UseInfiniteScrollDocDemo } from "@/components/demos/use-infinite-scroll-demo";
 import { UseIntersectionObserverDocDemo } from "@/components/demos/use-intersection-observer-demo";
 import { UseIntervalDocDemo } from "@/components/demos/use-interval-demo";
 import { UseIsClientDocDemo } from "@/components/demos/use-is-client-demo";
 import { UseIsMountedDocDemo } from "@/components/demos/use-is-mounted-demo";
 import { UseIsomorphicLayoutEffectDocDemo } from "@/components/demos/use-isomorphic-layout-effect-demo";
+import { UseKeyPressDocDemo } from "@/components/demos/use-key-press-demo";
+import { UseListDocDemo } from "@/components/demos/use-list-demo";
 import { UseLocalStorageDocDemo } from "@/components/demos/use-local-storage-demo";
 import { UseLocalStorageWithExpiryDocDemo } from "@/components/demos/use-local-storage-with-expiry-demo";
+import { UseLongPressDocDemo } from "@/components/demos/use-long-press-demo";
 import { UseMapDocDemo } from "@/components/demos/use-map-demo";
 import { UseMediaQueryDocDemo } from "@/components/demos/use-media-query-demo";
 import { UseMousePositionDocDemo } from "@/components/demos/use-mouse-position-demo";
+import { UseMutationDocDemo } from "@/components/demos/use-mutation-demo";
+import { UseNetworkStateDocDemo } from "@/components/demos/use-network-state-demo";
+import { UsePageVisibilityDocDemo } from "@/components/demos/use-page-visibility-demo";
+import { UsePaginationDocDemo } from "@/components/demos/use-pagination-demo";
+import { UsePermissionDocDemo } from "@/components/demos/use-permission-demo";
+import { UsePreviousDocDemo } from "@/components/demos/use-previous-demo";
+import { UseQueueDocDemo } from "@/components/demos/use-queue-demo";
+import { UseRafStateDocDemo } from "@/components/demos/use-raf-state-demo";
 import { UseReadLocalStorageDocDemo } from "@/components/demos/use-read-local-storage-demo";
 import { UseResizeObserverDocDemo } from "@/components/demos/use-resize-observer-demo";
 import { UseScreenDocDemo } from "@/components/demos/use-screen-demo";
 import { UseScriptDocDemo } from "@/components/demos/use-script-demo";
 import { UseScrollLockDocDemo } from "@/components/demos/use-scroll-lock-demo";
 import { UseSessionStorageDocDemo } from "@/components/demos/use-session-storage-demo";
+import { UseSetDocDemo } from "@/components/demos/use-set-demo";
 import { UseStepDocDemo } from "@/components/demos/use-step-demo";
 import { UseTernaryDarkModeDocDemo } from "@/components/demos/use-ternary-dark-mode-demo";
+import { UseTextSelectionDocDemo } from "@/components/demos/use-text-selection-demo";
+import { UseThrottleDocDemo } from "@/components/demos/use-throttle-demo";
 import { UseTimeoutDocDemo } from "@/components/demos/use-timeout-demo";
 import { UseToggleDocDemo } from "@/components/demos/use-toggle-demo";
 import { UseUnmountDocDemo } from "@/components/demos/use-unmount-demo";
+import { UseUpdateEffectDocDemo } from "@/components/demos/use-update-effect-demo";
+import { UseWindowScrollDocDemo } from "@/components/demos/use-window-scroll-demo";
 import { UseWindowSizeDocDemo } from "@/components/demos/use-window-size-demo";
 
 /* Per-hook page content layered on top of the registry entry (docs/DESIGN.md
@@ -226,6 +249,205 @@ const SCRIPT_OPTIONS_ALIAS: TypeAlias = {
       defaultValue: "false",
       description: "Remove the injected <script> tag when the component unmounts.",
     },
+  ],
+};
+
+const USE_LIST_ACTIONS_ALIAS: TypeAlias = {
+  name: "UseListActions<T>",
+  description: "Actions returned by useList for manipulating the array immutably.",
+  rows: [
+    {
+      name: "set",
+      type: "(list: T[]) => void",
+      description: "Replaces the entire list with a new array.",
+    },
+    {
+      name: "push",
+      type: "(...items: T[]) => void",
+      description: "Appends one or more items to the end of the list.",
+    },
+    {
+      name: "insertAt",
+      type: "(index: number, item: T) => void",
+      description: "Inserts an item at the specified index.",
+    },
+    {
+      name: "updateAt",
+      type: "(index: number, item: T) => void",
+      description: "Replaces the item at the specified index.",
+    },
+    {
+      name: "removeAt",
+      type: "(index: number) => void",
+      description: "Removes the item at the specified index.",
+    },
+    {
+      name: "clear",
+      type: "() => void",
+      description: "Empties the list.",
+    },
+    {
+      name: "reset",
+      type: "() => void",
+      description: "Resets the list to its initial value.",
+    },
+  ],
+};
+
+const USE_SET_ACTIONS_ALIAS: TypeAlias = {
+  name: "UseSetActions<T>",
+  description: "Actions returned by useSet for manipulating the Set immutably.",
+  rows: [
+    {
+      name: "add",
+      type: "(value: T) => void",
+      description: "Adds a value to the set.",
+    },
+    {
+      name: "remove",
+      type: "(value: T) => void",
+      description: "Removes a value from the set.",
+    },
+    {
+      name: "toggle",
+      type: "(value: T) => void",
+      description: "Adds the value if absent, removes it if present.",
+    },
+    {
+      name: "has",
+      type: "(value: T) => boolean",
+      description: "Returns whether the value is currently in the set.",
+    },
+    {
+      name: "clear",
+      type: "() => void",
+      description: "Empties the set.",
+    },
+    {
+      name: "reset",
+      type: "() => void",
+      description: "Resets the set to its initial values.",
+    },
+  ],
+};
+
+const USE_QUEUE_RETURN_ALIAS: TypeAlias = {
+  name: "UseQueueReturn<T>",
+  description: "Object returned by useQueue containing queue state and actions.",
+  rows: [
+    {
+      name: "queue",
+      type: "T[]",
+      description: "The current queue array, oldest item first.",
+    },
+    {
+      name: "add",
+      type: "(item: T) => void",
+      description: "Enqueues an item at the end of the queue.",
+    },
+    {
+      name: "remove",
+      type: "() => T | undefined",
+      description: "Dequeues the oldest item and returns it (or undefined if empty).",
+    },
+    {
+      name: "clear",
+      type: "() => void",
+      description: "Empties the queue.",
+    },
+    {
+      name: "first",
+      type: "T | undefined",
+      description: "The oldest item at the front of the queue.",
+    },
+    {
+      name: "last",
+      type: "T | undefined",
+      description: "The newest item at the back of the queue.",
+    },
+    {
+      name: "size",
+      type: "number",
+      description: "The number of items currently in the queue.",
+    },
+  ],
+};
+
+const USE_ASYNC_RETURN_ALIAS: TypeAlias = {
+  name: "UseAsyncReturn<T>",
+  description: "State and execution handler returned by useAsync.",
+  rows: [
+    { name: "loading", type: "boolean", description: "Whether the async function is currently running." },
+    { name: "error", type: "Error | null", description: "The error thrown by the last run, or null." },
+    { name: "value", type: "T | null", description: "The resolved value from the last run, or null." },
+    { name: "execute", type: "() => Promise<void>", description: "Re-triggers execution of the async function." },
+  ],
+};
+
+const USE_MUTATION_RETURN_ALIAS: TypeAlias = {
+  name: "UseMutationReturn<TArgs, TData>",
+  description: "Object returned by useMutation containing mutation state and actions.",
+  rows: [
+    { name: "mutate", type: "(...args: TArgs) => Promise<TData | undefined>", description: "Executes the async mutation." },
+    { name: "status", type: '"idle" | "loading" | "success" | "error"', description: "Current mutation lifecycle status." },
+    { name: "isLoading", type: "boolean", description: "Convenience boolean for status === 'loading'." },
+    { name: "data", type: "TData | null", description: "Data returned by the last successful mutation." },
+    { name: "error", type: "Error | null", description: "Error thrown by the last failed mutation." },
+    { name: "reset", type: "() => void", description: "Resets status, data, and error back to idle." },
+  ],
+};
+
+const USE_PAGINATION_RETURN_ALIAS: TypeAlias = {
+  name: "UsePaginationReturn",
+  description: "Pagination state and navigation helpers returned by usePagination.",
+  rows: [
+    { name: "page", type: "number", description: "Current page number (1-indexed)." },
+    { name: "pageSize", type: "number", description: "Number of items per page." },
+    { name: "totalPages", type: "number", description: "Total number of pages." },
+    { name: "setPage", type: "(page: number) => void", description: "Jumps directly to a specific page." },
+    { name: "next", type: "() => void", description: "Advances to the next page." },
+    { name: "prev", type: "() => void", description: "Moves to the previous page." },
+    { name: "first", type: "() => void", description: "Jumps to page 1." },
+    { name: "last", type: "() => void", description: "Jumps to the last page." },
+    { name: "canNext", type: "boolean", description: "Whether a subsequent page exists." },
+    { name: "canPrev", type: "boolean", description: "Whether an earlier page exists." },
+    { name: "range", type: "{ start: number; end: number }", description: "Zero-based item indices for the current page." },
+  ],
+};
+
+const USE_FULLSCREEN_RETURN_ALIAS: TypeAlias = {
+  name: "UseFullscreenReturn",
+  description: "Fullscreen state and control actions returned by useFullscreen.",
+  rows: [
+    { name: "isFullscreen", type: "boolean", description: "Whether the target element is currently fullscreen." },
+    { name: "enter", type: "() => Promise<void>", description: "Requests fullscreen for the referenced element." },
+    { name: "exit", type: "() => Promise<void>", description: "Exits fullscreen." },
+    { name: "toggle", type: "() => Promise<void>", description: "Toggles between fullscreen and normal state." },
+  ],
+};
+
+const USE_NETWORK_STATE_ALIAS: TypeAlias = {
+  name: "NetworkState",
+  description: "Snapshot of the browser connection returned by useNetworkState.",
+  rows: [
+    { name: "online", type: "boolean", description: "Whether the browser has network connectivity." },
+    { name: "effectiveType", type: "string | undefined", description: "Effective connection type (e.g. '4g')." },
+    { name: "downlink", type: "number | undefined", description: "Estimated bandwidth in megabits per second." },
+    { name: "rtt", type: "number | undefined", description: "Estimated round-trip time in milliseconds." },
+    { name: "saveData", type: "boolean | undefined", description: "Whether user enabled data-saving mode." },
+  ],
+};
+
+const USE_BATTERY_STATE_ALIAS: TypeAlias = {
+  name: "BatteryState",
+  description: "Snapshot of device battery status returned by useBattery.",
+  rows: [
+    { name: "supported", type: "boolean", description: "Whether the Battery Status API is supported in this browser." },
+    { name: "loading", type: "boolean", description: "Whether initial battery status is being queried." },
+    { name: "level", type: "number | null", description: "Battery charge level between 0 and 1." },
+    { name: "charging", type: "boolean | null", description: "Whether the device is plugged in and charging." },
+    { name: "chargingTime", type: "number | null", description: "Seconds until battery is fully charged." },
+    { name: "dischargingTime", type: "number | null", description: "Seconds until battery is completely discharged." },
   ],
 };
 
@@ -2509,6 +2731,806 @@ export function Demo() {
           { name: "x", type: "number", description: "Horizontal: px offset, or 0..1 of the bounds box width." },
           { name: "y", type: "number", description: "Vertical: px offset, or 0..1 of the bounds box height." },
         ],
+      },
+    ],
+  },
+  "use-previous": {
+    demo: UsePreviousDocDemo,
+    usage: `
+import { useState } from "react";
+import { usePrevious } from "hookli";
+
+export function Demo() {
+  const [count, setCount] = useState(0);
+  const previousCount = usePrevious(count);
+
+  return (
+    <div>
+      <p>Current: {count}</p>
+      <p>Previous: {previousCount ?? "(none)"}</p>
+      <button onClick={() => setCount((c) => c + 1)}>Increment</button>
+      <button onClick={() => setCount((c) => c - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "value",
+        type: "T",
+        description: "The value to track across renders.",
+      },
+    ],
+    returns: [
+      {
+        name: "previousValue",
+        type: "T | undefined",
+        description: "The value from the previous render (undefined on first render).",
+      },
+    ],
+  },
+  "use-list": {
+    demo: UseListDocDemo,
+    usage: `
+import { useList } from "hookli";
+
+export function Demo() {
+  const [list, { push, removeAt, clear, reset }] = useList<string>(["apple", "banana"]);
+
+  return (
+    <div>
+      <p>Items: {list.join(", ")}</p>
+      <button onClick={() => push("cherry")}>Push item</button>
+      <button onClick={() => removeAt(list.length - 1)}>Pop item</button>
+      <button onClick={clear}>Clear</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initial",
+        type: "T[]",
+        defaultValue: "[]",
+        description: "The initial array state.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] list",
+        type: "T[]",
+        description: "The current array state.",
+      },
+      {
+        name: "[1] actions",
+        type: "UseListActions<T>",
+        description: "Immutable manipulation actions (push, insertAt, updateAt, removeAt, clear, reset).",
+      },
+    ],
+    typeAliases: [USE_LIST_ACTIONS_ALIAS],
+  },
+  "use-set": {
+    demo: UseSetDocDemo,
+    usage: `
+import { useSet } from "hookli";
+
+export function Demo() {
+  const [set, { add, remove, toggle, clear, reset }] = useSet<string>(["react"]);
+
+  return (
+    <div>
+      <p>Selected: {Array.from(set).join(", ")}</p>
+      <button onClick={() => toggle("typescript")}>Toggle typescript</button>
+      <button onClick={() => add("nextjs")}>Add nextjs</button>
+      <button onClick={() => remove("react")}>Remove react</button>
+      <button onClick={clear}>Clear</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initial",
+        type: "Iterable<T>",
+        defaultValue: "empty",
+        description: "Optional initial values to populate the Set with.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] set",
+        type: "Set<T>",
+        description: "The current Set state.",
+      },
+      {
+        name: "[1] actions",
+        type: "UseSetActions<T>",
+        description: "Immutable set manipulation actions (add, remove, toggle, has, clear, reset).",
+      },
+    ],
+    typeAliases: [USE_SET_ACTIONS_ALIAS],
+  },
+  "use-queue": {
+    demo: UseQueueDocDemo,
+    usage: `
+import { useQueue } from "hookli";
+
+export function Demo() {
+  const { queue, add, remove, clear, first, last, size } = useQueue<string>(["first", "second"]);
+
+  return (
+    <div>
+      <p>Queue: {queue.join(" -> ")}</p>
+      <p>Head: {first ?? "(none)"} | Size: {size}</p>
+      <button onClick={() => add("new-task")}>Enqueue</button>
+      <button onClick={() => remove()}>Dequeue</button>
+      <button onClick={clear}>Clear</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initial",
+        type: "T[]",
+        defaultValue: "[]",
+        description: "Initial items for the queue.",
+      },
+    ],
+    returns: [
+      {
+        name: "queueReturn",
+        type: "UseQueueReturn<T>",
+        description: "Object containing queue state and actions (queue, add, remove, clear, first, last, size).",
+      },
+    ],
+    typeAliases: [USE_QUEUE_RETURN_ALIAS],
+  },
+  "use-raf-state": {
+    demo: UseRafStateDocDemo,
+    usage: `
+import { useRafState } from "hookli";
+
+export function Demo() {
+  const [pos, setPos] = useRafState({ x: 0, y: 0 });
+
+  return (
+    <div
+      onPointerMove={(e) => {
+        setPos({ x: e.clientX, y: e.clientY });
+      }}
+    >
+      <p>Position: {pos.x}, {pos.y}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "initialState",
+        type: "T | (() => T)",
+        description: "The initial state or lazy initializer function.",
+      },
+    ],
+    returns: [
+      {
+        name: "[0] state",
+        type: "T",
+        description: "The current state value.",
+      },
+      {
+        name: "[1] setState",
+        type: "Dispatch<SetStateAction<T>>",
+        description: "State setter whose updates are batched to requestAnimationFrame.",
+      },
+    ],
+  },
+  "use-throttle": {
+    demo: UseThrottleDocDemo,
+    usage: `
+import { useState } from "react";
+import { useThrottle } from "hookli";
+
+export function Demo() {
+  const [query, setQuery] = useState("");
+  const throttledQuery = useThrottle(query, 500);
+
+  return (
+    <div>
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <p>Instant: {query}</p>
+      <p>Throttled: {throttledQuery}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "value",
+        type: "T",
+        description: "The value to throttle.",
+      },
+      {
+        name: "interval",
+        type: "number",
+        defaultValue: "500",
+        description: "Minimum interval in milliseconds between updates.",
+      },
+    ],
+    returns: [
+      {
+        name: "throttledValue",
+        type: "T",
+        description: "The throttled value, updated at most once per interval.",
+      },
+    ],
+  },
+  "use-update-effect": {
+    demo: UseUpdateEffectDocDemo,
+    usage: `
+import { useState } from "react";
+import { useUpdateEffect } from "hookli";
+
+export function Demo() {
+  const [count, setCount] = useState(0);
+
+  useUpdateEffect(() => {
+    console.log("Count changed to:", count);
+  }, [count]);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount((c) => c + 1)}>Increment</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "effect",
+        type: "EffectCallback",
+        description: "Effect callback to execute on updates. Skips initial mount.",
+      },
+      {
+        name: "deps",
+        type: "DependencyList",
+        defaultValue: "undefined",
+        description: "Dependency list triggering the effect on change.",
+      },
+    ],
+    returns: [
+      {
+        name: "void",
+        type: "void",
+        description: "Returns nothing.",
+      },
+    ],
+  },
+  "use-effect-once": {
+    demo: UseEffectOnceDocDemo,
+    usage: `
+import { useEffectOnce } from "hookli";
+
+export function Demo() {
+  useEffectOnce(() => {
+    console.log("Component mounted exactly once");
+
+    return () => {
+      console.log("Component unmounted");
+    };
+  });
+
+  return <div>Mounted</div>;
+}
+`,
+    parameters: [
+      {
+        name: "effect",
+        type: "EffectCallback",
+        description: "Effect callback executed only once on initial mount.",
+      },
+    ],
+    returns: [
+      {
+        name: "void",
+        type: "void",
+        description: "Returns nothing.",
+      },
+    ],
+  },
+  "use-page-visibility": {
+    demo: UsePageVisibilityDocDemo,
+    usage: `
+import { usePageVisibility } from "hookli";
+
+export function Demo() {
+  const isVisible = usePageVisibility();
+
+  return (
+    <div>
+      <p>Tab is currently: {isVisible ? "Visible" : "Hidden"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "isVisible",
+        type: "boolean",
+        description: "True if the document/tab is currently visible, false when hidden or backgrounded.",
+      },
+    ],
+  },
+  "use-deep-compare-effect": {
+    demo: UseDeepCompareEffectDocDemo,
+    usage: `
+import { useState } from "react";
+import { useDeepCompareEffect } from "hookli";
+
+export function Demo() {
+  const [user, setUser] = useState({ name: "Alice", age: 25 });
+
+  useDeepCompareEffect(() => {
+    console.log("Deep effect triggered:", user);
+  }, [user]);
+
+  return (
+    <div>
+      <p>{user.name} ({user.age})</p>
+      <button onClick={() => setUser({ ...user })}>Recreate object reference</button>
+      <button onClick={() => setUser({ ...user, age: user.age + 1 })}>Increment age</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "effect",
+        type: "EffectCallback",
+        description: "Effect callback executed when deep structural dependencies change.",
+      },
+      {
+        name: "deps",
+        type: "DependencyList",
+        description: "Dependencies compared via deep structural equality instead of reference.",
+      },
+    ],
+    returns: [
+      {
+        name: "void",
+        type: "void",
+        description: "Returns nothing.",
+      },
+    ],
+  },
+  "use-key-press": {
+    demo: UseKeyPressDocDemo,
+    usage: `
+import { useKeyPress } from "hookli";
+
+export function Demo() {
+  const enterPressed = useKeyPress("Enter");
+  const escapePressed = useKeyPress("Escape");
+
+  return (
+    <div>
+      <p>Enter: {enterPressed ? "Pressed" : "Released"}</p>
+      <p>Escape: {escapePressed ? "Pressed" : "Released"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "targetKey",
+        type: "string",
+        description: "The KeyboardEvent.key to watch (e.g. 'Enter', 'Escape').",
+      },
+    ],
+    returns: [
+      {
+        name: "pressed",
+        type: "boolean",
+        description: "True while the specified key is held down.",
+      },
+    ],
+  },
+  "use-window-scroll": {
+    demo: UseWindowScrollDocDemo,
+    usage: `
+import { useWindowScroll } from "hookli";
+
+export function Demo() {
+  const { x, y } = useWindowScroll();
+
+  return (
+    <div>
+      <p>Scroll X: {x}px</p>
+      <p>Scroll Y: {y}px</p>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "scroll",
+        type: "{ x: number; y: number }",
+        description: "The current horizontal (x) and vertical (y) scroll position in pixels.",
+      },
+    ],
+  },
+  "use-idle": {
+    demo: UseIdleDocDemo,
+    usage: `
+import { useIdle } from "hookli";
+
+export function Demo() {
+  const isIdle = useIdle(5000);
+
+  return (
+    <div>
+      <p>User is: {isIdle ? "Idle" : "Active"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "ms",
+        type: "number",
+        defaultValue: "60000",
+        description: "Inactivity threshold in milliseconds before switching to idle.",
+      },
+    ],
+    returns: [
+      {
+        name: "isIdle",
+        type: "boolean",
+        description: "True if user has been inactive for at least ms milliseconds.",
+      },
+    ],
+  },
+  "use-text-selection": {
+    demo: UseTextSelectionDocDemo,
+    usage: `
+import { useTextSelection } from "hookli";
+
+export function Demo() {
+  const selection = useTextSelection();
+
+  return (
+    <div>
+      <p>Select text on this page.</p>
+      <p>Selected: {selection || "(none)"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "text",
+        type: "string",
+        description: "The currently selected text on the document.",
+      },
+    ],
+  },
+  "use-long-press": {
+    demo: UseLongPressDocDemo,
+    usage: `
+import { useLongPress } from "hookli";
+
+export function Demo() {
+  const handlers = useLongPress(() => {
+    alert("Long pressed!");
+  }, { delay: 500 });
+
+  return <button {...handlers}>Press and hold</button>;
+}
+`,
+    parameters: [
+      {
+        name: "callback",
+        type: "(event: MouseEvent | TouchEvent) => void",
+        description: "Callback invoked once the press is held for delay ms.",
+      },
+      {
+        name: "options",
+        type: "UseLongPressOptions",
+        defaultValue: "{}",
+        description: "Options object containing delay (defaults to 400ms).",
+      },
+    ],
+    returns: [
+      {
+        name: "handlers",
+        type: "UseLongPressHandlers",
+        description: "Event handlers (onMouseDown, onMouseUp, etc.) to spread onto the target element.",
+      },
+    ],
+  },
+  "use-hotkeys": {
+    demo: UseHotkeysDocDemo,
+    usage: `
+import { useHotkeys } from "hookli";
+
+export function Demo() {
+  useHotkeys("ctrl+k", () => {
+    console.log("Ctrl+K pressed");
+  });
+
+  return <div>Press Ctrl+K to trigger shortcut</div>;
+}
+`,
+    parameters: [
+      {
+        name: "keys",
+        type: "string",
+        description: "Key combination string separated by '+' (e.g. 'ctrl+k', 'shift+s').",
+      },
+      {
+        name: "callback",
+        type: "(event: KeyboardEvent) => void",
+        description: "Function called when the key combination is pressed.",
+      },
+    ],
+    returns: [
+      {
+        name: "void",
+        type: "void",
+        description: "Returns nothing.",
+      },
+    ],
+  },
+  "use-fullscreen": {
+    demo: UseFullscreenDocDemo,
+    usage: `
+import { useRef } from "react";
+import { useFullscreen } from "hookli";
+
+export function Demo() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { isFullscreen, toggle } = useFullscreen(ref);
+
+  return (
+    <div ref={ref}>
+      <button onClick={toggle}>
+        {isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+      </button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "ref",
+        type: "RefObject<HTMLElement | null>",
+        description: "Ref attached to the element to control fullscreen for.",
+      },
+    ],
+    returns: [
+      {
+        name: "fullscreen",
+        type: "UseFullscreenReturn",
+        description: "Object containing isFullscreen state and enter, exit, toggle methods.",
+      },
+    ],
+    typeAliases: [USE_FULLSCREEN_RETURN_ALIAS],
+  },
+  "use-async": {
+    demo: UseAsyncDocDemo,
+    usage: `
+import { useAsync } from "hookli";
+
+const fetchData = async () => {
+  const res = await fetch("https://api.example.com/data");
+  return res.json();
+};
+
+export function Demo() {
+  const { value, loading, error, execute } = useAsync(fetchData);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return (
+    <div>
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+      <button onClick={execute}>Reload</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "asyncFunction",
+        type: "() => Promise<T>",
+        description: "The asynchronous function to execute.",
+      },
+      {
+        name: "immediate",
+        type: "boolean",
+        defaultValue: "true",
+        description: "Whether to execute the async function immediately on mount.",
+      },
+    ],
+    returns: [
+      {
+        name: "state",
+        type: "UseAsyncReturn<T>",
+        description: "Object containing loading, error, value, and execute handler.",
+      },
+    ],
+    typeAliases: [USE_ASYNC_RETURN_ALIAS],
+  },
+  "use-mutation": {
+    demo: UseMutationDocDemo,
+    usage: `
+import { useMutation } from "hookli";
+
+const createUser = async (name: string) => {
+  const res = await fetch("/api/users", {
+    method: "POST",
+    body: JSON.stringify({ name }),
+  });
+  return res.json();
+};
+
+export function Demo() {
+  const { mutate, data, isLoading } = useMutation(createUser);
+
+  return (
+    <div>
+      <button disabled={isLoading} onClick={() => mutate("Alice")}>
+        {isLoading ? "Saving..." : "Create User"}
+      </button>
+      {data && <p>Created ID: {data.id}</p>}
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "mutationFn",
+        type: "(...args: TArgs) => Promise<TData>",
+        description: "Async function to execute when mutate is called.",
+      },
+    ],
+    returns: [
+      {
+        name: "mutation",
+        type: "UseMutationReturn<TArgs, TData>",
+        description: "Object containing mutate, status, isLoading, data, error, and reset.",
+      },
+    ],
+    typeAliases: [USE_MUTATION_RETURN_ALIAS],
+  },
+  "use-pagination": {
+    demo: UsePaginationDocDemo,
+    usage: `
+import { usePagination } from "hookli";
+
+export function Demo() {
+  const { page, totalPages, next, prev, canNext, canPrev } = usePagination({
+    total: 100,
+    pageSize: 10,
+    initialPage: 1,
+  });
+
+  return (
+    <div>
+      <p>Page {page} of {totalPages}</p>
+      <button disabled={!canPrev} onClick={prev}>Prev</button>
+      <button disabled={!canNext} onClick={next}>Next</button>
+    </div>
+  );
+}
+`,
+    parameters: [
+      {
+        name: "options",
+        type: "UsePaginationOptions",
+        defaultValue: "{}",
+        description: "Options object with total (default 0), pageSize (default 10), and initialPage (default 1).",
+      },
+    ],
+    returns: [
+      {
+        name: "pagination",
+        type: "UsePaginationReturn",
+        description: "Pagination state and controls (page, totalPages, next, prev, first, last, range).",
+      },
+    ],
+    typeAliases: [USE_PAGINATION_RETURN_ALIAS],
+  },
+  "use-network-state": {
+    demo: UseNetworkStateDocDemo,
+    usage: `
+import { useNetworkState } from "hookli";
+
+export function Demo() {
+  const { online, effectiveType, downlink } = useNetworkState();
+
+  return (
+    <div>
+      <p>Status: {online ? "Online" : "Offline"}</p>
+      <p>Effective Type: {effectiveType ?? "unknown"}</p>
+      <p>Downlink: {downlink ?? 0} Mbps</p>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "networkState",
+        type: "NetworkState",
+        description: "Snapshot of network status (online, effectiveType, downlink, rtt, saveData).",
+      },
+    ],
+    typeAliases: [USE_NETWORK_STATE_ALIAS],
+  },
+  "use-battery": {
+    demo: UseBatteryDocDemo,
+    usage: `
+import { useBattery } from "hookli";
+
+export function Demo() {
+  const { supported, level, charging } = useBattery();
+
+  if (!supported) return <p>Battery API not supported</p>;
+
+  return (
+    <div>
+      <p>Battery level: {level !== null ? Math.round(level * 100) : 0}%</p>
+      <p>Charging: {charging ? "Yes" : "No"}</p>
+    </div>
+  );
+}
+`,
+    parameters: [],
+    returns: [
+      {
+        name: "batteryState",
+        type: "BatteryState",
+        description: "Snapshot of device battery status (supported, loading, level, charging, chargingTime, dischargingTime).",
+      },
+    ],
+    typeAliases: [USE_BATTERY_STATE_ALIAS],
+  },
+  "use-permission": {
+    demo: UsePermissionDocDemo,
+    usage: `
+import { usePermission } from "hookli";
+
+export function Demo() {
+  const status = usePermission("geolocation");
+
+  return <p>Geolocation permission: {status}</p>;
+}
+`,
+    parameters: [
+      {
+        name: "name",
+        type: "PermissionName",
+        description: "The permission name to query (e.g. 'geolocation', 'notifications').",
+      },
+    ],
+    returns: [
+      {
+        name: "status",
+        type: "UsePermissionResult",
+        description: "The permission state ('granted', 'denied', 'prompt', 'pending', or 'unsupported').",
       },
     ],
   },
