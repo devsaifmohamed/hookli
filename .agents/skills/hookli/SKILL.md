@@ -1,4 +1,8 @@
-```markdown
+---
+name: hookli
+description: Development patterns, coding conventions, and collaborative workflows for the hookli repository.
+---
+
 # hookli Development Patterns
 
 > Auto-generated skill from repository analysis
@@ -163,4 +167,3 @@ export default function UseIntervalDemo() {
 | /update-design-tokens         | Update design tokens and sync design documentation             |
 | /enforce-kebab-case-components| Enforce kebab-case naming for component files and update imports|
 | /log-progress                 | Log progress after completing a task or batch                  |
-```
