@@ -13,9 +13,9 @@ import { join } from "node:path";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_COLORS = {
-  ground: "#10151d",
+  ground: "#0d0f14",
   accent: "#61dafb",
-  gray: "#9ba8b8",
+  gray: "#e2e8f0",
   fg: "#ffffff",
 } as const;
 

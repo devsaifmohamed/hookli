@@ -50,15 +50,14 @@ export function UseTernaryDarkModeDocDemo() {
       <div
         className={`rounded-lg border p-4 transition-colors duration-200 ${
           dark
-            ? "border-slate-syntax bg-ground"
+            ? "border-white/[0.08] bg-ground"
             : "border-slate-300 bg-slate-50"
         }`}
       >
-        <p className={`font-mono text-sm ${dark ? "text-fg" : "text-ground"}`}>
+        <p className={`font-mono text-sm ${dark ? "text-fg font-normal" : "text-slate-900 font-semibold"}`}>
           {dark ? "Resolved: dark" : "Resolved: light"}
         </p>
-        {/* light-panel exception: slate-syntax is text-grade on slate-50 (~9:1); gray-body would be ~1.7:1 */}
-        <p className={`mt-2 text-xs ${dark ? "text-gray-body" : "text-slate-syntax"}`}>
+        <p className={`mt-2 text-xs leading-relaxed ${dark ? "text-gray-body" : "text-slate-600 font-medium"}`}>
           &ldquo;system&rdquo; follows your OS setting — the other two force a mode.
         </p>
       </div>

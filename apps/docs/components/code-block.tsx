@@ -49,21 +49,21 @@ export function CodeBlock({
 }) {
   return (
     <figure
-      className={`surface overflow-hidden rounded-xl ${className}`}
+      className={`overflow-hidden rounded-2xl border border-white/[0.08] bg-ground-raised/80 shadow-md ${className}`}
     >
-      <figcaption className="flex items-center justify-between gap-2 border-b border-slate-syntax py-1 pl-4 pr-1">
+      <figcaption className="flex items-center justify-between gap-2 border-b border-white/[0.06] bg-white/[0.02] py-2 pl-4 pr-2">
         <span className="flex min-w-0 items-center gap-2">
           <span
             aria-hidden="true"
-            className="size-1.5 shrink-0 rounded-full bg-accent/70"
+            className="size-1.5 shrink-0 rounded-full bg-accent"
           />
-          <span className="truncate font-mono text-xs text-gray-body">
+          <span className="truncate font-mono text-xs text-gray-body font-medium">
             {title ?? lang}
           </span>
         </span>
-        <span className="flex shrink-0 items-center gap-1">
+        <span className="flex shrink-0 items-center gap-2">
           {title && (
-            <span className="rounded border border-slate-syntax px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-gray-body">
+            <span className="rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-gray-body/70">
               {lang}
             </span>
           )}

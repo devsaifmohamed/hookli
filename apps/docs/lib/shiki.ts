@@ -7,7 +7,7 @@ const cssVariablesTheme = createCssVariablesTheme({
   variablePrefix: "--shiki-",
 });
 
-export type CodeLang = "tsx" | "ts" | "bash";
+export type CodeLang = "tsx" | "ts" | "bash" | "json";
 
 export type HighlightOptions = {
   /* Gutter line numbers (Usage snippets — T16 usehooks-ts anatomy). */

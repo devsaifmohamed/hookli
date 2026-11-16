@@ -42,12 +42,13 @@ export function CopyButton({
         type="button"
         onClick={copy}
         aria-label={label}
-        className={`inline-flex min-h-11 items-center gap-2 rounded-lg border border-gray-outline px-4 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent ${className}`}
+        title={label}
+        className={`inline-flex h-9 items-center gap-2 rounded-lg border border-gray-outline px-3.5 text-xs font-medium text-fg transition-colors duration-150 hover:border-accent hover:text-accent active:scale-95 ${className}`}
       >
         {copied ? (
-          <CheckIcon className="copy-pop size-4 text-accent" aria-hidden="true" />
+          <CheckIcon className="copy-pop size-3.5 text-accent" aria-hidden="true" />
         ) : (
-          <CopyIcon className="size-4" aria-hidden="true" />
+          <CopyIcon className="size-3.5" aria-hidden="true" />
         )}
         <span>{copied ? "Copied" : copyLabel}</span>
         <span aria-live="polite" className="sr-only">
@@ -62,12 +63,13 @@ export function CopyButton({
       type="button"
       onClick={copy}
       aria-label={label}
-      className={`flex size-11 items-center justify-center rounded-md text-gray-body transition-colors duration-200 hover:bg-ground-overlay hover:text-fg ${className}`}
+      title={label}
+      className={`flex size-7 shrink-0 items-center justify-center rounded-md text-gray-body/70 transition-all duration-150 hover:bg-white/[0.08] hover:text-white active:scale-90 ${className}`}
     >
       {copied ? (
-        <CheckIcon className="copy-pop size-4 text-accent" />
+        <CheckIcon className="copy-pop size-3.5 text-accent stroke-[2.5]" />
       ) : (
-        <CopyIcon className="size-4" />
+        <CopyIcon className="size-3.5" />
       )}
       <span aria-live="polite" className="sr-only">
         {copied ? "Copied to clipboard" : ""}

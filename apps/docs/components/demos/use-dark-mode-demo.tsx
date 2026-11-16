@@ -30,13 +30,13 @@ export function UseDarkModeDocDemo() {
       <div
         className={`rounded-lg border p-4 transition-colors duration-200 ${
           dark
-            ? "border-slate-syntax bg-ground"
+            ? "border-white/[0.08] bg-ground"
             : "border-slate-300 bg-slate-50"
         }`}
       >
         <div className="flex items-center justify-between gap-4">
           <p
-            className={`font-mono text-sm ${dark ? "text-fg" : "text-ground"}`}
+            className={`font-mono text-sm ${dark ? "text-fg font-normal" : "text-slate-900 font-semibold"}`}
           >
             {dark ? "Dark mode" : "Light mode"}
           </p>
@@ -48,7 +48,7 @@ export function UseDarkModeDocDemo() {
             className={`flex size-11 items-center justify-center rounded-md border transition-colors duration-200 ${
               dark
                 ? "border-gray-outline text-fg hover:border-gray-body"
-                : "border-slate-300 text-ground hover:border-slate-400"
+                : "border-slate-300 text-slate-800 hover:border-slate-400 hover:bg-slate-100"
             }`}
           >
             {dark ? (
@@ -58,10 +58,9 @@ export function UseDarkModeDocDemo() {
             )}
           </button>
         </div>
-        {/* light-panel exception: slate-syntax is text-grade on slate-50 (~9:1); gray-body would be ~1.7:1 */}
         <p
-          className={`mt-2 text-xs ${
-            dark ? "text-gray-body" : "text-slate-syntax"
+          className={`mt-2 text-xs leading-relaxed ${
+            dark ? "text-gray-body" : "text-slate-600 font-medium"
           }`}
         >
           This panel is scoped to the demo — the docs stay dark either way.

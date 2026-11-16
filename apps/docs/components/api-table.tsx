@@ -5,8 +5,9 @@ export type ApiRow = {
   description: string;
 };
 
-/* Parameters / Returns tables on hook pages (docs/DESIGN.md §4). Parameters
-   pass `withDefault`; Returns omit it. Horizontal scroll keeps 375px clean. */
+/* Modern Mintlify-style property list for Parameters, Returns, and Type Aliases.
+   Replaces rigid spreadsheet tables with clean, responsive definition cards
+   that never require horizontal scrolling on mobile. */
 export function ApiTable({
   rows,
   withDefault = false,
@@ -16,59 +17,38 @@ export function ApiTable({
   withDefault?: boolean;
   className?: string;
 }) {
+  if (rows.length === 0) return null;
+
   return (
     <div
-      className={`surface overflow-x-auto rounded-xl ${className}`}
+      className={`overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.015] divide-y divide-white/[0.04] ${className}`}
     >
-      <table className="w-full text-left text-sm">
-        <thead>
-          <tr className="border-b border-slate-syntax">
-            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
-              Name
-            </th>
-            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
-              Type
-            </th>
-            {withDefault && (
-              <th scope="col" className="px-4 py-3 text-xs text-gray-body">
-                Default
-              </th>
+      {rows.map((row) => (
+        <div key={row.name} className="p-4 sm:p-5 transition-colors hover:bg-white/[0.01]">
+          {/* Top row: Name + Type Badge + Default Badge */}
+          <div className="flex flex-wrap items-baseline gap-2">
+            <span className="font-mono text-sm font-semibold text-accent">
+              {row.name}
+            </span>
+
+            <span className="inline-flex items-center rounded-md bg-accent/[0.08] px-2 py-0.5 font-mono text-xs text-accent-hover border border-accent/15">
+              {row.type}
+            </span>
+
+            {withDefault && row.defaultValue && (
+              <span className="inline-flex items-center gap-1 rounded-md bg-white/[0.03] px-2 py-0.5 font-mono text-xs text-gray-body/80 border border-white/[0.06]">
+                <span className="text-[10px] uppercase tracking-wider text-gray-body/50">default:</span>
+                <span className="text-white">{row.defaultValue}</span>
+              </span>
             )}
-            <th scope="col" className="px-4 py-3 text-xs text-gray-body">
-              Description
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr
-              key={row.name}
-              className="border-b border-slate-syntax align-top last:border-b-0"
-            >
-              <td className="whitespace-nowrap px-4 py-3 font-mono text-accent">
-                {row.name}
-              </td>
-              <td className="whitespace-nowrap px-4 py-3 font-mono text-gray-body">
-                {row.type}
-              </td>
-              {withDefault && (
-                <td className="whitespace-nowrap px-4 py-3">
-                  {row.defaultValue ? (
-                    <span className="inline-block rounded border border-slate-syntax bg-ground px-2 py-0.5 font-mono text-xs text-accent">
-                      {row.defaultValue}
-                    </span>
-                  ) : (
-                    <span className="font-mono text-gray-body">—</span>
-                  )}
-                </td>
-              )}
-              <td className="min-w-48 px-4 py-3 text-gray-body">
-                {row.description}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          </div>
+
+          {/* Description */}
+          <p className="mt-2 text-sm leading-relaxed text-gray-body">
+            {row.description}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }

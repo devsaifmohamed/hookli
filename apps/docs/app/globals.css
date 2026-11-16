@@ -1,31 +1,17 @@
 @import "tailwindcss";
 
-/* Premium Dark v1.0 — a cool near-black premium-dark ramp (refines the React
-   palette). The page sits at a near-black, slightly cool #0a0d12; cards and
-   panels lift only ~6% to #10151d, and hover/nested washes rise another step to
-   #151c27. Adjacent surfaces are deliberately close, so ELEVATION COMES FROM AN
-   EDGE, NOT A FILL: a solid frame border + a 1px top highlight (light catching
-   the top edge) + a soft ambient shadow. Three border roles keep the chrome
-   legible on this dense ramp — FRAME `slate-syntax` (the visible structural
-   edge on cards, code windows, major chrome), QUIET `divider` (near-invisible
-   row rules inside dense lists/tables), and INTERACTIVE `gray-outline` (the
-   only ≥3:1 tier — inputs, outline buttons, toggles). #61DAFB (classic React
-   cyan) stays the TEXT-GRADE accent, lifting to #7CE2FF on hover; #087EA4
-   (react.dev brand teal) is large-decorative-only and fails AA for text. */
+/* High-Contrast Obsidian & Classic React Cyan Palette */
 @theme {
-  /* Surfaces are defined by elevation + a solid frame edge, NOT by saturated
-     fills — the React hues stay accents. Tier semantics: ground (page + inset
-     wells) → raised (cards/panels) → overlay (hover / nested / elevated wash). */
-  --color-ground: #0a0d12;         /* page + inset wells — near-black, cool */
-  --color-ground-raised: #10151d;  /* cards / panels — ~6% lift off the page */
-  --color-ground-overlay: #151c27; /* hover / nested / elevated wash — the top step */
-  --color-accent: #61dafb;         /* classic React cyan — links, focus, CTA, active (text-grade) */
-  --color-accent-hover: #7ce2ff;   /* accent hover — brighter cyan for CTAs/links on hover */
-  --color-brand: #087ea4;          /* react.dev brand teal — LARGE DECORATIVE use only, never text/small UI */
-  --color-slate-syntax: #354355;   /* FRAME edge — solid 1px card/code-window/major-chrome borders, NOT text */
-  --color-divider: #242d3a;        /* QUIET row divider — near-invisible rules inside dense lists/tables */
-  --color-gray-outline: #697586;   /* INTERACTIVE outline — inputs, outline buttons, toggles (only tier ≥3:1 on every surface) */
-  --color-gray-body: #9ba8b8;      /* muted/secondary text — AA on every surface (min 6.5:1) */
+  --color-ground: #07080a;         /* pure deep obsidian black */
+  --color-ground-raised: #0d0f14;  /* elevated card / panel surface */
+  --color-ground-overlay: #131722; /* interactive wash / hover surface */
+  --color-accent: #61dafb;         /* Classic React cyan — links, focus, CTA, active */
+  --color-accent-hover: #7ce2ff;   /* Luminous brighter cyan hover */
+  --color-brand: #087ea4;          /* react.dev brand teal */
+  --color-slate-syntax: rgba(255, 255, 255, 0.06); /* ultra-soft seamless edge */
+  --color-divider: rgba(255, 255, 255, 0.035);     /* quiet row divider */
+  --color-gray-outline: rgba(255, 255, 255, 0.08); /* soft interactive outline */
+  --color-gray-body: #e2e8f0;      /* Slate-200: 100% crystal-clear readability (15:1 contrast) */
   --color-fg: #ffffff;             /* primary ink — pure white */
 }
 
@@ -40,8 +26,25 @@
 :root {
   color-scheme: dark;
 
-  /* Shiki css-variables theme → brand tokens (docs/DESIGN.md §1, §5 CodeBlock).
-     Background stays transparent — the CodeBlock frame owns the surface. */
+  /* Fumadocs Theme Tokens */
+  --color-fd-background: #07080a;
+  --color-fd-foreground: #ffffff;
+  --color-fd-muted: #0d0f14;
+  --color-fd-muted-foreground: #e2e8f0;
+  --color-fd-card: #0d0f14;
+  --color-fd-card-foreground: #ffffff;
+  --color-fd-popover: #0d0f14;
+  --color-fd-popover-foreground: #ffffff;
+  --color-fd-border: rgba(255, 255, 255, 0.06);
+  --color-fd-primary: #61dafb;
+  --color-fd-primary-foreground: #07080a;
+  --color-fd-secondary: #131722;
+  --color-fd-secondary-foreground: #ffffff;
+  --color-fd-accent: #61dafb;
+  --color-fd-accent-foreground: #07080a;
+  --color-fd-ring: #61dafb;
+
+  /* Shiki css-variables theme → brand tokens. */
   --shiki-foreground: var(--color-fg);
   --shiki-background: transparent;
   --shiki-token-keyword: var(--color-accent);
@@ -51,9 +54,7 @@
   --shiki-token-string-expression: var(--color-gray-body);
   --shiki-token-parameter: var(--color-gray-body);
   --shiki-token-punctuation: var(--color-gray-body);
-  /* Comments are text — slate (gray-70) is border-grade on the react.dev ramp
-     and fails AA on code surfaces, so comments read in the muted text gray. */
-  --shiki-token-comment: var(--color-gray-body);
+  --shiki-token-comment: #64748b;
   --shiki-token-link: var(--color-accent);
 }
 
@@ -75,7 +76,6 @@ body {
     text-wrap: balance;
   }
 
-  /* Larger headings get tighter tracking — the premium display-type look. */
   h1 {
     letter-spacing: -0.035em;
   }
@@ -102,184 +102,46 @@ body {
   }
 }
 
-/* ── Elevation system ─────────────────────────────────────────────────────
-   Near-black-on-near-black means depth can't come from a drop shadow alone —
-   it comes from a crisp solid 1px border, a 1px top highlight (light catching
-   the top edge), and a soft ambient shadow. `.surface` is the static card
-   treatment; `.surface-lift` adds a 150–200ms ease-out hover raise for
-   interactive cards. */
-@layer components {
-  .surface {
-    background-color: var(--color-ground-raised);
-    /* Solid gray-70, react.dev-style — every card/frame border runs at full
-       strength; alpha-faded hairlines vanish on this ramp. */
-    border: 1px solid var(--color-slate-syntax);
-    box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 8%, transparent),
-      0 1px 2px 0 color-mix(in srgb, black 40%, transparent),
-      0 12px 28px -18px color-mix(in srgb, black 70%, transparent);
-  }
-
-  .surface-lift {
-    transition:
-      transform 180ms ease-out,
-      border-color 180ms ease-out,
-      box-shadow 180ms ease-out;
-  }
-
-  .surface-lift:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
-    box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, var(--color-fg) 11%, transparent),
-      0 2px 4px 0 color-mix(in srgb, black 40%, transparent),
-      0 20px 44px -20px color-mix(in srgb, black 85%, transparent);
-  }
+/* Surface elevation utility classes */
+.surface {
+  background-color: var(--color-ground-raised);
+  border: 1px solid var(--color-slate-syntax);
 }
 
-/* ── Load reveal ──────────────────────────────────────────────────────────
-   A subtle fade-and-rise for hero + landing sections. `both` fill holds the
-   start state before the (optional) delay and the end state after, so there's
-   no flash. The reduced-motion guard zeroes duration AND delay, snapping
-   straight to the visible end state. */
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.surface-lift {
+  background-color: var(--color-ground-raised);
+  border: 1px solid var(--color-slate-syntax);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
 }
 
-.reveal {
-  animation: reveal 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.reveal-d1 {
-  animation-delay: 80ms;
-}
-.reveal-d2 {
-  animation-delay: 160ms;
-}
-.reveal-d3 {
-  animation-delay: 240ms;
-}
-.reveal-d4 {
-  animation-delay: 320ms;
-}
-
-/* Copy-button feedback: the check icon pops in when the copy succeeds
-   (components/copy-button.tsx). Neutralised under reduced-motion. */
-@keyframes copy-pop {
-  from {
-    transform: scale(0.4);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.copy-pop {
-  animation: copy-pop 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Code-pane interior: an inset well — it cuts through the raised frame back to
-   the page ground for terminal depth, plus a subtle inner shadow at the top
-   separating it from the filename caption above (premium code-block chrome). */
-.code-pane {
-  background-color: var(--color-ground);
-  box-shadow: inset 0 10px 12px -12px color-mix(in srgb, black 85%, transparent);
-}
-
-/* Hero backdrop: a faint radial glow behind the mark + a hairline grid, both
-   token-derived and masked so they fade out toward the edges. Decorative only
-   (aria-hidden on the element). */
-.hero-glow {
-  background: radial-gradient(
-    60% 55% at 50% 38%,
-    color-mix(in srgb, var(--color-accent) 14%, transparent),
-    transparent 70%
+/* Announcement Banner — soft accent underglow */
+.announcement-banner {
+  background: linear-gradient(
+    90deg,
+    rgba(97, 218, 251, 0.08) 0%,
+    rgba(97, 218, 251, 0.02) 50%,
+    rgba(97, 218, 251, 0.08) 100%
   );
+  box-shadow: inset 0 -1px 0 rgba(97, 218, 251, 0.15);
 }
 
-.hero-grid {
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-slate-syntax) 12%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-slate-syntax) 12%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 56px 56px;
-  mask-image: radial-gradient(60% 60% at 50% 40%, black, transparent 75%);
+/* Header nav chip glow animation */
+.nav-new-chip {
+  animation: chip-glow 2.5s ease-in-out infinite;
 }
 
-/* Usage-snippet gutter + highlighted hook-call line (T16 usehooks-ts anatomy).
-   `display: grid` on <code> drops shiki's inter-line "\n" text nodes so each
-   .line is a full-width row — line numbers and the call-line tint align. */
-.line-numbers code {
-  display: grid;
-  counter-reset: line;
-}
-
-.line-numbers .line {
-  counter-increment: line;
-}
-
-.line-numbers .line::before {
-  content: counter(line);
-  display: inline-block;
-  width: 1rem;
-  margin-right: 1.25rem;
-  text-align: right;
-  color: var(--color-gray-body);
-  user-select: none;
-}
-
-.highlighted-line {
-  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
-  box-shadow: inset 2px 0 0 0 var(--color-accent);
-}
-
-/* Floating donate button (components/donate-button.tsx): a gentle idle bob so
-   the support CTA quietly draws the eye. Neutralised by the reduced-motion
-   guard below. */
-@keyframes donate-bob {
-  0%,
-  100% {
-    transform: translateY(0);
+@keyframes chip-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(97, 218, 251, 0);
   }
   50% {
-    transform: translateY(-4px);
+    box-shadow: 0 0 10px 2px rgba(97, 218, 251, 0.25);
   }
 }
 
-.donate-float {
-  animation: donate-bob 3.5s ease-in-out infinite;
-}
-
-/* Smooth in-page anchor scrolling (e.g. the hero → #ai trigger). The
-   reduced-motion block below forces this back to `auto` when requested. */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Hero agent preview card — ambient glow */
+.hero-agent-card {
+  box-shadow:
+    0 0 40px -10px rgba(97, 218, 251, 0.09),
+    0 20px 50px -15px rgba(0, 0, 0, 0.6);
 }

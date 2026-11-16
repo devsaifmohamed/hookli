@@ -56,7 +56,12 @@ export function linkifyWebApis(text: string): ReactNode {
     last = start + term.length;
   }
 
-  if (last < text.length) parts.push(text.slice(last));
+  if (last < text.length) {
+    const remainder = text.slice(last);
+    // Remove awkward lone trailing period right after an end-of-description ApiChip
+    const cleaned = remainder.replace(/^\.(?:\s*)$/, "");
+    if (cleaned) parts.push(cleaned);
+  }
 
   return (
     <>

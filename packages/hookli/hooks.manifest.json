@@ -18,7 +18,7 @@
     {
       "slug": "use-local-storage",
       "name": "useLocalStorage",
-      "description": "State persisted to localStorage.",
+      "description": "State persisted to localStorage",
       "category": "state",
       "signature": "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T | ((val: T) => T)) => void }"
     },

@@ -23,10 +23,10 @@ export default function NotFound() {
       <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
         <Link
           href="/docs"
-          className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
+          className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground shadow-md shadow-accent/20 transition-opacity duration-200 hover:opacity-90"
         >
           Browse the docs
-          <ArrowRightIcon className="size-4" />
+          <ArrowRightIcon className="size-4 text-ground" />
         </Link>
         <Link
           href="/"

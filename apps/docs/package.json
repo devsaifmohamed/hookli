@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@stackblitz/sdk": "^1.11.1",
+    "fumadocs-core": "^16.19.0",
+    "fumadocs-ui": "^16.19.0",
     "hookli": "workspace:*",
+    "lucide-react": "^1.72.0",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",

@@ -15,7 +15,7 @@ export function DonateButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Support hookli — buy me a coffee on Ko-fi"
-      className="donate-float group fixed bottom-5 right-5 z-50 flex h-14 items-center gap-0 overflow-hidden rounded-full bg-accent pl-4 pr-4 font-semibold text-ground shadow-lg shadow-accent/30 ring-1 ring-inset ring-fg/10 transition-[padding,box-shadow] duration-200 ease-out hover:gap-2.5 hover:pr-5 hover:shadow-xl hover:shadow-accent/40 focus-visible:gap-2.5 focus-visible:pr-5"
+      className="donate-float group fixed bottom-5 right-5 z-50 flex h-14 items-center gap-0 overflow-hidden rounded-full bg-accent pl-4 pr-4 font-semibold text-ground shadow-lg shadow-accent/30 ring-1 ring-inset ring-white/10 transition-[padding,box-shadow] duration-200 ease-out hover:gap-2.5 hover:pr-5 hover:shadow-xl hover:shadow-accent/40 focus-visible:gap-2.5 focus-visible:pr-5"
     >
       <KofiIcon className="size-6 shrink-0" />
       <span className="max-w-0 whitespace-nowrap text-sm opacity-0 transition-[max-width,opacity] duration-200 ease-out group-hover:max-w-40 group-hover:opacity-100 group-focus-visible:max-w-40 group-focus-visible:opacity-100">

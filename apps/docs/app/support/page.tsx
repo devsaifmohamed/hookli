@@ -72,7 +72,7 @@ export default function SupportPage() {
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 flex min-h-11 w-fit items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
+          className="mt-5 flex min-h-11 w-fit items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground shadow-md shadow-accent/20 transition-opacity duration-200 hover:opacity-90"
         >
           <GitHubIcon className="size-4" />
           Star on GitHub
@@ -135,7 +135,7 @@ export default function SupportPage() {
             href={SPONSOR_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-medium text-ground transition-opacity duration-200 hover:opacity-90"
+            className="flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground shadow-md shadow-accent/20 transition-opacity duration-200 hover:opacity-90"
           >
             <GitHubSponsorsIcon className="size-4" />
             GitHub Sponsors

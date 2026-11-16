@@ -15,10 +15,10 @@ export function BottomCtaSection() {
         <InstallCommand className="mt-8" />
         <Link
           href="/docs"
-          className="mt-6 flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground transition-opacity duration-200 hover:opacity-90"
+          className="mt-6 flex min-h-11 items-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-ground shadow-lg shadow-accent/20 transition-opacity duration-200 hover:opacity-90"
         >
           Explore the docs
-          <ArrowRightIcon className="size-4" />
+          <ArrowRightIcon className="size-4 text-ground" />
         </Link>
       </div>
     </section>

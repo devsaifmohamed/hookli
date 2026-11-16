@@ -12,25 +12,26 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=0A0D12" alt="npm version" /></a>
-  <a href="https://hookli.vercel.app/docs"><img src="https://img.shields.io/badge/docs-hookli.vercel.app-61DAFB?style=flat-square" alt="Documentation" /></a>
-  <a href="https://github.com/saifmohamedsv/hookli/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/saifmohamedsv/hookli/ci.yml?branch=main&style=flat-square&color=0A0D12&label=CI" alt="CI build status" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=61DAFB&label=downloads%2Fmonth" alt="npm downloads per month" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=0A0D12&label=total%20downloads" alt="total npm downloads" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/types/hookli?style=flat-square&color=61DAFB" alt="TypeScript types included" /></a>
-  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=0A0D12" alt="GitHub stars" /></a>
-  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-61DAFB?style=flat-square&logo=githubsponsors&logoColor=0A0D12" alt="Sponsor" /></a>
-  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=354355" alt="license" />
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=07080A" alt="npm version" /></a>
+  <a href="https://hookli.vercel.app/docs"><img src="https://img.shields.io/badge/docs-hookli.vercel.app-61DAFB?style=flat-square&color=61DAFB&labelColor=07080A" alt="Documentation" /></a>
+  <a href="https://hookli.vercel.app/docs/mcp"><img src="https://img.shields.io/badge/MCP_Server-npx_-y_hookli--mcp-61DAFB?style=flat-square&color=61DAFB&labelColor=07080A" alt="MCP Server" /></a>
+  <a href="https://github.com/saifmohamedsv/hookli/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/saifmohamedsv/hookli/ci.yml?branch=main&style=flat-square&color=07080A&label=CI" alt="CI build status" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=61DAFB&labelColor=07080A&label=downloads%2Fmonth" alt="npm downloads per month" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=07080A&label=total%20downloads" alt="total npm downloads" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/types/hookli?style=flat-square&color=61DAFB&labelColor=07080A" alt="TypeScript types included" /></a>
+  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=07080A" alt="GitHub stars" /></a>
+  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-61DAFB?style=flat-square&logo=githubsponsors&logoColor=07080A&labelColor=07080A" alt="Sponsor" /></a>
+  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=232736" alt="license" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/zero_dependencies-61DAFB?style=for-the-badge" alt="zero dependencies" />
-  <img src="https://img.shields.io/badge/TypeScript-0A0D12?style=for-the-badge" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge" alt="SSR-safe" />
-  <img src="https://img.shields.io/badge/tree--shakable-0A0D12?style=for-the-badge" alt="tree-shakable" />
-  <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge" alt="ESM + CJS" />
-  <img src="https://img.shields.io/badge/66_hooks-0A0D12?style=for-the-badge" alt="66 hooks" />
-  <img src="https://img.shields.io/badge/AI--ready-61DAFB?style=for-the-badge" alt="AI-ready" />
+  <img src="https://img.shields.io/badge/zero_dependencies-61DAFB?style=for-the-badge&labelColor=07080A" alt="zero dependencies" />
+  <img src="https://img.shields.io/badge/TypeScript-07080A?style=for-the-badge" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge&labelColor=07080A" alt="SSR-safe" />
+  <img src="https://img.shields.io/badge/tree--shakable-07080A?style=for-the-badge" alt="tree-shakable" />
+  <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge&labelColor=07080A" alt="ESM + CJS" />
+  <img src="https://img.shields.io/badge/66_hooks-07080A?style=for-the-badge" alt="66 hooks" />
+  <img src="https://img.shields.io/badge/MCP--native-61DAFB?style=for-the-badge&labelColor=07080A" alt="MCP-native" />
 </p>
 
 <p align="center">
@@ -39,17 +40,34 @@
 
 <p align="center"><sub>Created by <a href="https://linkedin.com/in/saifmohamedsv/">Saif Mohamed</a> · ISC licensed</sub></p>
 
-## 🚀 Install
+## 🚀 Quick Start
 
+### 1. Install the Package
 ```bash
 npm i hookli
-# or
-yarn add hookli
-# or
-pnpm add hookli
+# or: pnpm add hookli | yarn add hookli
+```
+> **Peer dependency:** React `>=18`.
+
+### 2. Connect Your AI Agent (MCP)
+hookli ships an official Model Context Protocol (MCP) server so **Cursor**, **Claude Code**, **Claude Desktop**, and **Windsurf** query verified TypeScript AST signatures over stdio with zero hallucinations:
+
+```bash
+npx -y hookli-mcp
 ```
 
-> **Peer dependency:** React `>=18`.
+For Cursor, simply add to `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "hookli": {
+      "command": "npx",
+      "args": ["-y", "hookli-mcp"]
+    }
+  }
+}
+```
+> 📚 Complete MCP setup guide: <https://hookli.vercel.app/docs/mcp>
 
 ## 💫 Introduction
 
@@ -71,16 +89,17 @@ What sets hookli apart from similar libraries (including [usehooks-ts](https://u
 
 |                                          |      hookli       | usehooks-ts        |
 | ---------------------------------------- | :---------------: | :----------------: |
-| Hooks                                    |      **65**       | ~33                |
+| Hooks                                    |      **66**       | ~33                |
 | Runtime dependencies                     |       **0**       | `lodash.debounce`  |
 | Written in TypeScript                    |         ✅         | ✅                  |
 | Tree-shakable (ESM)                      |         ✅         | ✅                  |
 | SSR-safe                                 |         ✅         | ✅                  |
+| Native Model Context Protocol (MCP) server |     ✅ (`npx -y hookli-mcp`) | —                  |
 | AI-ready docs (`llms.txt` + Copy for AI) |         ✅         | —                  |
 | Live demos run the published npm build   |         ✅         | —                  |
 | License                                  |        ISC        | MIT                |
 
-<sub>Counts as of September 2026 (usehooks-ts v3.1.1). Both are solid — pick what fits your project.</sub>
+<sub>Counts as of November 2026. Both are solid — pick what fits your project.</sub>
 
 The library is designed to be as minimal as possible. It is fully **tree-shakable** (via the
 ESM build), meaning you only ship the hooks you import and the rest is removed from your
@@ -111,7 +130,7 @@ function Component() {
 
 - **[`useToggle`](https://hookli.vercel.app/docs/use-toggle)** — Boolean state with toggle and explicit set.
 - **[`useForm`](https://hookli.vercel.app/docs/use-form)** — Controlled form state with one change handler.
-- **[`useLocalStorage`](https://hookli.vercel.app/docs/use-local-storage)** — State persisted to localStorage.
+- **[`useLocalStorage`](https://hookli.vercel.app/docs/use-local-storage)** — State persisted to localStorage
 - **[`useLocalStorageWithExpiry`](https://hookli.vercel.app/docs/use-local-storage-with-expiry)** — Persisted state with a TTL.
 - **[`useSessionStorage`](https://hookli.vercel.app/docs/use-session-storage)** — useState backed by sessionStorage, synced across tabs.
 - **[`useReadLocalStorage`](https://hookli.vercel.app/docs/use-read-local-storage)** — Read a localStorage key without writing it, reactively.

@@ -166,6 +166,12 @@ slot beneath it. Every hook page also embeds its implementation source (**Hook**
 | `CodeBlock` | server | shiki (`css-variables` theme wired to brand tokens) + CopyButton |
 | `CopyButton` | client | clipboard API, check-icon feedback, `aria-live="polite"` |
 | `InstallCommand` | client | `$ npm i hookli` + CopyButton, used in hero/footer/docs index |
+| `DualInstallWidget` | client | package (`npm i hookli`) vs agent MCP (`npx -y hookli-mcp`) tab switcher |
+| `HeroAgentPreview` | client | typewriter IDE simulation cycling Cursor, Claude Code, Windsurf |
+| `AnnouncementBanner` | client | global top notification bar with radar ping and 1-click CTA |
+| `CopyMcpConfig` | client | 1-click universal `mcp.json` copy button with copied feedback |
+| `HookActionBar` | client | 2-row action bar: Row 1 import chip + Row 2 AI actions (Copy for AI, Copy MCP JSON, ChatGPT, Claude) |
+| `McpTabGroup` | client | segmented tab switcher for Cursor, Claude Code, Claude Desktop, Windsurf |
 | `FeatureCard` | server | icon + sans title + body |
 | `HookCard` | server | registry entry → linked card |
 | `ApiTable` | server | typed rows from the registry page data |

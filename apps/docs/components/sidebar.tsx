@@ -9,20 +9,40 @@ import {
   CATEGORY_ORDER,
   getHook,
   hooksByCategory,
+  type HookCategory,
 } from "@/lib/hooks-registry";
-import { MenuIcon, XIcon } from "./icons";
+import {
+  BookOpenIcon,
+  DatabaseIcon,
+  GlobeIcon,
+  MenuIcon,
+  ServerIcon,
+  SlidersIcon,
+  SparklesIcon,
+  XIcon,
+  ZapIcon,
+} from "./icons";
 
-/* Docs sidebar (docs/DESIGN.md §2, §5): sticky under the h-14 header, grouped
-   by category, active state from the pathname. Below md it collapses to
-   MobileDocsNav — a sticky trigger bar opening a left slide-over drawer. */
+const CATEGORY_ICONS: Record<HookCategory, React.ComponentType<{ className?: string }>> = {
+  state: SlidersIcon,
+  dom: GlobeIcon,
+  effects: ZapIcon,
+  data: DatabaseIcon,
+};
+
+/* Modern Mintlify-style sidebar:
+   - Grouped navigation with category icons and count pills
+   - Smooth translucent active pill (no harsh left vertical borders)
+   - Sticky under the h-14 header
+   - Mobile-responsive slide-over drawer */
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-56 shrink-0 border-r border-slate-syntax md:block">
+    <aside className="hidden w-64 shrink-0 border-r border-white/[0.06] md:block">
       <nav
         aria-label="Docs"
-        className="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto py-8 pr-6"
+        className="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto py-6 pr-4 pl-1"
       >
         <DocsNavList pathname={pathname} />
       </nav>
@@ -30,10 +50,7 @@ export function Sidebar() {
   );
 }
 
-/* Mobile-only (md:hidden) drawer navigation. Same two-piece dialog recipe as
-   SearchPalette: portal + overlay, scroll lock, Escape closes, focus returns
-   to the trigger; Tab is trapped inside the drawer. Links close on click —
-   no pathname effect needed (react-hooks/set-state-in-effect stays quiet). */
+/* Mobile-only drawer navigation. */
 export function MobileDocsNav() {
   const pathname = usePathname();
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -43,7 +60,9 @@ export function MobileDocsNav() {
   const currentLabel =
     pathname === "/docs"
       ? "Overview"
-      : (getHook(pathname.replace("/docs/", ""))?.name ?? "Docs");
+      : pathname === "/docs/mcp"
+        ? "MCP Server"
+        : (getHook(pathname.replace("/docs/", ""))?.name ?? "Docs");
 
   function close() {
     setOpen(false);
@@ -82,24 +101,29 @@ export function MobileDocsNav() {
   }
 
   return (
-    <div className="sticky top-14 z-30 -mx-4 border-b border-slate-syntax bg-ground/90 px-4 backdrop-blur sm:-mx-6 sm:px-6 md:hidden">
+    <div className="sticky top-14 z-30 -mx-4 border-b border-white/[0.06] bg-ground/95 px-4 backdrop-blur sm:-mx-6 sm:px-6 md:hidden">
       <button
         ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="flex min-h-11 w-full items-center gap-2 text-sm text-gray-body transition-colors duration-200 hover:text-fg"
+        className="flex min-h-11 w-full items-center justify-between text-sm text-gray-body transition-colors duration-200 hover:text-fg"
       >
-        <MenuIcon className="size-4 shrink-0" />
-        <span className="text-gray-body">docs /</span>
-        <span className="truncate text-fg">{currentLabel}</span>
+        <div className="flex items-center gap-2">
+          <MenuIcon className="size-4 shrink-0 text-accent" />
+          <span className="text-gray-body/70 text-xs">docs /</span>
+          <span className="truncate text-fg font-medium">{currentLabel}</span>
+        </div>
+        <span className="text-[11px] font-mono text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+          Navigation
+        </span>
       </button>
 
       {open &&
         createPortal(
           <div
-            className="fixed inset-0 z-50 bg-ground/80 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-50 bg-ground/80 backdrop-blur-md md:hidden"
             onMouseDown={close}
           >
             <div
@@ -109,23 +133,26 @@ export function MobileDocsNav() {
               aria-label="Docs navigation"
               onMouseDown={(event) => event.stopPropagation()}
               onKeyDown={onDrawerKeyDown}
-              className="flex h-full w-72 max-w-[85vw] flex-col border-r border-slate-syntax bg-ground-raised"
+              className="flex h-full w-80 max-w-[85vw] flex-col border-r border-white/[0.08] bg-ground-raised shadow-2xl"
             >
-              <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-syntax pl-4 pr-2">
-                <span className="text-sm text-gray-body">Docs</span>
+              <div className="flex h-14 shrink-0 items-center justify-between border-b border-white/[0.06] px-4">
+                <div className="flex items-center gap-2">
+                  <SparklesIcon className="size-4 text-accent" />
+                  <span className="text-sm font-semibold text-fg">Documentation</span>
+                </div>
                 <button
                   autoFocus
                   type="button"
                   onClick={close}
                   aria-label="Close docs navigation"
-                  className="flex size-11 items-center justify-center rounded-md text-gray-body transition-colors duration-200 hover:text-fg"
+                  className="flex size-9 items-center justify-center rounded-lg text-gray-body transition-colors duration-150 hover:bg-white/[0.06] hover:text-fg"
                 >
-                  <XIcon className="size-5" />
+                  <XIcon className="size-4" />
                 </button>
               </div>
               <nav
                 aria-label="Docs"
-                className="flex-1 overflow-y-auto px-4 py-6"
+                className="flex-1 overflow-y-auto px-3 py-5"
               >
                 <DocsNavList
                   pathname={pathname}
@@ -149,54 +176,92 @@ function DocsNavList({
   onNavigate?: () => void;
 }) {
   return (
-    <>
-      <ul className="flex flex-col border-l border-slate-syntax">
-        <li>
-          <SidebarLink
-            href="/docs"
-            active={pathname === "/docs"}
-            onNavigate={onNavigate}
-          >
-            Overview
-          </SidebarLink>
-        </li>
-      </ul>
-      {CATEGORY_ORDER.map((category) => (
-        <div key={category} className="mt-7">
-          <h3 className="mb-2 pl-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-body">
-            {CATEGORY_LABELS[category]}
-          </h3>
-          <ul className="flex flex-col border-l border-slate-syntax">
-            {hooksByCategory(category).map((hook) => {
-              const href = `/docs/${hook.slug}`;
-              return (
-                <li key={hook.slug}>
-                  <SidebarLink
-                    href={href}
-                    active={pathname === href}
-                    onNavigate={onNavigate}
-                  >
-                    {hook.name}
-                  </SidebarLink>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
-    </>
+    <div className="space-y-6">
+      {/* Getting Started Group */}
+      <div>
+        <p className="px-2.5 mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-body/60">
+          Getting Started
+        </p>
+        <ul className="space-y-0.5">
+          <li>
+            <SidebarPillLink
+              href="/docs"
+              active={pathname === "/docs"}
+              onNavigate={onNavigate}
+              icon={BookOpenIcon}
+            >
+              Overview
+            </SidebarPillLink>
+          </li>
+          <li>
+            <SidebarPillLink
+              href="/docs/mcp"
+              active={pathname === "/docs/mcp"}
+              onNavigate={onNavigate}
+              icon={ServerIcon}
+              badge="AI"
+            >
+              MCP Server
+            </SidebarPillLink>
+          </li>
+        </ul>
+      </div>
+
+      {/* Hook Categories */}
+      {CATEGORY_ORDER.map((category) => {
+        const hooks = hooksByCategory(category);
+        const Icon = CATEGORY_ICONS[category];
+
+        return (
+          <div key={category} className="space-y-1">
+            <div className="flex items-center justify-between px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-body/70">
+              <div className="flex items-center gap-2">
+                <Icon className="size-3.5 text-accent/80" />
+                <span>{CATEGORY_LABELS[category]}</span>
+              </div>
+              <span className="font-mono text-[10px] text-gray-body/50 bg-white/[0.04] px-1.5 py-0.2 rounded-full border border-white/[0.04]">
+                {hooks.length}
+              </span>
+            </div>
+
+            <ul className="space-y-0.5">
+              {hooks.map((hook) => {
+                const href = `/docs/${hook.slug}`;
+                const active = pathname === href;
+
+                return (
+                  <li key={hook.slug}>
+                    <SidebarPillLink
+                      href={href}
+                      active={active}
+                      onNavigate={onNavigate}
+                    >
+                      {hook.name}
+                    </SidebarPillLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
-function SidebarLink({
+function SidebarPillLink({
   href,
   active,
   onNavigate,
+  icon: Icon,
+  badge,
   children,
 }: {
   href: string;
   active: boolean;
   onNavigate?: () => void;
+  icon?: React.ComponentType<{ className?: string }>;
+  badge?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -204,13 +269,33 @@ function SidebarLink({
       href={href}
       onClick={onNavigate}
       aria-current={active ? "page" : undefined}
-      className={`-ml-px flex min-h-11 items-center border-l-2 pl-4 text-sm transition-colors duration-200 md:min-h-9 ${
+      className={`group flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs sm:text-sm font-normal transition-all duration-150 ${
         active
-          ? "border-accent font-medium text-fg"
-          : "border-transparent text-gray-body hover:border-slate-syntax hover:text-fg"
+          ? "bg-accent/15 text-accent font-medium shadow-sm shadow-accent/10"
+          : "text-gray-body hover:bg-white/[0.04] hover:text-white"
       }`}
     >
-      {children}
+      <div className="flex items-center gap-2 min-w-0">
+        {Icon && (
+          <Icon
+            className={`size-3.5 shrink-0 transition-colors ${
+              active ? "text-accent" : "text-gray-body/60 group-hover:text-white"
+            }`}
+          />
+        )}
+        <span className="truncate">{children}</span>
+      </div>
+
+      {badge ? (
+        <span className="rounded-full bg-accent/20 px-1.5 py-0.2 font-mono text-[10px] font-semibold text-accent border border-accent/30">
+          {badge}
+        </span>
+      ) : active ? (
+        <span
+          className="size-1.5 rounded-full bg-accent shadow-sm shadow-accent shrink-0"
+          aria-hidden="true"
+        />
+      ) : null}
     </Link>
   );
 }

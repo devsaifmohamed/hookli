@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" role="img" aria-label="hookli">
+  <!-- Carbon dark tile: deep premium obsidian-slate surface with subtle inner edge highlight -->
+  <rect width="256" height="256" rx="56" fill="#151C27"/>
+  <rect x="0.75" y="0.75" width="254.5" height="254.5" rx="55.25" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1.5"/>
+
+  <!-- Hook mark: continuous stroke in Classic React Cyan accent -->
+  <path
+    d="M170 68 V140 A42 42 0 1 1 86 140 V116"
+    stroke="#61DAFB"
+    stroke-width="26"
+    stroke-linecap="round"
+  />
+
+  <!-- State dot: matching Classic React Cyan accent fill -->
+  <circle cx="128" cy="140" r="15" fill="#61DAFB"/>
+</svg>

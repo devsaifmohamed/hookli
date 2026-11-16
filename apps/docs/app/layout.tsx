@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
+import { AnnouncementBanner } from "@/components/announcement-banner";
 import { Footer } from "@/components/footer";
 import { DonateButton } from "@/components/donate-button";
 import { SITE_URL, TAGLINE } from "@/lib/site";
@@ -50,7 +51,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   icons: {
-    icon: "/hookli-icon.svg",
+    icon: [
+      { url: "/hookli-icon.svg?v=6", type: "image/svg+xml" },
+      { url: "/icon.svg?v=6", type: "image/svg+xml" },
+    ],
+    apple: "/apple-icon?v=6",
   },
 };
 
@@ -69,6 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-ground font-sans text-fg">
+        <AnnouncementBanner />
         <Header />
         {children}
         <Footer />
