@@ -2,21 +2,35 @@
 
 import { useState } from "react";
 
-type TabKey = "cursor" | "claude-code" | "claude" | "windsurf" | "local";
+type TabKey =
+  | "cursor"
+  | "claude-code"
+  | "antigravity"
+  | "codex"
+  | "claude"
+  | "windsurf"
+  | "cline"
+  | "local";
 
 interface McpTabGroupProps {
   cursorContent: React.ReactNode;
   claudeCodeContent: React.ReactNode;
+  antigravityContent?: React.ReactNode;
+  codexContent?: React.ReactNode;
   claudeContent: React.ReactNode;
   windsurfContent: React.ReactNode;
+  clineContent?: React.ReactNode;
   localContent: React.ReactNode;
 }
 
 export function McpTabGroup({
   cursorContent,
   claudeCodeContent,
+  antigravityContent,
+  codexContent,
   claudeContent,
   windsurfContent,
+  clineContent,
   localContent,
 }: McpTabGroupProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("cursor");
@@ -24,8 +38,11 @@ export function McpTabGroup({
   const tabs: { key: TabKey; label: string; badge?: string }[] = [
     { key: "cursor", label: "Cursor", badge: "Recommended" },
     { key: "claude-code", label: "Claude Code", badge: "CLI" },
+    { key: "antigravity", label: "Antigravity", badge: "Google" },
+    { key: "codex", label: "Codex / OpenAI" },
     { key: "claude", label: "Claude Desktop" },
     { key: "windsurf", label: "Windsurf" },
+    { key: "cline", label: "VS Code / Cline" },
     { key: "local", label: "Local Workspace" },
   ];
 
@@ -67,8 +84,11 @@ export function McpTabGroup({
       <div className="mt-5">
         {activeTab === "cursor" && cursorContent}
         {activeTab === "claude-code" && claudeCodeContent}
+        {activeTab === "antigravity" && antigravityContent}
+        {activeTab === "codex" && codexContent}
         {activeTab === "claude" && claudeContent}
         {activeTab === "windsurf" && windsurfContent}
+        {activeTab === "cline" && clineContent}
         {activeTab === "local" && localContent}
       </div>
     </div>

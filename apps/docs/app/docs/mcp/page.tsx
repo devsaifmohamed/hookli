@@ -22,25 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CURSOR_CONFIG = `{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}`;
-
-const CLAUDE_DESKTOP_CONFIG = `{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}`;
-
-const WINDSURF_CONFIG = `{
+const UNIVERSAL_CONFIG = `{
   "mcpServers": {
     "hookli": {
       "command": "npx",
@@ -172,7 +154,7 @@ export default function McpDocsPage() {
                 <h4 className="text-sm font-medium text-fg">Paste Configuration</h4>
               </div>
               <div className="mt-2 pl-7">
-                <CodeBlock code={CURSOR_CONFIG} lang="json" title=".cursor/mcp.json" />
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title=".cursor/mcp.json" />
               </div>
             </div>
           </div>
@@ -205,6 +187,50 @@ export default function McpDocsPage() {
             </div>
           </div>
         }
+        antigravityContent={
+          <div className="flex flex-col gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">1</span>
+                <h4 className="text-sm font-medium text-fg">Workspace or Global Config</h4>
+              </div>
+              <p className="text-xs text-gray-body mt-1.5 pl-7">
+                Create or open <code className="text-accent bg-accent/10 px-1.5 py-0.5 rounded font-mono text-xs">.gemini/mcp.json</code> in your project, or global config at <code className="text-accent bg-accent/10 px-1.5 py-0.5 rounded font-mono text-xs">~/.gemini/antigravity/mcp.json</code>.
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">2</span>
+                <h4 className="text-sm font-medium text-fg">Paste Configuration</h4>
+              </div>
+              <div className="mt-2 pl-7">
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title=".gemini/mcp.json" />
+              </div>
+            </div>
+          </div>
+        }
+        codexContent={
+          <div className="flex flex-col gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">1</span>
+                <h4 className="text-sm font-medium text-fg">Codex CLI & ChatGPT Desktop</h4>
+              </div>
+              <p className="text-xs text-gray-body mt-1.5 pl-7">
+                Add to your global Codex config at <code className="text-accent bg-accent/10 px-1.5 py-0.5 rounded font-mono text-xs">~/.codex/mcp.json</code> or open <strong>ChatGPT Desktop → Settings → Developer → MCP Servers</strong>.
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">2</span>
+                <h4 className="text-sm font-medium text-fg">Paste Configuration</h4>
+              </div>
+              <div className="mt-2 pl-7">
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title="~/.codex/mcp.json" />
+              </div>
+            </div>
+          </div>
+        }
         claudeContent={
           <div className="flex flex-col gap-4">
             <div>
@@ -222,7 +248,7 @@ export default function McpDocsPage() {
                 <h4 className="text-sm font-medium text-fg">Add hookli Server</h4>
               </div>
               <div className="mt-2 pl-7">
-                <CodeBlock code={CLAUDE_DESKTOP_CONFIG} lang="json" title="claude_desktop_config.json" />
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title="claude_desktop_config.json" />
               </div>
             </div>
           </div>
@@ -244,7 +270,29 @@ export default function McpDocsPage() {
                 <h4 className="text-sm font-medium text-fg">Paste Configuration</h4>
               </div>
               <div className="mt-2 pl-7">
-                <CodeBlock code={WINDSURF_CONFIG} lang="json" title="mcp_config.json" />
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title="mcp_config.json" />
+              </div>
+            </div>
+          </div>
+        }
+        clineContent={
+          <div className="flex flex-col gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">1</span>
+                <h4 className="text-sm font-medium text-fg">VS Code Extension (Cline / Roo Code)</h4>
+              </div>
+              <p className="text-xs text-gray-body mt-1.5 pl-7">
+                In VS Code, open the <strong>Cline / Roo Code</strong> extension tab, click the <strong>MCP Servers (plug)</strong> icon, and click <strong>Configure MCP Servers</strong> (<code className="text-accent bg-accent/10 px-1.5 py-0.5 rounded font-mono text-xs">cline_mcp_settings.json</code>).
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[11px] font-semibold text-accent">2</span>
+                <h4 className="text-sm font-medium text-fg">Paste Configuration</h4>
+              </div>
+              <div className="mt-2 pl-7">
+                <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title="cline_mcp_settings.json" />
               </div>
             </div>
           </div>
