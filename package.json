@@ -11,9 +11,11 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "dev": "turbo run dev",
+    "gen:banner": "node scripts/render-banner.mjs",
     "gen:manifest": "pnpm --filter hookli run gen:manifest"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "turbo": "^2.5.4"
   }
 }
