@@ -63,10 +63,12 @@ export function HeroAgentPreview({ className = "" }: { className?: string }) {
     ).matches;
 
     if (prefersReducedMotion) {
-      setUserText(fullPrompt);
-      setCodeText(CODE_SNIPPET);
-      setPhase("done");
-      return;
+      const timer = setTimeout(() => {
+        setUserText(fullPrompt);
+        setCodeText(CODE_SNIPPET);
+        setPhase("done");
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -90,15 +92,16 @@ export function HeroAgentPreview({ className = "" }: { className?: string }) {
           setCodeText(CODE_SNIPPET.slice(0, codeText.length + 3));
         }, 15);
       } else {
-        setPhase("done");
-        timeoutId = setTimeout(() => {
-          // cycle to next IDE and restart
-          setIdeIndex((prev) => (prev + 1) % IDE_NAMES.length);
-          setUserText("");
-          setCodeText("");
-          setPhase("user");
-        }, 4500);
+        timeoutId = setTimeout(() => setPhase("done"), 100);
       }
+    } else if (phase === "done") {
+      timeoutId = setTimeout(() => {
+        // cycle to next IDE and restart
+        setIdeIndex((prev) => (prev + 1) % IDE_NAMES.length);
+        setUserText("");
+        setCodeText("");
+        setPhase("user");
+      }, 4500);
     }
 
     return () => clearTimeout(timeoutId);

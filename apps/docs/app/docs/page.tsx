@@ -7,7 +7,6 @@ import {
   ArrowRightIcon,
   DatabaseIcon,
   GlobeIcon,
-  ServerIcon,
   SlidersIcon,
   SparklesIcon,
   ZapIcon,

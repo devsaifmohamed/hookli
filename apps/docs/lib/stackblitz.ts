@@ -243,7 +243,7 @@ export function createStackBlitzProject(
   };
 }
 
-let sdkPromise: Promise<any> | null = null;
+let sdkPromise: Promise<typeof import("@stackblitz/sdk")> | null = null;
 
 function loadSdk() {
   if (!sdkPromise) {

@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/hookli">
-    <img src="https://raw.githubusercontent.com/saifmohamedsv/hookli/main/assets/hookli-banner.png?v=2" alt="hookli — React hooks, ready to use" width="680" />
+    <img src="https://raw.githubusercontent.com/devsaifmohamed/hookli/main/assets/hookli-banner.png?v=2" alt="hookli — React hooks, ready to use" width="680" />
   </a>
 </p>
 
@@ -12,33 +12,31 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=07080A" alt="npm version" /></a>
-  <a href="https://hookli.vercel.app/docs"><img src="https://img.shields.io/badge/docs-hookli.vercel.app-61DAFB?style=flat-square&color=61DAFB&labelColor=07080A" alt="Documentation" /></a>
-  <a href="https://hookli.vercel.app/docs/mcp"><img src="https://img.shields.io/badge/MCP_Server-npx_-y_hookli--mcp-61DAFB?style=flat-square&color=61DAFB&labelColor=07080A" alt="MCP Server" /></a>
-  <a href="https://github.com/saifmohamedsv/hookli/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/saifmohamedsv/hookli/ci.yml?branch=main&style=flat-square&color=07080A&label=CI" alt="CI build status" /></a>
+  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/v/hookli?style=flat-square&color=61DAFB&labelColor=07080A" alt="npm version" /></a>
+  <a href="https://hookli.vercel.app/docs"><img src="https://img.shields.io/badge/docs-hookli.vercel.app-61DAFB?style=flat-square&labelColor=07080A" alt="Documentation" /></a>
+  <a href="https://hookli.vercel.app/docs/mcp"><img src="https://img.shields.io/badge/MCP_Server-npx_hookli--mcp-61DAFB?style=flat-square&labelColor=07080A" alt="MCP Server" /></a>
+  <a href="https://github.com/devsaifmohamed/hookli/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/devsaifmohamed/hookli/ci.yml?branch=main&style=flat-square&label=CI&color=61DAFB&labelColor=07080A" alt="CI build status" /></a>
   <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dm/hookli?style=flat-square&color=61DAFB&labelColor=07080A&label=downloads%2Fmonth" alt="npm downloads per month" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/dt/hookli?style=flat-square&color=07080A&label=total%20downloads" alt="total npm downloads" /></a>
-  <a href="https://www.npmjs.com/package/hookli"><img src="https://img.shields.io/npm/types/hookli?style=flat-square&color=61DAFB&labelColor=07080A" alt="TypeScript types included" /></a>
-  <a href="https://github.com/saifmohamedsv/hookli"><img src="https://img.shields.io/github/stars/saifmohamedsv/hookli?style=flat-square&color=07080A" alt="GitHub stars" /></a>
-  <a href="https://github.com/sponsors/saifmohamedsv"><img src="https://img.shields.io/badge/sponsor-61DAFB?style=flat-square&logo=githubsponsors&logoColor=07080A&labelColor=07080A" alt="Sponsor" /></a>
-  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=232736" alt="license" />
+  <a href="https://github.com/devsaifmohamed/hookli"><img src="https://img.shields.io/github/stars/devsaifmohamed/hookli?style=flat-square&color=61DAFB&labelColor=07080A" alt="GitHub stars" /></a>
+  <a href="https://github.com/sponsors/devsaifmohamed"><img src="https://img.shields.io/badge/sponsor-github-61DAFB?style=flat-square&logo=githubsponsors&logoColor=61DAFB&labelColor=07080A" alt="Sponsor" /></a>
+  <img src="https://img.shields.io/npm/l/hookli?style=flat-square&color=61DAFB&labelColor=07080A" alt="license" />
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/zero_dependencies-61DAFB?style=for-the-badge&labelColor=07080A" alt="zero dependencies" />
-  <img src="https://img.shields.io/badge/TypeScript-07080A?style=for-the-badge" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/SSR--safe-61DAFB?style=for-the-badge&labelColor=07080A" alt="SSR-safe" />
-  <img src="https://img.shields.io/badge/tree--shakable-07080A?style=for-the-badge" alt="tree-shakable" />
-  <img src="https://img.shields.io/badge/ESM_%2B_CJS-61DAFB?style=for-the-badge&labelColor=07080A" alt="ESM + CJS" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/SSR_safe-61DAFB?style=for-the-badge&labelColor=07080A" alt="SSR safe" />
+  <img src="https://img.shields.io/badge/tree_shakable-07080A?style=for-the-badge" alt="tree shakable" />
+  <img src="https://img.shields.io/badge/ESM_&_CJS-61DAFB?style=for-the-badge&labelColor=07080A" alt="ESM & CJS" />
   <img src="https://img.shields.io/badge/66_hooks-07080A?style=for-the-badge" alt="66 hooks" />
-  <img src="https://img.shields.io/badge/MCP--native-61DAFB?style=for-the-badge&labelColor=07080A" alt="MCP-native" />
+  <img src="https://img.shields.io/badge/MCP_native-61DAFB?style=for-the-badge&labelColor=07080A" alt="MCP native" />
 </p>
 
 <p align="center">
   <a href="#-available-hooks"><strong>Browse the hooks &rarr;</strong></a>
 </p>
 
-<p align="center"><sub>Created by <a href="https://linkedin.com/in/saifmohamedsv/">Saif Mohamed</a> · ISC licensed</sub></p>
+<p align="center"><sub>Created by <a href="https://linkedin.com/in/devsaifmohamed/">Saif Mohamed</a> · ISC licensed</sub></p>
 
 ## 🚀 Quick Start
 
@@ -220,17 +218,17 @@ const debounced = useDebounce(query, 300); // debounced: typeof query
 
 hookli is free and open source, built and maintained in the open. If it saves you time:
 
-- ⭐ **[Star the repo](https://github.com/saifmohamedsv/hookli)** — it's the #1 way to help others find it.
-- 💖 **[Become a sponsor](https://github.com/sponsors/saifmohamedsv)** — fund ongoing maintenance and new hooks.
+- ⭐ **[Star the repo](https://github.com/devsaifmohamed/hookli)** — it's the #1 way to help others find it.
+- 💖 **[Become a sponsor](https://github.com/sponsors/devsaifmohamed)** — fund ongoing maintenance and new hooks.
 
 Every star and sponsorship genuinely helps keep this going. Thank you! 🙏
 
 ## 🤝 Contributing
 
-Contributions of any size are welcome — see **[CONTRIBUTING.md](https://github.com/saifmohamedsv/hookli/blob/main/CONTRIBUTING.md)**. In short:
+Contributions of any size are welcome — see **[CONTRIBUTING.md](https://github.com/devsaifmohamed/hookli/blob/main/CONTRIBUTING.md)**. In short:
 each hook lives in its own folder under `src/hooks/use-<name>/` (hook + colocated vitest test +
 barrel), keep it SSR-safe, and make sure `bash ralph/check.sh` (typecheck + tests + build) is green.
 
 ## 📄 License
 
-ISC © [Saif Mohamed](https://linkedin.com/in/saifmohamedsv/)
+ISC © [Saif Mohamed](https://linkedin.com/in/devsaifmohamed/)

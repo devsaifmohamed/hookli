@@ -36,14 +36,14 @@ export function McpTabGroup({
   const [activeTab, setActiveTab] = useState<TabKey>("cursor");
 
   const tabs: { key: TabKey; label: string; badge?: string }[] = [
-    { key: "cursor", label: "Cursor", badge: "Recommended" },
+    { key: "cursor", label: "Cursor", badge: "IDE" },
     { key: "claude-code", label: "Claude Code", badge: "CLI" },
     { key: "antigravity", label: "Antigravity", badge: "Google" },
-    { key: "codex", label: "Codex / OpenAI" },
-    { key: "claude", label: "Claude Desktop" },
-    { key: "windsurf", label: "Windsurf" },
-    { key: "cline", label: "VS Code / Cline" },
-    { key: "local", label: "Local Workspace" },
+    { key: "codex", label: "Codex / OpenAI", badge: "OpenAI" },
+    { key: "claude", label: "Claude Desktop", badge: "Desktop" },
+    { key: "windsurf", label: "Windsurf", badge: "IDE" },
+    { key: "cline", label: "VS Code / Cline", badge: "Extension" },
+    { key: "local", label: "Local Workspace", badge: "Dev" },
   ];
 
   return (

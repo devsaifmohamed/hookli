@@ -1,29 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { SparklesIcon, XIcon } from "@/components/icons";
 
 const STORAGE_KEY = "hookli_mcp_banner_dismissed_v1";
+const emptySubscribe = () => () => {};
 
 export function AnnouncementBanner() {
-  const [mounted, setMounted] = useState(false);
-  const [dismissed, setDismissed] = useState(true); // default hidden until client checks sessionStorage to prevent hydration flash
+  const [userDismissed, setUserDismissed] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    try {
-      const isDismissed = sessionStorage.getItem(STORAGE_KEY);
-      if (!isDismissed) {
-        setDismissed(false);
+  const isDismissed = useSyncExternalStore(
+    emptySubscribe,
+    () => {
+      try {
+        return sessionStorage.getItem(STORAGE_KEY) === "true";
+      } catch {
+        return false;
       }
-    } catch {
-      setDismissed(false);
-    }
-  }, []);
+    },
+    () => true // SSR returns true to prevent hydration mismatch
+  );
 
   function handleDismiss() {
-    setDismissed(true);
+    setUserDismissed(true);
     try {
       sessionStorage.setItem(STORAGE_KEY, "true");
     } catch {
@@ -31,7 +31,7 @@ export function AnnouncementBanner() {
     }
   }
 
-  if (!mounted || dismissed) return null;
+  if (isDismissed || userDismissed) return null;
 
   return (
     <aside
