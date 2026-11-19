@@ -42,6 +42,22 @@ describe("search_hooks accuracy on plain-language requests", () => {
     expect(res.every((r) => r.hook.category === "dom")).toBe(true);
   });
 
+  it("words that are Object.prototype keys do not crash the search", () => {
+    for (const q of ["constructor", "toString hook", "__proto__ valueOf", "hasOwnProperty"]) {
+      expect(() => rankHooks(CATALOG, q)).not.toThrow();
+    }
+  });
+
+  it("'persistence' finds the storage hooks", () => {
+    const names = rankHooks(CATALOG, "persistence", { limit: 3 }).map((r) => r.hook.name);
+    expect(names).toContain("useLocalStorage");
+  });
+
+  it("useDarkMode is not offered for the OS color-scheme preference (it only reads localStorage)", () => {
+    const top = rankHooks(CATALOG, "prefers-color-scheme", { limit: 1 })[0];
+    expect(top.hook.name).toBe("useTernaryDarkMode");
+  });
+
   it("stems word variants onto one form", () => {
     expect(stem("typing")).toBe(stem("type"));
     expect(stem("stopped")).toBe("stop");
@@ -58,6 +74,15 @@ describe("suggest_hooks_for_task composes one hook per requirement", () => {
     ["image gallery with lazy loading, fullscreen view and keyboard shortcuts", ["useIntersectionObserver", "useFullscreen", "useHotkeys"]],
     ["draggable chat widget that remembers its position and hides on mobile", ["useDraggable", "useLocalStorage", "useMediaQuery"]],
   ];
+  it("keeps every requirement's primary hook when the list is truncated", () => {
+    const task = "draggable widget that remembers its position, closes on outside click, locks body scroll";
+    const all = suggestForTask(CATALOG, task, 10).map((s) => s.hook.name);
+    const capped = suggestForTask(CATALOG, task, 3).map((s) => s.hook.name);
+    expect(all.length).toBeGreaterThan(3);
+    expect(capped).toEqual(expect.arrayContaining(["useClickOutside", "useScrollLock"]));
+    expect(capped).toHaveLength(3);
+  });
+
   it.each(cases)("%s", (task, expected) => {
     const names = suggestForTask(CATALOG, task).map((s) => s.hook.name);
     for (const hook of expected) expect(names).toContain(hook);

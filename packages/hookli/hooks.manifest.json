@@ -55,7 +55,7 @@
       "description": "Dark-mode boolean with toggle.",
       "category": "state",
       "signature": "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }",
-      "keywords": ["dark mode", "theme", "prefers-color-scheme", "color scheme", "night mode"]
+      "keywords": ["dark mode", "theme", "dark theme toggle", "night mode", "remember theme"]
     },
     {
       "slug": "use-ternary-dark-mode",
@@ -63,7 +63,7 @@
       "description": "Three-state dark mode — system, dark or light — persisted.",
       "category": "state",
       "signature": "useTernaryDarkMode(options?: UseTernaryDarkModeOptions): UseTernaryDarkModeReturn",
-      "keywords": ["dark light system", "theme switcher", "system theme", "three way theme", "color scheme toggle"]
+      "keywords": ["dark light system", "theme switcher", "system theme", "three way theme", "color scheme toggle", "prefers-color-scheme", "follow os theme"]
     },
     {
       "slug": "use-boolean",

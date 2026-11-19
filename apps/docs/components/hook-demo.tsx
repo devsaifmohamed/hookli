@@ -5,7 +5,7 @@ import { DemoErrorBoundary } from "@/components/demo-error-boundary";
 import { StackBlitzIcon } from "@/components/icons";
 import type { HookDoc } from "@/lib/hook-docs";
 import type { HookEntry } from "@/lib/hooks-registry";
-import { openInStackBlitz } from "@/lib/stackblitz";
+import { openInStackBlitz, preloadStackBlitz } from "@/lib/stackblitz";
 
 const TABS = [
   { id: "preview", label: "Preview" },
@@ -117,6 +117,8 @@ export function HookDemo({
             <button
               type="button"
               onClick={handleStackBlitz}
+              onPointerEnter={preloadStackBlitz}
+              onFocus={preloadStackBlitz}
               disabled={openingSb}
               className="group inline-flex h-7 items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 text-xs font-medium text-gray-body transition-all duration-150 hover:border-amber-400/40 hover:bg-amber-400/[0.08] hover:text-amber-300 active:scale-95 disabled:opacity-50"
               title="Open this demo in a StackBlitz cloud playground"

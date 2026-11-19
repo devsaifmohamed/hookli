@@ -353,9 +353,9 @@
     "keywords": [
       "dark mode",
       "theme",
-      "prefers-color-scheme",
-      "color scheme",
-      "night mode"
+      "dark theme toggle",
+      "night mode",
+      "remember theme"
     ]
   },
   {
@@ -450,7 +450,9 @@
       "theme switcher",
       "system theme",
       "three way theme",
-      "color scheme toggle"
+      "color scheme toggle",
+      "prefers-color-scheme",
+      "follow os theme"
     ]
   },
   {

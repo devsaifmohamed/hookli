@@ -28,7 +28,7 @@ const STOPWORDS = new Set(
 );
 
 /** Everyday developer wording -> words the catalog uses. Applied at reduced weight. */
-const SYNONYMS: Record<string, string[]> = {
+const SYNONYMS = new Map<string, string[]>(Object.entries({
   refresh: ["persist", "storage"],
   reload: ["persist", "storage"],
   reloads: ["persist", "storage"],
@@ -112,7 +112,7 @@ const SYNONYMS: Record<string, string[]> = {
   highlighted: ["selection", "selected"],
   selected: ["selection"],
   title: ["document"],
-};
+}));
 
 /** Multi-word phrasings whose meaning is not in their single words. */
 const PHRASE_SYNONYMS: Array<[RegExp, string[]]> = [
@@ -131,7 +131,7 @@ const NAME_BONUS = 4;
 
 export function stem(word: string): string {
   const w = word.toLowerCase();
-  for (const suffix of ["ing", "ies", "ied", "ed", "es", "s", "e"]) {
+  for (const suffix of ["ence", "ance", "ing", "ies", "ied", "ed", "es", "s", "e"]) {
     if (w.endsWith(suffix) && w.length - suffix.length >= 3) {
       if (suffix === "s" && w.endsWith("ss")) return w;
       let base = w.slice(0, -suffix.length);
@@ -216,7 +216,7 @@ export function rankHooks(
     terms.set(stem(w), 1);
   }
   for (const w of rawWords) {
-    for (const syn of SYNONYMS[w] ?? SYNONYMS[stem(w)] ?? []) {
+    for (const syn of SYNONYMS.get(w) ?? SYNONYMS.get(stem(w)) ?? []) {
       for (const t of contentTokens(syn)) if (!terms.has(t)) terms.set(t, SYNONYM_WEIGHT);
     }
   }
@@ -296,8 +296,12 @@ export function suggestForTask(catalog: HookCatalogItem[], task: string, max = 6
       picked.set(r.hook.name, { ...r, covers: task, order: 0 });
     }
   }
-  return [...picked.values()]
-    .sort((a, b) => a.order - b.order)
+  // Fill slots with each requirement's primary hook first, then second hooks.
+  const all = [...picked.values()];
+  const primaries = all.filter((s) => Number.isInteger(s.order));
+  const secondaries = all.filter((s) => !Number.isInteger(s.order));
+  return [...primaries, ...secondaries]
     .slice(0, max)
+    .sort((a, b) => a.order - b.order)
     .map(({ hook, score, covers }) => ({ hook, score, covers }));
 }

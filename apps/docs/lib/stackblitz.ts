@@ -262,7 +262,8 @@ export function createStackBlitzProject(
     hookFiles[`${LOCAL_LIB}/${slug}/index.ts`] = `export * from "./${slug}";\n`;
   }
   hookFiles[`${LOCAL_LIB}/index.ts`] =
-    `// hookli source for this playground — the same files that ship in the npm package.\n` +
+    `// hookli source from the GitHub repository (main) — the code the npm package is built from.\n` +
+    `// It can be ahead of the latest npm release.\n` +
     slugs.map((slug) => `export * from "./${slug}";`).join("\n") +
     "\n";
 
@@ -288,12 +289,30 @@ export function createStackBlitzProject(
 }
 
 let sdkPromise: Promise<typeof import("@stackblitz/sdk")> | null = null;
+let sourcesPromise: Promise<typeof import("@/lib/hook-sources")> | null = null;
 
 function loadSdk() {
   if (!sdkPromise) {
     sdkPromise = import("@stackblitz/sdk");
   }
   return sdkPromise;
+}
+
+function loadSources() {
+  if (!sourcesPromise) {
+    sourcesPromise = import("@/lib/hook-sources");
+  }
+  return sourcesPromise;
+}
+
+/**
+ * Starts downloading the SDK and hook sources before the click (call on pointer
+ * enter / focus). Browsers only allow `newWindow` popups for a few seconds after
+ * a click, so the click itself must not wait on a slow first download.
+ */
+export function preloadStackBlitz(): void {
+  void loadSdk();
+  void loadSources();
 }
 
 /**
@@ -308,7 +327,7 @@ export async function openInStackBlitz(
   // never ship in the page's initial JavaScript.
   const [sdkModule, { getHookSource, getHookSourceClosure }] = await Promise.all([
     loadSdk(),
-    import("@/lib/hook-sources"),
+    loadSources(),
   ]);
   const sdk = sdkModule.default ?? sdkModule;
   const project = createStackBlitzProject(hook, doc, {

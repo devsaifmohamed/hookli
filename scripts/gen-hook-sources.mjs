@@ -23,8 +23,9 @@ for (const { slug } of manifest.hooks) {
     continue;
   }
   const source = fs.readFileSync(file, "utf8");
-  const deps = [...source.matchAll(/from\s+"\.\.\/(use-[a-z0-9-]+)"/g)].map((m) => m[1]);
-  const foreign = [...source.matchAll(/from\s+"([^"]+)"/g)]
+  // Accept either quote style; anything other than react or a sibling hook is rejected.
+  const deps = [...source.matchAll(/from\s+["']\.\.\/(use-[a-z0-9-]+)["']/g)].map((m) => m[1]);
+  const foreign = [...source.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)]
     .map((m) => m[1])
     .filter((spec) => spec !== "react" && !/^\.\.\/use-[a-z0-9-]+$/.test(spec));
   if (foreign.length) problems.push(`${slug}: unsupported import(s) ${foreign.join(", ")}`);

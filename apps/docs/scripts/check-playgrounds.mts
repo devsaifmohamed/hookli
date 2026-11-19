@@ -27,54 +27,61 @@ const { createStackBlitzProject } = (await load("@/lib/stackblitz")) as {
 };
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "hookli-playgrounds-"));
-const projectsDir = path.join(tmp, "projects");
-let template: { dependencies: Record<string, string>; devDependencies: Record<string, string> } | undefined;
-const missingDocs: string[] = [];
+let exitCode = 1;
+try {
+  const projectsDir = path.join(tmp, "projects");
+  let template: { dependencies: Record<string, string>; devDependencies: Record<string, string> } | undefined;
+  const missingDocs: string[] = [];
 
-for (const hook of HOOKS) {
-  const doc = getHookDoc(hook.slug);
-  if (!doc) {
-    missingDocs.push(hook.slug);
-    continue;
+  for (const hook of HOOKS) {
+    const doc = getHookDoc(hook.slug);
+    if (!doc) {
+      missingDocs.push(hook.slug);
+      continue;
+    }
+    const project = createStackBlitzProject(hook, doc, { get: getHookSource, closure: getHookSourceClosure });
+    for (const [file, contents] of Object.entries(project.files)) {
+      const dest = path.join(projectsDir, hook.slug, file);
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, contents);
+    }
+    template ??= JSON.parse(project.files["package.json"]);
   }
-  const project = createStackBlitzProject(hook, doc, { get: getHookSource, closure: getHookSourceClosure });
-  for (const [file, contents] of Object.entries(project.files)) {
-    const dest = path.join(projectsDir, hook.slug, file);
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, contents);
-  }
-  template ??= JSON.parse(project.files["package.json"]);
-}
 
-if (!template) throw new Error("no playgrounds generated");
-fs.writeFileSync(
-  path.join(tmp, "package.json"),
-  JSON.stringify({ private: true, type: "module", dependencies: { ...template.dependencies, ...template.devDependencies } }),
-);
-console.log(`Installing playground template dependencies in ${tmp} ...`);
-execFileSync("npm", ["install", "--no-audit", "--no-fund", "--loglevel=error"], { cwd: tmp, stdio: "inherit" });
+  if (!template) throw new Error("no playgrounds generated");
+  fs.writeFileSync(
+    path.join(tmp, "package.json"),
+    JSON.stringify({ private: true, type: "module", dependencies: { ...template.dependencies, ...template.devDependencies } }),
+  );
+  console.log(`Installing playground template dependencies in ${tmp} ...`);
+  execFileSync("npm", ["install", "--no-audit", "--no-fund", "--loglevel=error"], { cwd: tmp, stdio: "inherit" });
 
-const bin = (name: string) => path.join(tmp, "node_modules", ".bin", name);
-const failures: string[] = [];
-const slugs = fs.readdirSync(projectsDir).sort();
-for (const slug of slugs) {
-  const dir = path.join(projectsDir, slug);
-  fs.symlinkSync(path.join(tmp, "node_modules"), path.join(dir, "node_modules"));
-  for (const [step, cmd, args] of [
-    ["tsc", bin("tsc"), ["-p", "tsconfig.json"]],
-    ["vite build", bin("vite"), ["build", "--logLevel", "error"]],
-  ] as const) {
-    try {
-      execFileSync(cmd, [...args], { cwd: dir, stdio: "pipe" });
-    } catch (error) {
-      const out = String((error as { stdout?: Buffer }).stdout ?? "") + String((error as { stderr?: Buffer }).stderr ?? "");
-      failures.push(`${slug} (${step}):\n    ${out.trim().split("\n").slice(0, 4).join("\n    ")}`);
+  const bin = (name: string) => path.join(tmp, "node_modules", ".bin", name);
+  const failures: string[] = [];
+  const slugs = fs.readdirSync(projectsDir).sort();
+  for (const slug of slugs) {
+    const dir = path.join(projectsDir, slug);
+    fs.symlinkSync(path.join(tmp, "node_modules"), path.join(dir, "node_modules"));
+    for (const [step, cmd, args] of [
+      ["tsc", bin("tsc"), ["-p", "tsconfig.json"]],
+      ["vite build", bin("vite"), ["build", "--logLevel", "error"]],
+    ] as const) {
+      try {
+        execFileSync(cmd, [...args], { cwd: dir, stdio: "pipe" });
+      } catch (error) {
+        const out = String((error as { stdout?: Buffer }).stdout ?? "") + String((error as { stderr?: Buffer }).stderr ?? "");
+        failures.push(`${slug} (${step}):\n    ${out.trim().split("\n").slice(0, 4).join("\n    ")}`);
+      }
     }
   }
-}
 
-console.log(`\nPlaygrounds: ${slugs.length} checked, ${failures.length} failing steps, ${missingDocs.length} hooks without docs.`);
-if (missingDocs.length) console.log(`No docs entry (no playground button): ${missingDocs.join(", ")}`);
-for (const f of failures) console.log(`  FAIL ${f}`);
-if (!process.env.KEEP) fs.rmSync(tmp, { recursive: true, force: true });
-process.exit(failures.length || missingDocs.length ? 1 : 0);
+  console.log(`\nPlaygrounds: ${slugs.length} checked, ${failures.length} failing steps, ${missingDocs.length} hooks without docs.`);
+  if (missingDocs.length) console.log(`No docs entry (no playground button): ${missingDocs.join(", ")}`);
+  for (const f of failures) console.log(`  FAIL ${f}`);
+  exitCode = failures.length || missingDocs.length ? 1 : 0;
+} finally {
+  // Always clean up, including when generation or `npm install` throws.
+  if (process.env.KEEP) console.log(`Kept ${tmp}`);
+  else fs.rmSync(tmp, { recursive: true, force: true });
+}
+process.exit(exitCode);
