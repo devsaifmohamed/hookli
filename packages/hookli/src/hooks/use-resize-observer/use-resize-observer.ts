@@ -31,7 +31,7 @@ export interface UseResizeObserverOptions {
  * @returns The element's `{ width, height }`.
  */
 export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T>,
+  ref: RefObject<T | null>,
   options: UseResizeObserverOptions = {},
 ): ResizeObserverSize => {
   const { box = "content-box" } = options;

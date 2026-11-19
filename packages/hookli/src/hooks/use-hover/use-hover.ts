@@ -12,7 +12,7 @@ import { useEventListener } from "../use-event-listener";
  * @returns `true` while the pointer is over the element, otherwise `false`.
  */
 export const useHover = <T extends HTMLElement = HTMLElement>(
-  elementRef: RefObject<T>,
+  elementRef: RefObject<T | null>,
 ): boolean => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
