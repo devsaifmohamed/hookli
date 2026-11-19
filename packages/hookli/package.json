@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "prepublishOnly": "node scripts/gen-readme.mjs && tsup",
+    "prepublishOnly": "pnpm run typecheck && pnpm run test && node scripts/gen-readme.mjs && tsup",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -74,7 +74,6 @@
     "typescript": "^5.4.5",
     "vitest": "^2"
   },
-  "dependencies": {},
   "sideEffects": false,
   "exports": {
     ".": {
