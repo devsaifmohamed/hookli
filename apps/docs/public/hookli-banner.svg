@@ -130,11 +130,11 @@
 </g>
 
   <!-- headline -->
-  <text x="90" y="256" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="800" font-size="72" letter-spacing="-1.5" fill="#FFFFFF">66 React hooks.</text>
-  <text x="90" y="332" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="800" font-size="72" letter-spacing="-1.5" fill="#61DAFB">One import.</text>
+  <text x="90" y="256" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="800" font-size="68" letter-spacing="-1.5" fill="#FFFFFF">Typed React hooks.</text>
+  <text x="90" y="332" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="800" font-size="68" letter-spacing="-1.5" fill="#61DAFB">One clean import.</text>
 
   <!-- subline -->
-  <text x="90" y="386" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="500" font-size="21" fill="#9BA8B8">Zero deps · SSR-safe · tree-shakable · TypeScript-first</text>
+  <text x="90" y="386" font-family="'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif" font-weight="500" font-size="21" fill="#9BA8B8">Zero dependencies · SSR-safe · tree-shakable · MCP-native</text>
 
   <!-- concrete AI proof line -->
   <text x="90" y="418" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-weight="500" font-size="15" fill="#8391A7"><tspan fill="#61DAFB">hookli-mcp</tspan> · stdio AST for AI agents · <tspan fill="#61DAFB">/llms.txt</tspan></text>

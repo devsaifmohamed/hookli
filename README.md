@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/hookli">
-    <img src="https://raw.githubusercontent.com/devsaifmohamed/hookli/main/assets/hookli-banner.png?v=3" alt="hookli — React hooks, ready to use" width="680" />
+    <img src="https://raw.githubusercontent.com/devsaifmohamed/hookli/main/assets/hookli-banner.png?v=4" alt="hookli — React hooks, ready to use" width="680" />
   </a>
 </p>
 
