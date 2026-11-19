@@ -1,12 +1,22 @@
+// Builds packages/hookli-mcp/src/data/catalog.json (+ meta.json) from the library:
+// hook list + keywords from hooks.manifest.json, sources from packages/hookli/src,
+// API tables + usage from apps/docs/lib/hook-docs.ts. Run from anywhere:
+//   node scripts/build-mcp-catalog.mjs          (also runs as hookli-mcp `prebuild`)
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { fileURLToPath } from "node:url";
 
-const manifestPath = path.resolve("packages/hookli/hooks.manifest.json");
-const hookDocsPath = path.resolve("apps/docs/lib/hook-docs.ts");
-const outputPath = path.resolve("packages/hookli-mcp/src/data/catalog.json");
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const manifestPath = path.join(root, "packages/hookli/hooks.manifest.json");
+const libraryPkgPath = path.join(root, "packages/hookli/package.json");
+const hookDocsPath = path.join(root, "apps/docs/lib/hook-docs.ts");
+const outputPath = path.join(root, "packages/hookli-mcp/src/data/catalog.json");
+const metaPath = path.join(root, "packages/hookli-mcp/src/data/meta.json");
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+const libraryVersion = JSON.parse(fs.readFileSync(libraryPkgPath, "utf-8")).version;
+const mcpVersion = JSON.parse(fs.readFileSync(path.join(root, "packages/hookli-mcp/package.json"), "utf-8")).version;
 
 // 1. Parse hook-docs.ts
 let docsCode = fs.readFileSync(hookDocsPath, "utf-8");
@@ -32,14 +42,14 @@ console.log("Loaded docs for hooks:", Object.keys(hookDocs).length);
 
 // 2. Read hook sources from packages/hookli/src/hooks/
 function getHookSource(slug) {
-  const primaryPath = path.resolve(`packages/hookli/src/hooks/${slug}/${slug}.ts`);
+  const primaryPath = path.join(root, `packages/hookli/src/hooks/${slug}/${slug}.ts`);
   if (fs.existsSync(primaryPath)) {
     return {
       path: `packages/hookli/src/hooks/${slug}/${slug}.ts`,
       source: fs.readFileSync(primaryPath, "utf-8"),
     };
   }
-  const altPath = path.resolve(`packages/hookli/src/hooks/${slug}/index.ts`);
+  const altPath = path.join(root, `packages/hookli/src/hooks/${slug}/index.ts`);
   if (fs.existsSync(altPath)) {
     return {
       path: `packages/hookli/src/hooks/${slug}/index.ts`,
@@ -47,84 +57,6 @@ function getHookSource(slug) {
     };
   }
   return { path: "", source: "" };
-}
-
-// Tag generator for search & use-cases
-function deriveUseCases(hook) {
-  const name = hook.name.toLowerCase();
-  const desc = hook.description.toLowerCase();
-  const slug = hook.slug;
-  const tags = new Set();
-
-  tags.add(hook.category);
-  tags.add(slug);
-  tags.add(name);
-
-  // Common intents & keywords
-  if (name.includes("debounce") || name.includes("throttle")) {
-    tags.add("rate limiting");
-    tags.add("search input");
-    tags.add("resize delay");
-    tags.add("typing delay");
-    tags.add("api optimization");
-  }
-  if (name.includes("storage")) {
-    tags.add("persistence");
-    tags.add("remember state");
-    tags.add("offline data");
-    tags.add("cache");
-    tags.add("session");
-  }
-  if (name.includes("click") || name.includes("mouse") || name.includes("hover")) {
-    tags.add("interaction");
-    tags.add("dom events");
-    tags.add("popover");
-    tags.add("dropdown");
-    tags.add("modal");
-  }
-  if (name.includes("hotkey") || name.includes("key")) {
-    tags.add("shortcuts");
-    tags.add("keyboard navigation");
-    tags.add("accessibility");
-  }
-  if (name.includes("scroll") || name.includes("intersection")) {
-    tags.add("lazy loading");
-    tags.add("infinite list");
-    tags.add("viewport");
-    tags.add("visibility");
-  }
-  if (name.includes("dark") || name.includes("theme")) {
-    tags.add("theme switching");
-    tags.add("dark mode");
-    tags.add("color mode");
-  }
-  if (name.includes("fetch") || name.includes("async") || name.includes("mutation")) {
-    tags.add("data fetching");
-    tags.add("api call");
-    tags.add("server requests");
-    tags.add("loading states");
-  }
-  if (name.includes("form") || name.includes("step") || name.includes("counter")) {
-    tags.add("user input");
-    tags.add("wizard");
-    tags.add("state management");
-  }
-  if (name.includes("media") || name.includes("screen") || name.includes("window")) {
-    tags.add("responsive");
-    tags.add("mobile detection");
-    tags.add("viewport size");
-  }
-  if (name.includes("clipboard")) {
-    tags.add("copy paste");
-    tags.add("share link");
-  }
-
-  const words = desc.replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(w => w.length > 3);
-  for (const w of words) {
-    tags.add(w);
-  }
-
-  return Array.from(tags);
 }
 
 // Assemble full catalog
@@ -165,11 +97,19 @@ const catalog = manifest.hooks.map((entry) => {
     source: (src.source || "").trim(),
     sourcePath: src.path || `packages/hookli/src/hooks/${entry.slug}/${entry.slug}.ts`,
     docsUrl: `https://hookli.vercel.app/docs/${entry.slug}`,
-    useCases: deriveUseCases(entry),
+    keywords: entry.keywords ?? [],
   };
 });
 
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2), "utf-8");
+const missingSource = catalog.filter((h) => !h.source).map((h) => h.slug);
+const missingKeywords = catalog.filter((h) => h.keywords.length === 0).map((h) => h.slug);
+if (missingSource.length || missingKeywords.length) {
+  console.error(`Catalog incomplete. No source: [${missingSource}]. No keywords in hooks.manifest.json: [${missingKeywords}].`);
+  process.exit(1);
+}
 
-console.log(`Successfully compiled catalog for ${catalog.length} hooks (found source for ${sourcesFound}/${catalog.length}) at: ${outputPath}`);
+fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2) + "\n", "utf-8");
+fs.writeFileSync(metaPath, JSON.stringify({ libraryVersion, mcpVersion, hookCount: catalog.length }, null, 2) + "\n", "utf-8");
+
+console.log(`MCP catalog: ${catalog.length} hooks, hookli ${libraryVersion}, source for ${sourcesFound}/${catalog.length}.`);

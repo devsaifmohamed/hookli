@@ -6,462 +6,528 @@
       "name": "useToggle",
       "description": "Boolean state with toggle and explicit set.",
       "category": "state",
-      "signature": "useToggle(initialValue?: boolean): [boolean, () => void, (value: boolean) => void]"
+      "signature": "useToggle(initialValue?: boolean): [boolean, () => void, (value: boolean) => void]",
+      "keywords": ["toggle", "on off", "flip boolean", "show hide", "open close", "switch"]
     },
     {
       "slug": "use-form",
       "name": "useForm",
       "description": "Controlled form state with one change handler.",
       "category": "state",
-      "signature": "useForm<T>(initialState: T): { values: T; handleChange: (e: ChangeEvent) => void; resetForm: () => void }"
+      "signature": "useForm<T>(initialState: T): { values: T; handleChange: (e: ChangeEvent) => void; resetForm: () => void }",
+      "keywords": ["form", "form fields", "inputs", "onChange handler", "controlled inputs", "reset form"]
     },
     {
       "slug": "use-local-storage",
       "name": "useLocalStorage",
       "description": "State persisted to localStorage",
       "category": "state",
-      "signature": "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T | ((val: T) => T)) => void }"
+      "signature": "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T | ((val: T) => T)) => void }",
+      "keywords": ["localStorage", "persist state", "save across reloads", "remember", "user preferences", "settings", "survive refresh"]
     },
     {
       "slug": "use-local-storage-with-expiry",
       "name": "useLocalStorageWithExpiry",
       "description": "Persisted state with a TTL.",
       "category": "state",
-      "signature": "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T | null; setStoredValue: (value: T) => void }"
+      "signature": "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T | null; setStoredValue: (value: T) => void }",
+      "keywords": ["localStorage", "expire", "ttl", "time to live", "cache with expiry", "expiring storage"]
     },
     {
       "slug": "use-session-storage",
       "name": "useSessionStorage",
       "description": "useState backed by sessionStorage, synced across tabs.",
       "category": "state",
-      "signature": "useSessionStorage<T>(key: string, initialValue: T | (() => T), options?: UseSessionStorageOptions<T>): [T, (value: T | ((prev: T) => T)) => void, () => void]"
+      "signature": "useSessionStorage<T>(key: string, initialValue: T | (() => T), options?: UseSessionStorageOptions<T>): [T, (value: T | ((prev: T) => T)) => void, () => void]",
+      "keywords": ["sessionStorage", "tab session", "per tab state", "persist until tab closes"]
     },
     {
       "slug": "use-read-local-storage",
       "name": "useReadLocalStorage",
       "description": "Read a localStorage key without writing it, reactively.",
       "category": "state",
-      "signature": "useReadLocalStorage<T>(key: string, options?: UseReadLocalStorageOptions<T>): T | null"
+      "signature": "useReadLocalStorage<T>(key: string, options?: UseReadLocalStorageOptions<T>): T | null",
+      "keywords": ["read localStorage", "read only storage", "subscribe to storage key", "cross tab sync"]
     },
     {
       "slug": "use-dark-mode",
       "name": "useDarkMode",
       "description": "Dark-mode boolean with toggle.",
       "category": "state",
-      "signature": "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }"
+      "signature": "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }",
+      "keywords": ["dark mode", "theme", "prefers-color-scheme", "color scheme", "night mode"]
     },
     {
       "slug": "use-ternary-dark-mode",
       "name": "useTernaryDarkMode",
       "description": "Three-state dark mode — system, dark or light — persisted.",
       "category": "state",
-      "signature": "useTernaryDarkMode(options?: UseTernaryDarkModeOptions): UseTernaryDarkModeReturn"
+      "signature": "useTernaryDarkMode(options?: UseTernaryDarkModeOptions): UseTernaryDarkModeReturn",
+      "keywords": ["dark light system", "theme switcher", "system theme", "three way theme", "color scheme toggle"]
     },
     {
       "slug": "use-boolean",
       "name": "useBoolean",
       "description": "Boolean state with setTrue, setFalse, toggle and set.",
       "category": "state",
-      "signature": "useBoolean(defaultValue?: boolean): { value: boolean; setValue: (value: boolean) => void; setTrue: () => void; setFalse: () => void; toggle: () => void }"
+      "signature": "useBoolean(defaultValue?: boolean): { value: boolean; setValue: (value: boolean) => void; setTrue: () => void; setFalse: () => void; toggle: () => void }",
+      "keywords": ["boolean", "flag", "setTrue", "setFalse", "open state", "visibility flag"]
     },
     {
       "slug": "use-counter",
       "name": "useCounter",
       "description": "Numeric counter with increment, decrement and reset.",
       "category": "state",
-      "signature": "useCounter(initialValue?: number): { count: number; increment: () => void; decrement: () => void; reset: () => void; setCount: Dispatch<SetStateAction<number>> }"
+      "signature": "useCounter(initialValue?: number): { count: number; increment: () => void; decrement: () => void; reset: () => void; setCount: Dispatch<SetStateAction<number>> }",
+      "keywords": ["counter", "increment", "decrement", "count", "number state", "quantity"]
     },
     {
       "slug": "use-step",
       "name": "useStep",
       "description": "1-indexed step counter for wizards and steppers.",
       "category": "state",
-      "signature": "useStep(maxStep: number): [number, UseStepActions]"
+      "signature": "useStep(maxStep: number): [number, UseStepActions]",
+      "keywords": ["wizard", "stepper", "steps", "onboarding flow", "next step", "previous step", "multi step form"]
     },
     {
       "slug": "use-countdown",
       "name": "useCountdown",
       "description": "Self-stopping countdown or count-up timer.",
       "category": "state",
-      "signature": "useCountdown(options: UseCountdownOptions): [number, UseCountdownActions]"
+      "signature": "useCountdown(options: UseCountdownOptions): [number, UseCountdownActions]",
+      "keywords": ["countdown", "timer", "seconds left", "resend code", "otp timer", "count down"]
     },
     {
       "slug": "use-map",
       "name": "useMap",
       "description": "Manage a Map as immutable React state.",
       "category": "state",
-      "signature": "useMap<K, V>(initialState?: MapOrEntries<K, V>): [ReadOnlyMap<K, V>, UseMapActions<K, V>]"
+      "signature": "useMap<K, V>(initialState?: MapOrEntries<K, V>): [ReadOnlyMap<K, V>, UseMapActions<K, V>]",
+      "keywords": ["Map", "key value state", "dictionary", "lookup table"]
     },
     {
       "slug": "use-debounce",
       "name": "useDebounce",
       "description": "Debounces a changing value.",
       "category": "effects",
-      "signature": "useDebounce<T>(value: T, delay: number): T"
+      "signature": "useDebounce<T>(value: T, delay: number): T",
+      "keywords": ["debounce", "typing delay", "search as you type", "wait until typing stops", "delay value"]
     },
     {
       "slug": "use-debounce-value",
       "name": "useDebounceValue",
       "description": "State whose debounced copy updates after a pause.",
       "category": "effects",
-      "signature": "useDebounceValue<T>(initialValue: T | (() => T), delayMs?: number, options?: DebounceOptions & { equalityFn?: (left: T, right: T) => boolean }): [T, DebouncedState<[T | ((prev: T) => T)], void>]"
+      "signature": "useDebounceValue<T>(initialValue: T | (() => T), delayMs?: number, options?: DebounceOptions & { equalityFn?: (left: T, right: T) => boolean }): [T, DebouncedState<[T | ((prev: T) => T)], void>]",
+      "keywords": ["debounce", "debounced value", "search input", "typing delay", "cancel flush"]
     },
     {
       "slug": "use-debounce-callback",
       "name": "useDebounceCallback",
       "description": "Debounces a callback, with cancel, flush and isPending.",
       "category": "effects",
-      "signature": "useDebounceCallback<Args, R>(fn: (...args: Args) => R, delayMs?: number, options?: DebounceOptions): DebouncedState<Args, R>"
+      "signature": "useDebounceCallback<Args, R>(fn: (...args: Args) => R, delayMs?: number, options?: DebounceOptions): DebouncedState<Args, R>",
+      "keywords": ["debounce function", "debounced callback", "debounce handler", "resize handler", "autosave", "rate limit calls"]
     },
     {
       "slug": "use-interval",
       "name": "useInterval",
       "description": "Runs a callback on a fixed interval; pause by passing null.",
       "category": "effects",
-      "signature": "useInterval(callback: () => void, delay: number | null): void"
+      "signature": "useInterval(callback: () => void, delay: number | null): void",
+      "keywords": ["setInterval", "interval", "every n seconds", "repeat", "polling", "periodic", "tick"]
     },
     {
       "slug": "use-timeout",
       "name": "useTimeout",
       "description": "Runs a callback once after a delay; cancel by passing null.",
       "category": "effects",
-      "signature": "useTimeout(callback: () => void, delay: number | null): void"
+      "signature": "useTimeout(callback: () => void, delay: number | null): void",
+      "keywords": ["setTimeout", "timeout", "delay", "after delay", "run later", "once after"]
     },
     {
       "slug": "use-isomorphic-layout-effect",
       "name": "useIsomorphicLayoutEffect",
       "description": "useLayoutEffect on the client, useEffect on the server.",
       "category": "effects",
-      "signature": "useIsomorphicLayoutEffect(effect: EffectCallback, deps?: DependencyList): void"
+      "signature": "useIsomorphicLayoutEffect(effect: EffectCallback, deps?: DependencyList): void",
+      "keywords": ["useLayoutEffect", "layout effect", "ssr warning", "server safe layout effect"]
     },
     {
       "slug": "use-event-callback",
       "name": "useEventCallback",
       "description": "A stable callback that always calls the latest closure.",
       "category": "effects",
-      "signature": "useEventCallback<Args extends unknown[], R>(fn: (...args: Args) => R): (...args: Args) => R"
+      "signature": "useEventCallback<Args extends unknown[], R>(fn: (...args: Args) => R): (...args: Args) => R",
+      "keywords": ["stable callback", "latest props", "stale closure", "useEvent", "callback ref"]
     },
     {
       "slug": "use-unmount",
       "name": "useUnmount",
       "description": "Runs a cleanup function once, when the component unmounts.",
       "category": "effects",
-      "signature": "useUnmount(fn: () => void): void"
+      "signature": "useUnmount(fn: () => void): void",
+      "keywords": ["unmount", "cleanup", "on destroy", "teardown", "component removed"]
     },
     {
       "slug": "use-is-client",
       "name": "useIsClient",
       "description": "Reports false on the server and true after hydration.",
       "category": "effects",
-      "signature": "useIsClient(): boolean"
+      "signature": "useIsClient(): boolean",
+      "keywords": ["is client", "browser check", "hydration", "client only", "server or client", "ssr"]
     },
     {
       "slug": "use-is-mounted",
       "name": "useIsMounted",
       "description": "A stable getter for whether the component is still mounted.",
       "category": "effects",
-      "signature": "useIsMounted(): () => boolean"
+      "signature": "useIsMounted(): () => boolean",
+      "keywords": ["is mounted", "unmounted", "async state update", "memory leak warning", "state update after unmount", "setState on unmounted component"]
     },
     {
       "slug": "use-document-title",
       "name": "useDocumentTitle",
       "description": "Keeps document.title in sync with a value, SSR-safe.",
       "category": "effects",
-      "signature": "useDocumentTitle(title: string, options?: UseDocumentTitleOptions): void"
+      "signature": "useDocumentTitle(title: string, options?: UseDocumentTitleOptions): void",
+      "keywords": ["document title", "page title", "tab title", "browser title"]
     },
     {
       "slug": "use-event-listener",
       "name": "useEventListener",
       "description": "Subscribe to a window, document or element event with cleanup.",
       "category": "dom",
-      "signature": "useEventListener<K>(eventName: K, handler: (event: Event) => void, element?: RefObject<T>, options?: boolean | AddEventListenerOptions): void"
+      "signature": "useEventListener<K>(eventName: K, handler: (event: Event) => void, element?: RefObject<T>, options?: boolean | AddEventListenerOptions): void",
+      "keywords": ["addEventListener", "event listener", "window event", "document event", "listen to event", "keydown", "resize event"]
     },
     {
       "slug": "use-click-outside",
       "name": "useClickOutside",
       "description": "Runs a callback on outside click.",
       "category": "dom",
-      "signature": "useClickOutside<T extends HTMLElement>(ref: RefObject<T>, callback: () => void): void"
+      "signature": "useClickOutside<T extends HTMLElement>(ref: RefObject<T>, callback: () => void): void",
+      "keywords": ["click outside", "outside click", "dismiss", "close dropdown", "close popover", "close menu", "close modal"]
     },
     {
       "slug": "use-mouse-position",
       "name": "useMousePosition",
       "description": "Cursor coordinates within an element.",
       "category": "dom",
-      "signature": "useMousePosition<T extends HTMLElement>(ref: RefObject<T>): { x: number | null; y: number | null }"
+      "signature": "useMousePosition<T extends HTMLElement>(ref: RefObject<T>): { x: number | null; y: number | null }",
+      "keywords": ["mouse position", "cursor position", "mouse coordinates", "pointer x y"]
     },
     {
       "slug": "use-infinite-scroll",
       "name": "useInfiniteScroll",
       "description": "Triggers loading near the scroll end.",
       "category": "dom",
-      "signature": "useInfiniteScroll(fetchMoreData: () => Promise<void>): boolean"
+      "signature": "useInfiniteScroll(fetchMoreData: () => Promise<void>): boolean",
+      "keywords": ["infinite scroll", "load more", "scroll to bottom", "pagination on scroll", "endless feed"]
     },
     {
       "slug": "use-expandable-text",
       "name": "useExpandableText",
       "description": "Collapse long text by a character and/or line budget with a show-more toggle.",
       "category": "dom",
-      "signature": "useExpandableText<T extends HTMLElement = HTMLElement>(text: string, options?: UseExpandableTextOptions): UseExpandableTextResult<T>"
+      "signature": "useExpandableText<T extends HTMLElement = HTMLElement>(text: string, options?: UseExpandableTextOptions): UseExpandableTextResult<T>",
+      "keywords": ["read more", "show more", "truncate text", "expand collapse text", "clamp text"]
     },
     {
       "slug": "use-hover",
       "name": "useHover",
       "description": "Tracks whether the pointer is hovering an element.",
       "category": "dom",
-      "signature": "useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean"
+      "signature": "useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean",
+      "keywords": ["hover", "mouse enter", "mouse leave", "is hovered", "hover state"]
     },
     {
       "slug": "use-intersection-observer",
       "name": "useIntersectionObserver",
       "description": "Observe an element's viewport intersection reactively.",
       "category": "dom",
-      "signature": "useIntersectionObserver(options?: UseIntersectionObserverOptions): UseIntersectionObserverReturn"
+      "signature": "useIntersectionObserver(options?: UseIntersectionObserverOptions): UseIntersectionObserverReturn",
+      "keywords": ["intersection observer", "in view", "visible in viewport", "lazy load", "scroll into view", "on screen"]
     },
     {
       "slug": "use-resize-observer",
       "name": "useResizeObserver",
       "description": "Measure an element's size reactively via ResizeObserver.",
       "category": "dom",
-      "signature": "useResizeObserver<T extends HTMLElement = HTMLElement>(ref: RefObject<T>, options?: UseResizeObserverOptions): ResizeObserverSize"
+      "signature": "useResizeObserver<T extends HTMLElement = HTMLElement>(ref: RefObject<T>, options?: UseResizeObserverOptions): ResizeObserverSize",
+      "keywords": ["resize observer", "element size", "element width", "element height", "measure element", "container size"]
     },
     {
       "slug": "use-scroll-lock",
       "name": "useScrollLock",
       "description": "Lock and restore scrolling on the body or an element.",
       "category": "dom",
-      "signature": "useScrollLock(options?: UseScrollLockOptions): UseScrollLockReturn"
+      "signature": "useScrollLock(options?: UseScrollLockOptions): UseScrollLockReturn",
+      "keywords": ["scroll lock", "disable scroll", "prevent scrolling", "body overflow hidden", "modal scroll", "lock page"]
     },
     {
       "slug": "use-click-any-where",
       "name": "useClickAnyWhere",
       "description": "Run a handler on every click anywhere in the document.",
       "category": "dom",
-      "signature": "useClickAnyWhere(handler: (event: MouseEvent) => void): void"
+      "signature": "useClickAnyWhere(handler: (event: MouseEvent) => void): void",
+      "keywords": ["click anywhere", "global click", "document click", "any click on page"]
     },
     {
       "slug": "use-media-query",
       "name": "useMediaQuery",
       "description": "Tracks whether a CSS media query currently matches.",
       "category": "dom",
-      "signature": "useMediaQuery(query: string, options?: UseMediaQueryOptions): boolean"
+      "signature": "useMediaQuery(query: string, options?: UseMediaQueryOptions): boolean",
+      "keywords": ["media query", "matchMedia", "breakpoint", "responsive", "mobile", "screen size", "is mobile"]
     },
     {
       "slug": "use-screen",
       "name": "useScreen",
       "description": "Tracks window.screen, refreshing it on every resize.",
       "category": "dom",
-      "signature": "useScreen(options?: UseScreenOptions): Screen | null"
+      "signature": "useScreen(options?: UseScreenOptions): Screen | null",
+      "keywords": ["screen", "window.screen", "screen resolution", "display size", "orientation"]
     },
     {
       "slug": "use-window-size",
       "name": "useWindowSize",
       "description": "Tracks the viewport's { width, height }, updated on resize.",
       "category": "dom",
-      "signature": "useWindowSize(options?: UseWindowSizeOptions): WindowSize"
+      "signature": "useWindowSize(options?: UseWindowSizeOptions): WindowSize",
+      "keywords": ["window size", "viewport size", "window width", "window height", "innerWidth", "resize"]
     },
     {
       "slug": "use-copy-to-clipboard",
       "name": "useCopyToClipboard",
       "description": "Copy text to the clipboard, tracking the last copied value.",
       "category": "dom",
-      "signature": "useCopyToClipboard(): [CopiedValue, CopyFn]"
+      "signature": "useCopyToClipboard(): [CopiedValue, CopyFn]",
+      "keywords": ["clipboard", "copy", "copy to clipboard", "copy button", "copy link", "navigator.clipboard"]
     },
     {
       "slug": "use-script",
       "name": "useScript",
       "description": "Load an external script and report its load status.",
       "category": "dom",
-      "signature": "useScript(src: string | null, options?: UseScriptOptions): UseScriptStatus"
+      "signature": "useScript(src: string | null, options?: UseScriptOptions): UseScriptStatus",
+      "keywords": ["load script", "script tag", "third party script", "external script", "sdk loader", "cdn script"]
     },
     {
       "slug": "use-fetch",
       "name": "useFetch",
       "description": "Declarative fetch with loading and error status.",
       "category": "data",
-      "signature": "useFetch<T>(url: string): { data: T | null; loading: boolean; error: Error | null }"
+      "signature": "useFetch<T>(url: string): { data: T | null; loading: boolean; error: Error | null }",
+      "keywords": ["fetch", "http get", "load json", "api request", "data fetching", "get data from url"]
     },
     {
       "slug": "use-geo-location",
       "name": "useGeoLocation",
       "description": "Browser geolocation state.",
       "category": "data",
-      "signature": "useGeoLocation(): { location: GeolocationPosition | null; error: GeolocationError | Error | null }"
+      "signature": "useGeoLocation(): { location: GeolocationPosition | null; error: GeolocationError | Error | null }",
+      "keywords": ["geolocation", "location", "gps", "latitude longitude", "coordinates", "user location"]
     },
     {
       "slug": "use-previous",
       "name": "usePrevious",
       "description": "Track a value from the previous render.",
       "category": "state",
-      "signature": "usePrevious<T>(value: T): T | undefined"
+      "signature": "usePrevious<T>(value: T): T | undefined",
+      "keywords": ["previous value", "last render value", "prev props", "previous state", "compare old and new"]
     },
     {
       "slug": "use-list",
       "name": "useList",
       "description": "Array state with push, insert, update, remove, and clear helpers.",
       "category": "state",
-      "signature": "useList<T>(initial?: T[]): [T[], UseListActions<T>]"
+      "signature": "useList<T>(initial?: T[]): [T[], UseListActions<T>]",
+      "keywords": ["list", "array state", "push", "remove item", "insert", "todo list"]
     },
     {
       "slug": "use-set",
       "name": "useSet",
       "description": "Set state with add, remove, toggle, has, and clear helpers.",
       "category": "state",
-      "signature": "useSet<T>(initial?: Iterable<T>): [Set<T>, UseSetActions<T>]"
+      "signature": "useSet<T>(initial?: Iterable<T>): [Set<T>, UseSetActions<T>]",
+      "keywords": ["Set", "unique values", "selected ids", "toggle selection", "set state"]
     },
     {
       "slug": "use-throttle",
       "name": "useThrottle",
       "description": "Throttle a fast-changing value to at most one update per interval.",
       "category": "effects",
-      "signature": "useThrottle<T>(value: T, interval?: number): T"
+      "signature": "useThrottle<T>(value: T, interval?: number): T",
+      "keywords": ["throttle", "rate limit", "scroll performance", "limit updates", "at most once"]
     },
     {
       "slug": "use-update-effect",
       "name": "useUpdateEffect",
       "description": "A useEffect that skips the initial mount and runs only on updates.",
       "category": "effects",
-      "signature": "useUpdateEffect(effect: EffectCallback, deps?: DependencyList): void"
+      "signature": "useUpdateEffect(effect: EffectCallback, deps?: DependencyList): void",
+      "keywords": ["skip first render", "update only", "componentDidUpdate", "not on mount"]
     },
     {
       "slug": "use-effect-once",
       "name": "useEffectOnce",
       "description": "Run an effect exactly once, on mount.",
       "category": "effects",
-      "signature": "useEffectOnce(effect: EffectCallback): void"
+      "signature": "useEffectOnce(effect: EffectCallback): void",
+      "keywords": ["run once", "on mount", "componentDidMount", "mount effect"]
     },
     {
       "slug": "use-key-press",
       "name": "useKeyPress",
       "description": "Track whether a specific key is currently held down.",
       "category": "dom",
-      "signature": "useKeyPress(targetKey: string): boolean"
+      "signature": "useKeyPress(targetKey: string): boolean",
+      "keywords": ["key press", "key down", "key held", "keyboard key", "escape key", "is key pressed"]
     },
     {
       "slug": "use-window-scroll",
       "name": "useWindowScroll",
       "description": "Track the window scroll position reactively.",
       "category": "dom",
-      "signature": "useWindowScroll(): { x: number; y: number }"
+      "signature": "useWindowScroll(): { x: number; y: number }",
+      "keywords": ["scroll position", "scrollY", "page scroll", "scrolled down", "sticky header", "back to top"]
     },
     {
       "slug": "use-async",
       "name": "useAsync",
       "description": "Run an async function and track its loading, error, and value state.",
       "category": "data",
-      "signature": "useAsync<T>(asyncFunction: () => Promise<T>, immediate?: boolean): UseAsyncReturn<T>"
+      "signature": "useAsync<T>(asyncFunction: () => Promise<T>, immediate?: boolean): UseAsyncReturn<T>",
+      "keywords": ["async", "promise", "loading error data", "async function", "data loading", "await"]
     },
     {
       "slug": "use-mutation",
       "name": "useMutation",
       "description": "Run an async write action on demand and track status, data, and error.",
       "category": "data",
-      "signature": "useMutation<TArgs, TData>(mutationFn: (...args: TArgs) => Promise<TData>): UseMutationReturn<TArgs, TData>"
+      "signature": "useMutation<TArgs, TData>(mutationFn: (...args: TArgs) => Promise<TData>): UseMutationReturn<TArgs, TData>",
+      "keywords": ["mutation", "post request", "submit", "save to api", "create update delete", "loading state"]
     },
     {
       "slug": "use-pagination",
       "name": "usePagination",
       "description": "Page, page size, total pages, navigation helpers, and the current item range.",
       "category": "data",
-      "signature": "usePagination(options?: UsePaginationOptions): UsePaginationReturn"
+      "signature": "usePagination(options?: UsePaginationOptions): UsePaginationReturn",
+      "keywords": ["pagination", "pages", "page number", "page size", "next page", "offset limit", "table paging"]
     },
     {
       "slug": "use-network-state",
       "name": "useNetworkState",
       "description": "Track online/offline status and connection details.",
       "category": "data",
-      "signature": "useNetworkState(): NetworkState"
+      "signature": "useNetworkState(): NetworkState",
+      "keywords": ["online", "offline", "network status", "internet connection", "connection type", "navigator.onLine"]
     },
     {
       "slug": "use-page-visibility",
       "name": "usePageVisibility",
       "description": "Track whether the page/tab is currently visible.",
       "category": "effects",
-      "signature": "usePageVisibility(): boolean"
+      "signature": "usePageVisibility(): boolean",
+      "keywords": ["page visibility", "tab hidden", "tab visible", "visibilitychange", "background tab", "tab focus"]
     },
     {
       "slug": "use-idle",
       "name": "useIdle",
       "description": "Detect user inactivity after a configurable threshold.",
       "category": "dom",
-      "signature": "useIdle(ms?: number): boolean"
+      "signature": "useIdle(ms?: number): boolean",
+      "keywords": ["idle", "inactive", "inactivity", "afk", "away", "auto logout", "session timeout"]
     },
     {
       "slug": "use-queue",
       "name": "useQueue",
       "description": "FIFO queue state with add, remove, clear, and first/last/size.",
       "category": "state",
-      "signature": "useQueue<T>(initial?: T[]): UseQueueReturn<T>"
+      "signature": "useQueue<T>(initial?: T[]): UseQueueReturn<T>",
+      "keywords": ["queue", "fifo", "enqueue", "dequeue", "task queue", "notifications queue"]
     },
     {
       "slug": "use-default-value",
       "name": "useDefaultValue",
       "description": "Like useState, but falls back to a default when the value is nullish.",
       "category": "state",
-      "signature": "useDefaultValue<T>(initialValue: T | null | undefined, defaultValue: T): [T, (value: T | null | undefined) => void]"
+      "signature": "useDefaultValue<T>(initialValue: T | null | undefined, defaultValue: T): [T, (value: T | null | undefined) => void]",
+      "keywords": ["default value", "fallback", "null fallback", "nullish", "reset to default"]
     },
     {
       "slug": "use-raf-state",
       "name": "useRafState",
       "description": "useState whose updates are batched to the next animation frame.",
       "category": "state",
-      "signature": "useRafState<T>(initialState: T | (() => T)): [T, Dispatch<SetStateAction<T>>]"
+      "signature": "useRafState<T>(initialState: T | (() => T)): [T, Dispatch<SetStateAction<T>>]",
+      "keywords": ["requestAnimationFrame", "raf", "animation frame", "smooth updates", "frame batched state"]
     },
     {
       "slug": "use-deep-compare-effect",
       "name": "useDeepCompareEffect",
       "description": "useEffect that compares dependencies by deep structural equality.",
       "category": "effects",
-      "signature": "useDeepCompareEffect(effect: EffectCallback, deps: DependencyList): void"
+      "signature": "useDeepCompareEffect(effect: EffectCallback, deps: DependencyList): void",
+      "keywords": ["deep compare", "deep equal", "object dependencies", "array dependencies", "effect runs too often"]
     },
     {
       "slug": "use-text-selection",
       "name": "useTextSelection",
       "description": "Track the text the user has currently selected on the page.",
       "category": "dom",
-      "signature": "useTextSelection(): string"
+      "signature": "useTextSelection(): string",
+      "keywords": ["text selection", "selected text", "highlight", "window.getSelection", "quote selection"]
     },
     {
       "slug": "use-long-press",
       "name": "useLongPress",
       "description": "Detect a long press (mouse or touch) via spreadable handlers.",
       "category": "dom",
-      "signature": "useLongPress(callback: (event: MouseEvent | TouchEvent) => void, options?: UseLongPressOptions): UseLongPressHandlers"
+      "signature": "useLongPress(callback: (event: MouseEvent | TouchEvent) => void, options?: UseLongPressOptions): UseLongPressHandlers",
+      "keywords": ["long press", "press and hold", "hold to confirm", "touch hold", "context menu on mobile"]
     },
     {
       "slug": "use-draggable",
       "name": "useDraggable",
       "description": "Drag an element with pointer or keyboard: bounds, grid, axis lock, smoothing, and jump-to-click.",
       "category": "dom",
-      "signature": "useDraggable<T extends HTMLElement, C extends HTMLElement>(options?: UseDraggableOptions): UseDraggableReturn<T, C>"
+      "signature": "useDraggable<T extends HTMLElement, C extends HTMLElement>(options?: UseDraggableOptions): UseDraggableReturn<T, C>",
+      "keywords": ["drag", "draggable", "drag and drop", "move element", "reposition", "pointer drag", "slider"]
     },
     {
       "slug": "use-hotkeys",
       "name": "useHotkeys",
       "description": "Bind a keyboard shortcut combo (e.g. ctrl+k) to a callback.",
       "category": "dom",
-      "signature": "useHotkeys(keys: string, callback: (event: KeyboardEvent) => void): void"
+      "signature": "useHotkeys(keys: string, callback: (event: KeyboardEvent) => void): void",
+      "keywords": ["hotkeys", "keyboard shortcut", "key combo", "ctrl", "cmd", "command palette", "shortcut"]
     },
     {
       "slug": "use-fullscreen",
       "name": "useFullscreen",
       "description": "Control the Fullscreen API for an element and track its state.",
       "category": "dom",
-      "signature": "useFullscreen<T extends HTMLElement>(ref: RefObject<T | null>): UseFullscreenReturn"
+      "signature": "useFullscreen<T extends HTMLElement>(ref: RefObject<T | null>): UseFullscreenReturn",
+      "keywords": ["fullscreen", "full screen", "requestFullscreen", "presentation mode", "video fullscreen"]
     },
     {
       "slug": "use-battery",
       "name": "useBattery",
       "description": "Read device battery level and charging state (where supported).",
       "category": "data",
-      "signature": "useBattery(): BatteryState"
+      "signature": "useBattery(): BatteryState",
+      "keywords": ["battery", "battery level", "charging", "power", "low battery"]
     },
     {
       "slug": "use-permission",
       "name": "usePermission",
       "description": "Query a Permissions API permission and track its state.",
       "category": "data",
-      "signature": "usePermission(name: PermissionName): UsePermissionResult"
+      "signature": "usePermission(name: PermissionName): UsePermissionResult",
+      "keywords": ["permission", "permissions api", "camera", "microphone", "notifications", "geolocation permission", "granted denied"]
     }
   ]
 }

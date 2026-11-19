@@ -1,7 +1,12 @@
 import catalogData from "./data/catalog.json";
+import metaData from "./data/meta.json";
+import { rankHooks } from "./search.js";
 import type { HookCatalogItem, HookCategory } from "./types.js";
 
 export const CATALOG: HookCatalogItem[] = catalogData as HookCatalogItem[];
+
+/** Generated with the catalog: which hookli release it describes. */
+export const CATALOG_META: { libraryVersion: string; mcpVersion: string; hookCount: number } = metaData;
 
 export function getAllHooks(): HookCatalogItem[] {
   return CATALOG;
@@ -28,44 +33,7 @@ export function searchHooks(
     limit?: number;
   },
 ): Array<{ hook: HookCatalogItem; score: number }> {
-  const q = query.trim().toLowerCase();
-  const limit = options?.limit ?? 10;
-  const terms = q.split(/\s+/).filter(Boolean);
-
-  const results: Array<{ hook: HookCatalogItem; score: number }> = [];
-
-  for (const hook of CATALOG) {
-    if (options?.category && hook.category.toLowerCase() !== options.category.toLowerCase()) {
-      continue;
-    }
-
-    let score = 0;
-    const nameLower = hook.name.toLowerCase();
-    const descLower = hook.description.toLowerCase();
-    const slugLower = hook.slug.toLowerCase();
-
-    // Exact name match gets highest score
-    if (nameLower === q || slugLower === q) {
-      score += 100;
-    } else if (nameLower.includes(q)) {
-      score += 50;
-    }
-
-    for (const term of terms) {
-      if (nameLower.includes(term)) score += 20;
-      if (slugLower.includes(term)) score += 15;
-      if (descLower.includes(term)) score += 10;
-      if (hook.category.toLowerCase().includes(term)) score += 5;
-      if (hook.useCases.some((uc) => uc.toLowerCase().includes(term))) score += 15;
-    }
-
-    if (score > 0) {
-      results.push({ hook, score });
-    }
-  }
-
-  results.sort((a, b) => b.score - a.score);
-  return results.slice(0, limit);
+  return rankHooks(CATALOG, query, options);
 }
 
 export function formatHookMarkdown(hook: HookCatalogItem): string {

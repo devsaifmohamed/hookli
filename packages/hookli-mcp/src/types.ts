@@ -26,5 +26,6 @@ export interface HookCatalogItem {
   source: string;
   sourcePath: string;
   docsUrl: string;
-  useCases: string[];
+  /** Curated search phrases from hooks.manifest.json. */
+  keywords: string[];
 }

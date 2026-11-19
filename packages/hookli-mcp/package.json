@@ -12,10 +12,14 @@
     "dist"
   ],
   "scripts": {
+    "gen:catalog": "node ../../scripts/build-mcp-catalog.mjs",
+    "prebuild": "node ../../scripts/build-mcp-catalog.mjs",
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "node dist/cli.js",
-    "typecheck": "tsc --noEmit"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build && pnpm run typecheck && pnpm run test"
   },
   "keywords": [
     "hookli",
@@ -35,6 +39,7 @@
   "devDependencies": {
     "@types/node": "^20.17.0",
     "tsup": "^8.4.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.9"
   }
 }

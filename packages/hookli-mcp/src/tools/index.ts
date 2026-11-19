@@ -1,12 +1,14 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import {
+  CATALOG,
   formatHookMarkdown,
   getAllHooks,
   getHookBySlugOrName,
   getHooksByCategory,
   searchHooks,
 } from "../catalog.js";
+import { suggestForTask } from "../search.js";
 import type { HookCategory } from "../types.js";
 
 const CategoryEnum = z.enum(["state", "effects", "dom", "data"]);
@@ -132,7 +134,7 @@ export function registerTools(server: McpServer): void {
             `- **Category:** \`${hook.category}\``,
             `- **Signature:** \`${hook.signature}\``,
             `- **Docs:** [${hook.docsUrl}](${hook.docsUrl})`,
-            `- **Common use-cases:** ${hook.useCases.slice(0, 6).join(", ")}`,
+            `- **Good for:** ${hook.keywords.slice(0, 6).join(", ")}`,
             hook.usage ? `\n\`\`\`tsx\n${hook.usage}\n\`\`\`` : "",
           ]
             .filter(Boolean)
@@ -204,59 +206,35 @@ export function registerTools(server: McpServer): void {
         .describe("Description of the UI component or feature you are building (e.g. 'A modal dialog with keyboard ESC escape, click-outside closing, and body scroll lock')"),
     },
     async ({ taskDescription }) => {
-      const searchTerms = taskDescription
-        .toLowerCase()
-        .replace(/[^a-z0-9 ]/g, " ")
-        .split(/\s+/)
-        .filter((w) => w.length > 2);
+      const suggestions = suggestForTask(CATALOG, taskDescription);
 
-      const scoredMatches = searchHooks(taskDescription, { limit: 6 });
-
-      if (scoredMatches.length === 0) {
+      if (suggestions.length === 0) {
         return {
           content: [
             {
               type: "text",
-              text: `Could not identify matching hookli hooks for: "${taskDescription}".`,
+              text: `Could not identify matching hookli hooks for: "${taskDescription}". Try list_hooks to browse all hooks.`,
             },
           ],
         };
       }
 
-      const recommendations = scoredMatches.map(({ hook }) => ({
-        name: hook.name,
-        category: hook.category,
-        description: hook.description,
-        signature: hook.signature,
-        docsUrl: hook.docsUrl,
-      }));
-
       const text = [
         `# Hook Recommendations for: "${taskDescription}"`,
         "",
-        "Here are the hookli hooks that best fit this task:",
+        "Each requirement mapped to the hookli hook that covers it:",
         "",
-        ...recommendations.map(
-          (rec, i) =>
-            `### ${i + 1}. \`${rec.name}\` (${rec.category})\n- **Role:** ${rec.description}\n- **API:** \`${rec.signature}\`\n- **Docs:** ${rec.docsUrl}`,
+        ...suggestions.map(
+          ({ hook, covers }, i) =>
+            `### ${i + 1}. \`${hook.name}\` — for "${covers}"\n- **Does:** ${hook.description}\n- **API:** \`${hook.signature}\`\n- **Docs:** ${hook.docsUrl}`,
         ),
         "",
-        "## Suggested Composition Pattern",
+        "## Import",
         "```tsx",
-        `import { ${recommendations.map((r) => r.name).join(", ")} } from "hookli";`,
-        "",
-        "export function MyFeatureComponent() {",
-        ...recommendations.map(
-          (r) => `  // Use ${r.name}: ${r.description}\n  // const ... = ${r.name}(...);`,
-        ),
-        "",
-        "  return (",
-        "    <div>",
-        "      {/* Feature UI elements wired with hook handlers */}",
-        "    </div>",
-        "  );",
-        "}",
+        `import { ${suggestions.map((s) => s.hook.name).join(", ")} } from "hookli";`,
         "```",
+        "",
+        "Call `get_hook` on each one for its full usage example before writing the component.",
       ].join("\n");
 
       return {

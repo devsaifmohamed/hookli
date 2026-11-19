@@ -1,0 +1,66 @@
+import { describe, expect, it } from "vitest";
+import { CATALOG } from "../src/catalog.js";
+import { rankHooks, stem, suggestForTask } from "../src/search.js";
+import { scoreCases } from "./eval-report.js";
+import { HOLDOUT_CASES, TUNING_CASES } from "./search-cases.js";
+
+/* Floors sit a little under today's scores (tuning 100% / holdout 100% top-3)
+   so wording tweaks don't flake, while a real regression fails CI. */
+describe("search_hooks accuracy on plain-language requests", () => {
+  it("tuning set: right hook in top 3 for >= 95% and first for >= 90%", () => {
+    const r = scoreCases(TUNING_CASES);
+    expect(r.misses, r.misses.join("\n")).toHaveLength(Math.max(0, r.total - r.top3));
+    expect(r.top3 / r.total).toBeGreaterThanOrEqual(0.95);
+    expect(r.top1 / r.total).toBeGreaterThanOrEqual(0.9);
+  });
+
+  it("holdout set (never used for tuning): top 3 >= 90%, first >= 85%", () => {
+    const r = scoreCases(HOLDOUT_CASES);
+    expect(r.top3 / r.total, r.misses.join("\n")).toBeGreaterThanOrEqual(0.9);
+    expect(r.top1 / r.total).toBeGreaterThanOrEqual(0.85);
+  });
+
+  it("every hook in the catalog is covered by at least one tuning case", () => {
+    const covered = new Set(TUNING_CASES.flatMap((c) => c.expect));
+    const missing = CATALOG.map((h) => h.name).filter((n) => !covered.has(n));
+    expect(missing).toEqual([]);
+  });
+
+  it("exact names and slugs still win", () => {
+    expect(rankHooks(CATALOG, "useDebounce")[0].hook.name).toBe("useDebounce");
+    expect(rankHooks(CATALOG, "use-local-storage")[0].hook.name).toBe("useLocalStorage");
+  });
+
+  it("filler-only and empty queries return nothing", () => {
+    expect(rankHooks(CATALOG, "")).toEqual([]);
+    expect(rankHooks(CATALOG, "the and when with")).toEqual([]);
+  });
+
+  it("respects category and limit", () => {
+    const res = rankHooks(CATALOG, "scroll", { category: "dom", limit: 2 });
+    expect(res.length).toBeLessThanOrEqual(2);
+    expect(res.every((r) => r.hook.category === "dom")).toBe(true);
+  });
+
+  it("stems word variants onto one form", () => {
+    expect(stem("typing")).toBe(stem("type"));
+    expect(stem("stopped")).toBe("stop");
+    expect(stem("scrolling")).toBe("scroll");
+    expect(stem("press")).toBe("press");
+  });
+});
+
+describe("suggest_hooks_for_task composes one hook per requirement", () => {
+  const cases: Array<[string, string[]]> = [
+    ["A modal dialog that closes on ESC key, closes when clicking outside, and locks body scroll", ["useKeyPress", "useClickOutside", "useScrollLock"]],
+    ["search page that waits until the user stops typing, shows results with infinite scroll and remembers the last query", ["useDebounce", "useInfiniteScroll", "useLocalStorage"]],
+    ["dashboard that polls every 10 seconds, pauses when the tab is hidden and shows an offline banner", ["useInterval", "usePageVisibility", "useNetworkState"]],
+    ["image gallery with lazy loading, fullscreen view and keyboard shortcuts", ["useIntersectionObserver", "useFullscreen", "useHotkeys"]],
+    ["draggable chat widget that remembers its position and hides on mobile", ["useDraggable", "useLocalStorage", "useMediaQuery"]],
+  ];
+  it.each(cases)("%s", (task, expected) => {
+    const names = suggestForTask(CATALOG, task).map((s) => s.hook.name);
+    for (const hook of expected) expect(names).toContain(hook);
+    expect(names.length).toBeLessThanOrEqual(expected.length + 1);
+  });
+});
