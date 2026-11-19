@@ -9,7 +9,6 @@ import {
   ServerIcon,
   SparklesIcon,
 } from "@/components/icons";
-import { hookDocUrl, hookToMarkdown } from "@/lib/hook-markdown";
 import type { HookEntry } from "@/lib/hooks-registry";
 
 const MCP_CONFIG = JSON.stringify(
@@ -28,7 +27,15 @@ const MCP_CONFIG = JSON.stringify(
 /* Modern Mintlify-style Action Area:
    - Row 1: Dedicated import statement chip (clean, spacious, instant copy)
    - Row 2: AI assistant row (Copy for AI CTA + 1-Click Copy MCP JSON + AI deep links) */
-export function HookActionBar({ hook }: { hook: HookEntry }) {
+/* `markdown` and `docUrl` are built on the server (HookPage) so the hook sources
+   behind "Copy for AI" never ship in the page's client JavaScript. */
+type HookActionBarProps = {
+  hook: HookEntry;
+  markdown: string;
+  docUrl: string;
+};
+
+export function HookActionBar({ hook, markdown, docUrl }: HookActionBarProps) {
   const [copiedImport, setCopiedImport] = useState(false);
   const [copiedAi, setCopiedAi] = useState(false);
   const [copiedMcp, setCopiedMcp] = useState(false);
@@ -38,8 +45,6 @@ export function HookActionBar({ hook }: { hook: HookEntry }) {
   const mcpTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const importSnippet = `import { ${hook.name} } from 'hookli';`;
-  const markdown = hookToMarkdown(hook);
-  const docUrl = hookDocUrl(hook.slug);
   const prompt = `I'm using the ${hook.name} React hook from the hookli library. Explain what it does and show me how to use it. Reference: ${docUrl}`;
   const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
   const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;

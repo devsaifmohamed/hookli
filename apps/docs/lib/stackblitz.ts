@@ -29,7 +29,7 @@ function usageToAppTsx(usage: string): string {
 
   // Edge case: Review component (use-expandable-text)
   if (/export\s+function\s+Review\s*\(/.test(code)) {
-    return `${code}\n\nexport default function App() {\n  return (\n    <div className="card">\n      <h2 style={{ fontSize: "1.25rem", marginBottom: "0.75rem", color: "#fff" }}>useExpandableText Playground</h2>\n      <Review body="hookli is 66 typed, zero-dependency, SSR-safe React hooks for state, DOM, and data chores every modern React application repeats. This text demonstrates how to smoothly truncate and expand long content." />\n    </div>\n  );\n}\n`;
+    return `${code}\n\nexport default function App() {\n  return (\n    <div className="card">\n      <h2 style={{ fontSize: "1.25rem", marginBottom: "0.75rem", color: "#fff" }}>useExpandableText Playground</h2>\n      <Review body="hookli is a collection of typed, zero-dependency, SSR-safe React hooks for state, DOM, and data chores every modern React application repeats. This text demonstrates how to smoothly truncate and expand long content." />\n    </div>\n  );\n}\n`;
   }
 
   // Edge case: Modal component (use-scroll-lock)
@@ -64,7 +64,6 @@ function makePackageJson(slug: string): string {
       dependencies: {
         react: "^19.0.0",
         "react-dom": "^19.0.0",
-        hookli: "^1.6.6",
       },
       devDependencies: {
         "@types/react": "^19.0.0",
@@ -218,14 +217,58 @@ code {
 }
 `;
 
+/** Where the hook sources live inside the playground (imported as "./hookli"). */
+const LOCAL_LIB = "src/hookli";
+
+/** `useLocalStorage` -> `use-local-storage` (the manifest's slug convention). */
+export function hookNameToSlug(name: string): string {
+  return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+/** Hook names a usage snippet imports from "hookli". */
+export function importedHooks(code: string): string[] {
+  const names: string[] = [];
+  for (const m of code.matchAll(/import\s*\{([^}]*)\}\s*from\s*["']hookli["']/g)) {
+    for (const part of m[1].split(",")) {
+      const name = part.replace(/^\s*type\s+/, "").split(/\s+as\s+/)[0].trim();
+      if (/^use[A-Z]/.test(name)) names.push(name);
+    }
+  }
+  return names;
+}
+
+export type SandboxSources = {
+  get: (slug: string) => { path: string; source: string } | undefined;
+  closure: (slugs: readonly string[]) => string[];
+};
+
 /**
- * Builds a complete StackBlitz Project definition for any hook.
+ * Builds a complete StackBlitz Project definition for any hook. The playground
+ * ships the hook's real source (plus any sibling hooks it imports) under
+ * src/hookli/, and the example imports from there — so editing the hook updates
+ * the preview live, and nothing is fetched from npm.
  */
 export function createStackBlitzProject(
   hook: HookEntry,
   doc: HookDoc,
+  sources: SandboxSources,
 ): StackBlitzProject {
-  const appTsx = usageToAppTsx(doc.usage);
+  const slugs = sources.closure([hook.slug, ...importedHooks(doc.usage).map(hookNameToSlug)]);
+  const hookFiles: Record<string, string> = {};
+  for (const slug of slugs) {
+    const entry = sources.get(slug);
+    if (!entry) continue;
+    hookFiles[`${LOCAL_LIB}/${slug}/${slug}.ts`] = entry.source;
+    hookFiles[`${LOCAL_LIB}/${slug}/index.ts`] = `export * from "./${slug}";\n`;
+  }
+  hookFiles[`${LOCAL_LIB}/index.ts`] =
+    `// hookli source for this playground — the same files that ship in the npm package.\n` +
+    slugs.map((slug) => `export * from "./${slug}";`).join("\n") +
+    "\n";
+
+  const appTsx =
+    `// ${hook.name}'s real implementation is in ${LOCAL_LIB}/${hook.slug}/${hook.slug}.ts — edit it and the preview updates.\n` +
+    usageToAppTsx(doc.usage).replace(/from\s*["']hookli["']/g, 'from "./hookli"');
 
   return {
     title: `${hook.name} — hookli playground`,
@@ -239,6 +282,7 @@ export function createStackBlitzProject(
       "src/main.tsx": MAIN_TSX,
       "src/App.tsx": appTsx,
       "src/index.css": INDEX_CSS,
+      ...hookFiles,
     },
   };
 }
@@ -260,12 +304,20 @@ export async function openInStackBlitz(
   hook: HookEntry,
   doc: HookDoc,
 ): Promise<void> {
-  const sdkModule = await loadSdk();
+  // Both chunks load on click only: the SDK and the generated hook sources (~140 KB)
+  // never ship in the page's initial JavaScript.
+  const [sdkModule, { getHookSource, getHookSourceClosure }] = await Promise.all([
+    loadSdk(),
+    import("@/lib/hook-sources"),
+  ]);
   const sdk = sdkModule.default ?? sdkModule;
-  const project = createStackBlitzProject(hook, doc);
+  const project = createStackBlitzProject(hook, doc, {
+    get: getHookSource,
+    closure: getHookSourceClosure,
+  });
 
   sdk.openProject(project, {
     newWindow: true,
-    openFile: "src/App.tsx",
+    openFile: `src/App.tsx,${LOCAL_LIB}/${hook.slug}/${hook.slug}.ts`,
   });
 }

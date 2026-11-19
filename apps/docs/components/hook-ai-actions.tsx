@@ -9,15 +9,19 @@ import {
   ServerIcon,
   SparklesIcon,
 } from "@/components/icons";
-import { hookDocUrl, hookToMarkdown } from "@/lib/hook-markdown";
 import type { HookEntry } from "@/lib/hooks-registry";
 
-export function HookAiActions({ hook }: { hook: HookEntry }) {
+/* `markdown` and `docUrl` come from the server so hook sources stay out of the client bundle. */
+type HookAiActionsProps = {
+  hook: HookEntry;
+  markdown: string;
+  docUrl: string;
+};
+
+export function HookAiActions({ hook, markdown, docUrl }: HookAiActionsProps) {
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const markdown = hookToMarkdown(hook);
-  const docUrl = hookDocUrl(hook.slug);
   const prompt = `I'm using the ${hook.name} React hook from the hookli library. Explain what it does and show me how to use it. Reference: ${docUrl}`;
   const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
   const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;

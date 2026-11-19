@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:playgrounds": "tsx scripts/check-playgrounds.mts"
   },
   "dependencies": {
     "@stackblitz/sdk": "^1.11.1",
@@ -30,6 +31,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
+    "tsx": "4.19.2",
     "typescript": "^5"
   }
 }
