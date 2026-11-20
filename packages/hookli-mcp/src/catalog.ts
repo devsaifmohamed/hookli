@@ -85,6 +85,11 @@ export function formatHookMarkdown(hook: HookCatalogItem): string {
     sections.push(`## Usage\n\n\`\`\`tsx\n${hook.usage}\n\`\`\``);
   }
 
+  for (const example of hook.examples ?? []) {
+    const desc = example.description ? `${example.description}\n\n` : "";
+    sections.push(`### ${example.title}\n\n${desc}\`\`\`tsx\n${example.code}\n\`\`\``);
+  }
+
   if (hook.source) {
     sections.push(`## Source Implementation\n\n\`\`\`ts\n${hook.source}\n\`\`\``);
   }

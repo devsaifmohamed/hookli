@@ -13,6 +13,12 @@ export interface TypeAliasDoc {
   rows: ApiRow[];
 }
 
+export interface HookExample {
+  title: string;
+  description: string | null;
+  code: string;
+}
+
 export interface HookCatalogItem {
   slug: string;
   name: string;
@@ -23,6 +29,8 @@ export interface HookCatalogItem {
   returns: ApiRow[];
   typeAliases: TypeAliasDoc[];
   usage: string;
+  /** Extra examples for patterns the main usage does not show. */
+  examples: HookExample[];
   source: string;
   sourcePath: string;
   docsUrl: string;

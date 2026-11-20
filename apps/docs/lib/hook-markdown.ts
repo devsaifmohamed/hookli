@@ -65,6 +65,11 @@ export function hookToMarkdown(hook: HookEntry): string {
     sections.push(`## Usage\n\n\`\`\`tsx\n${doc.usage.trim()}\n\`\`\``);
   }
 
+  for (const example of doc?.examples ?? []) {
+    const description = example.description ? `${example.description}\n\n` : "";
+    sections.push(`### ${example.title}\n\n${description}\`\`\`tsx\n${example.code.trim()}\n\`\`\``);
+  }
+
   if (source) {
     sections.push(
       `## Source\n\n\`${source.path}\`\n\n\`\`\`ts\n${source.source.trim()}\n\`\`\``,

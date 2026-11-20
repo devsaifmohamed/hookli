@@ -81,9 +81,18 @@ export type TypeAlias = {
   rows: readonly ApiRow[];
 };
 
+/** An extra code example shown under the main usage. */
+export type HookExample = {
+  title: string;
+  description?: string;
+  code: string;
+};
+
 export type HookDoc = {
   demo: ComponentType;
   usage: string;
+  /** Further examples for patterns the main usage does not show. */
+  examples?: readonly HookExample[];
   parameters: readonly ApiRow[];
   returns: readonly ApiRow[];
   typeAliases?: readonly TypeAlias[];
@@ -920,6 +929,33 @@ export function Demo() {
   return <div ref={ref}>Last key: {lastKey}</div>;
 }
 `,
+    examples: [
+      {
+        title: "Element mounted by a child component",
+        description: "A `useRef` cannot tell the hook when a child component shows its element. Keep the element in state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.",
+        code: `
+import { useState } from "react";
+import { useEventListener } from "hookli";
+
+function Menu({ onItem }: { onItem: (el: HTMLUListElement | null) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen((o) => !o)}>Menu</button>
+      {open && <ul ref={onItem}><li>Profile</li><li>Sign out</li></ul>}
+    </>
+  );
+}
+
+export function Toolbar() {
+  const [list, setList] = useState<HTMLUListElement | null>(null);
+  // Listens on the list whenever Menu shows it; nothing while it is hidden.
+  useEventListener("click", (event) => console.log("clicked", event.target), list);
+  return <Menu onItem={setList} />;
+}
+`,
+      },
+    ],
     parameters: [
       {
         name: "eventName",
@@ -1894,6 +1930,37 @@ export function Demo() {
   );
 }
 `,
+    examples: [
+      {
+        title: "Element mounted by a child component",
+        description: "A `useRef` cannot tell the hook when a child component shows its element. Keep the element in state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.",
+        code: `
+import { useState } from "react";
+import { useHover } from "hookli";
+
+function Card({ onCard }: { onCard: (el: HTMLDivElement | null) => void }) {
+  const [shown, setShown] = useState(false);
+  return (
+    <>
+      <button onClick={() => setShown(true)}>Show card</button>
+      {shown && <div ref={onCard}>Hover me</div>}
+    </>
+  );
+}
+
+export function Page() {
+  const [card, setCard] = useState<HTMLDivElement | null>(null);
+  const isHovered = useHover(card);
+  return (
+    <>
+      <Card onCard={setCard} />
+      <p>{isHovered ? "Hovering the card" : "Not hovering"}</p>
+    </>
+  );
+}
+`,
+      },
+    ],
     parameters: [
       {
         name: "elementRef",
@@ -2033,6 +2100,37 @@ export function Demo() {
   );
 }
 `,
+    examples: [
+      {
+        title: "Element mounted by a child component",
+        description: "A `useRef` cannot tell the hook when a child component shows its element. Keep the element in state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.",
+        code: `
+import { useState } from "react";
+import { useResizeObserver } from "hookli";
+
+function Panel({ onPanel }: { onPanel: (el: HTMLDivElement | null) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen((o) => !o)}>Toggle panel</button>
+      {open && <div ref={onPanel} style={{ resize: "horizontal", overflow: "auto" }}>Resize me</div>}
+    </>
+  );
+}
+
+export function Layout() {
+  const [panel, setPanel] = useState<HTMLDivElement | null>(null);
+  const { width } = useResizeObserver(panel);
+  return (
+    <>
+      <Panel onPanel={setPanel} />
+      <p>Panel width: {width ?? "not shown"}</p>
+    </>
+  );
+}
+`,
+      },
+    ],
     parameters: [
       {
         name: "ref",

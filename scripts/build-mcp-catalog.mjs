@@ -20,12 +20,12 @@ const mcpVersion = JSON.parse(fs.readFileSync(path.join(root, "packages/hookli-m
 
 // 1. Parse hook-docs.ts
 let docsCode = fs.readFileSync(hookDocsPath, "utf-8");
-// Remove component imports & type imports
-docsCode = docsCode.replace(/import\s+\{[^}]+\}\s+from\s+["'][^"']+["'];/g, "");
-docsCode = docsCode.replace(/import\s+type\s+\{[^}]+\}\s+from\s+["'][^"']+["'];/g, "");
+// Remove the file's own imports. Only the header is touched: the code snippets
+// inside `usage` and `examples` strings keep their import lines.
+const header = docsCode.match(/^(?:import[^;]*;\s*)+/);
+if (header) docsCode = docsCode.slice(header[0].length);
 // Remove type definitions
-docsCode = docsCode.replace(/export\s+type\s+TypeAlias\s*=\s*\{[\s\S]*?\};\s*/g, "");
-docsCode = docsCode.replace(/export\s+type\s+HookDoc\s*=\s*\{[\s\S]*?\};\s*/g, "");
+docsCode = docsCode.replace(/export\s+type\s+\w+\s*=\s*\{[\s\S]*?\n\};\s*/g, "");
 // Strip type annotations on consts
 docsCode = docsCode.replace(/:\s*TypeAlias\s*=/g, " =");
 docsCode = docsCode.replace(/export\s+const\s+HOOK_DOCS[^=]*=/g, "const HOOK_DOCS =");
@@ -94,6 +94,7 @@ const catalog = manifest.hooks.map((entry) => {
       })),
     })),
     usage: (doc.usage || "").trim(),
+    examples: (doc.examples || []).map((e) => ({ title: e.title, description: e.description || null, code: e.code.trim() })),
     source: (src.source || "").trim(),
     sourcePath: src.path || `packages/hookli/src/hooks/${entry.slug}/${entry.slug}.ts`,
     docsUrl: `https://hookli.vercel.app/docs/${entry.slug}`,

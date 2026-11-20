@@ -138,6 +138,15 @@ export function HookPage({ hook }: { hook: HookEntry }) {
               hook={hook}
               doc={doc}
             />
+            {doc.examples?.map((example) => (
+              <div key={example.title} className="mt-8">
+                <h3 className="text-base font-semibold text-fg">{example.title}</h3>
+                {example.description && (
+                  <p className="mt-2 text-sm leading-relaxed text-gray-body">{example.description}</p>
+                )}
+                <CodeBlock code={example.code.trim()} lang="tsx" className="mt-3" />
+              </div>
+            ))}
           </section>
         )}
 
