@@ -1,4 +1,4 @@
-import { useRef, useState, type RefObject } from "react";
+import { useRef, useState, type Ref } from "react";
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { useHover } from "./use-hover";
@@ -47,7 +47,7 @@ describe("useHover lifecycle", () => {
   });
 
   it("tracks an element rendered by a child when the parent's state mounts it", () => {
-    function Child({ innerRef }: { innerRef: RefObject<HTMLDivElement | null> }) {
+    function Child({ innerRef }: { innerRef: Ref<HTMLDivElement> }) {
       return <div data-testid="c" ref={innerRef}>child</div>;
     }
     function Parent() {

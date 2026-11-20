@@ -137,26 +137,6 @@ function WithChild() {
 // (Reuses Toggle; separate name kept for readability of the test.)
 
 // Child owns the element and its own state; the host component never re-renders.
-function ChildOwnsElement({ innerRef }: { innerRef: RefObject<HTMLDivElement | null> }) {
-  const [show, setShow] = useState(false);
-  return (
-    <div>
-      <button onClick={() => setShow(true)}>child-show</button>
-      {show ? <div data-testid="target" ref={innerRef}>target</div> : null}
-    </div>
-  );
-}
-function HostWithChildOwnedElement() {
-  const ref = useRef<HTMLDivElement>(null);
-  const hovered = useHover(ref);
-  return (
-    <div>
-      <output data-testid="state">{String(hovered)}</output>
-      <ChildOwnsElement innerRef={ref} />
-    </div>
-  );
-}
-
 const hoverState = (getByTestId: (id: string) => HTMLElement) =>
   getByTestId("state").textContent;
 
