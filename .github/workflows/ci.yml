@@ -23,6 +23,16 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # Generated files must match their sources: the MCP catalog (served to AI agents),
+      # the docs' hook sources (doc pages, llms.txt, StackBlitz) and the README hook index.
+      - name: Generated files are up to date
+        run: |
+          node scripts/build-mcp-catalog.mjs
+          node scripts/gen-hook-sources.mjs
+          pnpm --filter hookli run gen:manifest
+          git status --porcelain
+          test -z "$(git status --porcelain)" || { echo "::error::Generated files are stale or uncommitted. Run the commands above and commit the result."; exit 1; }
+
       # Turborepo runs each task across both workspaces (docs waits for the library build).
       - name: Build
         run: pnpm build
@@ -30,8 +40,47 @@ jobs:
       - name: Test
         run: pnpm test
 
+      # Packs hookli-mcp exactly as npm publish would, installs the tarball into an
+      # empty project and drives its `hookli-mcp` bin over stdio (= `npx -y hookli-mcp`).
+      - name: MCP package works when installed from npm
+        run: pnpm --filter hookli-mcp run test:package
+
       - name: Lint
         run: pnpm lint
 
       - name: Typecheck
         run: pnpm typecheck
+
+  # The library supports React ^18.2 || ^19. The main job runs React 19; this job
+  # swaps in React 18 (runtime + types) and runs the library's typecheck and tests.
+  react-18:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Use React 18
+        run: pnpm --filter hookli add -D react@18.3.1 react-dom@18.3.1 @types/react@18.3.12 @types/react-dom@18.3.1
+      - name: Typecheck (React 18 types)
+        run: pnpm --filter hookli run typecheck
+      - name: Test (React 18 runtime)
+        run: pnpm --filter hookli run test
+
+  # Every "Open in StackBlitz" playground must typecheck and build.
+  playgrounds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter hookli run build
+      - name: Typecheck and build all StackBlitz playgrounds
+        run: pnpm --filter hookli-docs run check:playgrounds

@@ -46,10 +46,10 @@ export const useDebounceCallback = <Args extends unknown[], R>(
   delayMs: number = 500,
   options: DebounceOptions = {},
 ): DebouncedState<Args, R> => {
-  const timeoutId = useRef<ReturnType<typeof setTimeout>>();
-  const maxTimeoutId = useRef<ReturnType<typeof setTimeout>>();
-  const lastArgs = useRef<Args>();
-  const lastResult = useRef<R>();
+  const timeoutId = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const maxTimeoutId = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const lastArgs = useRef<Args | undefined>(undefined);
+  const lastResult = useRef<R | undefined>(undefined);
   const lastInvokeTime = useRef<number>(0);
 
   const leading = options.leading ?? false;

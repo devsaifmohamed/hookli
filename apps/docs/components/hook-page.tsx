@@ -11,6 +11,7 @@ import {
 } from "@/components/icons";
 import { OnThisPage, type TocItem } from "@/components/on-this-page";
 import { getHookDoc } from "@/lib/hook-docs";
+import { hookDocUrl, hookToMarkdown } from "@/lib/hook-markdown";
 import { hookSourceUrl, getHookSource } from "@/lib/hook-sources";
 import {
   CATEGORY_LABELS,
@@ -120,7 +121,7 @@ export function HookPage({ hook }: { hook: HookEntry }) {
         </header>
 
         {/* Action Row — ultra-clean (Copy Import + Copy for AI) */}
-        <HookActionBar hook={hook} />
+        <HookActionBar hook={hook} markdown={hookToMarkdown(hook)} docUrl={hookDocUrl(hook.slug)} />
 
         {/* Interactive Demo & Usage */}
         {doc && (

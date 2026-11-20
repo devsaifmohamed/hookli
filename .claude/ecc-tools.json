@@ -143,14 +143,7 @@
   ],
   "managedFiles": [
     ".claude/skills/hookli/SKILL.md",
-    ".agents/skills/hookli/SKILL.md",
-    ".agents/skills/hookli/agents/openai.yaml",
     ".claude/identity.json",
-    ".codex/config.toml",
-    ".codex/AGENTS.md",
-    ".codex/agents/explorer.toml",
-    ".codex/agents/reviewer.toml",
-    ".codex/agents/docs-researcher.toml",
     ".claude/homunculus/instincts/inherited/hookli-instincts.yaml",
     ".claude/commands/feature-development.md",
     ".claude/commands/add-new-hook-doc-page.md",
@@ -159,14 +152,7 @@
   "packageFiles": {
     "runtime-core": [
       ".claude/skills/hookli/SKILL.md",
-      ".agents/skills/hookli/SKILL.md",
-      ".agents/skills/hookli/agents/openai.yaml",
       ".claude/identity.json",
-      ".codex/config.toml",
-      ".codex/AGENTS.md",
-      ".codex/agents/explorer.toml",
-      ".codex/agents/reviewer.toml",
-      ".codex/agents/docs-researcher.toml",
       ".claude/homunculus/instincts/inherited/hookli-instincts.yaml"
     ],
     "workflow-pack": [
@@ -178,14 +164,7 @@
   "moduleFiles": {
     "runtime-core": [
       ".claude/skills/hookli/SKILL.md",
-      ".agents/skills/hookli/SKILL.md",
-      ".agents/skills/hookli/agents/openai.yaml",
       ".claude/identity.json",
-      ".codex/config.toml",
-      ".codex/AGENTS.md",
-      ".codex/agents/explorer.toml",
-      ".codex/agents/reviewer.toml",
-      ".codex/agents/docs-researcher.toml",
       ".claude/homunculus/instincts/inherited/hookli-instincts.yaml"
     ],
     "workflow-pack": [

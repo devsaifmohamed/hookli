@@ -6,11 +6,11 @@
 
 ## What It Enables
 
-With `hookli-mcp` connected, AI assistants (Cursor, Claude Desktop, Antigravity, Copilot, etc.) can:
+With `hookli-mcp` connected, AI assistants (Claude Code, Cursor, Claude Desktop, VS Code Copilot, Windsurf, Codex, Zed, etc.) can:
 - **Discover hooks:** Query the complete catalog by category (`state`, `effects`, `dom`, `data`).
 - **Inspect exact APIs:** Fetch typed signatures, parameter tables, return shapes, and TypeScript type aliases.
-- **Search by intent:** Natural language search (e.g. *"how to debounce an input"*, *"click outside listener"*).
-- **Read source code:** View the exact implementation to see SSR guards and zero-dependency patterns.
+- **Search in plain words:** Describe what you need (e.g. *"wait until the user stops typing"*, *"close when clicking outside"*) and get the matching hook.
+- **Read source code:** Get the exact implementation that ships in the `hookli` package.
 - **Architect compositions:** Ask the MCP server how to compose multiple hooks for a given UI feature.
 
 ---
@@ -31,10 +31,10 @@ node packages/hookli-mcp/dist/cli.js
 
 ## Configuration for AI Clients
 
-`hookli-mcp` is published on npm as a standalone executable. Because it operates over standard I/O (`stdio`), it works identically across all modern AI coding assistants.
+`hookli-mcp` runs over standard I/O (`stdio`): every client starts it with `npx -y hookli-mcp`. Most clients take the same `mcpServers` JSON; VS Code, Zed and Codex use their own formats, shown below.
 
-### ⚡ The Universal Config
-Paste this JSON block into **any** MCP-compatible editor or client config file:
+### The common config (`mcpServers`)
+Used by Claude Desktop, Cursor, Windsurf, Antigravity, Cline and Roo Code:
 
 ```json
 {
@@ -51,69 +51,40 @@ Paste this JSON block into **any** MCP-compatible editor or client config file:
 
 ### Client-Specific Setup Guides
 
-#### 1. Claude Code CLI (1 command)
-Run directly in your terminal:
+#### 1. Claude Code
+Run in your terminal (the `--` separates Claude's options from the server command):
 ```bash
-claude mcp add hookli npx -y hookli-mcp
+claude mcp add hookli -- npx -y hookli-mcp
 ```
-Or scope it to the current project repository:
+Or share it with everyone on the repository (writes `.mcp.json`):
 ```bash
-claude mcp add --scope project hookli npx -y hookli-mcp
+claude mcp add --scope project hookli -- npx -y hookli-mcp
 ```
+Check it with `claude mcp list`.
 
-#### 2. Cursor IDE
-Add to your project's `.cursor/mcp.json` (or via **Cursor Settings → Features → MCP → Add New MCP Server**):
-- **Name:** `hookli`
-- **Type:** `command`
-- **Command:** `npx -y hookli-mcp`
+#### 2. Cursor
+Paste the common config into `.cursor/mcp.json` in your project, or `~/.cursor/mcp.json` for all projects.
 
-Or in `.cursor/mcp.json`:
-```json
-{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}
-```
-
-#### 3. Google Antigravity (IDE & CLI)
-Add to your workspace `.gemini/mcp.json` or global `~/.gemini/antigravity/mcp.json`:
-```json
-{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}
-```
-
-#### 4. OpenAI Codex / ChatGPT Desktop
-In ChatGPT Desktop (**Settings → Developer → MCP Servers → Edit Config**) or `~/.codex/mcp.json`:
-```json
-{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}
-```
-
-#### 5. Claude Desktop
-Edit your `claude_desktop_config.json`:
+#### 3. Claude Desktop
+Paste the common config into `claude_desktop_config.json`:
 - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
+Restart Claude Desktop afterwards.
+
+#### 4. Windsurf
+Paste the common config into `~/.codeium/windsurf/mcp_config.json`, then fully quit and reopen Windsurf.
+
+#### 5. Google Antigravity
+Paste the common config into `~/.gemini/config/mcp_config.json` (all projects) or `.agents/mcp_config.json` (one workspace). In the IDE: **…** in the agent panel → **MCP Servers** → **Manage MCP Servers** → **View raw config**.
+
+#### 6. VS Code (GitHub Copilot)
+VS Code uses a `servers` key. Add to `.vscode/mcp.json`:
 ```json
 {
-  "mcpServers": {
+  "servers": {
     "hookli": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "hookli-mcp"]
     }
@@ -121,55 +92,42 @@ Edit your `claude_desktop_config.json`:
 }
 ```
 
-#### 6. Windsurf
-Edit `~/.codeium/windsurf/mcp_config.json`:
+#### 7. Cline / Roo Code (VS Code extensions)
+Open the extension's MCP settings (`cline_mcp_settings.json` / `mcp_settings.json`) and paste the common config.
+
+#### 8. OpenAI Codex (CLI and IDE extension)
+```bash
+codex mcp add hookli -- npx -y hookli-mcp
+```
+Or add to `~/.codex/config.toml`:
+```toml
+[mcp_servers.hookli]
+command = "npx"
+args = ["-y", "hookli-mcp"]
+```
+
+#### 9. Zed
+Zed uses a `context_servers` key. Add to your settings file (`zed: open settings file`):
 ```json
 {
-  "mcpServers": {
+  "context_servers": {
     "hookli": {
       "command": "npx",
-      "args": ["-y", "hookli-mcp"]
+      "args": ["-y", "hookli-mcp"],
+      "env": {}
     }
   }
 }
 ```
 
-#### 7. VS Code Extensions (Cline / Roo Code / Continue)
-Open Cline MCP settings (`cline_mcp_settings.json`):
-```json
-{
-  "mcpServers": {
-    "hookli": {
-      "command": "npx",
-      "args": ["-y", "hookli-mcp"]
-    }
-  }
-}
-```
-
-#### 8. Zed Editor
-Add to `~/.config/zed/settings.json`:
-```json
-{
-  "context_servers": [
-    "hookli": {
-      "command": {
-        "path": "npx",
-        "args": ["-y", "hookli-mcp"]
-      }
-    }
-  ]
-}
-```
-
-#### 9. Local Development / Monorepo Run
-If developing locally inside the `hookli` monorepo:
+#### 10. Local development (inside this monorepo)
+Build first (`pnpm --filter hookli-mcp run build`), then point your client at the built file with an absolute path:
 ```json
 {
   "mcpServers": {
     "hookli": {
       "command": "node",
-      "args": ["${workspaceRoot}/packages/hookli-mcp/dist/cli.js"]
+      "args": ["/absolute/path/to/hookli/packages/hookli-mcp/dist/cli.js"]
     }
   }
 }

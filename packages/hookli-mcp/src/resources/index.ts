@@ -1,6 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CATALOG, formatHookMarkdown, getHookBySlugOrName } from "../catalog.js";
+import { CATALOG, CATALOG_META, formatHookMarkdown, getHookBySlugOrName } from "../catalog.js";
 
 export function registerResources(server: McpServer): void {
   // 1. Full catalog resource
@@ -36,7 +36,7 @@ export function registerResources(server: McpServer): void {
           {
             uri: uri.href,
             mimeType: "application/json",
-            text: JSON.stringify({ library: "hookli", version: "1.6.6", hooks: summary }, null, 2),
+            text: JSON.stringify({ library: "hookli", version: CATALOG_META.libraryVersion, hooks: summary }, null, 2),
           },
         ],
       };

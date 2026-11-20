@@ -1,6 +1,6 @@
 {
   "name": "hookli-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official Model Context Protocol (MCP) server for hookli React hooks library",
   "bin": {
     "hookli-mcp": "./dist/cli.js"
@@ -12,10 +12,15 @@
     "dist"
   ],
   "scripts": {
+    "gen:catalog": "node ../../scripts/build-mcp-catalog.mjs",
+    "prebuild": "node ../../scripts/build-mcp-catalog.mjs",
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "node dist/cli.js",
-    "typecheck": "tsc --noEmit"
+    "test": "vitest run",
+    "test:package": "vitest run --config vitest.e2e.config.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build && pnpm run typecheck && pnpm run test && pnpm run test:package"
   },
   "keywords": [
     "hookli",
@@ -35,6 +40,7 @@
   "devDependencies": {
     "@types/node": "^20.17.0",
     "tsup": "^8.4.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.9"
   }
 }

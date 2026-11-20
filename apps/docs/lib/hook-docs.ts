@@ -828,17 +828,28 @@ export function Demo() {
   "use-is-mounted": {
     demo: UseIsMountedDocDemo,
     usage: `
+import { useState } from "react";
 import { useIsMounted } from "hookli";
+
+const fetchData = () =>
+  new Promise<string>((resolve) => setTimeout(() => resolve("Loaded!"), 1000));
 
 export function Demo() {
   const isMounted = useIsMounted();
+  const [data, setData] = useState<string | null>(null);
 
   async function load() {
-    const data = await fetchData();
-    if (isMounted()) setData(data);
+    const result = await fetchData();
+    // Skip the update if the component unmounted while waiting.
+    if (isMounted()) setData(result);
   }
 
-  return <button onClick={load}>Load</button>;
+  return (
+    <div>
+      <button onClick={load}>Load</button>
+      <p>{data ?? "Nothing loaded yet"}</p>
+    </div>
+  );
 }
 `,
     parameters: [],
@@ -1187,7 +1198,7 @@ export function Demo() {
   "use-ternary-dark-mode": {
     demo: UseTernaryDarkModeDocDemo,
     usage: `
-import { useTernaryDarkMode } from "hookli";
+import { useTernaryDarkMode, type TernaryDarkMode } from "hookli";
 
 export function Demo() {
   const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } =
@@ -1197,7 +1208,7 @@ export function Demo() {
     <div className={isDarkMode ? "panel-dark" : "panel-light"}>
       <select
         value={ternaryDarkMode}
-        onChange={(e) => setTernaryDarkMode(e.target.value)}
+        onChange={(e) => setTernaryDarkMode(e.target.value as TernaryDarkMode)}
       >
         <option value="light">Light</option>
         <option value="system">System</option>

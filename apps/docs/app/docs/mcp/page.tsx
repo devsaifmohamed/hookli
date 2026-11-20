@@ -7,17 +7,19 @@ import {
   SparklesIcon,
 } from "@/components/icons";
 import { HOOKS } from "@/lib/hooks-registry";
+import { GITHUB_URL } from "@/lib/site";
+import { HOOKLI_VERSION } from "@/lib/version";
 import { McpTabGroup } from "@/components/mcp-tab-group";
 import { CopyMcpConfig } from "@/components/copy-mcp-config";
 
 export const metadata: Metadata = {
   title: "Model Context Protocol (MCP) — AI Agent Setup",
   description:
-    "Connect all 66 hookli React hooks directly to Cursor, Claude Code, Claude Desktop, and CLI coding agents via Model Context Protocol.",
+    `Connect all ${HOOKS.length} hookli React hooks directly to Cursor, Claude Code, Claude Desktop, and CLI coding agents via Model Context Protocol.`,
   openGraph: {
     title: "hookli-mcp — Model Context Protocol for React Hooks",
     description:
-      "Native MCP tools for Cursor, Claude Code, and Windsurf. Zero hallucinations, verified TypeScript signatures, and SSR guards for all 66 hooks.",
+      `Native MCP tools for Cursor, Claude Code, and Windsurf: real TypeScript signatures, real source and SSR-safe code for all ${HOOKS.length} hooks.`,
     url: "/docs/mcp",
   },
 };
@@ -43,7 +45,7 @@ const LOCAL_CONFIG = `{
 const MCP_TOOLS = [
   {
     name: "list_hooks",
-    desc: "Lists all 66 hooks or filters by category (state, effects, dom, data) or keyword.",
+    desc: `Lists all ${HOOKS.length} hooks or filters by category (state, effects, dom, data) or keyword.`,
   },
   {
     name: "get_hook",
@@ -51,7 +53,7 @@ const MCP_TOOLS = [
   },
   {
     name: "search_hooks",
-    desc: "Natural-language intent search scored against hook names, descriptions, and use-case tags.",
+    desc: "Plain-language search over hook names, descriptions and curated keywords, ranked by relevance.",
   },
   {
     name: "get_hook_source",
@@ -74,7 +76,7 @@ export default function McpDocsPage() {
             Model Context Protocol
           </span>
           <span className="rounded-full bg-white/[0.04] px-2.5 py-0.5 font-mono text-xs text-gray-body border border-white/[0.06]">
-            v1.6.6
+            hookli v{HOOKLI_VERSION}
           </span>
         </div>
         <CopyMcpConfig />
@@ -122,9 +124,9 @@ export default function McpDocsPage() {
             <h3 className="text-sm font-semibold text-accent">With hookli-mcp (Native Agent Tools)</h3>
           </div>
           <ul className="mt-3 space-y-2 text-xs leading-relaxed text-gray-body">
-            <li>• AI queries real-time signatures directly from our TypeScript source of truth</li>
-            <li>• Automatic use-case discovery via semantic intent search</li>
-            <li>• Zero runtime dependencies & verified SSR safety in every recommendation</li>
+            <li>• Signatures, docs and source are generated from the library itself, so they match the release</li>
+            <li>• Finds the right hook from plain-language requests</li>
+            <li>• Zero runtime dependencies; every hook is server-render tested</li>
             <li>• Multi-hook composition patterns generated automatically</li>
           </ul>
         </div>
@@ -133,14 +135,19 @@ export default function McpDocsPage() {
       {/* Setup */}
       <h2 className="mt-14 text-2xl font-semibold text-fg">Setup</h2>
       <p className="mt-2 text-sm text-gray-body">
-        Every MCP client uses the same JSON config. Pick how you work:
+        Most MCP clients use the same JSON config. Pick how you work:
       </p>
 
       <McpTabGroup
         ideContent={
           <div className="flex flex-col gap-5">
             <p className="text-sm text-gray-body">
-              Paste this into your editor&apos;s MCP config file. The JSON is identical for every editor — only the file path changes.
+              Paste this into your editor&apos;s MCP config file. The JSON is the same for the editors below — only the file path changes.
+              VS Code, Zed and Codex use their own format: see the{" "}
+              <a href={`${GITHUB_URL}/tree/main/packages/hookli-mcp#client-specific-setup-guides`} className="text-accent underline underline-offset-2">
+                setup guide
+              </a>
+              .
             </p>
             <CodeBlock code={UNIVERSAL_CONFIG} lang="json" title="mcp config" />
 
@@ -152,12 +159,10 @@ export default function McpDocsPage() {
               <div className="divide-y divide-white/[0.04]">
                 {[
                   { tool: "Cursor", path: ".cursor/mcp.json" },
-                  { tool: "Antigravity", path: ".gemini/mcp.json" },
+                  { tool: "Antigravity", path: "~/.gemini/config/mcp_config.json" },
                   { tool: "Claude Desktop", path: "~/Library/Application Support/Claude/claude_desktop_config.json" },
                   { tool: "Windsurf", path: "~/.codeium/windsurf/mcp_config.json" },
-                  { tool: "Codex / ChatGPT", path: "~/.codex/mcp.json" },
-                  { tool: "VS Code (Cline)", path: "cline_mcp_settings.json" },
-                  { tool: "Zed", path: "~/.config/zed/settings.json" },
+                  { tool: "Cline", path: "cline_mcp_settings.json" },
                 ].map((row) => (
                   <div key={row.tool} className="flex items-baseline gap-3 px-4 py-2.5">
                     <span className="text-xs font-medium text-fg whitespace-nowrap w-28 shrink-0">{row.tool}</span>
@@ -176,9 +181,9 @@ export default function McpDocsPage() {
 
             <div>
               <h4 className="text-xs font-semibold text-fg mb-2">Claude Code</h4>
-              <CodeBlock code="claude mcp add hookli npx -y hookli-mcp" lang="bash" title="Terminal" />
+              <CodeBlock code="claude mcp add hookli -- npx -y hookli-mcp" lang="bash" title="Terminal" />
               <p className="text-xs text-gray-body mt-2">
-                Scope to current repo only: <code className="text-accent font-mono text-xs bg-white/[0.04] px-1.5 py-0.5 rounded">claude mcp add --scope project hookli npx -y hookli-mcp</code>
+                Scope to current repo only: <code className="text-accent font-mono text-xs bg-white/[0.04] px-1.5 py-0.5 rounded">claude mcp add --scope project hookli -- npx -y hookli-mcp</code>
               </p>
             </div>
 
@@ -209,7 +214,7 @@ export default function McpDocsPage() {
           <span className="flex size-6 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-semibold text-accent">1</span>
           <h3 className="mt-3 text-sm font-semibold text-fg">Intent & Discovery</h3>
           <p className="mt-2 text-xs leading-relaxed text-gray-body">
-            You ask: <em>&ldquo;Add a debounced search bar with localStorage cache.&rdquo;</em> The agent calls <code className="text-accent font-mono">suggest_hooks_for_task</code> to discover <code className="text-fg font-mono">useDebounceValue</code> and <code className="text-fg font-mono">useLocalStorage</code>.
+            You ask: <em>&ldquo;Add a debounced search bar that remembers the last query in localStorage.&rdquo;</em> The agent calls <code className="text-accent font-mono">suggest_hooks_for_task</code> to discover <code className="text-fg font-mono">useDebounce</code> and <code className="text-fg font-mono">useLocalStorage</code>.
           </p>
         </div>
 
@@ -217,7 +222,7 @@ export default function McpDocsPage() {
           <span className="flex size-6 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-semibold text-accent">2</span>
           <h3 className="mt-3 text-sm font-semibold text-fg">Signatures & SSR Guards</h3>
           <p className="mt-2 text-xs leading-relaxed text-gray-body">
-            The agent invokes <code className="text-accent font-mono">get_hook</code> and <code className="text-accent font-mono">get_hook_source</code> to pull the exact TypeScript AST and verify hydration guards before writing a single line.
+            The agent invokes <code className="text-accent font-mono">get_hook</code> and <code className="text-accent font-mono">get_hook_source</code> to pull the exact signature and source, including its SSR guards, before writing a single line.
           </p>
         </div>
 
@@ -225,7 +230,7 @@ export default function McpDocsPage() {
           <span className="flex size-6 items-center justify-center rounded-full bg-accent/15 font-mono text-xs font-semibold text-accent">3</span>
           <h3 className="mt-3 text-sm font-semibold text-fg">Autonomous Code Writing</h3>
           <p className="mt-2 text-xs leading-relaxed text-gray-body">
-            The CLI agent writes the component file, runs <code className="text-fg font-mono">npm i hookli</code> automatically, and verifies the build with your project&apos;s typechecker.
+            The CLI agent writes the component file, installs <code className="text-fg font-mono">hookli</code> if needed, and can verify the build with your project&apos;s typechecker.
           </p>
         </div>
       </div>
