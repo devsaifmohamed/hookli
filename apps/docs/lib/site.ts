@@ -1,3 +1,8 @@
+import hookliPackage from "hookli/package.json";
+
+/* The workspace library's version, so the docs never show a stale release number. */
+export const HOOKLI_VERSION: string = hookliPackage.version;
+
 /* Canonical origin for metadataBase, sitemap and robots. Placeholder until the
    human deploys — override with NEXT_PUBLIC_SITE_URL, no trailing slash. */
 export const SITE_URL =

@@ -1,6 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { formatHookMarkdown, getHookBySlugOrName } from "../catalog.js";
+import { CATALOG_META, formatHookMarkdown, getHookBySlugOrName } from "../catalog.js";
 
 export function registerPrompts(server: McpServer): void {
   // 1. implement-hook prompt
@@ -58,7 +58,7 @@ export function registerPrompts(server: McpServer): void {
               type: "text",
               text: [
                 `I want to migrate this React component from \`${sourceLibrary}\` to \`hookli\`.`,
-                `hookli features 66 typed, zero-runtime-dependency, SSR-safe React hooks.`,
+                `hookli features ${CATALOG_META.hookCount} typed, zero-runtime-dependency, SSR-safe React hooks.`,
                 "",
                 `Current component code:`,
                 "```tsx",

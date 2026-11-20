@@ -19,7 +19,7 @@ import {
   hooksByCategory,
   type HookCategory,
 } from "@/lib/hooks-registry";
-import { TAGLINE } from "@/lib/site";
+import { HOOKLI_VERSION, TAGLINE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Docs — hookli",
@@ -93,7 +93,7 @@ export default function DocsIndexPage() {
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1 font-mono text-xs font-semibold text-accent border border-accent/25">
             <SparklesIcon className="size-3" />
-            v1.6.6
+            v{HOOKLI_VERSION}
           </span>
           <span className="rounded-full bg-white/[0.04] px-2.5 py-0.5 font-mono text-xs text-gray-body/70 border border-white/[0.04]">
             {HOOKS.length} typed hooks

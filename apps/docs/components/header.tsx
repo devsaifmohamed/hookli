@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HookMark, Wordmark } from "./wordmark";
 import { GitHubIcon } from "./icons";
 import { SearchPalette } from "./search-palette";
-import { GITHUB_URL } from "@/lib/site";
+import { GITHUB_URL, HOOKLI_VERSION } from "@/lib/site";
 
 export function Header() {
   return (
@@ -18,7 +18,7 @@ export function Header() {
             <HookMark className="h-5 w-auto" />
             <Wordmark size="sm" />
             <span className="hidden sm:inline-flex rounded-full bg-accent/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-accent border border-accent/25">
-              v1.6.6
+              v{HOOKLI_VERSION}
             </span>
           </Link>
 

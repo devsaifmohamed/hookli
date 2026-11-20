@@ -81,7 +81,8 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./manifest": "./hooks.manifest.json"
+    "./manifest": "./hooks.manifest.json",
+    "./package.json": "./package.json"
   },
   "engines": {
     "node": ">=16"

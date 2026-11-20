@@ -27,6 +27,8 @@ const STOPWORDS = new Set(
   ).split(" "),
 );
 
+const LEADING_TASK_VERB = /^(?:please\s+)?(?:create|build|implement|write|make|add)\s+(?=\S)/i;
+
 /** Everyday developer wording -> words the catalog uses. Applied at reduced weight. */
 const SYNONYMS = new Map<string, string[]>(Object.entries({
   refresh: ["persist", "storage"],
@@ -206,10 +208,15 @@ export function rankHooks(
 ): SearchResult[] {
   const limit = options?.limit ?? 10;
   const { hooks, idf } = buildIndex(catalog);
-  const q = query.trim().toLowerCase();
+  // A request usually opens with a task verb ("Create a search bar ...") that says
+  // nothing about which hook; dropping it keeps "create" from matching useMutation.
+  query = query.trim().replace(LEADING_TASK_VERB, "");
+  const q = query.toLowerCase();
   if (!q) return [];
 
-  const rawWords = words(q).filter((w) => !STOPWORDS.has(w));
+  // Tokenize the original text: lowercasing first would merge camelCase words
+  // ("localStorage", "useDebounce") into tokens the index never contains.
+  const rawWords = words(query).filter((w) => !STOPWORDS.has(w));
   const terms = new Map<string, number>();
   for (const w of rawWords) {
     if (w.length < 2) continue;
@@ -223,7 +230,7 @@ export function rankHooks(
   for (const [pattern, extra] of PHRASE_SYNONYMS) {
     if (pattern.test(q)) for (const t of extra.map(stem)) terms.set(t, Math.max(terms.get(t) ?? 0, 0.8));
   }
-  const rawWordSet = new Set(words(q));
+  const rawWordSet = new Set(words(query));
   const queryStems = new Set([...terms].filter(([, w]) => w === 1).map(([t]) => t));
 
   const results: SearchResult[] = [];
@@ -266,7 +273,7 @@ export type Suggestion = { hook: HookCatalogItem; score: number; covers: string 
  */
 export function suggestForTask(catalog: HookCatalogItem[], task: string, max = 6): Suggestion[] {
   const clauses = task
-    .split(/[,;.\n]|\band\b|\bwith\b|\bplus\b|\balso\b|\bthen\b|\bwhile\b/i)
+    .split(/[,;.\n]|\band\b|\bwith\b|\bor\b|\bthat\b|\bwhich\b|\bplus\b|\balso\b|\bthen\b|\bwhile\b/i)
     .map((c) => c.trim())
     .filter((c) => contentTokens(c).length > 0);
 
@@ -288,7 +295,13 @@ export function suggestForTask(catalog: HookCatalogItem[], task: string, max = 6
   }
   // A requirement can need two hooks ("draggable widget that remembers its position").
   for (const c of ranked) {
-    const second = c.results.find((r) => !picked.has(r.hook.name) && r.score >= c.results[0].score * 0.6);
+    // A second hook must add something: not a variant of a hook already picked
+    // (useDebounce / useDebounceValue, useLocalStorage / useLocalStorageWithExpiry).
+    const isVariant = (name: string) =>
+      [...picked.keys()].some((p) => name.startsWith(p) || p.startsWith(name));
+    const second = c.results.find(
+      (r) => !picked.has(r.hook.name) && !isVariant(r.hook.name) && r.score >= c.results[0].score * 0.6,
+    );
     if (second) picked.set(second.hook.name, { ...second, covers: c.clause, order: c.order + 0.5 });
   }
   if (picked.size === 0) {

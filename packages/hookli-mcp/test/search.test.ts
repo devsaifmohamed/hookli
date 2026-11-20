@@ -58,6 +58,20 @@ describe("search_hooks accuracy on plain-language requests", () => {
     expect(top.hook.name).toBe("useTernaryDarkMode");
   });
 
+  it("camelCase words typed in a query match (API and hook names)", () => {
+    const top = (q: string) => rankHooks(CATALOG, q, { limit: 1 })[0]?.hook.name;
+    expect(top("save it in localStorage")).toBe("useLocalStorage");
+    expect(top("sessionStorage value")).toBe("useSessionStorage");
+    expect(top("wrap IntersectionObserver")).toBe("useIntersectionObserver");
+    expect(top("Replace react-use useDebounce in this component with hookli")).toBe("useDebounce");
+  });
+
+  it("an opening task verb does not decide the result", () => {
+    const names = rankHooks(CATALOG, "Create a search bar with a debounce", { limit: 3 }).map((r) => r.hook.name);
+    expect(names).not.toContain("useMutation");
+    expect(names[0]).toMatch(/^useDebounce/);
+  });
+
   it("stems word variants onto one form", () => {
     expect(stem("typing")).toBe(stem("type"));
     expect(stem("stopped")).toBe("stop");
@@ -73,6 +87,10 @@ describe("suggest_hooks_for_task composes one hook per requirement", () => {
     ["dashboard that polls every 10 seconds, pauses when the tab is hidden and shows an offline banner", ["useInterval", "usePageVisibility", "useNetworkState"]],
     ["image gallery with lazy loading, fullscreen view and keyboard shortcuts", ["useIntersectionObserver", "useFullscreen", "useHotkeys"]],
     ["draggable chat widget that remembers its position and hides on mobile", ["useDraggable", "useLocalStorage", "useMediaQuery"]],
+    // The examples shown on hookli.vercel.app/docs/mcp:
+    ["I need to close a dropdown whenever the user clicks outside or presses Escape.", ["useClickOutside", "useKeyPress"]],
+    ["Create a search bar with 300ms debounce that stores the last query in localStorage.", ["useDebounce", "useLocalStorage"]],
+    ["Build a slide-over drawer and prevent background body scrolling when it opens.", ["useScrollLock"]],
   ];
   it("keeps every requirement's primary hook when the list is truncated", () => {
     const task = "draggable widget that remembers its position, closes on outside click, locks body scroll";
