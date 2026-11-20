@@ -1,9 +1,9 @@
 {
   "name": "hookli-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Official Model Context Protocol (MCP) server for hookli React hooks library",
   "bin": {
-    "hookli-mcp": "./dist/cli.js"
+    "hookli-mcp": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

@@ -73,7 +73,8 @@ describe("the published hookli-mcp package", () => {
   it("declares only the dependencies the server needs, all resolvable after install", () => {
     expect(Object.keys(pkg.dependencies).sort()).toEqual(["@modelcontextprotocol/sdk", "zod"]);
     const installed = JSON.parse(fs.readFileSync(path.join(app, "node_modules/hookli-mcp/package.json"), "utf8"));
-    expect(installed.bin).toEqual({ "hookli-mcp": "./dist/cli.js" });
+    // The form npm publishes; "./dist/cli.js" makes npm print a misleading "invalid and removed" warning.
+    expect(installed.bin).toEqual({ "hookli-mcp": "dist/cli.js" });
     expect(fs.readFileSync(path.join(app, "node_modules/hookli-mcp/dist/cli.js"), "utf8").startsWith("#!/usr/bin/env node\n")).toBe(true);
   });
 
