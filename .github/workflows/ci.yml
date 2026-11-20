@@ -30,7 +30,8 @@ jobs:
           node scripts/build-mcp-catalog.mjs
           node scripts/gen-hook-sources.mjs
           pnpm --filter hookli run gen:manifest
-          git diff --exit-code || { echo "::error::Generated files are stale. Run the commands above and commit the result."; exit 1; }
+          git status --porcelain
+          test -z "$(git status --porcelain)" || { echo "::error::Generated files are stale or uncommitted. Run the commands above and commit the result."; exit 1; }
 
       # Turborepo runs each task across both workspaces (docs waits for the library build).
       - name: Build

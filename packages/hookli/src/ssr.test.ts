@@ -6,8 +6,10 @@ import * as hookli from "./index";
 
 /*
  * SSR safety net: server-render every exported hook in plain Node — no window,
- * document, navigator or storage — the way Next.js / Remix render on the server.
- * A hook that touches a browser API outside an effect or guard throws here.
+ * document or storage, and on Node 21+ only a partial `navigator` — the way
+ * Next.js / Remix render on the server. A hook that touches a browser API
+ * during render without a guard throws here. Effects do not run in
+ * renderToString, so this covers render-phase code only.
  *
  * Every export must be listed below (with arguments, or in NO_ARGS), so a new
  * hook cannot ship without this check.
@@ -77,6 +79,16 @@ describe("SSR: every hook server-renders without browser globals", () => {
   it("runs in a real server environment", () => {
     expect(typeof window).toBe("undefined");
     expect(typeof document).toBe("undefined");
+  });
+
+  it("useNetworkState reports online on the server, even where Node defines navigator", () => {
+    let result: unknown;
+    function Probe() {
+      result = hookli.useNetworkState();
+      return null;
+    }
+    renderToString(createElement(Probe));
+    expect(result).toEqual({ online: true });
   });
 
   it("covers every exported hook", () => {

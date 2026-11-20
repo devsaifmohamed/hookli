@@ -9,8 +9,7 @@ import { HOLDOUT_CASES, TUNING_CASES } from "./search-cases.js";
 describe("search_hooks accuracy on plain-language requests", () => {
   it("tuning set: right hook in top 3 for >= 95% and first for >= 90%", () => {
     const r = scoreCases(TUNING_CASES);
-    expect(r.misses, r.misses.join("\n")).toHaveLength(Math.max(0, r.total - r.top3));
-    expect(r.top3 / r.total).toBeGreaterThanOrEqual(0.95);
+    expect(r.top3 / r.total, r.misses.join("\n")).toBeGreaterThanOrEqual(0.95);
     expect(r.top1 / r.total).toBeGreaterThanOrEqual(0.9);
   });
 
@@ -38,7 +37,7 @@ describe("search_hooks accuracy on plain-language requests", () => {
 
   it("respects category and limit", () => {
     const res = rankHooks(CATALOG, "scroll", { category: "dom", limit: 2 });
-    expect(res.length).toBeLessThanOrEqual(2);
+    expect(res).toHaveLength(2);
     expect(res.every((r) => r.hook.category === "dom")).toBe(true);
   });
 
@@ -66,10 +65,21 @@ describe("search_hooks accuracy on plain-language requests", () => {
     expect(top("Replace react-use useDebounce in this component with hookli")).toBe("useDebounce");
   });
 
+  it("keyboard combos, plurals and nouns ending in -ing still match", () => {
+    const top = (q: string) => rankHooks(CATALOG, q, { limit: 1 })[0]?.hook.name;
+    expect(top("Ctrl+K opens search")).toBe("useHotkeys");
+    expect(top("user setting")).toBe("useLocalStorage");
+    expect(top("user settings")).toBe("useLocalStorage");
+    expect(top("screens")).toBe("useScreen");
+    expect(stem("settings")).toBe(stem("setting"));
+  });
+
   it("an opening task verb does not decide the result", () => {
     const names = rankHooks(CATALOG, "Create a search bar with a debounce", { limit: 3 }).map((r) => r.hook.name);
     expect(names).not.toContain("useMutation");
     expect(names[0]).toMatch(/^useDebounce/);
+    const colon = suggestForTask(CATALOG, "Create: a dropdown menu that closes on outside click").map((x) => x.hook.name);
+    expect(colon).not.toContain("useMutation");
   });
 
   it("stems word variants onto one form", () => {
@@ -99,6 +109,18 @@ describe("suggest_hooks_for_task composes one hook per requirement", () => {
     expect(all.length).toBeGreaterThan(3);
     expect(capped).toEqual(expect.arrayContaining(["useClickOutside", "useScrollLock"]));
     expect(capped).toHaveLength(3);
+  });
+
+  it("a dot inside an identifier does not split a requirement", () => {
+    const res = suggestForTask(CATALOG, "read window.screen size");
+    expect(res.map((x) => x.hook.name)[0]).toBe("useScreen");
+    expect(new Set(res.map((x) => x.covers)).size).toBe(1);
+  });
+
+  it("a generic word does not pull in an unrelated second hook", () => {
+    const names = suggestForTask(CATALOG, "modal that closes on ESC").map((x) => x.hook.name);
+    expect(names).toContain("useKeyPress");
+    expect(names).not.toContain("useSessionStorage");
   });
 
   it.each(cases)("%s", (task, expected) => {

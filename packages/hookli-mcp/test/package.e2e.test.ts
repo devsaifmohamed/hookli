@@ -25,7 +25,15 @@ let stderr = "";
 const protocolErrors: Error[] = [];
 
 beforeAll(async () => {
-  if (!fs.existsSync(path.join(pkgDir, "dist/cli.js"))) throw new Error("Run `pnpm run build` first.");
+  // Refuse to test a stale build: dist must be newer than every source and data file.
+  const built = path.join(pkgDir, "dist/cli.js");
+  if (!fs.existsSync(built)) throw new Error("Run `pnpm run build` first.");
+  const newestSource = Math.max(
+    ...fs.readdirSync(path.join(pkgDir, "src"), { recursive: true, withFileTypes: true })
+      .filter((e) => e.isFile())
+      .map((e) => fs.statSync(path.join(e.parentPath, e.name)).mtimeMs),
+  );
+  if (fs.statSync(built).mtimeMs < newestSource) throw new Error("dist is older than src; run `pnpm run build` first.");
   tmp = fs.mkdtempSync(path.join(os.tmpdir(), "hookli-mcp-pack-"));
   execFileSync("pnpm", ["pack", "--pack-destination", tmp], { cwd: pkgDir, stdio: "pipe" });
   const tarball = path.join(tmp, `hookli-mcp-${pkg.version}.tgz`);

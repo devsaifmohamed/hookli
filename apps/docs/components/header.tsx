@@ -2,7 +2,8 @@ import Link from "next/link";
 import { HookMark, Wordmark } from "./wordmark";
 import { GitHubIcon } from "./icons";
 import { SearchPalette } from "./search-palette";
-import { GITHUB_URL, HOOKLI_VERSION } from "@/lib/site";
+import { GITHUB_URL } from "@/lib/site";
+import { HOOKLI_VERSION } from "@/lib/version";
 
 export function Header() {
   return (

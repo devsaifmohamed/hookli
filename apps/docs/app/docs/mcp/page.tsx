@@ -7,7 +7,8 @@ import {
   SparklesIcon,
 } from "@/components/icons";
 import { HOOKS } from "@/lib/hooks-registry";
-import { GITHUB_URL, HOOKLI_VERSION } from "@/lib/site";
+import { GITHUB_URL } from "@/lib/site";
+import { HOOKLI_VERSION } from "@/lib/version";
 import { McpTabGroup } from "@/components/mcp-tab-group";
 import { CopyMcpConfig } from "@/components/copy-mcp-config";
 

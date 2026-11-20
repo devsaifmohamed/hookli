@@ -27,7 +27,7 @@ const STOPWORDS = new Set(
   ).split(" "),
 );
 
-const LEADING_TASK_VERB = /^(?:please\s+)?(?:create|build|implement|write|make|add)\s+(?=\S)/i;
+const LEADING_TASK_VERB = /^(?:please\s+)?(?:create|build|implement|write|make|add)\b[\s:,\-–—]+(?=\S)/i;
 
 /** Everyday developer wording -> words the catalog uses. Applied at reduced weight. */
 const SYNONYMS = new Map<string, string[]>(Object.entries({
@@ -133,6 +133,8 @@ const NAME_BONUS = 4;
 
 export function stem(word: string): string {
   const w = word.toLowerCase();
+  // "setting(s)" is a noun here; stripping "-ing" would turn it into the verb "set".
+  if (w === "setting" || w === "settings") return "setting";
   for (const suffix of ["ence", "ance", "ing", "ies", "ied", "ed", "es", "s", "e"]) {
     if (w.endsWith(suffix) && w.length - suffix.length >= 3) {
       if (suffix === "s" && w.endsWith("ss")) return w;
@@ -151,7 +153,7 @@ export function words(text: string): string[] {
   return text
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .toLowerCase()
-    .split(/[^a-z0-9+]+/)
+    .split(/[^a-z0-9]+/)
     .filter(Boolean);
 }
 
@@ -247,7 +249,7 @@ export function rankHooks(
       }
       if (best) score += best * weight * (idf.get(term) ?? 0);
     }
-    if (h.nameWords.length > 0 && h.nameWords.every((w) => rawWordSet.has(w))) {
+    if (h.nameWords.length > 0 && h.nameWords.every((w) => rawWordSet.has(w) || rawWordSet.has(`${w}s`))) {
       score += NAME_BONUS * h.nameWords.length;
     }
     for (const phrase of h.phrases) {
@@ -273,7 +275,7 @@ export type Suggestion = { hook: HookCatalogItem; score: number; covers: string 
  */
 export function suggestForTask(catalog: HookCatalogItem[], task: string, max = 6): Suggestion[] {
   const clauses = task
-    .split(/[,;.\n]|\band\b|\bwith\b|\bor\b|\bthat\b|\bwhich\b|\bplus\b|\balso\b|\bthen\b|\bwhile\b/i)
+    .split(/[,;\n]|\.(?=\s|$)|\band\b|\bwith\b|\bor\b|\bthat\b|\bwhich\b|\bplus\b|\balso\b|\bthen\b|\bwhile\b/i)
     .map((c) => c.trim())
     .filter((c) => contentTokens(c).length > 0);
 
@@ -300,7 +302,7 @@ export function suggestForTask(catalog: HookCatalogItem[], task: string, max = 6
     const isVariant = (name: string) =>
       [...picked.keys()].some((p) => name.startsWith(p) || p.startsWith(name));
     const second = c.results.find(
-      (r) => !picked.has(r.hook.name) && !isVariant(r.hook.name) && r.score >= c.results[0].score * 0.6,
+      (r) => !picked.has(r.hook.name) && !isVariant(r.hook.name) && r.score >= c.results[0].score * 0.8,
     );
     if (second) picked.set(second.hook.name, { ...second, covers: c.clause, order: c.order + 0.5 });
   }

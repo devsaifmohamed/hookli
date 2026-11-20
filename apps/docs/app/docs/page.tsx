@@ -19,7 +19,8 @@ import {
   hooksByCategory,
   type HookCategory,
 } from "@/lib/hooks-registry";
-import { HOOKLI_VERSION, TAGLINE } from "@/lib/site";
+import { TAGLINE } from "@/lib/site";
+import { HOOKLI_VERSION } from "@/lib/version";
 
 export const metadata: Metadata = {
   title: "Docs — hookli",

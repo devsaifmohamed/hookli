@@ -34,8 +34,11 @@ const getConnection = (): ConnectionLike | undefined => {
   );
 };
 
+// Node 21+ defines a partial `navigator` (no `onLine`), so check for a browser.
+const isBrowser = () => typeof window !== "undefined" && typeof navigator !== "undefined";
+
 const read = (): NetworkState => {
-  if (typeof navigator === "undefined") return { online: true };
+  if (!isBrowser()) return { online: true };
   const c = getConnection();
   return {
     online: navigator.onLine,
@@ -55,7 +58,7 @@ const read = (): NetworkState => {
  */
 export const useNetworkState = (): NetworkState => {
   const [state, setState] = useState<NetworkState>(() =>
-    typeof navigator === "undefined" ? { online: true } : read(),
+    isBrowser() ? read() : { online: true },
   );
 
   useEffect(() => {

@@ -318,8 +318,9 @@ function loadSources() {
  * a click, so the click itself must not wait on a slow first download.
  */
 export function preloadStackBlitz(): void {
-  void loadSdk();
-  void loadSources();
+  // A failed preload is retried on click; don't surface it as an unhandled rejection.
+  loadSdk().catch(() => {});
+  loadSources().catch(() => {});
 }
 
 /**
