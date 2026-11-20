@@ -64,10 +64,6 @@ This skill covers the development patterns, coding conventions, and collaborativ
    `lib/hook-sources.ts`
 4. Register the hook in:  
    `lib/hooks-registry.ts`
-5. Mark the task as done in:  
-   `ralph/prd.json`
-6. Update the progress log:  
-   `ralph/progress.txt`
 
 **Example:**
 ```typescript
@@ -91,19 +87,15 @@ export default function UseIntervalDemo() {
    - Add entry to `lib/hook-docs.ts`
    - Add source to `lib/hook-sources.ts`
    - Register in `lib/hooks-registry.ts`
-2. Mark all related tasks as done in `ralph/prd.json`
-3. Update `ralph/progress.txt`
 
 ---
 
-### Feature Development with PRD Tracking
+### Feature Development
 
 **Trigger:** When implementing a new feature or completing a tracked task.  
 **Command:** `/complete-task`
 
 1. Implement the feature in `app/`, `components/`, or `lib/` as needed.
-2. Mark the task as done in `ralph/prd.json`.
-3. Log progress in `ralph/progress.txt`.
 
 ---
 
@@ -126,15 +118,6 @@ export default function UseIntervalDemo() {
 1. Rename all `components/*.tsx` files to kebab-case.
 2. Update all imports in `app/`, `components/`, and related files to match new names.
 3. Update `AGENTS.md` and/or conventions documentation.
-
----
-
-### Ralph Progress Logging
-
-**Trigger:** Whenever a tracked task or batch is completed.  
-**Command:** `/log-progress`
-
-1. Edit `ralph/progress.txt` to log the latest progress.
 
 ---
 
@@ -163,7 +146,7 @@ export default function UseIntervalDemo() {
 |-------------------------------|----------------------------------------------------------------|
 | /add-hook-doc                 | Add documentation and demo for a new hook                      |
 | /batch-add-hook-docs          | Add documentation and demos for multiple hooks in one batch    |
-| /complete-task                | Complete a feature/task and update PRD/progress                |
+| /complete-task                | Complete a feature/task                                         |
 | /update-design-tokens         | Update design tokens and sync design documentation             |
 | /enforce-kebab-case-components| Enforce kebab-case naming for component files and update imports|
 | /log-progress                 | Log progress after completing a task or batch                  |

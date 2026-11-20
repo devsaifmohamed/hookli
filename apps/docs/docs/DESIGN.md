@@ -246,5 +246,5 @@ Enter routes, Esc closes. Rendered in a portal; focus trap; `role="dialog"` +
 
 Approved when their task lands: **shiki** (T6, highlighting — build-time/server only),
 **lucide-react** (only if inline SVGs become a burden). Nothing else without a
-progress.txt note. Demos import from **`hookli`** (npm) — never relative paths into
+note in the PR. Demos import from **`hookli`** (npm) — never relative paths into
 `../rehooks-app`.

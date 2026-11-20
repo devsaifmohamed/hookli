@@ -27,7 +27,6 @@ pnpm build                   # turbo: build library + docs (docs waits for the l
 pnpm test                    # turbo: vitest across workspaces
 pnpm typecheck               # turbo: tsc --noEmit across workspaces
 pnpm lint                    # turbo: eslint across workspaces
-bash ralph/check.sh          # the gate — scoped to the workspace(s) that changed
 
 # target one workspace
 pnpm --filter hookli run build
@@ -43,8 +42,7 @@ pnpm --filter hookli-docs run dev
 ```
 hookli/                       # repo root (github.com/saifmohamedsv/hookli)
 ├── CLAUDE.md                 # ← you are here (whole-repo)
-├── .claude/                  # git-safety hooks, settings, commands, agents
-├── ralph/                    # the gated self-driving loop (scoped gate)
+├── .claude/                  # workflow.json (way-of-working profile), settings, commands, skills
 ├── packages/hookli/          # the library    → packages/hookli/CLAUDE.md
 ├── apps/docs/                # the docs site   → apps/docs/CLAUDE.md (+ AGENTS.md)
 ├── pnpm-workspace.yaml  turbo.json  package.json  .npmrc
@@ -77,17 +75,10 @@ cd packages/hookli && npm publish --otp=<code>
 Vercel builds `apps/docs` (project **Root Directory = `apps/docs`**) against the workspace library.
 A push to `main` deploys. Don't push/deploy from an agent loop.
 
-## Ralph — the gated self-driving loop
+## Before a commit
 
-`ralph/` runs one task per iteration and must pass `ralph/check.sh` — which is **scoped**: it gates
-only the workspace(s) whose files changed (library: typecheck+test+build · docs: lint+typecheck+build).
-It stops at the autonomy gates: no merge/push to `main`, no deletions, no publish/deploy.
-
-```bash
-bash ralph/ralph-once.sh          # one supervised iteration
-bash ralph/afk-ralph.sh 10        # up to 10 autonomous iterations
-RALPH_MODEL=sonnet bash ralph/afk-ralph.sh 10   # override the model (default: opus)
-```
+Run the `verify.commands` of every area you touched, as listed in `.claude/workflow.json`
+(library, mcp, docs). CI runs the full set on every PR.
 
 ## Safety hooks (`.claude/`)
 

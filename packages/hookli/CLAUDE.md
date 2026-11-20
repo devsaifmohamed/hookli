@@ -22,12 +22,11 @@ yarn install          # deps (yarn 1.x classic; a yarn.lock is committed)
 yarn build            # tsup → dist/ (index.js CJS, index.mjs ESM, index.d.ts types)
 yarn test             # vitest — colocated per-hook tests
 npx tsc --noEmit      # typecheck only
-bash ralph/check.sh   # quality gate: tsc --noEmit + vitest + tsup build
 ```
 
 Tests run on **vitest** (colocated `*.test.ts` per hook) and **CI** runs the gate on every push/PR. The quality net is
-`tsc --noEmit` + `vitest` tests + a successful `tsup` build — that is exactly what `ralph/check.sh`
-enforces. If you add hooks, keep that gate green.
+`tsc --noEmit` + `vitest` tests + a successful `tsup` build — that is exactly what the
+library area's verify commands in the root `.claude/workflow.json` run. If you add hooks, keep that gate green.
 
 ## Layout
 
@@ -104,7 +103,7 @@ the README (and, once it exists, the docs site's `hook-docs` entry in `../hookli
 
 ### Build & typecheck stay green
 
-`bash ralph/check.sh` (`tsc --noEmit` + `vitest` + `tsup`) must pass before any commit.
+`pnpm typecheck && pnpm test && pnpm build` (from `packages/hookli`) must pass before any commit.
 
 ## Releasing (human-gated — do NOT automate)
 
@@ -112,23 +111,6 @@ Publishing is the one irreversible, outward-facing action here. **Never** run
 `npm publish` / `yarn publish`, `npm version`, or push a git tag on your own — the version
 history (`1.3.x` commits) shows the maintainer drives releases by hand. Ship code and let
 a human cut the release.
-
-## Ralph — the gated self-driving loop
-
-`ralph/` holds a stateless, file-memory task loop (see `ralph/README.md` + `ralph/GUIDE.md`).
-All memory lives in `ralph/prd.json` (backlog), `ralph/progress.txt` (log), and git.
-
-```bash
-bash ralph/ralph-once.sh          # one supervised iteration — start here
-bash ralph/afk-ralph.sh 10        # up to 10 autonomous iterations, stops when backlog drains
-bash ralph/approve.sh <task-id>   # commit a review-first task the loop left in the tree
-bash ralph/check.sh               # the gate the loop must pass before every commit
-```
-
-The loop does **exactly one task per iteration**, must pass `ralph/check.sh` before
-committing, and **stops** at the autonomy gates: no merge/push to `main`, no deletions, and
-**no publish/version/tag**. The backlog (`ralph/prd.json`) is currently seeded with the
-quality-pass tasks T1–T4 above.
 
 ## Safety hooks (`.claude/`)
 

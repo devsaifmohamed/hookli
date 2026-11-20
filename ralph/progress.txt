@@ -1,5 +1,0 @@
-# Ralph progress log — hookli monorepo
-# Durable, append-only memory. Committed to git on purpose.
-
-2026-07-16 · seeded · monorepo established (pnpm + Turborepo). packages/hookli (library) + apps/docs (Next.js, workspace:* dep). Scoped check.sh; hierarchical CLAUDE.md; Nzmly .claude commands/agents. Backlog empty.
-2026-11-20 · dep note · apps/docs adds devDependency tsx (4.19.2) — runs scripts/check-playgrounds.mts, which loads the docs' TS modules (@/ aliases) to generate and build every StackBlitz playground in CI. Dev-only; not shipped to the site.
