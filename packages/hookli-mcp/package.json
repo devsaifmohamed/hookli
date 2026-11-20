@@ -18,8 +18,9 @@
     "dev": "tsup --watch",
     "start": "node dist/cli.js",
     "test": "vitest run",
+    "test:package": "vitest run --config vitest.e2e.config.ts",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build && pnpm run typecheck && pnpm run test"
+    "prepublishOnly": "pnpm run build && pnpm run typecheck && pnpm run test && pnpm run test:package"
   },
   "keywords": [
     "hookli",
