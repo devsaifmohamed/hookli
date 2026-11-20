@@ -122,10 +122,6 @@ icon-only controls need an `aria-label`; respect `prefers-reduced-motion`.
 
 ## Quality gate (before every commit)
 ```bash
-bash ralph/check.sh   # npm run lint + npx tsc --noEmit + npm run build
+pnpm lint && pnpm typecheck && pnpm build && pnpm check:playgrounds
 ```
 
-## Ralph loop
-This app is built by the Ralph loop: backlog in `ralph/prd.json`, durable log in
-`ralph/progress.txt`, operating manual in `ralph/prompt.md`, design source of truth in
-`docs/DESIGN.md`. One task per iteration, gate green before commit, no pushes/deploys/publishes.

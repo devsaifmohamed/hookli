@@ -227,7 +227,7 @@ Every star and sponsorship genuinely helps keep this going. Thank you! 🙏
 
 Contributions of any size are welcome — see **[CONTRIBUTING.md](https://github.com/devsaifmohamed/hookli/blob/main/CONTRIBUTING.md)**. In short:
 each hook lives in its own folder under `src/hooks/use-<name>/` (hook + colocated vitest test +
-barrel), keep it SSR-safe, and make sure `bash ralph/check.sh` (typecheck + tests + build) is green.
+barrel), keep it SSR-safe, and make sure `pnpm typecheck && pnpm test && pnpm build` (typecheck + tests + build) is green.
 
 ## 📄 License
 

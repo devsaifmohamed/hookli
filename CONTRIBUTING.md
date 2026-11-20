@@ -55,7 +55,7 @@ pnpm test          # 2. vitest - all hooks have colocated tests
 pnpm build         # 3. tsup: CJS + ESM + .d.ts must all emit
 ```
 
-Or run all three at once: `bash ralph/check.sh`. **CI runs the same gate on every pull request.**
+Or run all three for every workspace from the root: `pnpm typecheck && pnpm test && pnpm build`. **CI runs the same gate on every pull request.**
 
 ## Commit & PR
 

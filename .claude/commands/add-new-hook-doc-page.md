@@ -18,8 +18,6 @@ Adds documentation for a new React hook, including interactive demo, registry en
 - `lib/hook-docs.ts`
 - `lib/hook-sources.ts`
 - `lib/hooks-registry.ts`
-- `ralph/prd.json`
-- `ralph/progress.txt`
 
 ## Suggested Sequence
 
@@ -34,7 +32,6 @@ Adds documentation for a new React hook, including interactive demo, registry en
 - Add hook entry to lib/hook-docs.ts
 - Add hook source to lib/hook-sources.ts
 - Add hook to lib/hooks-registry.ts
-- Update ralph/prd.json to mark the task done
 
 ## Notes
 

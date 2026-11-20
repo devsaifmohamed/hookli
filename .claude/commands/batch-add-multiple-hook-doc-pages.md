@@ -18,8 +18,6 @@ Adds documentation for several new hooks in a single commit, following the same 
 - `lib/hook-docs.ts`
 - `lib/hook-sources.ts`
 - `lib/hooks-registry.ts`
-- `ralph/prd.json`
-- `ralph/progress.txt`
 
 ## Suggested Sequence
 
@@ -34,7 +32,6 @@ Adds documentation for several new hooks in a single commit, following the same 
 - For each hook: add entry to lib/hook-docs.ts
 - For each hook: add source to lib/hook-sources.ts
 - For each hook: add to lib/hooks-registry.ts
-- Update ralph/prd.json to mark all related tasks done
 
 ## Notes
 

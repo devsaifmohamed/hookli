@@ -33,11 +33,11 @@ npm run lint     # eslint
 
 ### Quality gate
 
-One script runs the full gate — **lint + typecheck + production build**. It must exit 0
+The gate is **lint + typecheck + production build + playground check**. It must pass
 before any commit:
 
 ```bash
-bash ralph/check.sh
+pnpm lint && pnpm typecheck && pnpm build && pnpm check:playgrounds
 ```
 
 ## Sitemap
@@ -79,7 +79,6 @@ lib/                      Framework-agnostic data & utilities
   shiki.ts  og.tsx  site.ts
 
 docs/DESIGN.md           Design source of truth (brand tokens, IA, page anatomy)
-ralph/                   Ralph build-loop backlog, progress log, gate script, operating manual
 ```
 
 ## Adding a new hook page
@@ -110,9 +109,3 @@ React palette — dark neutral grays + React cyan — tonal depth scale, typogra
 [`docs/DESIGN.md`](./docs/DESIGN.md) and is implemented purely through the `@theme` tokens in
 `app/globals.css` — components reference tokens (`bg-ground`, `text-accent`), never raw hex.
 
-## How this site was built
-
-hookli-docs was built by the **Ralph loop** — an autonomous, one-task-per-iteration build
-loop. The backlog is `ralph/prd.json`, the durable log is `ralph/progress.txt`, and the
-operating manual is `ralph/prompt.md`. Every iteration ends only after `ralph/check.sh` is
-green.
