@@ -132,7 +132,6 @@ quality-pass tasks T1–T4 above.
 
 ## Safety hooks (`.claude/`)
 
-- `hooks/guard-destructive-git.cjs` — wired in `settings.json`; pauses for confirmation on
-  destructive git (force-push, branch/remote deletion, push to `main`). Best-effort backstop.
-- `hooks/enforce-pr-body.cjs` — copied in but **not wired** (it expects a
-  `.github/pull_request_template.md`). Enable it in `settings.json` if you adopt that template.
+Provided by the **way-of-working** plugin, configured by the root `.claude/workflow.json`: a
+destructive-git guard (force-push, branch/remote deletion, push to `main`; best-effort backstop)
+and a PR-body guard (required template headings). See the root `CLAUDE.md`.

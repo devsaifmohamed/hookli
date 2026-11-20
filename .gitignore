@@ -37,3 +37,6 @@ dist
 apps/*/.next
 packages/*/dist
 **/.turbo
+
+# way-of-working task worktrees
+.claude/worktrees/

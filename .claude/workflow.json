@@ -1,0 +1,46 @@
+{
+  "owner_title": "CEO",
+  "base_branch": "main",
+  "pr": {
+    "cross_cutting_area": "hookli",
+    "required_headings": ["## What & why", "## Deployment Steps", "## Tests", "## Checklist"],
+    "footer": false
+  },
+  "areas": [
+    {
+      "name": "library",
+      "kind": "library",
+      "paths": ["packages/hookli/**"],
+      "stack": "TypeScript React hooks (React 18 + 19), zero deps, tsup CJS+ESM+d.ts, vitest + jsdom",
+      "conventions": ["CLAUDE.md", "packages/hookli/CLAUDE.md"],
+      "verify": { "cwd": "packages/hookli", "commands": ["pnpm typecheck", "pnpm test", "pnpm build"] },
+      "tests": "with-code"
+    },
+    {
+      "name": "mcp",
+      "kind": "cli",
+      "paths": ["packages/hookli-mcp/**", "scripts/build-mcp-catalog.mjs"],
+      "stack": "TypeScript MCP stdio server (hookli-mcp bin), catalog generated from the library + docs, tsup, vitest",
+      "conventions": ["CLAUDE.md"],
+      "verify": { "cwd": "packages/hookli-mcp", "commands": ["pnpm build", "pnpm typecheck", "pnpm test", "pnpm test:package"] },
+      "tests": "with-code"
+    },
+    {
+      "name": "docs",
+      "kind": "frontend",
+      "paths": ["apps/docs/**", "scripts/gen-hook-sources.mjs"],
+      "stack": "Next.js App Router + Fumadocs, Tailwind tokens, Geist / JetBrains Mono, deployed on Vercel",
+      "conventions": ["CLAUDE.md", "apps/docs/CLAUDE.md", "apps/docs/AGENTS.md"],
+      "verify": { "cwd": "apps/docs", "commands": ["pnpm lint", "pnpm typecheck", "pnpm build", "pnpm check:playgrounds"] },
+      "tests": "never"
+    }
+  ],
+  "extra_rules": [
+    "Releases are human-gated: never npm publish, npm version or push a tag. The owner publishes with npm publish --otp=<code>.",
+    "Never push to main or deploy from an agent loop. A push to main deploys the docs to Vercel.",
+    "No Claude attribution in commits or PRs: no Co-Authored-By trailers, no Claude Code footer, no session links.",
+    "Generated files must be committed: run node scripts/build-mcp-catalog.mjs, node scripts/gen-hook-sources.mjs and pnpm --filter hookli run gen:manifest (CI fails when stale).",
+    "Shared facts (hook list, count, descriptions, version) come from packages/hookli/hooks.manifest.json, never hand-maintained copies.",
+    "A library release bumps packages/hookli version + CHANGELOG.md; an MCP release bumps packages/hookli-mcp. Tags: vX.Y.Z and mcp-vX.Y.Z."
+  ]
+}

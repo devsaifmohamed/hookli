@@ -1,24 +1,11 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "j=$(cat); case \"$j\" in *git*|*gh*|*rm*) printf '%s' \"$j\" | node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-destructive-git.cjs\" ;; esac",
-            "timeout": 10,
-            "statusMessage": "Checking git safety gates…"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[hookli defaults] This is the hookli (brand: hookli) React hooks library (published to npm, built with tsup). Conventions: one hook per src/hooks/<name>.hook.ts, re-exported from src/hooks/index.ts; every hook has a typed public API and is SSR-safe (guard window/document/navigator/localStorage). Quality gate before any commit: `bash ralph/check.sh` (tsc --noEmit + tsup build) — there is no test suite yet. NEVER `npm publish` / `npm version` / push git tags — releases are a human step. Autonomous batches: `bash ralph/afk-ralph.sh <N>`; single supervised iteration: `bash ralph/ralph-once.sh`.'"
+            "command": "echo '[hookli defaults] pnpm + Turborepo monorepo: packages/hookli (the hookli npm library), packages/hookli-mcp (the hookli-mcp MCP server), apps/docs (Next.js docs on Vercel). Read the workspace CLAUDE.md before editing. Library: one hook per packages/hookli/src/hooks/use-<name>/ folder (use-<name>.ts + vitest tests + index.ts barrel), re-exported from src/hooks/index.ts; every hook has a typed public API, is SSR-safe (guard window/document/navigator/localStorage) and cleans up its effects. Gate before any commit: `bash ralph/check.sh` (scoped: library = typecheck + test + build, docs = lint + typecheck + build). packages/hookli/hooks.manifest.json is the source of truth; regenerate and commit generated files (scripts/build-mcp-catalog.mjs, scripts/gen-hook-sources.mjs, pnpm --filter hookli run gen:manifest) or CI fails. NEVER `npm publish` / `npm version` / push git tags: releases are a human step.'"
           }
         ]
       }
