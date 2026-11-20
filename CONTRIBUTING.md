@@ -55,7 +55,7 @@ pnpm test          # 2. vitest - all hooks have colocated tests
 pnpm build         # 3. tsup: CJS + ESM + .d.ts must all emit
 ```
 
-Or run all three for every workspace from the root: `pnpm typecheck && pnpm test && pnpm build`. **CI runs the same gate on every pull request.**
+Or run all three for every workspace from the root: `pnpm typecheck && pnpm test && pnpm build`. **CI runs these on every pull request, plus lint (`pnpm lint`), a check that generated files are committed, and the MCP package install test (`pnpm --filter hookli-mcp run test:package`).**
 
 ## Commit & PR
 
