@@ -96,4 +96,5 @@ The git-safety and PR-body guards come from the **way-of-working** plugin
 - its destructive-git guard pauses on force-push, branch/remote deletion, push to `main`;
 - its PR-body guard requires the headings in `pr.required_headings` (footer off: no attribution).
 
-`.claude/settings.json` only adds the `[hookli defaults]` SessionStart reminder.
+The plugin must be installed (see its README). Without it these guards are inactive: a push to
+`main` is not paused. `.claude/settings.json` only adds the `[hookli defaults]` SessionStart reminder.
