@@ -24,7 +24,8 @@ for (const { slug } of manifest.hooks) {
   }
   const source = fs.readFileSync(file, "utf8");
   // Accept either quote style; anything other than react or a sibling hook is rejected.
-  const deps = [...source.matchAll(/from\s+["']\.\.\/(use-[a-z0-9-]+)["']/g)].map((m) => m[1]);
+  // Covers `import { x } from "../use-y"` and side-effect `import "../use-y"`.
+  const deps = [...source.matchAll(/(?:from|import)\s+["']\.\.\/(use-[a-z0-9-]+)["']/g)].map((m) => m[1]);
   const foreign = [...source.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)]
     .map((m) => m[1])
     .filter((spec) => spec !== "react" && !/^\.\.\/use-[a-z0-9-]+$/.test(spec));

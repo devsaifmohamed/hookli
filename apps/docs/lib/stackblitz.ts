@@ -293,14 +293,21 @@ let sourcesPromise: Promise<typeof import("@/lib/hook-sources")> | null = null;
 
 function loadSdk() {
   if (!sdkPromise) {
-    sdkPromise = import("@stackblitz/sdk");
+    // A failed chunk load must not stick: clear it so the next click retries.
+    sdkPromise = import("@stackblitz/sdk").catch((error) => {
+      sdkPromise = null;
+      throw error;
+    });
   }
   return sdkPromise;
 }
 
 function loadSources() {
   if (!sourcesPromise) {
-    sourcesPromise = import("@/lib/hook-sources");
+    sourcesPromise = import("@/lib/hook-sources").catch((error) => {
+      sourcesPromise = null;
+      throw error;
+    });
   }
   return sourcesPromise;
 }
