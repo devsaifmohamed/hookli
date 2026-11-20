@@ -3,21 +3,24 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
 /**
  * Subscribes to an event on a media query, the window, the document, or an
- * element ref, cleaning the listener up automatically.
+ * element, cleaning the listener up automatically.
  *
- * The target defaults to `window` when no `element` ref is given. The handler is
- * held in a ref so updating it never detaches and re-attaches the listener, and
- * the subscription lives inside an effect so the hook is SSR-safe.
+ * The target is a ref (`useRef`) or the element itself (for example from
+ * `const [el, setEl] = useState(null)` and `ref={setEl}`, which also follows an
+ * element that a child component mounts). While it is `null` nothing is
+ * attached. Without a target the hook listens on `window`. The handler is held
+ * in a ref so updating it never detaches and re-attaches the listener, and the
+ * subscription lives inside an effect so the hook is SSR-safe.
  *
  * @param eventName - The event to listen for, typed against the target's map.
  * @param handler - Called with the typed event on every dispatch.
- * @param element - Optional ref to the target; defaults to `window`.
+ * @param element - Optional ref or element to listen on; defaults to `window`.
  * @param options - Standard `addEventListener` options.
  */
 function useEventListener<K extends keyof MediaQueryListEventMap>(
   eventName: K,
   handler: (event: MediaQueryListEventMap[K]) => void,
-  element: RefObject<MediaQueryList | null>,
+  element: RefObject<MediaQueryList | null> | MediaQueryList | null,
   options?: boolean | AddEventListenerOptions,
 ): void;
 function useEventListener<K extends keyof WindowEventMap>(
@@ -29,7 +32,7 @@ function useEventListener<K extends keyof WindowEventMap>(
 function useEventListener<K extends keyof DocumentEventMap>(
   eventName: K,
   handler: (event: DocumentEventMap[K]) => void,
-  element: RefObject<Document | null>,
+  element: RefObject<Document | null> | Document | null,
   options?: boolean | AddEventListenerOptions,
 ): void;
 function useEventListener<
@@ -38,7 +41,7 @@ function useEventListener<
 >(
   eventName: K,
   handler: (event: HTMLElementEventMap[K] | SVGElementEventMap[K]) => void,
-  element: RefObject<T | null>,
+  element: RefObject<T | null> | T | null,
   options?: boolean | AddEventListenerOptions,
 ): void;
 function useEventListener<
@@ -58,7 +61,7 @@ function useEventListener<
       | DocumentEventMap[KD]
       | Event,
   ) => void,
-  element?: RefObject<T | null>,
+  element?: RefObject<T | null> | T | null,
   options?: boolean | AddEventListenerOptions,
 ): void {
   const savedHandler = useRef(handler);
@@ -79,13 +82,16 @@ function useEventListener<
   // points to has to be re-read after every commit. Re-subscribing only happens
   // when the target, event or options actually changed.
   useEffect(() => {
-    // A ref was passed: listen on its element only (none while it is null).
-    // No ref: listen on window.
-    const target: EventTarget | null = element
-      ? element.current
-      : typeof window !== "undefined"
-        ? window
-        : null;
+    // No target given: window. A ref: its current element. An element: itself.
+    // `null` (a ref not yet filled, or an element not yet mounted): nothing.
+    const target: EventTarget | null =
+      element === undefined
+        ? typeof window !== "undefined"
+          ? window
+          : null
+        : element === null || isEventTarget(element)
+          ? element
+          : element.current;
 
     const current = attached.current;
     if (current && current.target === target && current.eventName === eventName && current.options === options) {
@@ -115,5 +121,8 @@ function useEventListener<
     [],
   );
 }
+
+const isEventTarget = (value: object): value is EventTarget =>
+  typeof (value as EventTarget).addEventListener === "function";
 
 export { useEventListener };

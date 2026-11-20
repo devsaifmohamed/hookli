@@ -933,9 +933,9 @@ export function Demo() {
       },
       {
         name: "element",
-        type: "RefObject<T>",
+        type: "RefObject<T> | T | null",
         defaultValue: "window",
-        description: "Optional ref to the target. Defaults to window when omitted.",
+        description: "Optional target: a ref, or the element itself (from useState + ref={setEl}, which also follows an element a child component mounts). Nothing is attached while it is null. Defaults to window when omitted.",
       },
       {
         name: "options",
@@ -1897,8 +1897,8 @@ export function Demo() {
     parameters: [
       {
         name: "elementRef",
-        type: "RefObject<T>",
-        description: "Ref to the element whose hover state to track. mouseenter/mouseleave are attached to it and cleaned up automatically.",
+        type: "RefObject<T> | T | null",
+        description: "Ref to the element, or the element itself (from useState + ref={setEl}, which also follows an element a child component mounts). mouseenter/mouseleave are attached to it and cleaned up automatically.",
       },
     ],
     returns: [
@@ -2036,8 +2036,8 @@ export function Demo() {
     parameters: [
       {
         name: "ref",
-        type: "RefObject<T>",
-        description: "Ref to the element to measure. The observer attaches to ref.current.",
+        type: "RefObject<T> | T | null",
+        description: "Ref to the element to measure, or the element itself (from useState + ref={setEl}, which also follows an element a child component mounts). Observes a new element when it changes.",
       },
       {
         name: "options",
