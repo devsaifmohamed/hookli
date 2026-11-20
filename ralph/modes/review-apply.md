@@ -8,7 +8,7 @@ Task shape (in `prd.json`, produced by the seed script):
 - `file` / `line` — where the inline comment sits (null for conversation comments).
 - `body` — the reviewer's comment text.
 
-Per iteration, mirror the repo's `/watch-prs` protocol:
+Per iteration, mirror the way-of-working plugin's `/way-of-working:watch-prs` protocol:
 1. Pick the highest-priority `todo` comment. **React 👀** on it so the human sees it's
    in progress:
    - inline: `gh api repos/{owner}/{repo}/pulls/comments/{id}/reactions -f content=eyes`

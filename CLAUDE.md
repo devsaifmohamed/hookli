@@ -91,6 +91,10 @@ RALPH_MODEL=sonnet bash ralph/afk-ralph.sh 10   # override the model (default: o
 
 ## Safety hooks (`.claude/`)
 
-- `hooks/guard-destructive-git.cjs` — wired in `settings.json`; pauses on destructive git
-  (force-push, branch/remote deletion, push to `main`).
-- `hooks/enforce-pr-body.cjs` — available; wire it in `settings.json` if you adopt a PR template.
+The git-safety and PR-body guards come from the **way-of-working** plugin
+(`~/Developer/claude-workflow`), configured by `.claude/workflow.json`:
+- its destructive-git guard pauses on force-push, branch/remote deletion, push to `main`;
+- its PR-body guard requires the headings in `pr.required_headings` (footer off: no attribution).
+
+The plugin must be installed (see its README). Without it these guards are inactive: a push to
+`main` is not paused. `.claude/settings.json` only adds the `[hookli defaults]` SessionStart reminder.
