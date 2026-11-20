@@ -198,7 +198,7 @@
       "name": "useEventListener",
       "description": "Subscribe to a window, document or element event with cleanup.",
       "category": "dom",
-      "signature": "useEventListener<K>(eventName: K, handler: (event: Event) => void, element?: RefObject<T>, options?: boolean | AddEventListenerOptions): void",
+      "signature": "useEventListener<K>(eventName: K, handler: (event: Event) => void, element?: RefObject<T | null> | T | null, options?: boolean | AddEventListenerOptions): void",
       "keywords": ["addEventListener", "event listener", "window event", "document event", "listen to event", "keydown", "resize event"]
     },
     {
@@ -238,7 +238,7 @@
       "name": "useHover",
       "description": "Tracks whether the pointer is hovering an element.",
       "category": "dom",
-      "signature": "useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T>): boolean",
+      "signature": "useHover<T extends HTMLElement = HTMLElement>(elementRef: RefObject<T | null> | T | null): boolean",
       "keywords": ["hover", "mouse enter", "mouse leave", "is hovered", "hover state"]
     },
     {
@@ -254,7 +254,7 @@
       "name": "useResizeObserver",
       "description": "Measure an element's size reactively via ResizeObserver.",
       "category": "dom",
-      "signature": "useResizeObserver<T extends HTMLElement = HTMLElement>(ref: RefObject<T>, options?: UseResizeObserverOptions): ResizeObserverSize",
+      "signature": "useResizeObserver<T extends HTMLElement = HTMLElement>(ref: RefObject<T | null> | T | null, options?: UseResizeObserverOptions): ResizeObserverSize",
       "keywords": ["resize observer", "element size", "element width", "element height", "measure element", "container size"]
     },
     {

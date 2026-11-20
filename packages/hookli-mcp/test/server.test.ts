@@ -3,7 +3,7 @@ import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { CATALOG, CATALOG_META } from "../src/catalog.js";
+import { CATALOG, CATALOG_META, formatHookMarkdown } from "../src/catalog.js";
 import { createMcpServer } from "../src/server.js";
 
 /* End-to-end: a real MCP client talks to the server over an in-memory transport,
@@ -285,3 +285,25 @@ describe("prompts", () => {
   });
 });
 
+
+describe("catalog code snippets", () => {
+  // Agents paste these as-is, so each must import what it uses.
+  it("every usage snippet and example imports its hook from hookli", () => {
+    const missing = CATALOG.flatMap((h) =>
+      [h.usage, ...h.examples.map((e) => e.code)]
+        .filter((code) => !new RegExp(`import \\{[^}]*\\b${h.name}\\b[^}]*\\} from "hookli"`).test(code))
+        .map(() => h.name),
+    );
+    expect(missing).toEqual([]);
+  });
+
+  it("examples appear in the hook markdown that get_hook returns", () => {
+    const hover = CATALOG.find((h) => h.name === "useHover")!;
+    expect(hover.examples.length).toBeGreaterThan(0);
+    const md = formatHookMarkdown(hover);
+    for (const e of hover.examples) {
+      expect(md).toContain(`### ${e.title}`);
+      expect(md).toContain(e.code);
+    }
+  });
+});

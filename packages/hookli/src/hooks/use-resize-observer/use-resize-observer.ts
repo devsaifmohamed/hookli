@@ -26,12 +26,16 @@ export interface UseResizeObserverOptions {
  * hook is SSR-safe and leaks nothing. Both dimensions start `undefined` and
  * populate after the first observed layout.
  *
- * @param ref - A ref to the element to measure.
+ * Pass a ref (`useRef`) or the element itself (for example from
+ * `const [el, setEl] = useState(null)` and `ref={setEl}`, which also follows an
+ * element that a child component mounts).
+ *
+ * @param ref - A ref to the element to measure, or the element itself (`null` until mounted).
  * @param options - Which box to measure and an optional resize callback.
  * @returns The element's `{ width, height }`.
  */
 export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T | null>,
+  ref: RefObject<T | null> | T | null,
   options: UseResizeObserverOptions = {},
 ): ResizeObserverSize => {
   const { box = "content-box" } = options;
@@ -54,7 +58,7 @@ export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
   // No dependency array: the ref's element can appear, change or disappear on
   // any commit, so check it every time and re-observe only when it changed.
   useEffect(() => {
-    const element = ref.current;
+    const element = ref === null || isElement(ref) ? ref : ref.current;
     const current = observing.current;
     if (current && current.element === element && current.box === box) return;
 
@@ -112,3 +116,5 @@ export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
 
   return size;
 };
+
+const isElement = (value: object): value is Element => typeof (value as Element).nodeType === "number";
