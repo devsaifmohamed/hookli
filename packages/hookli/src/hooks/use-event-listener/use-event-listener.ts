@@ -67,20 +67,53 @@ function useEventListener<
     savedHandler.current = handler;
   }, [handler]);
 
+  // What is attached right now, so a render only re-subscribes when it changed.
+  const attached = useRef<{
+    target: EventTarget;
+    eventName: string;
+    options: typeof options;
+    detach: () => void;
+  } | null>(null);
+
+  // No dependency array: a ref object never changes identity, so the element it
+  // points to has to be re-read after every commit. Re-subscribing only happens
+  // when the target, event or options actually changed.
   useEffect(() => {
-    const targetElement: T | Window =
-      element?.current ?? (typeof window !== "undefined" ? window : undefined!);
+    // A ref was passed: listen on its element only (none while it is null).
+    // No ref: listen on window.
+    const target: EventTarget | null = element
+      ? element.current
+      : typeof window !== "undefined"
+        ? window
+        : null;
 
-    if (!targetElement?.addEventListener) return;
+    const current = attached.current;
+    if (current && current.target === target && current.eventName === eventName && current.options === options) {
+      return;
+    }
 
-    const listener: typeof handler = (event) => savedHandler.current(event);
+    current?.detach();
+    attached.current = null;
+    if (!target?.addEventListener) return;
 
-    targetElement.addEventListener(eventName, listener, options);
-
-    return () => {
-      targetElement.removeEventListener(eventName, listener, options);
+    const listener = (event: Event) => savedHandler.current(event);
+    target.addEventListener(eventName, listener, options);
+    attached.current = {
+      target,
+      eventName,
+      options,
+      detach: () => target.removeEventListener(eventName, listener, options),
     };
-  }, [eventName, element, options]);
+  });
+
+  // Detach on unmount.
+  useEffect(
+    () => () => {
+      attached.current?.detach();
+      attached.current = null;
+    },
+    [],
+  );
 }
 
 export { useEventListener };

@@ -48,8 +48,20 @@ export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
     height: undefined,
   });
 
+  // The element and box being observed right now.
+  const observing = useRef<{ element: Element; box: ResizeObserverBoxOptions; observer: ResizeObserver } | null>(null);
+
+  // No dependency array: the ref's element can appear, change or disappear on
+  // any commit, so check it every time and re-observe only when it changed.
   useEffect(() => {
     const element = ref.current;
+    const current = observing.current;
+    if (current && current.element === element && current.box === box) return;
+
+    current?.observer.disconnect();
+    observing.current = null;
+    // A new element is measured from scratch, even if it happens to match the old size.
+    previous.current = { width: undefined, height: undefined };
     if (!element) return;
     if (typeof ResizeObserver === "undefined") return;
 
@@ -86,11 +98,17 @@ export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
     });
 
     observer.observe(element, { box });
+    observing.current = { element, box, observer };
+  });
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [ref, box]);
+  // Disconnect on unmount.
+  useEffect(
+    () => () => {
+      observing.current?.observer.disconnect();
+      observing.current = null;
+    },
+    [],
+  );
 
   return size;
 };
