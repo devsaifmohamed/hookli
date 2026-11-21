@@ -81,21 +81,21 @@ Each mistake must make the CI command fail with a message naming the hook. It is
 
 ## Cleanliness score
 
-A number from 0 to 100, computed by `pnpm score` on any commit.
+A number from 0 to 100. **It's a measurement for this project, not code in the repo (CEO):** a score script kept outside the repo measures it once before (done: 40.6) and once after.
 
 | # | Metric | How it's measured | Ideal | Weight |
 |---|---|---|---|---|
 | M1 | Copies per fact | Hand-written places for the 6 facts in the Problem table, summed. The category list counts, so the floor is 7: `@category` plus `catalog/categories.json` | 7 | 25 |
 | M2 | Hand edits per scenario | For S1 and S3–S8: ideal ÷ actual edits, averaged. Before: replayed once on `main`. After: counted by the scenario tests. Each test also runs every "one edit left out" variant, and each variant must fail, so the count can't be padded or trimmed | the frozen table above | 25 |
-| M3 | Mistakes caught | Share of X1–X15 that make the CI command set fail. `score.mjs` applies each mistake fixture and runs that set (`pnpm test`, `examples:check`, the docs demo check). X14 and X15 count as caught only when M1 shows a single copy of that fact, so the bug can't exist | 100% | 25 |
+| M3 | Mistakes caught | Share of X1–X15 that make the CI command set fail. The score script applies each mistake fixture and runs that set (`pnpm test`, `examples:check`, the docs demo check). X14 and X15 count as caught only when M1 shows a single copy of that fact, so the bug can't exist | 100% | 25 |
 | M4 | Committed generated files | Tracked files a generator writes. The README and its root mirror are one output | 1 | 15 |
-| M5 | Generator scripts | Scripts that write data the shipped outputs read (README, manifest, catalog, docs or MCP data). The fixed list lives in `score.mjs`; banner rendering, `score.mjs`, the codemod and check scripts aren't counted | 1 | 10 |
+| M5 | Generator scripts | Scripts that write data the shipped outputs read (README, manifest, catalog, docs or MCP data). The fixed list lives in the score script; banner rendering, the score script, the codemod and check scripts aren't counted | 1 | 10 |
 
 Each metric scores `ideal ÷ actual`, capped at 1, times its weight; M3 uses the percentage directly. Today's rough numbers (M1 7/12, M4 1/4, M5 1/3, M3 low) put the score near **40**. PR 1 measures the real one. **Target: 90 or more.**
 
 ## How we prove it before shipping
 
-1. **Score:** `pnpm score` on `main` and on the release branch. Both scorecards go in the release PR.
+1. **Score:** the out-of-repo score script, run on `main` (before) and on the release branch (after). Both scorecards go in the release PR description.
 2. **Scenarios and mistakes:** tests of the generator, run against fixture hook folders in a temp dir. They cover S1–S8 end states and X1–X15. They **stay in the repo**, so every future PR is protected too. The "before" replay of the same scenarios lives only on the release branch.
 3. **Parity:**
    - The npm `.js`/`.mjs` must be byte-identical to `main`, and the `.d.ts` identical once comments are stripped. The TSDoc that 3a–3g add is meant to show up in `.d.ts` hovers. `.map` files are excluded, because they embed the source.
@@ -278,7 +278,7 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
   - **Docs end states** (page exists, redirect, removed page, demo map): `check-playgrounds` and the docs build.
   - `examples:check` (X8).
   - The docs demo check (X9, X10).
-  - `pnpm score` (`scripts/score.mjs`, about 100 lines). M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 are read from the test results.
+  - (The score script is not committed. M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 are read from the test results.
 - **Release branch only (deleted before merge):**
   - The "before" replay: the S1–S8 recipes and X1–X15 run once on a copy of `main` to measure the before score.
   - The parity test from 3a (catalog vs `hook-docs.ts` + manifest, field by field) and `parity-approved.json`. They leave `main` in PR 6. The release-branch copy and a snapshot of `main`'s outputs stay until the release PR's parity report is made.
@@ -291,7 +291,7 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
 | library | TSDoc on 66 hooks; `build-catalog.mjs` + tests; `catalog/`; manifest built; `prepublishOnly` and `test:package`; `examples:check` | **High:** the public `hookli/manifest` (same shape, reworded descriptions); the npm tarball contents |
 | docs | 2 files deleted; 8 switched to the catalog; demo map; redirects and removed page; path alias; `vercel.json` | **High:** public URLs and every hook page |
 | mcp | Imports the library catalog; `meta.json`/`docsUrl` computed; alias and removed answers; `rootDir` widened | **High:** answers AI agents rely on; search ranking |
-| hookli (cross-cutting) | `turbo.json`, CI, `scripts/score.mjs`, CONTRIBUTING, CLAUDE.md files, `.claude` commands/skill/settings | Medium: build order and cache for every workspace |
+| hookli (cross-cutting) | `turbo.json`, CI, CONTRIBUTING, CLAUDE.md files, `.claude` commands/skill/settings | Medium: build order and cache for every workspace |
 
 ## 7. Delivery plan (task lane)
 
@@ -299,7 +299,7 @@ Release branch `release/single-source`. Build PRs carry at most 15 production fi
 
 | PR | Slice | Depends on |
 |---|---|---|
-| 1 | `pnpm score` + "before" replay → **before scorecard** (the replay stays on the release branch) | — |
+| 1 | ~~Score + before replay~~ **Done outside the repo** (#19 closed unmerged, CEO): before scorecard 40.6 / 100 | — |
 | 2 | `build-catalog.mjs` (with the type checker) as a standalone script: writes `generated/catalog.json` only, lists missing fields without failing; fixture tests; `examples:check` | — (sibling of 1) |
 | 3a–3g | Codemod `hook-docs.ts` → TSDoc, one category slice per PR (state 3a–3b, effects 3c–3d, dom 3e–3f, data 3g, all ≤15 files); JSDoc for the 11 missing; `catalog/categories.json` in 3a. 3a adds the parity test (catalog vs `hook-docs.ts` + manifest, migrated hooks only) and `parity-approved.json`; each PR extends both. Until PRs 5 and 6, each also regenerates and commits `hookli-mcp/src/data/catalog.json` and `docs/lib/hook-sources.generated.ts` (they embed hook source, and CI checks them). Those count against the 15-file cap | 2, stacked in order |
 | 4 | Generator strict (X1–X7, X11, X13 fail), wired into the library `build` (catalog only); turbo outputs (`generated/**`); hookli-mcp devDependency on `hookli` and MCP `test` after its `build`; `dev` after `^build` | 3g |
@@ -365,3 +365,4 @@ The measured before score is **40.6 / 100**: M1 10.9, M2 9.2, M3 13.3 (8 of 15 c
 | From PR 2: all 45 existing `@returns` tags are free text | The codemod rewrites each as `name - text` or `[0] name - text` | 3a–3g |
 | From PR 2: `useExpandableText`'s only `@example` doesn't compile | Replaced by the docs usage in its dom PR | 3e–3f |
 | From PR 1: the before replay couldn't run the `react-18` CI job (needs network) | Accepted; that job reruns the library tests on React 18 and isn't part of M3 | — |
+| CEO on #19: the score is for us, not for the repo | #19 closed unmerged. The score and replay scripts live outside the repo and are run once more at the end for the after score. The durable scenario and mistake tests next to the generator stay, because they are real tests of the generator | 1 |
