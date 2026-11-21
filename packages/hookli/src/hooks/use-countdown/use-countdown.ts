@@ -1,28 +1,24 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/**
- * Options for {@link useCountdown}.
- */
+/** The single options argument. */
 export interface UseCountdownOptions {
   /** The value the countdown starts from. */
   countStart: number;
-  /** Milliseconds between ticks. Defaults to `1000`. */
+  /** Milliseconds between ticks. Defaults to 1000. */
   intervalMs?: number;
-  /** Count up instead of down. Defaults to `false`. */
+  /** Count up instead of down. Defaults to false. */
   isIncrement?: boolean;
-  /** The value at which the countdown stops. Defaults to `0`. */
+  /** The value at which the timer stops itself. Defaults to 0. */
   countStop?: number;
 }
 
-/**
- * The controls returned as the second tuple element of {@link useCountdown}.
- */
+/** The second tuple element — the timer controls. */
 export interface UseCountdownActions {
-  /** Start (or resume) the countdown. */
+  /** Starts (or resumes) the timer. */
   startCountdown: () => void;
-  /** Pause the countdown. */
+  /** Pauses the timer without resetting the count. */
   stopCountdown: () => void;
-  /** Stop and reset the count back to `countStart`. */
+  /** Stops the timer and resets the count to countStart. */
   resetCountdown: () => void;
 }
 
@@ -33,8 +29,33 @@ export interface UseCountdownActions {
  * reaches `countStop`. Timers are created inside an effect, so the hook is
  * SSR-safe and every interval is cleared on cleanup.
  *
- * @param options - See {@link UseCountdownOptions}.
- * @returns A tuple of the current count and a controls object.
+ * @category state
+ * @keywords countdown, timer, seconds left, resend code, otp timer, count down
+ * @param options - Configures the timer — start value, tick interval, direction and stop value. See
+ *   below.
+ * @returns [0] count - The current count. Ticks by ±1 every intervalMs while running.
+ * @returns [1] actions - Start, pause and reset controls — see below.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useCountdown } from "hookli";
+ *
+ * export function Demo() {
+ *   const [count, { startCountdown, stopCountdown, resetCountdown }] = useCountdown({
+ *     countStart: 10,
+ *     intervalMs: 1000,
+ *   });
+ *
+ *   return (
+ *     <div>
+ *       <p>{count}</p>
+ *       <button onClick={startCountdown}>Start</button>
+ *       <button onClick={stopCountdown}>Pause</button>
+ *       <button onClick={resetCountdown}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useCountdown = ({
   countStart,

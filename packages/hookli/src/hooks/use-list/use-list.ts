@@ -1,22 +1,20 @@
 import { useMemo, useState } from "react";
 
-/**
- * Actions returned by {@link useList} for manipulating the array immutably.
- */
+/** Actions returned by useList for manipulating the array immutably. */
 export interface UseListActions<T> {
-  /** Replace the whole list. */
+  /** Replaces the entire list with a new array. */
   set: (list: T[]) => void;
-  /** Append one or more items to the end. */
+  /** Appends one or more items to the end of the list. */
   push: (...items: T[]) => void;
-  /** Insert an item at `index`, shifting the rest right. */
+  /** Inserts an item at the specified index. */
   insertAt: (index: number, item: T) => void;
-  /** Replace the item at `index`. */
+  /** Replaces the item at the specified index. */
   updateAt: (index: number, item: T) => void;
-  /** Remove the item at `index`. */
+  /** Removes the item at the specified index. */
   removeAt: (index: number) => void;
-  /** Empty the list. */
+  /** Empties the list. */
   clear: () => void;
-  /** Reset to the initial list the hook was created with. */
+  /** Resets the list to its initial value. */
   reset: () => void;
 }
 
@@ -25,8 +23,31 @@ export interface UseListActions<T> {
  * `updateAt`, `removeAt`, `clear`, `reset`). Every helper produces a new array,
  * so referential-equality checks and memoization work as expected.
  *
- * @param initial - The initial array. Defaults to `[]`.
- * @returns A tuple of `[list, actions]`.
+ * @category state
+ * @keywords list, array state, push, remove item, insert, todo list
+ * @param initial - The initial array state.
+ * @returns [0] list - The current array state.
+ * @returns [1] actions - Immutable manipulation actions (push, insertAt, updateAt, removeAt, clear,
+ *   reset).
+ *
+ * @example Usage
+ * ```tsx
+ * import { useList } from "hookli";
+ *
+ * export function Demo() {
+ *   const [list, { push, removeAt, clear, reset }] = useList<string>(["apple", "banana"]);
+ *
+ *   return (
+ *     <div>
+ *       <p>Items: {list.join(", ")}</p>
+ *       <button onClick={() => push("cherry")}>Push item</button>
+ *       <button onClick={() => removeAt(list.length - 1)}>Pop item</button>
+ *       <button onClick={clear}>Clear</button>
+ *       <button onClick={reset}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useList = <T>(initial: T[] = []): [T[], UseListActions<T>] => {
   const [list, setList] = useState<T[]>(initial);

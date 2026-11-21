@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useStep } from "./use-step";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useStep", () => {
   it("starts at step 1", () => {
@@ -38,5 +39,11 @@ describe("useStep", () => {
   it("setStep throws when out of range", () => {
     const { result } = renderHook(() => useStep(3));
     expect(() => act(() => result.current[1].setStep(9))).toThrow();
+  });
+});
+
+describe("useStep on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useStep", 3);
   });
 });

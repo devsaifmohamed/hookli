@@ -1,20 +1,20 @@
 import { useCallback, useRef, useState } from "react";
 
-/** The value returned by {@link useQueue}. */
+/** Object returned by useQueue containing queue state and actions. */
 export interface UseQueueReturn<T> {
-  /** The current queue, oldest item first. */
+  /** The current queue array, oldest item first. */
   queue: T[];
-  /** Enqueue an item at the end. */
+  /** Enqueues an item at the end of the queue. */
   add: (item: T) => void;
-  /** Dequeue the oldest item and return it (`undefined` if empty). */
+  /** Dequeues the oldest item and returns it (or undefined if empty). */
   remove: () => T | undefined;
-  /** Empty the queue. */
+  /** Empties the queue. */
   clear: () => void;
-  /** The oldest item (next to be removed), or `undefined`. */
+  /** The oldest item at the front of the queue. */
   first: T | undefined;
-  /** The newest item, or `undefined`. */
+  /** The newest item at the back of the queue. */
   last: T | undefined;
-  /** Number of items in the queue. */
+  /** The number of items currently in the queue. */
   size: number;
 }
 
@@ -22,8 +22,30 @@ export interface UseQueueReturn<T> {
  * Manages a FIFO queue with `add` (enqueue) and `remove` (dequeue) helpers.
  * `remove` returns the item it removed. Every mutation produces a new array.
  *
- * @param initial - Initial items. Defaults to `[]`.
- * @returns `{ queue, add, remove, clear, first, last, size }`.
+ * @category state
+ * @keywords queue, fifo, enqueue, dequeue, task queue, notifications queue
+ * @param initial - Initial items for the queue.
+ * @returns queueReturn - Object containing queue state and actions (queue, add, remove, clear,
+ *   first, last, size).
+ *
+ * @example Usage
+ * ```tsx
+ * import { useQueue } from "hookli";
+ *
+ * export function Demo() {
+ *   const { queue, add, remove, clear, first, last, size } = useQueue<string>(["first", "second"]);
+ *
+ *   return (
+ *     <div>
+ *       <p>Queue: {queue.join(" -> ")}</p>
+ *       <p>Head: {first ?? "(none)"} | Size: {size}</p>
+ *       <button onClick={() => add("new-task")}>Enqueue</button>
+ *       <button onClick={() => remove()}>Dequeue</button>
+ *       <button onClick={clear}>Clear</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useQueue = <T>(initial: T[] = []): UseQueueReturn<T> => {
   const [queue, setQueue] = useState<T[]>(initial);

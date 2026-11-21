@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { useMap } from "./use-map";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useMap", () => {
   it("starts empty by default", () => {
@@ -67,5 +68,11 @@ describe("useMap", () => {
     });
 
     expect(result.current[0].size).toBe(0);
+  });
+});
+
+describe("useMap on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useMap");
   });
 });

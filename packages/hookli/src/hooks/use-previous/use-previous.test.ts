@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { usePrevious } from "./use-previous";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("usePrevious", () => {
   it("is undefined on the first render", () => {
@@ -16,5 +17,11 @@ describe("usePrevious", () => {
     expect(result.current).toBe(0);
     rerender({ v: 2 });
     expect(result.current).toBe(1);
+  });
+});
+
+describe("usePrevious on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("usePrevious", 1);
   });
 });
