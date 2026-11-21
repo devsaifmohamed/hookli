@@ -1,6 +1,6 @@
 # RFC: One source of truth per hook
 
-Status: **Locked** by the CEO on 2026-11-21. The business half and every open question were approved; the plan was reviewed by the product owner, three tech-lead lenses and two re-reviews, with every finding folded in (see "Review log").
+Status: **Locked** by the CEO on 2026-11-21, with **amendment 1** (same day, after PR 1 measured the repo; see the end of this doc). The business half and every open question were approved; the plan was reviewed by the product owner, three tech-lead lenses and two re-reviews, with every finding folded in (see "Review log").
 Codex: skipped for this plan, at the CEO's request.
 Diagrams: [today](assets/2026-11-21-hookli-architecture-today.png) and [target](assets/2026-11-21-hookli-single-source-target.png).
 
@@ -41,14 +41,14 @@ What a contributor does in the target state, and what must be true after. The "i
 
 | # | Scenario | Ideal hand edits (frozen) | Must be true after |
 |---|---|---|---|
-| S1 | **Add a hook** | 6: `use-x.ts`, `use-x.test.ts`, `use-x/index.ts`, barrel line in `src/hooks/index.ts`, `use-x-demo.tsx`, one line in the demo map | `useX` is in npm, `hookli/manifest`, the README index and count, `/docs/use-x` with its demo, `llms.txt`, and MCP `list_hooks` / `search_hooks` |
+| S1 | **Add a hook** | 7: `use-x.ts`, `use-x.test.ts` (including its SSR case), `use-x/index.ts`, barrel line in `src/hooks/index.ts`, `use-x-demo.tsx`, one line in the demo map, one MCP search tuning case | `useX` is in npm, `hookli/manifest`, the README index and count, `/docs/use-x` with its demo, `llms.txt`, and MCP `list_hooks` / `search_hooks` |
 | S2 | **Add a hook, forget something** | — | CI fails with `use-x: <field>: <problem>` (mistakes X1–X7, X10) |
 | S3 | **Bug fix, no API change** | 2: code + test | The Source section, StackBlitz and MCP `get_hook_source` show the new code. No generated file in the diff |
 | S4 | **Public API change** (param type, new optional param, new return field) | 2: code (with its TSDoc) + test | Manifest signature, docs tables and MCP update. A stale or missing `@param` fails CI (X6, X7) |
 | S5 | **Docs text only** (summary, example, keywords) | 1 | Docs page, README line and MCP search update |
-| S6 | **Rename with deprecated alias** | 6: the 3 renamed folder files, barrel, the demo file renamed, the demo map line | The old name is still importable and marked deprecated, with no catalog entry or page of its own. The old URL redirects. Hooks that import the old folder are updated, or CI fails |
+| S6 | **Rename with deprecated alias** | 7: the 3 renamed folder files, barrel, the demo file renamed, the demo map line, the search tuning case | The old name is still importable and marked deprecated, with no catalog entry or page of its own. The old URL redirects. Hooks that import the old folder are updated, or CI fails |
 | S7 | **Move to another category** | 1 (a new category: 2, adding `catalog/categories.json`) | README grouping, docs sidebar and MCP filter follow. A category left empty fails CI (X13) |
-| S8 | **Delete a hook** | 7: 3 folder files, barrel, demo, demo map line, `catalog/removed-hooks.json` | Gone from README, count, docs nav, `llms.txt` and MCP. `/docs/use-x` shows "Removed in vX, use Y". MCP `get_hook` gives the same answer. A hook that still imports it fails CI with the dependent's name (X12) |
+| S8 | **Delete a hook** | 8: 3 folder files, barrel, demo, demo map line, the search tuning case, `catalog/removed-hooks.json` | Gone from README, count, docs nav, `llms.txt` and MCP. `/docs/use-x` shows "Removed in vX, use Y". MCP `get_hook` gives the same answer. A hook that still imports it fails CI with the dependent's name (X12) |
 | S9 | **Forget to run a generator** | — | Nothing to run. Outputs are built, never committed (the README is checked in CI) |
 | S10 | **Two sources disagree** | — | Impossible by construction (one copy). The leftover checks are X6–X8 |
 | S11 | **Release** | — | The `hookli` tarball contains a manifest built from the same commit; a package test fails if it's missing. The `hookli-mcp` catalog records the `hookli` version it was built from |
@@ -346,3 +346,22 @@ None. All answered by the CEO on 2026-11-21 (see "Decisions taken").
 | Re-review (all lenses) | M1 ideal unreachable; M2 tautological; docs and MCP end states outside vitest; X14/X15 untestable; M5 ambiguous | M1 ideal 7; "one edit left out" variants must fail; MCP fixture tests + docs checks; X14/X15 rule; a fixed M5 list |
 | Re-review (all lenses) | Full catalog in the client bundle; MCP `rootDir`; `description` rename is a public API change | Catalog server-only, manifest in client code; `rootDir` widened; field name kept |
 | Second re-review | `.d.ts` can't stay byte-identical once TSDoc is added; MCP `prebuild`; manifest types file; 3a–3g must regenerate the committed files; stale PR numbers; owner of each "one edit left out" variant | JS byte-identical, `.d.ts` compared with comments stripped; PR 5 drops `prebuild`/`gen:catalog`; types file kept; 3a–3g regenerate and count those files; sections aligned (parity from 3a, `vercel.json` in PR 7, cold-cache check on PRs 6–7, M1 7/12); variant owners named |
+
+## Amendment 1 (2026-11-21, after PR 1 #19 and PR 2 #18)
+
+The measured before score is **40.6 / 100**: M1 10.9, M2 9.2, M3 13.3 (8 of 15 caught), M4 3.8, M5 3.3. Measuring the real repo found these gaps in the locked plan:
+
+| Finding | Change to the plan | PR |
+|---|---|---|
+| Category is hand-written in **7** places, not 3. The 4 extra: `apps/docs/app/docs/page.tsx` (`CATEGORY_META`), `components/sidebar.tsx` (`CATEGORY_ICONS`), MCP `src/types.ts` (`HookCategory`), MCP `tools/index.ts` (`z.enum`) | `catalog/categories.json` gains `title` and `description` (from `CATEGORY_META`). The MCP `HookCategory` type and `z.enum` are built from it. The docs icon map and the featured-hooks map stay as docs UI, keyed by category id; a check fails if their keys don't match `categories.json`, or if a featured hook doesn't exist | 5, 6 |
+| `export { x as y }` with `@deprecated` loses the tag in the bundled `.d.ts`, so `useDefault` isn't marked deprecated in the published types today | Alias rule: `/** @deprecated Use useX. */ export const useOld = useX;`. `useDefault` is converted in its state PR. The `.d.ts` text changes (approved diff, and a bug fix) | 3a–3b, §1 |
+| Tests force per-hook edits the ideals missed: `ssr.test.ts` `ARGS` list; MCP search tuning case per hook | **CEO:** each hook's SSR case moves into its own `use-x.test.ts` (shared `expectSSRSafe()` helper), and the central `ARGS` list is deleted in 3g. The search tuning case stays on purpose. Ideals: S1 6→7, S6 6→7, S8 7→8 | 3a–3g, 5 |
+| Hook counts are hard-coded: `dual-install-widget.tsx`, `hero-agent-preview.tsx` ("66 hooks"), the MCP README | Docs read `HOOKS.length`. The MCP README drops the exact number | 5, 6 |
+| `useEventListener` has 4 overloads: whose parameter types go in the table? | **CEO:** the union of the public overloads (approved diff) | 2 |
+| From PR 2: `useIsomorphicLayoutEffect` isn't a function declaration | Annotate it `: typeof useLayoutEffect`, matching today's `.d.ts` | 3c–3d |
+| From PR 2: destructured parameters (`useCountdown`, `useIntersectionObserver`) | Name taken from the `@param` in the same position | 2 (done) |
+| From PR 2: signatures keep source defaults (`initialValue: boolean = false` vs today's `initialValue?: boolean`) | Approved diff | 3a–3g |
+| From PR 2: union and tuple aliases | The alias takes the first sentence of its TSDoc, and the `value` row takes the rest | 2 (done), codemod |
+| From PR 2: all 45 existing `@returns` tags are free text | The codemod rewrites each as `name - text` or `[0] name - text` | 3a–3g |
+| From PR 2: `useExpandableText`'s only `@example` doesn't compile | Replaced by the docs usage in its dom PR | 3e–3f |
+| From PR 1: the before replay couldn't run the `react-18` CI job (needs network) | Accepted; that job reruns the library tests on React 18 and isn't part of M3 | — |
