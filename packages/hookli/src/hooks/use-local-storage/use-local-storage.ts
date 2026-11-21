@@ -5,6 +5,36 @@ interface UseLocalStorageResponse<T> {
   setStoredValue: (value: T | ((val: T) => T)) => void;
 }
 
+/**
+ * State persisted to localStorage.
+ *
+ * @category state
+ * @keywords localStorage, persist state, save across reloads, remember, user preferences, settings,
+ *   survive refresh
+ * @param key - The localStorage key to read and write.
+ * @param initialValue - Value used before hydration and when the key is empty. Prefer a stable
+ *   reference — the sync effect depends on it.
+ * @returns value - The stored value. Server-rendered as initialValue, then synced from localStorage
+ *   after mount.
+ * @returns setStoredValue - Persists to localStorage and updates state; accepts a value or an
+ *   updater function.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useLocalStorage } from "hookli";
+ *
+ * export function Demo() {
+ *   const { value, setStoredValue } = useLocalStorage("note", "");
+ *
+ *   return (
+ *     <div>
+ *       <input value={value} onChange={(e) => setStoredValue(e.target.value)} />
+ *       <button type="button" onClick={() => setStoredValue("")}>Clear</button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export const useLocalStorage = <T>(
   key: string,
   initialValue: T

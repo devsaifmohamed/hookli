@@ -173,6 +173,28 @@ export const useCount = (): CounterReturn => ({ count: 0, reset() {} });
     ]);
   });
 
+  it("types a lone `@returns name` row that is no property as the whole return type", () => {
+    const source = `export interface CounterReturn {
+  count: number;
+}
+${doc("Counts.", "@returns counter - The count and its actions.")}
+export const useCount = (): CounterReturn => ({ count: 0 });
+`;
+    const { catalog, problems } = build({ hooks: { "use-count": source } });
+    expect(catalog.hooks[0].returns).toEqual([{ name: "counter", type: "CounterReturn", description: "The count and its actions." }]);
+    expect(problems.filter((p) => p.includes("returns"))).toEqual([]);
+  });
+
+  it("reports a `@returns name` row that is no property when there are several rows", () => {
+    const source = `export interface CounterReturn {
+  count: number;
+}
+${doc("Counts.", "@returns count - The count.", "@returns bogus - Not there.")}
+export const useCount = (): CounterReturn => ({ count: 0 });
+`;
+    expect(build({ hooks: { "use-count": source } }).problems).toContain('use-count: returns: "bogus" is not a property of the return type');
+  });
+
   it("follows unexported local types transitively, in first-seen order, with dotted nested rows", () => {
     const source = `${doc("Where am I.")}
 interface GeoError {

@@ -170,7 +170,9 @@ describe("tools: every hook and every branch", () => {
     const pkg = JSON.parse(libraryFile("package.json"));
     expect(pkg.dependencies ?? {}).toEqual({});
     for (const hook of CATALOG) {
-      const specs = [...hook.source.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)].map((m) => m[1]);
+      // Imports in the code only: TSDoc `@example` blocks import from "hookli".
+      const code = hook.source.replace(/\/\*[\s\S]*?\*\//g, "");
+      const specs = [...code.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)].map((m) => m[1]);
       for (const spec of specs) expect(spec, hook.name).toMatch(/^(react|\.\.\/use-[a-z0-9-]+)$/);
     }
   });

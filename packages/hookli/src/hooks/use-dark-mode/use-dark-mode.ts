@@ -5,6 +5,33 @@ interface UseDarkModeState {
   toggleDarkMode: () => void;
 }
 
+/**
+ * Dark-mode boolean with toggle.
+ *
+ * @category state
+ * @keywords dark mode, theme, dark theme toggle, night mode, remember theme
+ * @returns isDarkMode - Current mode. Initialized from localStorage("theme") on the client; false
+ *   during SSR.
+ * @returns toggleDarkMode - Flips the mode. An effect persists it to localStorage("theme") and
+ *   toggles a "dark" class on <body>.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useDarkMode } from "hookli";
+ *
+ * export function Demo() {
+ *   const { isDarkMode, toggleDarkMode } = useDarkMode();
+ *
+ *   return (
+ *     <div className={isDarkMode ? "panel-dark" : "panel-light"}>
+ *       <button onClick={toggleDarkMode}>
+ *         {isDarkMode ? "Switch to light" : "Switch to dark"}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export const useDarkMode = (): UseDarkModeState => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     // SSR-safe: no localStorage on the server.

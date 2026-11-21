@@ -10,6 +10,39 @@ interface StoredItem<T> {
   expiry: number;
 }
 
+/**
+ * Persisted state with a TTL.
+ *
+ * @category state
+ * @keywords localStorage, expire, ttl, time to live, cache with expiry, expiring storage
+ * @param key - The localStorage key to read and write.
+ * @param initialValue - Value used before hydration and when nothing is stored under the key.
+ * @param expiryMs - Time-to-live in milliseconds. Every write stores the value with a fresh expiry
+ *   timestamp.
+ * @returns value - The stored value, or null once the item has expired. Expiry is checked when the
+ *   hook reads — on mount or key change — at which point the item is removed.
+ * @returns setStoredValue - Persists the value to localStorage with a new expiry of now + expiryMs.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useLocalStorageWithExpiry } from "hookli";
+ *
+ * export function Demo() {
+ *   const { value, setStoredValue } = useLocalStorageWithExpiry(
+ *     "draft",
+ *     "",
+ *     10_000,
+ *   );
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setStoredValue("hello")}>Save for 10s</button>
+ *       <p>{value === null ? "Expired" : value || "Nothing stored"}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export const useLocalStorageWithExpiry = <T>(
   key: string,
   initialValue: T,

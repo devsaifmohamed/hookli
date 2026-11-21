@@ -235,8 +235,9 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
     return node;
   };
 
-  /** One `@returns` row: its type is the tuple member, the property, or the whole return type. */
-  function returnRow(slug, tag, returnType) {
+  /** One `@returns` row: its type is the tuple member, the property, or the whole return type.
+      A lone row whose name is not a property describes the whole return (`useQueue`). */
+  function returnRow(slug, tag, returnType, lone) {
     const match = RETURNS_TAG.exec(tag.text);
     const whole = returnType ? text(returnType) : "";
     if (!match) {
@@ -260,7 +261,7 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
     const property = !member && resolved?.getProperty(name);
     if (member) row.type = ts.isMethodSignature(member) ? callText(member) : member.type ? text(member.type) : "any";
     else if (property) row.type = checker.typeToString(checker.getTypeOfSymbolAtLocation(property, returnType));
-    else if (members) report(slug, "returns", `"${name}" is not a property of the return type`);
+    else if (members && !lone) report(slug, "returns", `"${name}" is not a property of the return type`);
     return row;
   }
 
@@ -361,7 +362,7 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
       keywords,
       signature,
       parameters: parameterRows(slug, signatures, all, tagsOf(doc, "param")),
-      returns: tagsOf(doc, "returns", "return").map((tag) => returnRow(slug, tag, returnType)),
+      returns: tagsOf(doc, "returns", "return").map((tag, _, all) => returnRow(slug, tag, returnType, all.length === 1)),
       typeAliases: reachableTypes(variable?.type && !signatures.length ? [variable.type] : typeNodes),
       usage: usage?.code ?? "",
       examples,

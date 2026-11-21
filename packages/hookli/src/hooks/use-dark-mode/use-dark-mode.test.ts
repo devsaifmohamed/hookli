@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useDarkMode } from "./use-dark-mode";
 
 describe("useDarkMode", () => {
@@ -14,5 +15,9 @@ describe("useDarkMode", () => {
     act(() => result.current.toggleDarkMode());
     expect(result.current.isDarkMode).toBe(true);
     expect(document.body.classList.contains("dark")).toBe(true);
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useDarkMode");
   });
 });

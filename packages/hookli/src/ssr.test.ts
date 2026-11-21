@@ -1,6 +1,8 @@
 // @vitest-environment node
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import * as hookli from "./index";
 
@@ -12,18 +14,16 @@ import * as hookli from "./index";
  * renderToString, so this covers render-phase code only.
  *
  * Every export must be listed below (with arguments, or in NO_ARGS), so a new
- * hook cannot ship without this check.
+ * hook cannot ship without this check. Hooks are moving their SSR case into their
+ * own use-x.test.ts (`expectSSRSafe`, src/test-utils/ssr.ts); those are skipped
+ * here, and this file goes once every hook has moved
+ * (docs/plans/2026-11-21-single-source.md, Amendment 1).
  */
 const noop = () => {};
 const asyncNoop = async () => {};
 const ref = () => ({ current: null });
 
 const ARGS: Record<string, () => unknown[]> = {
-  useForm: () => [{ name: "" }],
-  useLocalStorage: () => ["key", 1],
-  useLocalStorageWithExpiry: () => ["key", 1, 1000],
-  useSessionStorage: () => ["key", 1],
-  useReadLocalStorage: () => ["key"],
   useStep: () => [3],
   useCountdown: () => [{ countStart: 10 }],
   useDebounce: () => [1, 100],
@@ -63,16 +63,21 @@ const ARGS: Record<string, () => unknown[]> = {
 };
 
 const NO_ARGS = new Set([
-  "useToggle", "useDarkMode", "useTernaryDarkMode", "useBoolean", "useCounter", "useMap",
-  "useIsClient", "useIsMounted", "useIntersectionObserver", "useScrollLock", "useScreen",
+  "useMap", "useIsClient", "useIsMounted", "useIntersectionObserver", "useScrollLock", "useScreen",
   "useWindowSize", "useCopyToClipboard", "useGeoLocation", "useList", "useSet",
   "useWindowScroll", "usePagination", "useNetworkState", "usePageVisibility", "useIdle",
   "useQueue", "useTextSelection", "useDraggable", "useBattery",
   "useDefault", // deprecated alias of useDefaultValue
 ]);
 
+const kebab = (name: string) => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const hasOwnSSRCase = (name: string) => {
+  const test = path.join(__dirname, "hooks", kebab(name), `${kebab(name)}.test.ts`);
+  return fs.existsSync(test) && fs.readFileSync(test, "utf8").includes("expectSSRSafe(");
+};
+
 const exported = Object.entries(hookli).filter(
-  ([name, value]) => /^use[A-Z]/.test(name) && typeof value === "function",
+  ([name, value]) => /^use[A-Z]/.test(name) && typeof value === "function" && !hasOwnSSRCase(name),
 ) as Array<[string, (...args: unknown[]) => unknown]>;
 
 describe("SSR: every hook server-renders without browser globals", () => {
