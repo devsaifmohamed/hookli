@@ -1,0 +1,6 @@
+[
+  { "id": "state", "label": "State" },
+  { "id": "effects", "label": "Effects" },
+  { "id": "dom", "label": "DOM" },
+  { "id": "data", "label": "Data" }
+]

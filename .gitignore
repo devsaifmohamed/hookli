@@ -33,6 +33,8 @@ dist
 *.tsbuildinfo
 apps/*/.next
 packages/*/dist
+# built by packages/hookli/scripts/build-catalog.mjs, never committed
+packages/hookli/generated/
 **/.turbo
 
 # way-of-working task worktrees
