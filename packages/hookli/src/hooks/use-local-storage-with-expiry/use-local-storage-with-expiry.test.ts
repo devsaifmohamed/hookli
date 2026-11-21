@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useLocalStorageWithExpiry } from "./use-local-storage-with-expiry";
 
 describe("useLocalStorageWithExpiry", () => {
@@ -11,5 +12,9 @@ describe("useLocalStorageWithExpiry", () => {
     );
     act(() => result.current.setStoredValue("hi"));
     expect(result.current.value).toBe("hi");
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useLocalStorageWithExpiry", "key", 1, 1000);
   });
 });

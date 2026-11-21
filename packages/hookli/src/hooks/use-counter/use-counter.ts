@@ -19,8 +19,33 @@ export interface UseCounterReturn {
 /**
  * A custom hook to manage a numeric counter.
  *
- * @param initialValue - The initial count. Defaults to `0`.
- * @returns An object with the current `count` and actions `increment`, `decrement`, `reset`, and `setCount`.
+ * @category state
+ * @keywords counter, increment, decrement, count, number state, quantity
+ * @param initialValue - The count the hook starts from; reset returns here.
+ * @returns count - The current count.
+ * @returns increment - Adds one to the count.
+ * @returns decrement - Subtracts one from the count.
+ * @returns reset - Restores the count to initialValue.
+ * @returns setCount - Sets the count directly; accepts a value or an updater function.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useCounter } from "hookli";
+ *
+ * export function Demo() {
+ *   const { count, increment, decrement, reset, setCount } = useCounter(0);
+ *
+ *   return (
+ *     <div>
+ *       <p>{count}</p>
+ *       <button onClick={decrement}>-1</button>
+ *       <button onClick={increment}>+1</button>
+ *       <button onClick={() => setCount(10)}>Set 10</button>
+ *       <button onClick={reset}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useCounter = (initialValue: number = 0): UseCounterReturn => {
   const [count, setCount] = useState<number>(initialValue);

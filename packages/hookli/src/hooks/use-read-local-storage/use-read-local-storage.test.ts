@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useReadLocalStorage } from "./use-read-local-storage";
 
 describe("useReadLocalStorage", () => {
@@ -49,5 +50,9 @@ describe("useReadLocalStorage", () => {
       window.dispatchEvent(new StorageEvent("storage", { key: "other" }));
     });
     expect(result.current).toBe("keep");
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useReadLocalStorage", "key");
   });
 });

@@ -23,10 +23,12 @@ for (const { slug } of manifest.hooks) {
     continue;
   }
   const source = fs.readFileSync(file, "utf8");
+  // Imports are read from the code only: TSDoc `@example` blocks import from "hookli".
+  const code = source.replace(/\/\*[\s\S]*?\*\//g, "");
   // Accept either quote style; anything other than react or a sibling hook is rejected.
   // Covers `import { x } from "../use-y"` and side-effect `import "../use-y"`.
-  const deps = [...source.matchAll(/(?:from|import)\s+["']\.\.\/(use-[a-z0-9-]+)["']/g)].map((m) => m[1]);
-  const foreign = [...source.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)]
+  const deps = [...code.matchAll(/(?:from|import)\s+["']\.\.\/(use-[a-z0-9-]+)["']/g)].map((m) => m[1]);
+  const foreign = [...code.matchAll(/(?:from|import)\s+["']([^"']+)["']/g)]
     .map((m) => m[1])
     .filter((spec) => spec !== "react" && !/^\.\.\/use-[a-z0-9-]+$/.test(spec));
   if (foreign.length) problems.push(`${slug}: unsupported import(s) ${foreign.join(", ")}`);

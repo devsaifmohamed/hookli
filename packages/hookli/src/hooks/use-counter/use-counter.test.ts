@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useCounter } from "./use-counter";
 
 describe("useCounter", () => {
@@ -36,5 +37,9 @@ describe("useCounter", () => {
     expect(result.current.count).toBe(10);
     act(() => result.current.setCount((c) => c + 5));
     expect(result.current.count).toBe(15);
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useCounter");
   });
 });

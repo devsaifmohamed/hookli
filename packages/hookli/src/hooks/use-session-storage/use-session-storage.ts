@@ -10,9 +10,16 @@ declare global {
 
 const IS_SERVER = typeof window === "undefined";
 
+/** Custom (de)serialization and hydration behaviour. */
 export interface UseSessionStorageOptions<T> {
+  /** Turn the value into the string stored under the key. Defaults to JSON.stringify. */
   serializer?: (value: T) => string;
+  /** Parse the stored string back into a value. Defaults to JSON.parse. */
   deserializer?: (value: string) => T;
+  /**
+   * Read sessionStorage synchronously on mount. Set false to defer to after hydration and avoid
+   * SSR mismatches. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
@@ -31,10 +38,33 @@ export type UseSessionStorageReturn<T> = [
  * mirrors the `useState` API and accepts an updater; `removeValue` clears the
  * key and resets the state to `initialValue`.
  *
- * @param key - The `sessionStorage` key to read and write.
- * @param initialValue - Fallback value (or factory) when the key is absent.
+ * @category state
+ * @keywords sessionStorage, tab session, per tab state, persist until tab closes
+ * @param key - The sessionStorage key to read and write.
+ * @param initialValue - Value used before hydration and when the key is empty. Pass a function to
+ *   compute it lazily.
  * @param options - Optional custom serializer/deserializer and hydration flag.
- * @returns `[value, setValue, removeValue]`.
+ * @returns [0] value - The stored value. Server-rendered as initialValue, then hydrated from
+ *   sessionStorage after mount.
+ * @returns [1] setValue - Persists to sessionStorage and updates state; accepts a value or an
+ *   updater. Syncs every hook using the key in this tab.
+ * @returns [2] removeValue - Removes the key from sessionStorage and resets state to initialValue.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useSessionStorage } from "hookli";
+ *
+ * export function Demo() {
+ *   const [draft, setDraft, removeDraft] = useSessionStorage("draft", "");
+ *
+ *   return (
+ *     <div>
+ *       <input value={draft} onChange={(e) => setDraft(e.target.value)} />
+ *       <button type="button" onClick={removeDraft}>Clear</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export function useSessionStorage<T>(
   key: string,

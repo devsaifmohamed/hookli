@@ -1,0 +1,220 @@
+[
+  {
+    "slug": "use-boolean",
+    "field": "signature",
+    "docs": "useBoolean(defaultValue?: boolean): { value: boolean; setValue: (value: boolean) => void; setTrue: () => void; setFalse: () => void; toggle: () => void }",
+    "catalog": "useBoolean(defaultValue: boolean = false): UseBooleanReturn",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-boolean",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseBooleanReturn"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-ternary-dark-mode",
+    "field": "signature",
+    "docs": "useTernaryDarkMode(options?: UseTernaryDarkModeOptions): UseTernaryDarkModeReturn",
+    "catalog": "useTernaryDarkMode(options: UseTernaryDarkModeOptions = {}): UseTernaryDarkModeReturn",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-ternary-dark-mode",
+    "field": "returns[]",
+    "docs": [
+      "{ … }"
+    ],
+    "catalog": [
+      "darkMode"
+    ],
+    "reason": "\"{ … }\" is not a valid @returns name; a lone row naming no property describes the whole return type (renamed by hand)."
+  },
+  {
+    "slug": "use-ternary-dark-mode",
+    "field": "typeAliases[]",
+    "docs": [
+      "TernaryDarkMode",
+      "UseTernaryDarkModeOptions",
+      "UseTernaryDarkModeReturn"
+    ],
+    "catalog": [
+      "UseTernaryDarkModeOptions",
+      "TernaryDarkMode",
+      "UseTernaryDarkModeReturn"
+    ],
+    "reason": "Aliases follow first-seen order from the signature (options, then its TernaryDarkMode member, then the return type)."
+  },
+  {
+    "slug": "use-counter",
+    "field": "signature",
+    "docs": "useCounter(initialValue?: number): { count: number; increment: () => void; decrement: () => void; reset: () => void; setCount: Dispatch<SetStateAction<number>> }",
+    "catalog": "useCounter(initialValue: number = 0): UseCounterReturn",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-counter",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseCounterReturn"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-dark-mode",
+    "field": "signature",
+    "docs": "useDarkMode(): { isDarkMode: boolean; toggleDarkMode: () => void }",
+    "catalog": "useDarkMode(): UseDarkModeState",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-dark-mode",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseDarkModeState"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-form",
+    "field": "signature",
+    "docs": "useForm<T>(initialState: T): { values: T; handleChange: (e: ChangeEvent) => void; resetForm: () => void }",
+    "catalog": "useForm<T extends UseFormValues>(initialState: T): { values: T; handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void; resetForm: () => void }",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-form",
+    "field": "returns.handleChange.type",
+    "docs": "(event: ChangeEvent) => void",
+    "catalog": "(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void",
+    "reason": "Code type wins (CEO): the docs type was simplified or used another parameter name."
+  },
+  {
+    "slug": "use-form",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseFormValues<T>"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-local-storage",
+    "field": "signature",
+    "docs": "useLocalStorage<T>(key: string, initialValue: T): { value: T; setStoredValue: (value: T | ((val: T) => T)) => void }",
+    "catalog": "useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageResponse<T>",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-local-storage",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseLocalStorageResponse<T>"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-local-storage-with-expiry",
+    "field": "signature",
+    "docs": "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): { value: T | null; setStoredValue: (value: T) => void }",
+    "catalog": "useLocalStorageWithExpiry<T>(key: string, initialValue: T, expiryMs: number): UseLocalStorageWithExpiryState<T>",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-local-storage-with-expiry",
+    "field": "returns.setStoredValue.type",
+    "docs": "(value: T) => void",
+    "catalog": "(newValue: T) => void",
+    "reason": "Code type wins (CEO): the docs type was simplified or used another parameter name."
+  },
+  {
+    "slug": "use-local-storage-with-expiry",
+    "field": "typeAliases[]",
+    "docs": [],
+    "catalog": [
+      "UseLocalStorageWithExpiryState<T>"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-read-local-storage",
+    "field": "signature",
+    "docs": "useReadLocalStorage<T>(key: string, options?: UseReadLocalStorageOptions<T>): T | null",
+    "catalog": "useReadLocalStorage<T>(key: string, options: UseReadLocalStorageOptions<T> = {}): T | null",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-read-local-storage",
+    "field": "typeAliases.UseReadLocalStorageOptions<T>.rows.deserializer.defaultValue",
+    "docs": null,
+    "catalog": "JSON.parse",
+    "reason": "The Defaults to sentence moves into the default column; reworded by hand so the default reads JSON.parse, not \"JSON.parse,\"."
+  },
+  {
+    "slug": "use-read-local-storage",
+    "field": "typeAliases.UseReadLocalStorageOptions<T>.rows.deserializer.description",
+    "docs": "Parse the stored string into a value. Defaults to JSON.parse, falling back to the raw string.",
+    "catalog": "Parse the stored string into a value; the default returns the raw string when it isn't JSON.",
+    "reason": "The Defaults to sentence moves into the default column; reworded by hand so the default reads JSON.parse, not \"JSON.parse,\"."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "signature",
+    "docs": "useSessionStorage<T>(key: string, initialValue: T | (() => T), options?: UseSessionStorageOptions<T>): [T, (value: T | ((prev: T) => T)) => void, () => void]",
+    "catalog": "useSessionStorage<T>(key: string, initialValue: T | (() => T), options: UseSessionStorageOptions<T> = {}): UseSessionStorageReturn<T>",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "typeAliases[]",
+    "docs": [
+      "UseSessionStorageOptions<T>"
+    ],
+    "catalog": [
+      "UseSessionStorageOptions<T>",
+      "UseSessionStorageReturn<T>"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "typeAliases.UseSessionStorageOptions<T>.rows.serializer.defaultValue",
+    "docs": null,
+    "catalog": "JSON.stringify",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "typeAliases.UseSessionStorageOptions<T>.rows.serializer.description",
+    "docs": "Turn the value into the string stored under the key. Defaults to JSON.stringify.",
+    "catalog": "Turn the value into the string stored under the key.",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "typeAliases.UseSessionStorageOptions<T>.rows.deserializer.defaultValue",
+    "docs": null,
+    "catalog": "JSON.parse",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-session-storage",
+    "field": "typeAliases.UseSessionStorageOptions<T>.rows.deserializer.description",
+    "docs": "Parse the stored string back into a value. Defaults to JSON.parse.",
+    "catalog": "Parse the stored string back into a value.",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-toggle",
+    "field": "signature",
+    "docs": "useToggle(initialValue?: boolean): [boolean, () => void, (value: boolean) => void]",
+    "catalog": "useToggle(initialValue: boolean = false): [boolean, () => void, (value: boolean) => void]",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  }
+]

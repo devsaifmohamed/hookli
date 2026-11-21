@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useBoolean } from "./use-boolean";
 
 describe("useBoolean", () => {
@@ -30,5 +31,9 @@ describe("useBoolean", () => {
     const { result } = renderHook(() => useBoolean());
     act(() => result.current.setValue(true));
     expect(result.current.value).toBe(true);
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useBoolean");
   });
 });
