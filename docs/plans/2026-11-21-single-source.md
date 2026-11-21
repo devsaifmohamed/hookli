@@ -278,9 +278,8 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
   - **Docs end states** (page exists, redirect, removed page, demo map): `check-playgrounds` and the docs build.
   - `examples:check` (X8).
   - The docs demo check (X9, X10).
-  - (The score script is not committed. M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 are read from the test results.
+- **Outside the repo (CEO):** the score script and the "before" replay. M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 come from the replay (before) and from the tests above (after).
 - **Release branch only (deleted before merge):**
-  - The "before" replay: the S1–S8 recipes and X1–X15 run once on a copy of `main` to measure the before score.
   - The parity test from 3a (catalog vs `hook-docs.ts` + manifest, field by field) and `parity-approved.json`. They leave `main` in PR 6. The release-branch copy and a snapshot of `main`'s outputs stay until the release PR's parity report is made.
 - **Release PR body:** both scorecards; the parity report (JS byte-identical, `.d.ts` identical once comments are stripped, approved diffs listed, search eval floors green).
 
