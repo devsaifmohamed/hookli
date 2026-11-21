@@ -1,0 +1,470 @@
+{
+  "commit": "3045baa1fd1cbfb86a1ad8b557e05654f4c2ba1b",
+  "measuredAt": "2026-11-21T13:44:33.382Z",
+  "runtimeSeconds": 536,
+  "ciSteps": [
+    "generated files",
+    "build",
+    "test",
+    "test:package",
+    "lint",
+    "typecheck",
+    "playgrounds"
+  ],
+  "notRun": "react-18 CI job (same library typecheck + tests on React 18; no edit here depends on the React version)",
+  "scenarios": {
+    "S1": {
+      "title": "Add a hook (useRenderCount)",
+      "edits": 15,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "npm types export useRenderCount": true,
+        "hookli/manifest lists it": true,
+        "README index + count (package and root)": true,
+        "/docs/use-render-count page with its demo": true,
+        "llms.txt lists it": true,
+        "MCP list_hooks": true,
+        "MCP search_hooks": true
+      },
+      "handFiles": [
+        "apps/docs/components/demos/use-render-count-demo.tsx",
+        "apps/docs/lib/hook-docs.ts",
+        "packages/hookli-mcp/README.md",
+        "packages/hookli-mcp/test/search-cases.ts",
+        "packages/hookli/hooks.manifest.json",
+        "packages/hookli/src/hooks/index.ts",
+        "packages/hookli/src/hooks/use-render-count/index.ts",
+        "packages/hookli/src/hooks/use-render-count/use-render-count.test.ts",
+        "packages/hookli/src/hooks/use-render-count/use-render-count.ts",
+        "packages/hookli/src/ssr.test.ts"
+      ],
+      "generatedFiles": [
+        "README.md",
+        "apps/docs/lib/hook-sources.generated.ts",
+        "packages/hookli-mcp/src/data/catalog.json",
+        "packages/hookli-mcp/src/data/meta.json",
+        "packages/hookli/README.md"
+      ],
+      "renamedFiles": 0
+    },
+    "S3": {
+      "title": "Bug fix, no API change (useIsMounted)",
+      "edits": 4,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "docs Source / llms markdown show the new code": true,
+        "StackBlitz source data has the new code": true,
+        "MCP get_hook_source": true
+      },
+      "handFiles": [
+        "packages/hookli/src/hooks/use-is-mounted/use-is-mounted.test.ts",
+        "packages/hookli/src/hooks/use-is-mounted/use-is-mounted.ts"
+      ],
+      "generatedFiles": [
+        "apps/docs/lib/hook-sources.generated.ts",
+        "packages/hookli-mcp/src/data/catalog.json"
+      ],
+      "renamedFiles": 0
+    },
+    "S4": {
+      "title": "Public API change: useDocumentTitle(title: string | null)",
+      "edits": 6,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "npm types": true,
+        "manifest signature": true,
+        "docs tables": true,
+        "MCP signature + parameters": true
+      },
+      "handFiles": [
+        "apps/docs/lib/hook-docs.ts",
+        "packages/hookli/hooks.manifest.json",
+        "packages/hookli/src/hooks/use-document-title/use-document-title.test.ts",
+        "packages/hookli/src/hooks/use-document-title/use-document-title.ts"
+      ],
+      "generatedFiles": [
+        "apps/docs/lib/hook-sources.generated.ts",
+        "packages/hookli-mcp/src/data/catalog.json"
+      ],
+      "renamedFiles": 0
+    },
+    "S5": {
+      "title": "Docs text only: useIsMounted summary, example, keywords",
+      "edits": 5,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "README line": true,
+        "docs page summary": true,
+        "docs example": true,
+        "MCP search by the new keyword": true,
+        "MCP usage": true
+      },
+      "handFiles": [
+        "apps/docs/lib/hook-docs.ts",
+        "packages/hookli/hooks.manifest.json"
+      ],
+      "generatedFiles": [
+        "README.md",
+        "packages/hookli-mcp/src/data/catalog.json",
+        "packages/hookli/README.md"
+      ],
+      "renamedFiles": 0
+    },
+    "S6": {
+      "title": "Rename with deprecated alias: usePageVisibility -> useDocumentVisibility",
+      "edits": 15,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "old name importable and deprecated": true,
+        "no catalog entry for the old name": true,
+        "new page, no old page": true,
+        "old URL redirects": true
+      },
+      "handFiles": [
+        "apps/docs/components/demos/use-document-visibility-demo.tsx",
+        "apps/docs/components/demos/use-page-visibility-demo.tsx",
+        "apps/docs/lib/hook-docs.ts",
+        "apps/docs/next.config.ts",
+        "packages/hookli-mcp/test/search-cases.ts",
+        "packages/hookli-mcp/test/search.test.ts",
+        "packages/hookli/hooks.manifest.json",
+        "packages/hookli/src/hooks/index.ts",
+        "packages/hookli/src/hooks/use-document-visibility/index.ts",
+        "packages/hookli/src/hooks/use-document-visibility/use-document-visibility.test.ts",
+        "packages/hookli/src/hooks/use-document-visibility/use-document-visibility.ts",
+        "packages/hookli/src/hooks/use-page-visibility/index.ts",
+        "packages/hookli/src/hooks/use-page-visibility/use-page-visibility.test.ts",
+        "packages/hookli/src/hooks/use-page-visibility/use-page-visibility.ts",
+        "packages/hookli/src/ssr.test.ts"
+      ],
+      "generatedFiles": [
+        "README.md",
+        "apps/docs/lib/hook-sources.generated.ts",
+        "packages/hookli-mcp/src/data/catalog.json",
+        "packages/hookli/README.md"
+      ],
+      "renamedFiles": 4
+    },
+    "S7": {
+      "title": "Move to another category: useDocumentTitle effects -> dom",
+      "edits": 4,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "README grouping": true,
+        "docs category": true,
+        "MCP filter": true
+      },
+      "handFiles": [
+        "packages/hookli/hooks.manifest.json"
+      ],
+      "generatedFiles": [
+        "README.md",
+        "packages/hookli-mcp/src/data/catalog.json",
+        "packages/hookli/README.md"
+      ],
+      "renamedFiles": 0
+    },
+    "S8": {
+      "title": "Delete a hook: useEffectOnce (use useUpdateEffect)",
+      "edits": 14,
+      "green": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "endState": {
+        "gone from npm": true,
+        "gone from README + count": true,
+        "gone from docs nav and llms.txt": true,
+        "old URL names the replacement (redirect)": true,
+        "gone from MCP": true
+      },
+      "handFiles": [
+        "apps/docs/components/demos/use-effect-once-demo.tsx",
+        "apps/docs/lib/hook-docs.ts",
+        "apps/docs/next.config.ts",
+        "packages/hookli-mcp/README.md",
+        "packages/hookli/hooks.manifest.json",
+        "packages/hookli/src/hooks/index.ts",
+        "packages/hookli/src/hooks/use-effect-once/index.ts",
+        "packages/hookli/src/hooks/use-effect-once/use-effect-once.test.ts",
+        "packages/hookli/src/hooks/use-effect-once/use-effect-once.ts"
+      ],
+      "generatedFiles": [
+        "README.md",
+        "apps/docs/lib/hook-sources.generated.ts",
+        "packages/hookli-mcp/src/data/catalog.json",
+        "packages/hookli-mcp/src/data/meta.json",
+        "packages/hookli/README.md"
+      ],
+      "renamedFiles": 0,
+      "unreachable": "The 'Removed in vX, use Y' page and the MCP get_hook removed answer don't exist today; the recipe adds a redirect to the replacement instead."
+    }
+  },
+  "mistakes": {
+    "X1": {
+      "how": "barrel line for use-hover removed",
+      "caught": true,
+      "failedStep": "build",
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "fail"
+      },
+      "output": "hookli-docs:build: > Build error occurred\nhookli-docs:build: Error: Turbopack build failed with 2 errors:\n\n ERROR  run failed: command  exited (1)\n[ELIFECYCLE] Command failed with exit code 1."
+    },
+    "X2": {
+      "how": "no summary anywhere: JSDoc removed and manifest description emptied",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X3": {
+      "how": "manifest category 'misc'",
+      "caught": true,
+      "failedStep": "generated files",
+      "namesHook": true,
+      "steps": {
+        "generated files": "fail"
+      },
+      "output": "  throw new Error(`gen-readme: hook \"${orphan.name}\" has unknown category \"${orphan.category}\"`);\nError: gen-readme: hook \"useIsMounted\" has unknown category \"misc\"\n[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] hookli@1.7.0 gen:manifest: `node scripts/gen-readme.mjs`\n<copy>/packages/hookli:\nExit status 1"
+    },
+    "X4": {
+      "how": "manifest keywords []",
+      "caught": true,
+      "failedStep": "generated files",
+      "namesHook": true,
+      "steps": {
+        "generated files": "fail"
+      },
+      "output": "Loaded docs for hooks: 66\nCatalog incomplete. No source: []. No keywords in hooks.manifest.json: [use-is-mounted]."
+    },
+    "X5": {
+      "how": "hook-docs.ts usage emptied",
+      "caught": true,
+      "failedStep": "test",
+      "namesHook": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "fail"
+      },
+      "output": "hookli-mcp:test:    × catalog code snippets > every usage snippet and example imports its hook from hookli 5ms\nhookli-mcp:test:  FAIL  test/server.test.ts > catalog code snippets > every usage snippet and example imports its hook from hookli\nhookli-mcp:test: AssertionError: expected [ 'useIsMounted' ] to deeply equal []\nhookli-mcp:test: - Expected\nhookli-mcp:test: + Received\n\n ERROR  run failed: command  exited (1)\n[ELIFECYCLE] Test failed. See above for more details."
+    },
+    "X6": {
+      "how": "@param and the docs Parameters row name 'heading', which doesn't exist",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X7": {
+      "how": "parameter 'options' has no @param and no docs Parameters row",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X8": {
+      "how": "usage example calls useDocumentTitle(42, …)",
+      "caught": true,
+      "failedStep": "playgrounds",
+      "namesHook": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "fail"
+      },
+      "output": "  FAIL use-document-title (tsc):\n    src/App.tsx(5,20): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] hookli-docs@0.1.0 check:playgrounds: `tsx scripts/check-playgrounds.mts`\n<copy>/apps/docs:\nExit status 1"
+    },
+    "X9": {
+      "how": "demo + hook-docs entry for use-ghost, which isn't a hook",
+      "caught": true,
+      "failedStep": "build",
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "fail"
+      },
+      "output": "hookli-docs:build: > Build error occurred\nhookli-docs:build: Error: Turbopack build failed with 2 errors:\n\n ERROR  run failed: command  exited (1)\n[ELIFECYCLE] Command failed with exit code 1."
+    },
+    "X10": {
+      "how": "demo file and hook-docs entry removed (the useDraggable miss, 3c1e009)",
+      "caught": true,
+      "failedStep": "test",
+      "namesHook": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "fail"
+      },
+      "output": "hookli-mcp:test:    × catalog code snippets > every usage snippet and example imports its hook from hookli 8ms\nhookli-mcp:test:  FAIL  test/server.test.ts > catalog code snippets > every usage snippet and example imports its hook from hookli\nhookli-mcp:test: AssertionError: expected [ 'useIsMounted' ] to deeply equal []\nhookli-mcp:test: - Expected\nhookli-mcp:test: + Received\n\n ERROR  run failed: command  exited (1)\n[ELIFECYCLE] Test failed. See above for more details."
+    },
+    "X11": {
+      "how": "no removed-hooks.json today; its stand-in (the S8 redirect to a replacement) added for a hook that still exists",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X12": {
+      "how": "S8 recipe applied to use-event-listener, which 6 hooks import",
+      "caught": true,
+      "failedStep": "build",
+      "namesHook": true,
+      "steps": {
+        "generated files": "pass",
+        "build": "fail"
+      },
+      "output": "hookli:build: Error: Build failed with 6 errors:\nhookli:build:     at failureErrorWithLog (<copy>/node_modules/.pnpm/esbuild@0.27.7/node_modules/esbuild/lib/main.js:1748:15)\nhookli:build: src/hooks/use-click-any-where/use-click-any-where.ts(1,34): error TS2307: Cannot find module '../use-event-listener' or its corresponding type declarations.\nhookli:build: DTS Build error\n\n ERROR  run failed: command  exited (1)\n[ELIFECYCLE] Command failed with exit code 1."
+    },
+    "X13": {
+      "how": "category 'media' added to all 6 category lists (gen-readme.mjs, hooks-registry.ts, docs page.tsx + sidebar.tsx, MCP types.ts + zod enum) with no hooks",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X14": {
+      "how": "docs Parameters type for title is 'number', the code says string",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    },
+    "X15": {
+      "how": "manifest description reworded away from the JSDoc",
+      "caught": false,
+      "failedStep": null,
+      "namesHook": false,
+      "steps": {
+        "generated files": "pass",
+        "build": "pass",
+        "test": "pass",
+        "test:package": "pass",
+        "lint": "pass",
+        "typecheck": "pass",
+        "playgrounds": "pass"
+      },
+      "output": null
+    }
+  }
+}
