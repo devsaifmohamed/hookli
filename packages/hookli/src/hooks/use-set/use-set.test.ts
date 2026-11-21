@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useSet } from "./use-set";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useSet", () => {
   it("initialises from an iterable", () => {
@@ -30,5 +31,11 @@ describe("useSet", () => {
     expect(result.current[0].size).toBe(0);
     act(() => result.current[1].reset());
     expect([...result.current[0]]).toEqual([1, 2]);
+  });
+});
+
+describe("useSet on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useSet");
   });
 });

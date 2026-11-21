@@ -5,8 +5,30 @@ import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateA
  * high-frequency values (scroll, pointer, resize) so React re-renders at most
  * once per frame. Any pending frame is cancelled on unmount.
  *
- * @param initialState - Initial state, or a lazy initializer.
- * @returns A `[state, setState]` tuple, same shape as `useState`.
+ * @category state
+ * @keywords requestAnimationFrame, raf, animation frame, smooth updates, frame batched state
+ * @param initialState - The initial state or lazy initializer function.
+ * @returns [0] state - The current state value.
+ * @returns [1] setState - State setter whose updates are batched to requestAnimationFrame.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRafState } from "hookli";
+ *
+ * export function Demo() {
+ *   const [pos, setPos] = useRafState({ x: 0, y: 0 });
+ *
+ *   return (
+ *     <div
+ *       onPointerMove={(e) => {
+ *         setPos({ x: e.clientX, y: e.clientY });
+ *       }}
+ *     >
+ *       <p>Position: {pos.x}, {pos.y}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useRafState = <T>(
   initialState: T | (() => T),

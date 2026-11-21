@@ -26,12 +26,12 @@
     "slug": "use-ternary-dark-mode",
     "field": "returns[]",
     "docs": [
-      "{ … }"
+      "{ \u2026 }"
     ],
     "catalog": [
       "darkMode"
     ],
-    "reason": "\"{ … }\" is not a valid @returns name; a lone row naming no property describes the whole return type (renamed by hand)."
+    "reason": "\"{ \u2026 }\" is not a valid @returns name; a lone row naming no property describes the whole return type (renamed by hand)."
   },
   {
     "slug": "use-ternary-dark-mode",
@@ -215,6 +215,97 @@
     "field": "signature",
     "docs": "useToggle(initialValue?: boolean): [boolean, () => void, (value: boolean) => void]",
     "catalog": "useToggle(initialValue: boolean = false): [boolean, () => void, (value: boolean) => void]",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-map",
+    "field": "signature",
+    "docs": "useMap<K, V>(initialState?: MapOrEntries<K, V>): [ReadOnlyMap<K, V>, UseMapActions<K, V>]",
+    "catalog": "useMap<K, V>(initialState: MapOrEntries<K, V> = new Map()): UseMapReturn<K, V>",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-map",
+    "field": "typeAliases[]",
+    "docs": [
+      "UseMapActions"
+    ],
+    "catalog": [
+      "MapOrEntries<K, V>",
+      "UseMapReturn<K, V>",
+      "ReadOnlyMap<K, V>",
+      "UseMapActions<K, V>"
+    ],
+    "reason": "Code type wins (CEO): the catalog lists the local types the signature reaches, which the docs omitted."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "signature",
+    "docs": "useCountdown(options: UseCountdownOptions): [number, UseCountdownActions]",
+    "catalog": "useCountdown({ countStart, intervalMs = 1000, isIncrement = false, countStop = 0 }: UseCountdownOptions): [number, UseCountdownActions]",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.intervalMs.defaultValue",
+    "docs": null,
+    "catalog": "1000",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.intervalMs.description",
+    "docs": "Milliseconds between ticks. Defaults to 1000.",
+    "catalog": "Milliseconds between ticks.",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.isIncrement.defaultValue",
+    "docs": null,
+    "catalog": "false",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.isIncrement.description",
+    "docs": "Count up instead of down. Defaults to false.",
+    "catalog": "Count up instead of down.",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.countStop.defaultValue",
+    "docs": null,
+    "catalog": "0",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-countdown",
+    "field": "typeAliases.UseCountdownOptions.rows.countStop.description",
+    "docs": "The value at which the timer stops itself. Defaults to 0.",
+    "catalog": "The value at which the timer stops itself.",
+    "reason": "The Defaults to sentence of the docs text moves into the default column."
+  },
+  {
+    "slug": "use-list",
+    "field": "signature",
+    "docs": "useList<T>(initial?: T[]): [T[], UseListActions<T>]",
+    "catalog": "useList<T>(initial: T[] = []): [T[], UseListActions<T>]",
+    "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
+  },
+  {
+    "slug": "use-set",
+    "field": "parameters.initial.defaultValue",
+    "docs": "empty",
+    "catalog": null,
+    "reason": "Code wins (CEO): the parameter has no default in the code; the docs' \"empty\" was descriptive text, not a value."
+  },
+  {
+    "slug": "use-queue",
+    "field": "signature",
+    "docs": "useQueue<T>(initial?: T[]): UseQueueReturn<T>",
+    "catalog": "useQueue<T>(initial: T[] = []): UseQueueReturn<T>",
     "reason": "Signature is the code source text (code type wins, CEO): source defaults and named return types instead of the hand-written manifest form (Amendment 1)."
   }
 ]

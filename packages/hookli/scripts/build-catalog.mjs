@@ -378,15 +378,22 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
   for (const exported of exports) {
     const target = resolve(exported);
     if (!HOOK_NAME.test(exported.name) || !(target.flags & ts.SymbolFlags.Value)) continue;
-    if (target.name !== exported.name) aliases.push({ exported, target });
+    // `export const useOld = useNew;` is an alias too (the form that keeps `@deprecated` in the .d.ts).
+    const constAlias = target.declarations?.find(
+      (d) => ts.isVariableDeclaration(d) && d.initializer && ts.isIdentifier(d.initializer),
+    );
+    if (constAlias) aliases.push({ exported, target: { name: constAlias.initializer.text }, docNode: constAlias.parent.parent });
+    else if (target.name !== exported.name) aliases.push({ exported, target });
     else hooks.push(hookRecord(exported.name, target));
   }
 
-  // `export { useNew as useOld }` (with `@deprecated`) is an alias of the hook, not a hook.
-  for (const { exported, target } of aliases) {
+  // `export { useNew as useOld }` or `export const useOld = useNew` (with `@deprecated`) is an
+  // alias of the hook, not a hook.
+  for (const { exported, target, docNode } of aliases) {
     const hook = hooks.find((h) => h.name === target.name);
     const specifier = exported.declarations?.find(ts.isExportSpecifier);
-    const deprecated = specifier ? tagsOf(readDoc(specifier.parent.parent), "deprecated")[0] : undefined;
+    const node = docNode ?? (specifier ? specifier.parent.parent : undefined);
+    const deprecated = node ? tagsOf(readDoc(node), "deprecated")[0] : undefined;
     hook?.aliases.push({ name: exported.name, slug: kebab(exported.name), deprecated: deprecated ? flat(deprecated.text) : null });
   }
 
