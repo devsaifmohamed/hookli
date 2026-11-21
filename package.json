@@ -12,7 +12,8 @@
     "typecheck": "turbo run typecheck",
     "dev": "turbo run dev",
     "gen:banner": "node scripts/render-banner.mjs",
-    "gen:manifest": "pnpm --filter hookli run gen:manifest"
+    "gen:manifest": "pnpm --filter hookli run gen:manifest",
+    "score": "node scripts/score.mjs"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
