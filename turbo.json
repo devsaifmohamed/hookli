@@ -5,6 +5,20 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "hookli#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/gen-hook-sources.mjs",
+        "$TURBO_ROOT$/scripts/build-mcp-catalog.mjs",
+        "$TURBO_ROOT$/apps/docs/lib/hook-docs.ts"
+      ],
+      "outputs": [
+        "dist/**",
+        "$TURBO_ROOT$/apps/docs/lib/hook-sources.generated.ts",
+        "$TURBO_ROOT$/packages/hookli-mcp/src/data/**"
+      ]
+    },
     "test": {
       "dependsOn": ["^build"]
     },
@@ -14,7 +28,8 @@
     "lint": {},
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["^build"]
     }
   }
 }

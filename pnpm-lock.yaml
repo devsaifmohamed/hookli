@@ -127,6 +127,9 @@ importers:
       '@types/node':
         specifier: ^20.17.0
         version: 20.19.43
+      hookli:
+        specifier: workspace:*
+        version: link:../hookli
       tsup:
         specifier: ^8.4.0
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.19)(tsx@4.19.2)(typescript@5.9.3)(yaml@2.9.1)
