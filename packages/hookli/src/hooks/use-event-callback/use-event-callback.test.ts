@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useEventCallback } from "./use-event-callback";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useEventCallback", () => {
   it("keeps a stable identity across renders", () => {
@@ -30,5 +31,11 @@ describe("useEventCallback", () => {
     );
 
     expect(result.current(2, 3)).toBe(5);
+  });
+});
+
+describe("useEventCallback on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useEventCallback", () => {});
   });
 });

@@ -5,13 +5,9 @@ import {
   type DebouncedState,
 } from "../use-debounce-callback";
 
-/**
- * The tuple returned by {@link useDebounceValue}: the debounced value and a
- * setter, plus the underlying debounced updater for manual control.
- */
 export type UseDebounceValueReturn<T> = [
-  T,
-  DebouncedState<[value: T | ((prev: T) => T)], void>,
+  debouncedValue: T,
+  setValue: DebouncedState<[value: T | ((prev: T) => T)], void>,
 ];
 
 /**
@@ -22,10 +18,34 @@ export type UseDebounceValueReturn<T> = [
  * returned setter is a debounced function exposing `cancel`, `flush`, and
  * `isPending`; the value equality check can be customised via `options.equalityFn`.
  *
- * @param initialValue - The starting value or a factory producing it.
- * @param delayMs - Milliseconds of inactivity before the debounced value updates.
- * @param options - Debounce edge options plus an optional `equalityFn`.
- * @returns `[debouncedValue, setValue]` where `setValue` also carries `cancel`/`flush`/`isPending`.
+ * @category effects
+ * @keywords debounce, debounced value, search input, typing delay, cancel flush
+ * @param options - DebounceOptions plus `equalityFn`; when it reports the values equal, the update
+ *   is skipped.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useDebounceValue } from "hookli";
+ *
+ * export function Demo() {
+ *   const [text, setText] = useState("");
+ *   const [debounced, setValue] = useDebounceValue("", 500);
+ *
+ *   return (
+ *     <div>
+ *       <input
+ *         value={text}
+ *         onChange={(e) => {
+ *           setText(e.target.value);
+ *           setValue(e.target.value);
+ *         }}
+ *       />
+ *       <p>Debounced: {debounced}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useDebounceValue = <T>(
   initialValue: T | (() => T),

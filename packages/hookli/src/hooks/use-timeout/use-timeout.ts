@@ -7,8 +7,31 @@ import { useEffect, useRef } from "react";
  * timeout is created inside an effect so the hook is SSR-safe and always
  * cleared on cleanup. Passing `null` as `delay` cancels the pending timeout.
  *
- * @param callback - The function to run when the timeout elapses.
- * @param delay - Milliseconds to wait before running, or `null` to cancel.
+ * @category effects
+ * @keywords setTimeout, timeout, delay, after delay, run later, once after
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useTimeout } from "hookli";
+ *
+ * export function Demo() {
+ *   const [visible, setVisible] = useState(false);
+ *   const [delay, setDelay] = useState<number | null>(null);
+ *
+ *   useTimeout(() => {
+ *     setVisible(true);
+ *     setDelay(null);
+ *   }, delay);
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setDelay(2000)}>Reveal in 2s</button>
+ *       {visible && <p>Here!</p>}
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useTimeout = (callback: () => void, delay: number | null): void => {
   const savedCallback = useRef<() => void>(callback);

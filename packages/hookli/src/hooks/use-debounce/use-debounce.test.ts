@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useDebounce } from "./use-debounce";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useDebounce", () => {
   beforeEach(() => vi.useFakeTimers());
@@ -19,5 +20,11 @@ describe("useDebounce", () => {
     expect(result.current).toBe("a");
     act(() => vi.advanceTimersByTime(500));
     expect(result.current).toBe("b");
+  });
+});
+
+describe("useDebounce on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useDebounce", 1, 100);
   });
 });

@@ -9,8 +9,31 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
  * children or effect dependency arrays without causing re-subscriptions, yet it
  * always invokes the most recent `fn` closure.
  *
- * @param fn - The function to keep current behind a stable reference.
- * @returns A memoized callback that forwards to the latest `fn`.
+ * @category effects
+ * @keywords stable callback, latest props, stale closure, useEvent, callback ref
+ * @param fn - Calling the returned callback during render throws: use it in event handlers and
+ *   effects.
+ * @returns callback - A memoized callback with an unchanging identity that always forwards to the
+ *   latest fn.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useEventCallback } from "hookli";
+ *
+ * export function Demo() {
+ *   const [count, setCount] = useState(0);
+ *
+ *   const readLatest = useEventCallback(() => count);
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setCount((prev) => prev + 1)}>{count}</button>
+ *       <button onClick={() => alert(readLatest())}>Read latest</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useEventCallback = <Args extends unknown[], R>(
   fn: (...args: Args) => R,

@@ -2,28 +2,27 @@ import { useEffect, useMemo, useRef } from "react";
 import { useEventCallback } from "../use-event-callback";
 import { useUnmount } from "../use-unmount";
 
-/**
- * Options controlling how {@link useDebounceCallback} schedules invocations.
- */
 export interface DebounceOptions {
-  /** Invoke on the leading edge of the timeout. Defaults to `false`. */
+  /**
+   * Invoke on the leading edge — run once immediately on the first call of a burst. Defaults to
+   * `false`.
+   */
   leading?: boolean;
-  /** Invoke on the trailing edge of the timeout. Defaults to `true`. */
+  /** Invoke on the trailing edge — run after the burst settles. Defaults to `true`. */
   trailing?: boolean;
-  /** The maximum time the callback is allowed to be delayed before it is forced to run. */
+  /**
+   * The maximum time the callback may be delayed before it is forced to run, even during a
+   * continuous burst.
+   */
   maxWait?: number;
 }
 
-/**
- * A debounced function with manual control methods.
- */
 export interface DebouncedState<Args extends unknown[], R> {
+  /** Calling it schedules an invocation and returns the last computed result — undefined before the first run. */
   (...args: Args): R | undefined;
-  /** Cancel any pending trailing invocation. */
   cancel: () => void;
-  /** Immediately invoke any pending trailing invocation. */
+  /** Immediately runs any pending invocation and returns its result. */
   flush: () => R | undefined;
-  /** Whether a trailing invocation is currently pending. */
   isPending: () => boolean;
 }
 
@@ -36,10 +35,33 @@ export interface DebouncedState<Args extends unknown[], R> {
  * manual control. Any pending invocation is cancelled on unmount, so the hook
  * is SSR-safe (no timer is scheduled until the debounced function is called).
  *
- * @param fn - The function to debounce.
- * @param delayMs - Milliseconds to wait after the last call. Defaults to `500`.
- * @param options - Leading/trailing edge and `maxWait` behaviour.
- * @returns A debounced callback with `cancel`, `flush`, and `isPending`.
+ * @category effects
+ * @keywords debounce function, debounced callback, debounce handler, resize handler, autosave, rate
+ *   limit calls
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useDebounceCallback } from "hookli";
+ *
+ * export function Demo() {
+ *   const [query, setQuery] = useState("");
+ *
+ *   const search = useDebounceCallback((q: string) => {
+ *     console.log("searching", q);
+ *   }, 600);
+ *
+ *   return (
+ *     <input
+ *       value={query}
+ *       onChange={(e) => {
+ *         setQuery(e.target.value);
+ *         search(e.target.value);
+ *       }}
+ *     />
+ *   );
+ * }
+ * ```
  */
 export const useDebounceCallback = <Args extends unknown[], R>(
   fn: (...args: Args) => R,
