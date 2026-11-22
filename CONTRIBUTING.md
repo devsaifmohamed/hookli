@@ -91,6 +91,8 @@ fails with `use-x: <field>: <problem>` when something is missing.
 - **Parameters, return values and types come from the code.** Write a `@param` or `@returns`,
   or a comment on an interface member, only when it says something the name and type don't:
   behaviour, defaults (`Defaults to …`), units, SSR, edge cases. An obvious one is left out.
+  One exception: a hook returning a plain value (not an object, tuple or `void`) needs one
+  `@returns name - text`, because that row is its only Returns entry. The strict build checks it.
 - Label tuple members in the type (`[value: boolean, toggle: () => void]`), or name them with
   `@returns [0] value - …`.
 - Every `@example` is compiled against the library (`pnpm --filter hookli run examples:check`).

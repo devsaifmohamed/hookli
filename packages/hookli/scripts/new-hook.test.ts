@@ -54,7 +54,7 @@ describe("pnpm new:hook", () => {
 
   it("the TODO placeholders fail the strict generator, naming each field", () => {
     const problems = buildCatalog(root).problems.filter((p) => p.startsWith("use-thing:"));
-    for (const field of ["summary", "details", "category", "keywords", "parameters"]) {
+    for (const field of ["summary", "details", "category", "keywords", "parameters", "returns"]) {
       expect(problems.some((p) => p.startsWith(`use-thing: ${field}:`)), field).toBe(true);
     }
   });
@@ -65,7 +65,8 @@ describe("pnpm new:hook", () => {
       .replace(/ \*\n \* TODO: behaviour[^\n]*/, "")
       .replace(/@category TODO[^\n]*/, "@category state")
       .replace(/@keywords TODO[^\n]*/, "@keywords first value, initial value")
-      .replace(/ \* @param initialValue - TODO[^\n]*\n/, "");
+      .replace(/ \* @param initialValue - TODO[^\n]*\n/, "")
+      .replace(/@returns value - TODO[^\n]*/, "@returns value - The value from the first render.");
     fs.writeFileSync(hookFile, filled);
     const { catalog, problems } = buildCatalog(root);
     expect(problems).toEqual([]);

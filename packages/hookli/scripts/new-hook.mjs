@@ -27,6 +27,7 @@ export function hookFiles(slug) {
  * @category TODO: state, effects, dom or data (see catalog/categories.json)
  * @keywords TODO: comma-separated phrases people search for
  * @param initialValue - TODO: what the name and type don't say, or delete this line.
+ * @returns value - TODO: what the hook returns.
  *
  * @example Usage
  * ${FENCE}tsx
