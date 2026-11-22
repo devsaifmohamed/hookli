@@ -19,6 +19,9 @@ const root = path.join(tmp, "hookli");
 const docs = path.join(tmp, "docs");
 for (const entry of ["src", "catalog", "package.json", "tsconfig.json"]) fs.cpSync(path.join(PKG, entry), path.join(root, entry), { recursive: true });
 fs.symlinkSync(path.join(PKG, "node_modules"), path.join(root, "node_modules"), "dir");
+// The barrel without its final newline: the starter must not glue its line onto the last one.
+const barrel = path.join(root, "src", "hooks", "index.ts");
+fs.writeFileSync(barrel, fs.readFileSync(barrel, "utf8").trimEnd());
 fs.mkdirSync(path.join(docs, "components", "demos"), { recursive: true });
 fs.copyFileSync(path.join(DEMOS, "index.ts"), path.join(docs, "components", "demos", "index.ts"));
 
@@ -37,7 +40,9 @@ describe("pnpm new:hook", () => {
     expect(read(hookFile)).toContain("export function useThing<T>(initialValue: T): T");
     expect(read(root, "src", "hooks", "use-thing", "use-thing.test.ts")).toContain('await expectSSRSafe("useThing", 1);');
     expect(read(root, "src", "hooks", "use-thing", "index.ts")).toBe('export * from "./use-thing";\n');
-    expect(read(root, "src", "hooks", "index.ts").trim().split("\n").at(-1)).toBe('export * from "./use-thing";');
+    const lines = read(barrel).trim().split("\n");
+    expect(lines.at(-1)).toBe('export * from "./use-thing";');
+    expect(lines.at(-2)).toMatch(/^export \* from "\.\/use-[a-z-]+";$/);
   });
 
   it("writes a demo and its map line, sorted with the others", () => {

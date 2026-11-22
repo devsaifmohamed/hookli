@@ -102,7 +102,8 @@ export function newHook(slug, { root = PACKAGE_ROOT, docs = path.join(PACKAGE_RO
   fs.writeFileSync(path.join(folder, `${slug}.test.ts`), test);
   fs.writeFileSync(path.join(folder, "index.ts"), `export * from "./${slug}";\n`);
   const barrel = path.join(root, "src", "hooks", "index.ts");
-  fs.appendFileSync(barrel, `export * from "./${slug}";\n`);
+  const lead = fs.readFileSync(barrel, "utf8").endsWith("\n") ? "" : "\n";
+  fs.appendFileSync(barrel, `${lead}export * from "./${slug}";\n`);
 
   const demos = path.join(docs, "components", "demos");
   fs.writeFileSync(path.join(demos, `${slug}-demo.tsx`), demoFile);
