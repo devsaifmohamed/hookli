@@ -4,8 +4,10 @@ export type MapOrEntries<K, V> = Map<K, V> | [K, V][];
 
 export interface UseMapActions<K, V> {
   set: (key: K, value: V) => void;
+  /** Replaces every entry with the given Map or [key, value] pairs. */
   setAll: (entries: MapOrEntries<K, V>) => void;
   remove: (key: K) => void;
+  /** Empties the map. */
   reset: () => void;
 }
 
@@ -14,7 +16,7 @@ export type ReadOnlyMap<K, V> = Omit<
   "set" | "clear" | "delete"
 >;
 
-export type UseMapReturn<K, V> = [ReadOnlyMap<K, V>, UseMapActions<K, V>];
+export type UseMapReturn<K, V> = [map: ReadOnlyMap<K, V>, actions: UseMapActions<K, V>];
 
 /**
  * Manages a `Map` as immutable React state, returning a read-only view plus
@@ -24,9 +26,32 @@ export type UseMapReturn<K, V> = [ReadOnlyMap<K, V>, UseMapActions<K, V>];
  * use the action helpers instead, each of which replaces the map with a fresh
  * copy so React re-renders. No browser globals are touched, so it is SSR-safe.
  *
- * @param initialState - Initial entries as a `Map` or an array of `[key, value]`
- * pairs.
- * @returns `[map, { set, setAll, remove, reset }]`.
+ * @category state
+ * @keywords Map, key value state, dictionary, lookup table
+ *
+ * @example Usage
+ * ```tsx
+ * import { useMap } from "hookli";
+ *
+ * export function Demo() {
+ *   const [map, { set, remove, reset }] = useMap<string, string>([
+ *     ["theme", "dark"],
+ *   ]);
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => set("lang", "en")}>Set lang</button>
+ *       <button onClick={() => remove("theme")}>Remove theme</button>
+ *       <button onClick={reset}>Reset</button>
+ *       <ul>
+ *         {[...map.entries()].map(([key, value]) => (
+ *           <li key={key}>{key}: {value}</li>
+ *         ))}
+ *       </ul>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export function useMap<K, V>(
   initialState: MapOrEntries<K, V> = new Map(),

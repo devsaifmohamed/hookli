@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useCountdown } from "./use-countdown";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useCountdown", () => {
   beforeEach(() => vi.useFakeTimers());
@@ -47,5 +48,11 @@ describe("useCountdown", () => {
 
     act(() => result.current[1].resetCountdown());
     expect(result.current[0]).toBe(5);
+  });
+});
+
+describe("useCountdown on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useCountdown", { countStart: 10 });
   });
 });

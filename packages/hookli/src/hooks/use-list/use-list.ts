@@ -1,22 +1,13 @@
 import { useMemo, useState } from "react";
 
-/**
- * Actions returned by {@link useList} for manipulating the array immutably.
- */
 export interface UseListActions<T> {
-  /** Replace the whole list. */
   set: (list: T[]) => void;
-  /** Append one or more items to the end. */
   push: (...items: T[]) => void;
-  /** Insert an item at `index`, shifting the rest right. */
   insertAt: (index: number, item: T) => void;
-  /** Replace the item at `index`. */
   updateAt: (index: number, item: T) => void;
-  /** Remove the item at `index`. */
   removeAt: (index: number) => void;
-  /** Empty the list. */
   clear: () => void;
-  /** Reset to the initial list the hook was created with. */
+  /** Back to the initial list. */
   reset: () => void;
 }
 
@@ -25,10 +16,29 @@ export interface UseListActions<T> {
  * `updateAt`, `removeAt`, `clear`, `reset`). Every helper produces a new array,
  * so referential-equality checks and memoization work as expected.
  *
- * @param initial - The initial array. Defaults to `[]`.
- * @returns A tuple of `[list, actions]`.
+ * @category state
+ * @keywords list, array state, push, remove item, insert, todo list
+ *
+ * @example Usage
+ * ```tsx
+ * import { useList } from "hookli";
+ *
+ * export function Demo() {
+ *   const [list, { push, removeAt, clear, reset }] = useList<string>(["apple", "banana"]);
+ *
+ *   return (
+ *     <div>
+ *       <p>Items: {list.join(", ")}</p>
+ *       <button onClick={() => push("cherry")}>Push item</button>
+ *       <button onClick={() => removeAt(list.length - 1)}>Pop item</button>
+ *       <button onClick={clear}>Clear</button>
+ *       <button onClick={reset}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
-export const useList = <T>(initial: T[] = []): [T[], UseListActions<T>] => {
+export const useList = <T>(initial: T[] = []): [list: T[], actions: UseListActions<T>] => {
   const [list, setList] = useState<T[]>(initial);
 
   const actions = useMemo<UseListActions<T>>(

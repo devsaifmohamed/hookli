@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useList } from "./use-list";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useList", () => {
   it("defaults to an empty list", () => {
@@ -30,5 +31,11 @@ describe("useList", () => {
     expect(result.current[0]).toEqual([]);
     act(() => result.current[1].reset());
     expect(result.current[0]).toEqual([1, 2]);
+  });
+});
+
+describe("useList on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useList");
   });
 });
