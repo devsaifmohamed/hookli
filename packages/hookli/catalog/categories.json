@@ -1,0 +1,26 @@
+[
+  {
+    "id": "state",
+    "label": "State",
+    "title": "State Management",
+    "description": "Primitives for boolean flags, counters, multi-step wizards, forms, and undo/redo queues."
+  },
+  {
+    "id": "effects",
+    "label": "Effects",
+    "title": "Effects & Timing",
+    "description": "Debouncing, throttling, intervals, countdown timers, and SSR-safe lifecycle side-effects."
+  },
+  {
+    "id": "dom",
+    "label": "DOM",
+    "title": "DOM & Browser",
+    "description": "Intersection observers, outside clicks, resize detection, mouse tracking, and keyboard hotkeys."
+  },
+  {
+    "id": "data",
+    "label": "Data",
+    "title": "Data & Storage",
+    "description": "On-demand async mutations, client-side fetching, and reactive localStorage & sessionStorage."
+  }
+]
