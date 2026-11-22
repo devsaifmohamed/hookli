@@ -12,10 +12,50 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
  * in a ref so updating it never detaches and re-attaches the listener, and the
  * subscription lives inside an effect so the hook is SSR-safe.
  *
- * @param eventName - The event to listen for, typed against the target's map.
- * @param handler - Called with the typed event on every dispatch.
- * @param element - Optional ref or element to listen on; defaults to `window`.
- * @param options - Standard `addEventListener` options.
+ * @category dom
+ * @keywords addEventListener, event listener, window event, document event, listen to event,
+ *   keydown, resize event
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRef, useState } from "react";
+ * import { useEventListener } from "hookli";
+ *
+ * export function Demo() {
+ *   const ref = useRef<HTMLDivElement>(null);
+ *   const [lastKey, setLastKey] = useState("");
+ *
+ *   useEventListener("keydown", (event) => setLastKey(event.key));
+ *   useEventListener("click", () => console.log("clicked"), ref);
+ *
+ *   return <div ref={ref}>Last key: {lastKey}</div>;
+ * }
+ * ```
+ *
+ * @example Element mounted by a child component
+ * A `useRef` cannot tell the hook when a child component shows its element. Keep the element in
+ * state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.
+ * ```tsx
+ * import { useState } from "react";
+ * import { useEventListener } from "hookli";
+ *
+ * function Menu({ onItem }: { onItem: (el: HTMLUListElement | null) => void }) {
+ *   const [open, setOpen] = useState(false);
+ *   return (
+ *     <>
+ *       <button onClick={() => setOpen((o) => !o)}>Menu</button>
+ *       {open && <ul ref={onItem}><li>Profile</li><li>Sign out</li></ul>}
+ *     </>
+ *   );
+ * }
+ *
+ * export function Toolbar() {
+ *   const [list, setList] = useState<HTMLUListElement | null>(null);
+ *   // Listens on the list whenever Menu shows it; nothing while it is hidden.
+ *   useEventListener("click", (event) => console.log("clicked", event.target), list);
+ *   return <Menu onItem={setList} />;
+ * }
+ * ```
  */
 function useEventListener<K extends keyof MediaQueryListEventMap>(
   eventName: K,

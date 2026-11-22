@@ -3,6 +3,7 @@ import { createRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useResizeObserver } from "./use-resize-observer";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 type Cb = (entries: Partial<ResizeObserverEntry>[]) => void;
 
@@ -97,5 +98,11 @@ describe("useResizeObserver", () => {
     disconnect.mockClear();
     unmount();
     expect(disconnect).toHaveBeenCalled();
+  });
+});
+
+describe("useResizeObserver on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useResizeObserver", { current: null });
   });
 });

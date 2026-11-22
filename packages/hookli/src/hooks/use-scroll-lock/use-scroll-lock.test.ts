@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { useScrollLock } from "./use-scroll-lock";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 afterEach(() => {
   document.body.style.overflow = "";
@@ -56,5 +57,11 @@ describe("useScrollLock", () => {
     expect(el.style.overflow).toBe("");
 
     document.body.removeChild(el);
+  });
+});
+
+describe("useScrollLock on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useScrollLock");
   });
 });

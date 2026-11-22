@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { useScreen } from "./use-screen";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useScreen", () => {
   it("returns the window screen synchronously", () => {
@@ -24,5 +25,11 @@ describe("useScreen", () => {
       window.dispatchEvent(new Event("resize"));
     });
     expect(result.current).toBe(window.screen);
+  });
+});
+
+describe("useScreen on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useScreen");
   });
 });

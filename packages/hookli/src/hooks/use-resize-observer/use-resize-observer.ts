@@ -1,21 +1,18 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-/**
- * The size reported by {@link useResizeObserver}. Both values are `undefined`
- * until the first measurement lands.
- */
 export interface ResizeObserverSize {
+  /** In pixels. */
   width: number | undefined;
+  /** In pixels. */
   height: number | undefined;
 }
 
-/**
- * Options accepted by {@link useResizeObserver}.
- */
 export interface UseResizeObserverOptions {
-  /** Which box model to measure. Defaults to `content-box`. */
+  /**
+   * Which box model to measure: content-box, border-box or device-pixel-content-box. Defaults to
+   * `"content-box"`.
+   */
   box?: ResizeObserverBoxOptions;
-  /** Called with the freshly measured size on every resize. */
   onResize?: (size: ResizeObserverSize) => void;
 }
 
@@ -30,9 +27,55 @@ export interface UseResizeObserverOptions {
  * `const [el, setEl] = useState(null)` and `ref={setEl}`, which also follows an
  * element that a child component mounts).
  *
- * @param ref - A ref to the element to measure, or the element itself (`null` until mounted).
- * @param options - Which box to measure and an optional resize callback.
- * @returns The element's `{ width, height }`.
+ * @category dom
+ * @keywords resize observer, element size, element width, element height, measure element,
+ *   container size
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRef } from "react";
+ * import { useResizeObserver } from "hookli";
+ *
+ * export function Demo() {
+ *   const boxRef = useRef<HTMLDivElement>(null);
+ *   const { width, height } = useResizeObserver(boxRef);
+ *
+ *   return (
+ *     <div ref={boxRef}>
+ *       {width === undefined ? "Measuring…" : `${Math.round(width)} × ${Math.round(height ?? 0)}`}
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @example Element mounted by a child component
+ * A `useRef` cannot tell the hook when a child component shows its element. Keep the element in
+ * state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.
+ * ```tsx
+ * import { useState } from "react";
+ * import { useResizeObserver } from "hookli";
+ *
+ * function Panel({ onPanel }: { onPanel: (el: HTMLDivElement | null) => void }) {
+ *   const [open, setOpen] = useState(false);
+ *   return (
+ *     <>
+ *       <button onClick={() => setOpen((o) => !o)}>Toggle panel</button>
+ *       {open && <div ref={onPanel} style={{ resize: "horizontal", overflow: "auto" }}>Resize me</div>}
+ *     </>
+ *   );
+ * }
+ *
+ * export function Layout() {
+ *   const [panel, setPanel] = useState<HTMLDivElement | null>(null);
+ *   const { width } = useResizeObserver(panel);
+ *   return (
+ *     <>
+ *       <Panel onPanel={setPanel} />
+ *       <p>Panel width: {width ?? "not shown"}</p>
+ *     </>
+ *   );
+ * }
+ * ```
  */
 export const useResizeObserver = <T extends HTMLElement = HTMLElement>(
   ref: RefObject<T | null> | T | null,

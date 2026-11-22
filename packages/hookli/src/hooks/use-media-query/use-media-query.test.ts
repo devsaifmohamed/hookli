@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useMediaQuery } from "./use-media-query";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 type ChangeListener = (event: Partial<MediaQueryListEvent>) => void;
 
@@ -89,5 +90,11 @@ describe("useMediaQuery", () => {
 
     unmount();
     expect(listeners.length).toBe(0);
+  });
+});
+
+describe("useMediaQuery on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useMediaQuery", "(min-width: 768px)");
   });
 });

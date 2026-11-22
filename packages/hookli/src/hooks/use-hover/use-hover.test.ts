@@ -3,6 +3,7 @@ import { createRef } from "react";
 import { describe, expect, it } from "vitest";
 
 import { useHover } from "./use-hover";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 const refTo = (el: HTMLElement) => {
   const ref = createRef<HTMLDivElement>();
@@ -45,5 +46,11 @@ describe("useHover", () => {
     expect(result.current).toBe(false);
 
     document.body.removeChild(el);
+  });
+});
+
+describe("useHover on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useHover", { current: null });
   });
 });

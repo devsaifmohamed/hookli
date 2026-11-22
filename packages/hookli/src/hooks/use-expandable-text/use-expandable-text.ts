@@ -6,50 +6,37 @@ import {
   type RefCallback,
 } from "react";
 
-/**
- * Options accepted by {@link useExpandableText}. Provide `maxChars`, `maxLines`,
- * or both — whichever limit clips first wins.
- */
 export interface UseExpandableTextOptions {
   /**
-   * Maximum characters shown while collapsed. Pure string logic, so it works on
-   * the server and yields a genuinely shortened string (trimmed to a word
-   * boundary). Omit for no character cap.
+   * Max characters shown while collapsed. Pure string logic (SSR-safe), trimmed to a word
+   * boundary.
    */
   maxChars?: number;
   /**
-   * Maximum lines shown while collapsed. Applied as a CSS line-clamp via
-   * {@link UseExpandableTextResult.clampStyle} and measured in the DOM, so it is
-   * responsive (re-clips as the container narrows). Omit for no line cap.
+   * Max lines shown while collapsed. Applied as a CSS line-clamp and measured in the DOM, so it
+   * re-clips on resize.
    */
   maxLines?: number;
   /** Appended to character-truncated text. Defaults to `"…"`. */
   ellipsis?: string;
-  /** Whether the text starts expanded. Defaults to `false`. */
+  /** Defaults to `false`. */
   defaultExpanded?: boolean;
 }
 
-/**
- * The value returned by {@link useExpandableText}.
- */
 export interface UseExpandableTextResult<T extends HTMLElement = HTMLElement> {
   /**
    * The text to render — character-capped when collapsed and `maxChars` is set,
    * otherwise the full text.
    */
   text: string;
-  /** Whether the full text is currently shown. */
   isExpanded: boolean;
   /**
    * `true` when either limit actually clips the text. Use it to hide the toggle
    * when the text fits and no control is needed.
    */
   isTruncated: boolean;
-  /** Flip between expanded and collapsed. */
   toggle: () => void;
-  /** Show the full text. */
   expand: () => void;
-  /** Collapse back to the limit. */
   collapse: () => void;
   /**
    * Attach to the text element. Required for the `maxLines` clamp and its
@@ -90,23 +77,26 @@ const truncateChars = (
  * Measurement runs inside an effect and the observer is disconnected on cleanup,
  * so the hook is SSR-safe and leaks nothing.
  *
- * @param text - The full text to (maybe) collapse.
- * @param options - Character and/or line budgets and display options.
- * @returns The text to render plus `{ isExpanded, isTruncated, toggle, expand, collapse, ref, clampStyle }`.
+ * @category dom
+ * @keywords read more, show more, truncate text, expand collapse text, clamp text
  *
- * @example
+ * @example Usage
  * ```tsx
- * const { text, isTruncated, isExpanded, toggle, ref, clampStyle } =
- *   useExpandableText(review.body, { maxChars: 180, maxLines: 3 });
+ * import { useExpandableText } from "hookli";
  *
- * return (
- *   <>
- *     <p ref={ref} style={clampStyle}>{text}</p>
- *     {isTruncated && (
- *       <button onClick={toggle}>{isExpanded ? "Show less" : "Show more"}</button>
- *     )}
- *   </>
- * );
+ * export function Review({ body }: { body: string }) {
+ *   const { text, isExpanded, isTruncated, toggle, ref, clampStyle } =
+ *     useExpandableText<HTMLParagraphElement>(body, { maxChars: 180, maxLines: 3 });
+ *
+ *   return (
+ *     <div>
+ *       <p ref={ref} style={clampStyle}>{text}</p>
+ *       {isTruncated && (
+ *         <button onClick={toggle}>{isExpanded ? "Show less" : "Show more"}</button>
+ *       )}
+ *     </div>
+ *   );
+ * }
  * ```
  */
 export const useExpandableText = <T extends HTMLElement = HTMLElement>(

@@ -7,7 +7,22 @@ import { useEventListener } from "../use-event-listener";
  * dispatch, cleaning the listener up on unmount. The subscription lives inside
  * an effect so the hook is SSR-safe.
  *
- * @param handler - Called with the `MouseEvent` on every document-wide click.
+ * @category dom
+ * @keywords click anywhere, global click, document click, any click on page
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useClickAnyWhere } from "hookli";
+ *
+ * export function Demo() {
+ *   const [clicks, setClicks] = useState(0);
+ *
+ *   useClickAnyWhere(() => setClicks((prev) => prev + 1));
+ *
+ *   return <p>Document clicks: {clicks}</p>;
+ * }
+ * ```
  */
 export const useClickAnyWhere = (
   handler: (event: MouseEvent) => void,
