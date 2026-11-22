@@ -12,8 +12,21 @@ export type UsePermissionResult = PermissionState | "pending" | "unsupported";
  * (it updates if the user later changes the setting). SSR-safe; resolves to
  * `"unsupported"` where the API — or the specific permission — is unavailable.
  *
- * @param name - The permission to query, e.g. `"geolocation"`, `"camera"`, `"notifications"`.
- * @returns The current permission state.
+ * @category data
+ * @keywords permission, permissions api, camera, microphone, notifications, geolocation permission,
+ *   granted denied
+ * @param name - The permission name to query (e.g. 'geolocation', 'notifications').
+ *
+ * @example Usage
+ * ```tsx
+ * import { usePermission } from "hookli";
+ *
+ * export function Demo() {
+ *   const status = usePermission("geolocation");
+ *
+ *   return <p>Geolocation permission: {status}</p>;
+ * }
+ * ```
  */
 export const usePermission = (name: PermissionName): UsePermissionResult => {
   const [state, setState] = useState<UsePermissionResult>("pending");

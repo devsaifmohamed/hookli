@@ -1,23 +1,14 @@
 import { useCallback, useRef, useState } from "react";
 
-/** The lifecycle status of a {@link useMutation}. */
 export type MutationStatus = "idle" | "loading" | "success" | "error";
 
-/**
- * The value returned by {@link useMutation}.
- */
 export interface UseMutationReturn<TArgs extends unknown[], TData> {
-  /** Run the mutation. Resolves with the data, or `undefined` if it errored. */
   mutate: (...args: TArgs) => Promise<TData | undefined>;
-  /** Current lifecycle status. */
   status: MutationStatus;
-  /** Convenience flag for `status === "loading"`. */
   isLoading: boolean;
-  /** Data from the last successful run, or `null`. */
   data: TData | null;
-  /** Error from the last failed run, or `null`. */
   error: Error | null;
-  /** Reset back to the idle state. */
+  /** Resets status, data, and error back to idle. */
   reset: () => void;
 }
 
@@ -27,8 +18,34 @@ export interface UseMutationReturn<TArgs extends unknown[], TData> {
  * `mutate` never throws: on failure it records the error and resolves to
  * `undefined`. State is not set after unmount.
  *
- * @param mutationFn - The async function to run when `mutate` is called.
- * @returns `{ mutate, status, isLoading, data, error, reset }`.
+ * @category data
+ * @keywords mutation, post request, submit, save to api, create update delete, loading state
+ *
+ * @example Usage
+ * ```tsx
+ * import { useMutation } from "hookli";
+ *
+ * const createUser = async (name: string) => {
+ *   const res = await fetch("/api/users", {
+ *     method: "POST",
+ *     body: JSON.stringify({ name }),
+ *   });
+ *   return res.json();
+ * };
+ *
+ * export function Demo() {
+ *   const { mutate, data, isLoading } = useMutation(createUser);
+ *
+ *   return (
+ *     <div>
+ *       <button disabled={isLoading} onClick={() => mutate("Alice")}>
+ *         {isLoading ? "Saving..." : "Create User"}
+ *       </button>
+ *       {data && <p>Created ID: {data.id}</p>}
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useMutation = <TArgs extends unknown[], TData>(
   mutationFn: (...args: TArgs) => Promise<TData>,
