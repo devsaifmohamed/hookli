@@ -5,19 +5,24 @@ import { useMediaQuery } from "../use-media-query";
 const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)";
 const DEFAULT_STORAGE_KEY = "hookli-ternary-dark-mode";
 
+/** "system" follows the OS; "dark" and "light" force a mode. */
 export type TernaryDarkMode = "system" | "dark" | "light";
 
 export interface UseTernaryDarkModeOptions {
+  /** Defaults to `"system"`. */
   defaultValue?: TernaryDarkMode;
+  /** Defaults to `"hookli-ternary-dark-mode"`. */
   localStorageKey?: string;
 }
 
 export interface UseTernaryDarkModeReturn {
+  /** True when the mode is "dark", or "system" while the OS prefers dark. */
   isDarkMode: boolean;
   ternaryDarkMode: TernaryDarkMode;
   setTernaryDarkMode: (
     value: TernaryDarkMode | ((prev: TernaryDarkMode) => TernaryDarkMode),
   ) => void;
+  /** Cycle the preference: light → system → dark → light. */
   toggleTernaryDarkMode: () => void;
 }
 
@@ -27,12 +32,34 @@ export interface UseTernaryDarkModeReturn {
  *
  * SSR-safe: the OS preference is read via {@link useMediaQuery} and the stored
  * choice via {@link useLocalStorage}, both of which defer browser access to
- * effects. `isDarkMode` is `true` when the mode is `"dark"`, or `"system"` while
- * the OS prefers dark. `toggleTernaryDarkMode` cycles light → system → dark.
+ * effects.
  *
- * @param options - Optional `defaultValue` (default `"system"`) and
- * `localStorageKey`.
- * @returns `{ isDarkMode, ternaryDarkMode, setTernaryDarkMode, toggleTernaryDarkMode }`.
+ * @category state
+ * @keywords dark light system, theme switcher, system theme, three way theme, color scheme toggle,
+ *   prefers-color-scheme, follow os theme
+ *
+ * @example Usage
+ * ```tsx
+ * import { useTernaryDarkMode, type TernaryDarkMode } from "hookli";
+ *
+ * export function Demo() {
+ *   const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } =
+ *     useTernaryDarkMode();
+ *
+ *   return (
+ *     <div className={isDarkMode ? "panel-dark" : "panel-light"}>
+ *       <select
+ *         value={ternaryDarkMode}
+ *         onChange={(e) => setTernaryDarkMode(e.target.value as TernaryDarkMode)}
+ *       >
+ *         <option value="light">Light</option>
+ *         <option value="system">System</option>
+ *         <option value="dark">Dark</option>
+ *       </select>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export function useTernaryDarkMode(
   options: UseTernaryDarkModeOptions = {},

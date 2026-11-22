@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useForm } from "./use-form";
 
 describe("useForm", () => {
@@ -14,5 +15,9 @@ describe("useForm", () => {
     expect(result.current.values.name).toBe("Ada");
     act(() => result.current.resetForm());
     expect(result.current.values.name).toBe("");
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useForm", { name: "" });
   });
 });

@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useTernaryDarkMode } from "./use-ternary-dark-mode";
 
 let prefersDark: boolean;
@@ -96,5 +97,9 @@ describe("useTernaryDarkMode", () => {
     expect(window.localStorage.getItem("custom-key")).toBe(
       JSON.stringify("dark"),
     );
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useTernaryDarkMode");
   });
 });

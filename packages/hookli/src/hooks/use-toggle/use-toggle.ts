@@ -3,10 +3,27 @@ import { useCallback, useState } from "react";
 /**
  * A custom hook to toggle a boolean value.
  *
- * @param initialValue - The initial boolean value. Defaults to `false`.
- * @returns An array containing the current state, a function to toggle it, and a function to explicitly set the value.
+ * @category state
+ * @keywords toggle, on off, flip boolean, show hide, open close, switch
+ *
+ * @example Usage
+ * ```tsx
+ * import { useToggle } from "hookli";
+ *
+ * export function Demo() {
+ *   const [on, toggle, setOn] = useToggle(false);
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={toggle}>{on ? "On" : "Off"}</button>
+ *       <button onClick={() => setOn(true)}>Set on</button>
+ *       <button onClick={() => setOn(false)}>Set off</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
-export const useToggle = (initialValue: boolean = false): [boolean, () => void, (value: boolean) => void] => {
+export const useToggle = (initialValue: boolean = false): [value: boolean, toggle: () => void, setValue: (value: boolean) => void] => {
   const [state, setState] = useState<boolean>(initialValue);
 
   // Toggles the current state

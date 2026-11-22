@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useSessionStorage } from "./use-session-storage";
 
 describe("useSessionStorage", () => {
@@ -52,5 +53,9 @@ describe("useSessionStorage", () => {
       useSessionStorage("k", () => ["a", "b"]),
     );
     expect(result.current[0]).toEqual(["a", "b"]);
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useSessionStorage", "key", 1);
   });
 });
