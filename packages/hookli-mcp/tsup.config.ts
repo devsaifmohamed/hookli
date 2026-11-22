@@ -1,4 +1,10 @@
+import fs from "node:fs";
 import { defineConfig } from "tsup";
+
+// The server bundles the library's catalog, which the library build writes.
+if (!fs.existsSync(new URL("../hookli/generated/catalog.json", import.meta.url))) {
+  throw new Error("hookli-mcp: ../hookli/generated/catalog.json is missing. Run `pnpm --filter hookli build` first.");
+}
 
 export default defineConfig({
   entry: {

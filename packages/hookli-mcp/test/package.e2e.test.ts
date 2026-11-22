@@ -5,7 +5,7 @@ import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import meta from "../src/data/meta.json";
+import { CATALOG_META as meta } from "../src/catalog.js";
 
 /* What a user gets from `npx -y hookli-mcp`: pack the built package exactly as
    `npm publish` would, install the tarball into an empty project with npm (so

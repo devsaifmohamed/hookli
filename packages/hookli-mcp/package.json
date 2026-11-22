@@ -12,8 +12,6 @@
     "dist"
   ],
   "scripts": {
-    "gen:catalog": "node ../../scripts/build-mcp-catalog.mjs",
-    "prebuild": "node ../../scripts/build-mcp-catalog.mjs",
     "build": "tsup",
     "dev": "tsup --watch",
     "start": "node dist/cli.js",

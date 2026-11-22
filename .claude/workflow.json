@@ -19,7 +19,7 @@
     {
       "name": "mcp",
       "kind": "cli",
-      "paths": ["packages/hookli-mcp/**", "scripts/build-mcp-catalog.mjs"],
+      "paths": ["packages/hookli-mcp/**"],
       "stack": "TypeScript MCP stdio server (hookli-mcp bin), catalog generated from the library + docs, tsup, vitest",
       "conventions": ["CLAUDE.md"],
       "verify": { "cwd": "packages/hookli-mcp", "commands": ["pnpm build", "pnpm typecheck", "pnpm test", "pnpm test:package"] },
