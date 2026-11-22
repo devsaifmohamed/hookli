@@ -432,7 +432,15 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
     const specifier = exported.declarations?.find(ts.isExportSpecifier);
     const node = docNode ?? (specifier ? specifier.parent.parent : undefined);
     const deprecated = node ? tagsOf(readDoc(node), "deprecated")[0] : undefined;
-    hook?.aliases.push({ name: exported.name, slug: kebab(exported.name), deprecated: deprecated ? flat(deprecated.text) : null });
+    const slug = kebab(exported.name);
+    if (!hook) report(slug, "aliases", `${exported.name} re-exports ${target.name}, which is not an exported hook`);
+    hook?.aliases.push({ name: exported.name, slug, deprecated: deprecated ? flat(deprecated.text) : null });
+  }
+
+  // An alias slug becomes a permanent docs redirect, so it must not take a hook's or a removed hook's URL.
+  for (const alias of hooks.flatMap((h) => h.aliases)) {
+    if (hooks.some((h) => h.slug === alias.slug)) report(alias.slug, "aliases", `${alias.name} has the same URL as the hook ${alias.slug}`);
+    if (removed.some((r) => r.slug === alias.slug)) report(alias.slug, "aliases", `${alias.name} has the same URL as the removed hook ${alias.slug}`);
   }
 
   // X1: a hook folder that the barrel does not export.

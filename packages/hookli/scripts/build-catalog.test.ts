@@ -446,6 +446,17 @@ describe("build-catalog --strict: each mistake fails, naming the hook and the fi
     expect(strict({ hooks: { "use-thing": untyped } })).toContain("use-thing: returns: no return type: annotate it so the return can be documented");
   });
 
+  it("an alias of something that is not an exported hook, and an alias on a removed hook's URL", () => {
+    const helper = completeHook("useThing") + "export const helper = () => 1;\n";
+    const output = strict({
+      hooks: { "use-thing": helper },
+      folderIndex: { "use-thing": 'export * from "./use-thing";\nexport { helper as useHelper } from "./use-thing";\nexport { useThing as useOld } from "./use-thing";\n' },
+      removed: [{ slug: "use-old", name: "useOld", removedIn: "1.0.0", replacement: "useThing", note: "" }],
+    });
+    expect(output).toContain("use-helper: aliases: useHelper re-exports helper, which is not an exported hook");
+    expect(output).toContain("use-old: aliases: useOld has the same URL as the removed hook use-old");
+  });
+
   it("X12: a hook that imports a sibling which is no longer an exported hook", () => {
     const body = "const [value] = useState(useGone(initial));\n  return value;";
     const source = completeHook("useThing", { body }).replace('import { useState } from "react";', 'import { useState } from "react";\nimport { useGone } from "../use-gone";');
