@@ -9,10 +9,10 @@ import {
   ChevronRightIcon,
   ExternalLinkIcon,
 } from "@/components/icons";
+import { DEMOS } from "@/components/demos";
 import { OnThisPage, type TocItem } from "@/components/on-this-page";
-import { getHookDoc } from "@/lib/hook-docs";
+import { getHookDoc, getHookSource, getPlaygroundSources, hookSourceUrl } from "@/lib/hook-catalog";
 import { hookDocUrl, hookToMarkdown } from "@/lib/hook-markdown";
-import { hookSourceUrl, getHookSource } from "@/lib/hook-sources";
 import {
   CATEGORY_LABELS,
   HOOKS,
@@ -32,6 +32,7 @@ import { linkifyWebApis } from "@/lib/web-apis";
 export function HookPage({ hook }: { hook: HookEntry }) {
   const doc = getHookDoc(hook.slug);
   const source = getHookSource(hook.slug);
+  const Demo = DEMOS[hook.slug];
 
   const index = HOOKS.findIndex((entry) => entry.slug === hook.slug);
   const prev = index > 0 ? HOOKS[index - 1] : undefined;
@@ -118,13 +119,18 @@ export function HookPage({ hook }: { hook: HookEntry }) {
           <p className="mt-3 text-base sm:text-lg leading-relaxed text-gray-body">
             {linkifyWebApis(hook.description)}
           </p>
+          {doc?.details.split("\n\n").map((paragraph) => (
+            <p key={paragraph} className="mt-3 text-sm leading-relaxed text-gray-body">
+              {linkifyWebApis(paragraph)}
+            </p>
+          ))}
         </header>
 
         {/* Action Row — ultra-clean (Copy Import + Copy for AI) */}
         <HookActionBar hook={hook} markdown={hookToMarkdown(hook)} docUrl={hookDocUrl(hook.slug)} />
 
         {/* Interactive Demo & Usage */}
-        {doc && (
+        {doc && Demo && (
           <section id="usage" aria-label="Usage and interactive demo" className="mt-12">
             <div className="flex items-center justify-between">
               <h2 className="scroll-mt-24 text-xl sm:text-2xl font-semibold text-fg">
@@ -133,10 +139,11 @@ export function HookPage({ hook }: { hook: HookEntry }) {
             </div>
             <HookDemo
               className="mt-4"
-              preview={<doc.demo />}
+              preview={<Demo />}
               code={<HighlightedCode code={doc.usage} />}
               hook={hook}
-              doc={doc}
+              usage={doc.usage}
+              sources={getPlaygroundSources(hook.slug)}
             />
             {doc.examples?.map((example) => (
               <div key={example.title} className="mt-8">

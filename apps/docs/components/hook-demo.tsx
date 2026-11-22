@@ -3,9 +3,8 @@
 import { useId, useRef, useState } from "react";
 import { DemoErrorBoundary } from "@/components/demo-error-boundary";
 import { StackBlitzIcon } from "@/components/icons";
-import type { HookDoc } from "@/lib/hook-docs";
 import type { HookEntry } from "@/lib/hooks-registry";
-import { openInStackBlitz, preloadStackBlitz } from "@/lib/stackblitz";
+import { openInStackBlitz, preloadStackBlitz, type PlaygroundSource } from "@/lib/stackblitz";
 
 const TABS = [
   { id: "preview", label: "Preview" },
@@ -23,13 +22,15 @@ export function HookDemo({
   preview,
   code,
   hook,
-  doc,
+  usage,
+  sources,
   className = "",
 }: {
   preview: React.ReactNode;
   code: React.ReactNode;
   hook?: HookEntry;
-  doc?: HookDoc;
+  usage?: string;
+  sources?: readonly PlaygroundSource[];
   className?: string;
 }) {
   const [active, setActive] = useState<TabId>("preview");
@@ -60,10 +61,10 @@ export function HookDemo({
   }
 
   async function handleStackBlitz() {
-    if (!hook || !doc || openingSb) return;
+    if (!hook || !usage || !sources || openingSb) return;
     setOpeningSb(true);
     try {
-      await openInStackBlitz(hook, doc);
+      await openInStackBlitz(hook, usage, sources);
     } catch (err) {
       console.error("Failed to launch StackBlitz playground:", err);
     } finally {
@@ -113,7 +114,7 @@ export function HookDemo({
 
         {/* Right: Open in StackBlitz Action */}
         <div className="flex items-center gap-2">
-          {hook && doc && (
+          {hook && usage && sources && (
             <button
               type="button"
               onClick={handleStackBlitz}
