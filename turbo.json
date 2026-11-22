@@ -15,12 +15,16 @@
       ],
       "outputs": [
         "dist/**",
+        "generated/**",
         "$TURBO_ROOT$/apps/docs/lib/hook-sources.generated.ts",
         "$TURBO_ROOT$/packages/hookli-mcp/src/data/**"
       ]
     },
     "test": {
       "dependsOn": ["^build"]
+    },
+    "hookli-mcp#test": {
+      "dependsOn": ["build"]
     },
     "typecheck": {
       "dependsOn": ["build"]

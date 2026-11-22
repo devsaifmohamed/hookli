@@ -13,7 +13,7 @@
       "paths": ["packages/hookli/**"],
       "stack": "TypeScript React hooks (React 18 + 19), zero deps, tsup CJS+ESM+d.ts, vitest + jsdom",
       "conventions": ["CLAUDE.md", "packages/hookli/CLAUDE.md"],
-      "verify": { "cwd": "packages/hookli", "commands": ["pnpm typecheck", "pnpm test", "pnpm build"] },
+      "verify": { "cwd": "packages/hookli", "commands": ["pnpm typecheck", "pnpm test", "pnpm build", "pnpm examples:check"] },
       "tests": "with-code"
     },
     {
