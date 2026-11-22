@@ -396,6 +396,7 @@ The measured before score is **40.6 / 100**: M1 10.9, M2 9.2, M3 13.3 (8 of 15 c
 | `.gitignore` lines for files that 12 and 13 stop writing | Removed by the PR that removes the writer | 12, 13 |
 | Pre-review: 14 hooks returning a plain value lost their Returns rows (no `@returns` tag, and strict didn't notice) | Strict fails a value return with no `@returns` tag, and a hook with no return type (#18); the tags are restored in the hook PRs from the old docs text; the starter gets a `@returns` placeholder (16/17) | 2, 5–10, 16 |
 | Pre-review: the docs build needs the library build from 3/15, but `vercel.json` landed in 15/17 | `vercel.json` moves to #23 (3/15), the first PR whose docs build reads a file the library build writes | 3, 15 |
+| Pre-review: an alias of a non-hook vanished silently; an alias slug could take a hook's or removed hook's URL; the starter glued its barrel line onto a last line with no newline | Strict reports all three alias cases (#18); the starter adds the missing newline (16/17) | 2, 16 |
 | Open (CEO): 43 demo files say "Mirrors lib/hook-docs.ts" | A comment-only PR over the cap, or wait for the Chakra demo rewrite | — |
 | Open (CEO): many summaries from the old JSDoc are weaker than the old manifest text | Reword chosen summaries (one TSDoc edit each) before the release | — |
 
