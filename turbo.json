@@ -7,16 +7,7 @@
     },
     "hookli#build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/scripts/gen-hook-sources.mjs",
-        "$TURBO_ROOT$/apps/docs/lib/hook-docs.ts"
-      ],
-      "outputs": [
-        "dist/**",
-        "generated/**",
-        "$TURBO_ROOT$/apps/docs/lib/hook-sources.generated.ts"
-      ]
+      "outputs": ["dist/**", "generated/**"]
     },
     "test": {
       "dependsOn": ["^build"]

@@ -1,6 +1,5 @@
 "use client";
 
-import type { HookDoc } from "@/lib/hook-docs";
 import type { HookEntry } from "@/lib/hooks-registry";
 
 /* StackBlitz Project Definition (mirrors @stackblitz/sdk Project type) */
@@ -220,27 +219,8 @@ code {
 /** Where the hook sources live inside the playground (imported as "./hookli"). */
 const LOCAL_LIB = "src/hookli";
 
-/** `useLocalStorage` -> `use-local-storage` (the manifest's slug convention). */
-export function hookNameToSlug(name: string): string {
-  return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-}
-
-/** Hook names a usage snippet imports from "hookli". */
-export function importedHooks(code: string): string[] {
-  const names: string[] = [];
-  for (const m of code.matchAll(/import\s*\{([^}]*)\}\s*from\s*["']hookli["']/g)) {
-    for (const part of m[1].split(",")) {
-      const name = part.replace(/^\s*type\s+/, "").split(/\s+as\s+/)[0].trim();
-      if (/^use[A-Z]/.test(name)) names.push(name);
-    }
-  }
-  return names;
-}
-
-export type SandboxSources = {
-  get: (slug: string) => { path: string; source: string } | undefined;
-  closure: (slugs: readonly string[]) => string[];
-};
+/** A hook source shipped in the playground; the page computes the list on the server. */
+export type PlaygroundSource = { slug: string; source: string };
 
 /**
  * Builds a complete StackBlitz Project definition for any hook. The playground
@@ -250,15 +230,13 @@ export type SandboxSources = {
  */
 export function createStackBlitzProject(
   hook: HookEntry,
-  doc: HookDoc,
-  sources: SandboxSources,
+  usage: string,
+  sources: readonly PlaygroundSource[],
 ): StackBlitzProject {
-  const slugs = sources.closure([hook.slug, ...importedHooks(doc.usage).map(hookNameToSlug)]);
+  const slugs = sources.map((entry) => entry.slug);
   const hookFiles: Record<string, string> = {};
-  for (const slug of slugs) {
-    const entry = sources.get(slug);
-    if (!entry) continue;
-    hookFiles[`${LOCAL_LIB}/${slug}/${slug}.ts`] = entry.source;
+  for (const { slug, source } of sources) {
+    hookFiles[`${LOCAL_LIB}/${slug}/${slug}.ts`] = source;
     hookFiles[`${LOCAL_LIB}/${slug}/index.ts`] = `export * from "./${slug}";\n`;
   }
   hookFiles[`${LOCAL_LIB}/index.ts`] =
@@ -269,7 +247,7 @@ export function createStackBlitzProject(
 
   const appTsx =
     `// ${hook.name}'s real implementation is in ${LOCAL_LIB}/${hook.slug}/${hook.slug}.ts — edit it and the preview updates.\n` +
-    usageToAppTsx(doc.usage).replace(/from\s*["']hookli["']/g, 'from "./hookli"');
+    usageToAppTsx(usage).replace(/from\s*["']hookli["']/g, 'from "./hookli"');
 
   return {
     title: `${hook.name} — hookli playground`,
@@ -289,7 +267,6 @@ export function createStackBlitzProject(
 }
 
 let sdkPromise: Promise<typeof import("@stackblitz/sdk")> | null = null;
-let sourcesPromise: Promise<typeof import("@/lib/hook-sources")> | null = null;
 
 function loadSdk() {
   if (!sdkPromise) {
@@ -302,25 +279,14 @@ function loadSdk() {
   return sdkPromise;
 }
 
-function loadSources() {
-  if (!sourcesPromise) {
-    sourcesPromise = import("@/lib/hook-sources").catch((error) => {
-      sourcesPromise = null;
-      throw error;
-    });
-  }
-  return sourcesPromise;
-}
-
 /**
- * Starts downloading the SDK and hook sources before the click (call on pointer
+ * Starts downloading the SDK before the click (call on pointer
  * enter / focus). Browsers only allow `newWindow` popups for a few seconds after
  * a click, so the click itself must not wait on a slow first download.
  */
 export function preloadStackBlitz(): void {
   // A failed preload is retried on click; don't surface it as an unhandled rejection.
   loadSdk().catch(() => {});
-  loadSources().catch(() => {});
 }
 
 /**
@@ -329,19 +295,13 @@ export function preloadStackBlitz(): void {
  */
 export async function openInStackBlitz(
   hook: HookEntry,
-  doc: HookDoc,
+  usage: string,
+  sources: readonly PlaygroundSource[],
 ): Promise<void> {
-  // Both chunks load on click only: the SDK and the generated hook sources (~140 KB)
-  // never ship in the page's initial JavaScript.
-  const [sdkModule, { getHookSource, getHookSourceClosure }] = await Promise.all([
-    loadSdk(),
-    loadSources(),
-  ]);
+  // The SDK loads on click only, so it never ships in the page's initial JavaScript.
+  const sdkModule = await loadSdk();
   const sdk = sdkModule.default ?? sdkModule;
-  const project = createStackBlitzProject(hook, doc, {
-    get: getHookSource,
-    closure: getHookSourceClosure,
-  });
+  const project = createStackBlitzProject(hook, usage, sources);
 
   sdk.openProject(project, {
     newWindow: true,

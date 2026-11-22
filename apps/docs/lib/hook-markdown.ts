@@ -1,6 +1,5 @@
 import type { ApiRow } from "@/components/api-table";
-import { getHookDoc } from "@/lib/hook-docs";
-import { getHookSource } from "@/lib/hook-sources";
+import { getHookDoc, getHookSource } from "@/lib/hook-catalog";
 import { CATEGORY_LABELS, type HookEntry } from "@/lib/hooks-registry";
 import { SITE_URL } from "@/lib/site";
 
@@ -8,8 +7,8 @@ import { SITE_URL } from "@/lib/site";
    the per-hook /docs/[slug]/llms.txt route, the whole-library llms-full.txt,
    and the "Copy for AI" button all render a hook with THIS function — there is
    exactly one Markdown renderer in the codebase. Data is pulled from the same
-   registry + hook-docs + hook-sources helpers the human pages use, so the
-   Markdown can never drift from what the site shows. */
+   registry + hook-catalog helpers the human pages use, so the Markdown can never
+   drift from what the site shows. */
 
 /* The canonical docs URL for a hook — the same link the Markdown advertises. */
 export function hookDocUrl(slug: string): string {
@@ -49,6 +48,10 @@ export function hookToMarkdown(hook: HookEntry): string {
 
   if (doc && doc.returns.length > 0) {
     sections.push(`## Returns\n\n${rowsToMarkdown(doc.returns)}`);
+  }
+
+  if (doc?.details) {
+    sections.splice(2, 0, doc.details);
   }
 
   if (doc?.typeAliases?.length) {

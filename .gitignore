@@ -35,7 +35,6 @@ apps/*/.next
 packages/*/dist
 # built from the hook sources by each workspace's build/dev/test, never committed
 packages/hookli/generated/
-apps/docs/lib/hook-sources.generated.ts
 **/.turbo
 
 # way-of-working task worktrees

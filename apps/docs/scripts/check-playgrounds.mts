@@ -2,7 +2,8 @@
  * Proves every "Open in StackBlitz" playground works: generates the project for
  * each hook exactly as the docs button does, installs the template's
  * dependencies once, then runs `tsc` and a production `vite build` on every
- * project. Exits non-zero if any playground fails.
+ * project. Exits non-zero if any playground fails, or when a hook has no demo in
+ * components/demos/index.ts (or a demo has no hook).
  *
  *   pnpm --filter hookli-docs run check:playgrounds      (needs `hookli` built)
  *   KEEP=1 ...   keeps the temp folder for inspection
@@ -20,11 +21,25 @@ const load = async (spec: string): Promise<Mod> => {
 };
 
 const { HOOKS } = (await load("@/lib/hooks-registry")) as { HOOKS: Array<{ slug: string; name: string }> };
-const { getHookDoc } = (await load("@/lib/hook-docs")) as { getHookDoc: (slug: string) => unknown };
-const { getHookSource, getHookSourceClosure } = await load("@/lib/hook-sources");
-const { createStackBlitzProject } = (await load("@/lib/stackblitz")) as {
-  createStackBlitzProject: (hook: unknown, doc: unknown, sources: unknown) => { files: Record<string, string> };
+const { getHookDoc, getPlaygroundSources } = (await load("@/lib/hook-catalog")) as {
+  getHookDoc: (slug: string) => { usage: string } | undefined;
+  getPlaygroundSources: (slug: string) => unknown;
 };
+const { DEMOS } = (await load("@/components/demos")) as { DEMOS: Record<string, unknown> };
+const { createStackBlitzProject } = (await load("@/lib/stackblitz")) as {
+  createStackBlitzProject: (hook: unknown, usage: string, sources: unknown) => { files: Record<string, string> };
+};
+
+// Every hook has exactly one demo, and every demo is for a hook (X9, X10).
+const hookSlugs = HOOKS.map((h) => h.slug).sort();
+const demoSlugs = Object.keys(DEMOS).sort();
+const noDemo = hookSlugs.filter((slug) => !DEMOS[slug]);
+const noHook = demoSlugs.filter((slug) => !hookSlugs.includes(slug));
+if (noDemo.length || noHook.length) {
+  if (noDemo.length) console.error(`Hooks with no demo in components/demos/index.ts: ${noDemo.join(", ")}`);
+  if (noHook.length) console.error(`Demos for hooks that don't exist: ${noHook.join(", ")}`);
+  process.exit(1);
+}
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "hookli-playgrounds-"));
 let exitCode = 1;
@@ -39,7 +54,7 @@ try {
       missingDocs.push(hook.slug);
       continue;
     }
-    const project = createStackBlitzProject(hook, doc, { get: getHookSource, closure: getHookSourceClosure });
+    const project = createStackBlitzProject(hook, doc.usage, getPlaygroundSources(hook.slug));
     for (const [file, contents] of Object.entries(project.files)) {
       const dest = path.join(projectsDir, hook.slug, file);
       fs.mkdirSync(path.dirname(dest), { recursive: true });
