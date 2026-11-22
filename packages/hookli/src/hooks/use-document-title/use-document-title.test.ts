@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { useDocumentTitle } from "./use-document-title";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useDocumentTitle", () => {
   afterEach(() => {
@@ -39,5 +40,11 @@ describe("useDocumentTitle", () => {
 
     unmount();
     expect(document.title).toBe("Original");
+  });
+});
+
+describe("useDocumentTitle on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useDocumentTitle", "Title");
   });
 });

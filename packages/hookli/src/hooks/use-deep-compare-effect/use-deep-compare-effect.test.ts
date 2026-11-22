@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useDeepCompareEffect } from "./use-deep-compare-effect";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useDeepCompareEffect", () => {
   it("runs on mount", () => {
@@ -25,5 +26,11 @@ describe("useDeepCompareEffect", () => {
     });
     rerender({ deps: [{ a: 2 }] });
     expect(effect).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("useDeepCompareEffect on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useDeepCompareEffect", () => {}, [{ a: 1 }]);
   });
 });

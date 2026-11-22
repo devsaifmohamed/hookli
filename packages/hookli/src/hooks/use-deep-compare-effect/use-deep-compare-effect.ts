@@ -24,8 +24,31 @@ const deepEqual = (a: unknown, b: unknown): boolean => {
  * instead of reference. Use it when deps are objects/arrays recreated on every
  * render (so a normal `useEffect` would fire every time).
  *
- * @param effect - Imperative effect callback; may return a cleanup function.
- * @param deps - Dependency list, compared deeply.
+ * @category effects
+ * @keywords deep compare, deep equal, object dependencies, array dependencies, effect runs too
+ *   often
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useDeepCompareEffect } from "hookli";
+ *
+ * export function Demo() {
+ *   const [user, setUser] = useState({ name: "Alice", age: 25 });
+ *
+ *   useDeepCompareEffect(() => {
+ *     console.log("Deep effect triggered:", user);
+ *   }, [user]);
+ *
+ *   return (
+ *     <div>
+ *       <p>{user.name} ({user.age})</p>
+ *       <button onClick={() => setUser({ ...user })}>Recreate object reference</button>
+ *       <button onClick={() => setUser({ ...user, age: user.age + 1 })}>Increment age</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useDeepCompareEffect = (
   effect: EffectCallback,

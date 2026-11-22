@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useThrottle } from "./use-throttle";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useThrottle", () => {
   afterEach(() => vi.useRealTimers());
@@ -23,5 +24,11 @@ describe("useThrottle", () => {
       vi.advanceTimersByTime(500);
     });
     expect(result.current).toBe("b");
+  });
+});
+
+describe("useThrottle on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useThrottle", 1, 100);
   });
 });

@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { usePageVisibility } from "./use-page-visibility";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("usePageVisibility", () => {
   afterEach(() => vi.restoreAllMocks());
@@ -17,5 +18,11 @@ describe("usePageVisibility", () => {
       document.dispatchEvent(new Event("visibilitychange"));
     });
     expect(result.current).toBe(false);
+  });
+});
+
+describe("usePageVisibility on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("usePageVisibility");
   });
 });
