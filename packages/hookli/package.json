@@ -11,7 +11,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsup && node ../../scripts/gen-hook-sources.mjs && node ../../scripts/build-mcp-catalog.mjs",
+    "build": "node scripts/build-catalog.mjs --strict && tsup && node ../../scripts/gen-hook-sources.mjs && node ../../scripts/build-mcp-catalog.mjs",
     "prepublishOnly": "pnpm run typecheck && pnpm run test && node scripts/gen-readme.mjs && tsup",
     "test": "vitest run",
     "test:watch": "vitest",
