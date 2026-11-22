@@ -4,11 +4,13 @@
 // catalog is exactly the public API. Signatures and types are the code's own source
 // text with whitespace normalised, never re-printed by TypeScript.
 //
-//   node scripts/build-catalog.mjs               list problems, exit 0 (until every hook is migrated)
+//   node scripts/build-catalog.mjs               list problems, exit 0
 //   node scripts/build-catalog.mjs --strict      exit 1 on any problem
+//   node scripts/build-catalog.mjs --manifest    also write hooks.manifest.json (the public `hookli/manifest`)
+//   node scripts/build-catalog.mjs --readme      also write the README hook index and count, and its repo-root mirror
 //   node scripts/build-catalog.mjs --root <dir>  build another package root (fixture tests)
 //
-// It writes generated/catalog.json only: never hooks.manifest.json or the README.
+// It always writes generated/catalog.json. Every file is written only when its content changed.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -25,6 +27,8 @@ const DEFAULTS_TO = /\s*Defaults to\s+(`[^`]*`|\S+?)\.?(?=\s|$)/;
 
 export const kebab = (name) => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 const flat = (value) => value.replace(/\s+/g, " ").trim();
+// Text the `new:hook` starter writes, which must be replaced before the hook ships.
+const PLACEHOLDER = /\bTODO\b/;
 const readJson = (file, fallback) => (fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : fallback);
 
 /** The library's compiler options (its tsconfig.json), or strict defaults for a root without one. */
@@ -436,6 +440,29 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
     if (!exportedFolders.has(name)) report(name, "barrel", `no hook is exported from src/index.ts (add export * from "./${name}" to src/hooks/index.ts)`);
   }
 
+  // X12: a hook that imports a sibling folder which is no longer an exported hook.
+  for (const hook of hooks) {
+    for (const dep of hook.deps) {
+      if (!hooks.some((h) => h.slug === dep)) report(hook.slug, "deps", `imports ../${dep}, which is not an exported hook`);
+    }
+  }
+
+  // Starter placeholders left in the TSDoc.
+  for (const hook of hooks) {
+    const fields = {
+      summary: hook.summary,
+      details: hook.details,
+      category: hook.category,
+      keywords: hook.keywords.join(", "),
+      usage: hook.usage,
+      parameters: hook.parameters.map((p) => p.description).join(" "),
+      returns: hook.returns.map((r) => r.description).join(" "),
+    };
+    for (const [field, value] of Object.entries(fields)) {
+      if (PLACEHOLDER.test(value ?? "")) report(hook.slug, field, "replace the TODO placeholder from the new:hook starter");
+    }
+  }
+
   // X11: a removed hook that still exists.
   for (const entry of removed) {
     if (hooks.some((h) => h.slug === entry.slug || h.name === entry.name)) {
@@ -451,6 +478,46 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
   return { catalog: { libraryVersion, categories, removed, hooks }, problems };
 }
 
+/** The public `hookli/manifest`: one slim entry per hook, the shape outside users rely on. */
+export function manifestOf(catalog) {
+  const hooks = catalog.hooks.map(({ slug, name, summary, category, signature, keywords }) => ({
+    slug,
+    name,
+    description: summary,
+    category,
+    signature,
+    keywords,
+  }));
+  return { $schema: "hookli hooks manifest", hooks };
+}
+
+/** The README with its hook-count badge and the category-grouped index between the HOOKS markers. */
+export function readmeOf(catalog, readme) {
+  const region = /(<!-- HOOKS:START[\s\S]*?-->)[\s\S]*?(<!-- HOOKS:END -->)/;
+  if (!region.test(readme)) throw new Error("build-catalog: README.md has no HOOKS:START / HOOKS:END markers");
+  const count = catalog.hooks.length;
+  const bullet = (h) => `- **[\`${h.name}\`](https://hookli.vercel.app/docs/${h.slug})** — ${h.summary}`;
+  const grouped = catalog.categories
+    .map(({ id, label }) => {
+      const items = catalog.hooks.filter((h) => h.category === id);
+      return `### ${label} (${items.length})\n\n${items.map(bullet).join("\n")}`;
+    })
+    .join("\n\n");
+  return readme
+    .replace(/badge\/\d+_hooks-/g, `badge/${count}_hooks-`)
+    .replace(/alt="\d+ hooks"/g, `alt="${count} hooks"`)
+    .replace(region, `$1\n\n${grouped}\n\n$2`);
+}
+
+const MIRROR_BANNER = "<!-- GENERATED — do not edit. Source: packages/hookli/README.md (run `pnpm --filter hookli run readme`). -->\n\n";
+
+/** Writes `text` only when it differs, so an unchanged output keeps its mtime. */
+function writeIfChanged(file, text) {
+  if (fs.existsSync(file) && fs.readFileSync(file, "utf8") === text) return;
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, text);
+}
+
 function main(argv) {
   const strict = argv.includes("--strict");
   const rootFlag = argv.indexOf("--root");
@@ -461,8 +528,14 @@ function main(argv) {
   const failed = strict && problems.length > 0;
   if (!failed) {
     const out = path.join(root, "generated", "catalog.json");
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-    fs.writeFileSync(out, `${JSON.stringify(catalog, null, 2)}\n`);
+    writeIfChanged(out, `${JSON.stringify(catalog, null, 2)}\n`);
+    if (argv.includes("--manifest")) writeIfChanged(path.join(root, "hooks.manifest.json"), `${JSON.stringify(manifestOf(catalog), null, 2)}\n`);
+    if (argv.includes("--readme")) {
+      const readme = readmeOf(catalog, fs.readFileSync(path.join(root, "README.md"), "utf8"));
+      writeIfChanged(path.join(root, "README.md"), readme);
+      // The repo page shows the package README. Only the real package has a repo root above it.
+      if (root === PACKAGE_ROOT) writeIfChanged(path.join(root, "..", "..", "README.md"), MIRROR_BANNER + readme);
+    }
     console.log(`build-catalog: ${catalog.hooks.length} hooks -> ${path.relative(process.cwd(), out)} (${Math.round(performance.now() - started)} ms)`);
   }
   if (problems.length) {

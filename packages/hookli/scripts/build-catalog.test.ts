@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
-import { buildCatalog } from "./build-catalog.mjs";
+import { buildCatalog, manifestOf, readmeOf } from "./build-catalog.mjs";
 import { checkExamples } from "./check-examples.mjs";
 
 const PKG = fileURLToPath(new URL("..", import.meta.url));
@@ -438,6 +438,17 @@ describe("build-catalog --strict: each mistake fails, naming the hook and the fi
     expect(output).toContain('use-thing: parameters: @param "bogus" names no parameter');
   });
 
+  it("X12: a hook that imports a sibling which is no longer an exported hook", () => {
+    const body = "const [value] = useState(useGone(initial));\n  return value;";
+    const source = completeHook("useThing", { body }).replace('import { useState } from "react";', 'import { useState } from "react";\nimport { useGone } from "../use-gone";');
+    expect(strict({ hooks: { "use-thing": source } })).toContain("use-thing: deps: imports ../use-gone, which is not an exported hook");
+  });
+
+  it("a TODO placeholder left from the new:hook starter", () => {
+    const output = strict(thing({ tags: ["@category state", "@keywords TODO", "@param initial - TODO: say what it does", "@returns value - y"] }));
+    expect(output).toContain("use-thing: keywords: replace the TODO placeholder from the new:hook starter");
+    expect(output).toContain("use-thing: parameters: replace the TODO placeholder from the new:hook starter");
+  });
 
   it("X11: removed-hooks.json lists a hook that still exists", () => {
     const output = strict({ ...thing({}), removed: [{ slug: "use-thing", name: "useThing", removedIn: null, replacement: null, note: "" }] });
@@ -461,6 +472,56 @@ describe("build-catalog --strict: each mistake fails, naming the hook and the fi
   it("a clean fixture passes --strict", () => {
     const root = makeFixture(thing({}));
     expect(run("build-catalog.mjs", "--strict", "--root", root).status).toBe(0);
+  });
+});
+
+describe("build-catalog --manifest and --readme", () => {
+  const README = "# hookli\n\n![1 hooks](https://img.shields.io/badge/1_hooks-blue)\n\n<!-- HOOKS:START (generated) -->\nold\n<!-- HOOKS:END -->\n\nAfter.\n";
+
+  it("the manifest is the public projection: summary as description, nothing else", () => {
+    const { catalog } = build({ hooks: { "use-thing": completeHook("useThing") } });
+    expect(manifestOf(catalog)).toEqual({
+      $schema: "hookli hooks manifest",
+      hooks: [
+        {
+          slug: "use-thing",
+          name: "useThing",
+          description: "Keeps a number for useThing.",
+          category: "state",
+          signature: "useThing(initial: number): number",
+          keywords: ["useThing", "thing"],
+        },
+      ],
+    });
+  });
+
+  it("the README index is grouped by category, in categories.json order, with the count", () => {
+    const { catalog } = build({
+      hooks: { "use-thing": completeHook("useThing"), "use-other": completeHook("useOther", { tags: ["@category data", "@keywords b"] }) },
+      categories: [{ id: "data", label: "Data" }, { id: "state", label: "State" }],
+    });
+    expect(readmeOf(catalog, README)).toBe(
+      "# hookli\n\n![1 hooks](https://img.shields.io/badge/2_hooks-blue)\n\n<!-- HOOKS:START (generated) -->\n\n" +
+        "### Data (1)\n\n- **[`useOther`](https://hookli.vercel.app/docs/use-other)** — Keeps a number for useOther.\n\n" +
+        "### State (1)\n\n- **[`useThing`](https://hookli.vercel.app/docs/use-thing)** — Keeps a number for useThing.\n\n" +
+        "<!-- HOOKS:END -->\n\nAfter.\n",
+    );
+  });
+
+  it("fails when the README has no HOOKS markers", () => {
+    const { catalog } = build({ hooks: { "use-thing": completeHook("useThing") } });
+    expect(() => readmeOf(catalog, "# hookli\n")).toThrow("HOOKS:START / HOOKS:END");
+  });
+
+  it("writes hooks.manifest.json and the README only when asked", () => {
+    const root = makeFixture({ hooks: { "use-thing": completeHook("useThing") } });
+    fs.writeFileSync(path.join(root, "README.md"), README);
+    expect(run("build-catalog.mjs", "--strict", "--root", root).status).toBe(0);
+    expect(fs.existsSync(path.join(root, "hooks.manifest.json"))).toBe(false);
+    expect(fs.readFileSync(path.join(root, "README.md"), "utf8")).toBe(README);
+    expect(run("build-catalog.mjs", "--strict", "--manifest", "--readme", "--root", root).status).toBe(0);
+    expect(JSON.parse(fs.readFileSync(path.join(root, "hooks.manifest.json"), "utf8")).hooks[0].name).toBe("useThing");
+    expect(fs.readFileSync(path.join(root, "README.md"), "utf8")).toContain("useThing`](https://hookli.vercel.app/docs/use-thing)");
   });
 });
 
