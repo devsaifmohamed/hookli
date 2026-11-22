@@ -11,12 +11,13 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "node scripts/build-catalog.mjs --strict && tsup",
-    "prepublishOnly": "pnpm run typecheck && pnpm run test && node scripts/gen-readme.mjs && tsup",
+    "build": "node scripts/build-catalog.mjs --strict --manifest && tsup",
+    "prepublishOnly": "pnpm run build && pnpm run typecheck && pnpm run test && pnpm run readme && pnpm run test:package",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "gen:manifest": "node scripts/gen-readme.mjs",
+    "readme": "node scripts/build-catalog.mjs --strict --readme",
+    "test:package": "node scripts/check-package.mjs",
     "build:catalog": "node scripts/build-catalog.mjs",
     "examples:check": "node scripts/build-catalog.mjs && node scripts/check-examples.mjs"
   },
