@@ -1,32 +1,25 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/**
- * Options accepted by {@link useIntersectionObserver}.
- */
 export interface UseIntersectionObserverOptions {
-  /** One or more thresholds at which to fire the callback. */
+  /** One or more visibility ratios at which to fire. Defaults to `0`. */
   threshold?: number | number[];
-  /** The element used as the viewport. Defaults to the browser viewport. */
+  /** `null` is the browser viewport. Defaults to `null`. */
   root?: Element | Document | null;
-  /** Margin around the root, in CSS-margin syntax. */
+  /**
+   * Margin around the root, in CSS-margin syntax — grows or shrinks the trigger area. Defaults to
+   * `"0%"`.
+   */
   rootMargin?: string;
-  /** Once the target is visible, stop updating and keep the visible state. */
+  /** Once the target is visible, stop observing and keep the visible state. Defaults to `false`. */
   freezeOnceVisible?: boolean;
-  /** Initial `isIntersecting` value used before the observer first reports. */
+  /** isIntersecting value used before the observer first reports. Defaults to `false`. */
   initialIsIntersecting?: boolean;
-  /** Called with the latest entry whenever intersection changes. */
   onChange?: (isIntersecting: boolean, entry: IntersectionObserverEntry) => void;
 }
 
-/**
- * The value returned by {@link useIntersectionObserver}.
- */
 export interface UseIntersectionObserverReturn {
-  /** Ref callback to attach to the element you want to observe. */
   ref: (node: Element | null) => void;
-  /** Whether the observed element is currently intersecting the root. */
   isIntersecting: boolean;
-  /** The most recent observer entry, or `null` before the first report. */
   entry: IntersectionObserverEntry | null;
 }
 
@@ -38,8 +31,27 @@ export interface UseIntersectionObserverReturn {
  * hook is SSR-safe and leaks nothing. When `freezeOnceVisible` is set the hook
  * stops observing after the first intersection and retains the visible state.
  *
- * @param options - Observer thresholds, root, and behaviour flags.
- * @returns A `ref` callback plus the current `isIntersecting` flag and `entry`.
+ * @category dom
+ * @keywords intersection observer, in view, visible in viewport, lazy load, scroll into view, on
+ *   screen
+ * @param options
+ *
+ * @example Usage
+ * ```tsx
+ * import { useIntersectionObserver } from "hookli";
+ *
+ * export function Demo() {
+ *   const { ref, isIntersecting } = useIntersectionObserver({
+ *     threshold: 0.5,
+ *   });
+ *
+ *   return (
+ *     <div ref={ref}>
+ *       {isIntersecting ? "In view" : "Scroll me into view"}
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useIntersectionObserver = ({
   threshold = 0,

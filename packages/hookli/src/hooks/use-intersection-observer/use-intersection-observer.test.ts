@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useIntersectionObserver } from "./use-intersection-observer";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 type Cb = (entries: Partial<IntersectionObserverEntry>[]) => void;
 
@@ -106,5 +107,11 @@ describe("useIntersectionObserver", () => {
     disconnect.mockClear();
     unmount();
     expect(disconnect).toHaveBeenCalled();
+  });
+});
+
+describe("useIntersectionObserver on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useIntersectionObserver");
   });
 });

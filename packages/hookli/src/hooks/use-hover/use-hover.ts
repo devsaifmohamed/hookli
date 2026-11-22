@@ -10,8 +10,55 @@ import { useEventListener } from "../use-event-listener";
  * follows an element that a child component mounts). The subscription lives
  * inside an effect so the hook is SSR-safe.
  *
- * @param elementRef - A ref to the element, or the element itself (`null` until mounted).
- * @returns `true` while the pointer is over the element, otherwise `false`.
+ * @category dom
+ * @keywords hover, mouse enter, mouse leave, is hovered, hover state
+ * @returns isHovered - False on the server and until the first mouseenter.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRef } from "react";
+ * import { useHover } from "hookli";
+ *
+ * export function Demo() {
+ *   const boxRef = useRef<HTMLDivElement>(null);
+ *   const isHovered = useHover(boxRef);
+ *
+ *   return (
+ *     <div ref={boxRef}>
+ *       {isHovered ? "Pointer is over me" : "Hover this panel"}
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @example Element mounted by a child component
+ * A `useRef` cannot tell the hook when a child component shows its element. Keep the element in
+ * state with `ref={setEl}` and pass it instead: the hook follows it wherever it is mounted.
+ * ```tsx
+ * import { useState } from "react";
+ * import { useHover } from "hookli";
+ *
+ * function Card({ onCard }: { onCard: (el: HTMLDivElement | null) => void }) {
+ *   const [shown, setShown] = useState(false);
+ *   return (
+ *     <>
+ *       <button onClick={() => setShown(true)}>Show card</button>
+ *       {shown && <div ref={onCard}>Hover me</div>}
+ *     </>
+ *   );
+ * }
+ *
+ * export function Page() {
+ *   const [card, setCard] = useState<HTMLDivElement | null>(null);
+ *   const isHovered = useHover(card);
+ *   return (
+ *     <>
+ *       <Card onCard={setCard} />
+ *       <p>{isHovered ? "Hovering the card" : "Not hovering"}</p>
+ *     </>
+ *   );
+ * }
+ * ```
  */
 export const useHover = <T extends HTMLElement = HTMLElement>(
   elementRef: RefObject<T | null> | T | null,

@@ -3,13 +3,13 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
 const IS_SERVER = typeof window === "undefined";
 
-/**
- * Options accepted by {@link useMediaQuery}.
- */
 export interface UseMediaQueryOptions {
   /** Value returned on the server and before hydration. Defaults to `false`. */
   defaultValue?: boolean;
-  /** Read the real match synchronously on mount. Defaults to `true`. */
+  /**
+   * Read the real match synchronously on mount. Set false to always start from defaultValue and
+   * avoid a hydration mismatch. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
@@ -21,9 +21,21 @@ export interface UseMediaQueryOptions {
  * mount. The `change` listener is attached inside a layout effect and removed
  * on cleanup.
  *
- * @param query - The media query string, e.g. `"(min-width: 768px)"`.
- * @param options - Optional server default and hydration flag.
- * @returns `true` when the query matches, otherwise `false`.
+ * @category dom
+ * @keywords media query, matchMedia, breakpoint, responsive, mobile, screen size, is mobile
+ * @returns matches - Whether the query currently matches. Re-renders on every matchMedia change
+ *   event, and starts from defaultValue on the server.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useMediaQuery } from "hookli";
+ *
+ * export function Demo() {
+ *   const isWide = useMediaQuery("(min-width: 768px)");
+ *
+ *   return <p>{isWide ? "Desktop layout" : "Mobile layout"}</p>;
+ * }
+ * ```
  */
 export function useMediaQuery(
   query: string,

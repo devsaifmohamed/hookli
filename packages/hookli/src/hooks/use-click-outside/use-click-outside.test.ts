@@ -2,6 +2,7 @@ import { fireEvent, renderHook } from "@testing-library/react";
 import type { RefObject } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { useClickOutside } from "./use-click-outside";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useClickOutside", () => {
   it("fires only when the click is outside the ref", () => {
@@ -19,5 +20,11 @@ describe("useClickOutside", () => {
     expect(cb).toHaveBeenCalledTimes(1);
 
     document.body.removeChild(inside);
+  });
+});
+
+describe("useClickOutside on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useClickOutside", { current: null }, () => {});
   });
 });

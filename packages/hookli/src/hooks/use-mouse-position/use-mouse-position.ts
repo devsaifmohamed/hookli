@@ -5,6 +5,38 @@ import { RefObject, useEffect, useRef, useState } from "react";
   y: number | null;
 }
 
+/**
+ * Cursor coordinates within an element.
+ *
+ * @category dom
+ * @keywords mouse position, cursor position, mouse coordinates, pointer x y
+ * @returns x - Cursor X relative to the element's left edge; null until the first mousemove.
+ *   Updates on every window mousemove, so it can go negative or exceed the element's width.
+ * @returns y - Cursor Y relative to the element's top edge; null until the first mousemove.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRef } from "react";
+ * import { useMousePosition } from "hookli";
+ *
+ * export function Demo() {
+ *   const panelRef = useRef<HTMLDivElement>(null);
+ *   const { x, y } = useMousePosition(panelRef);
+ *
+ *   return (
+ *     <div ref={panelRef} style={{ height: 160 }}>
+ *       {x === null || y === null ? (
+ *         <p>Move your cursor</p>
+ *       ) : (
+ *         <p>
+ *           {Math.round(x)} × {Math.round(y)}
+ *         </p>
+ *       )}
+ *     </div>
+ *   );
+ * }
+ * ```
+ */
 export const useMousePosition = <T extends HTMLElement>(
   ref: React.Ref<T>
 ): MousePosition => {

@@ -2,6 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { useEventListener } from "./use-event-listener";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useEventListener", () => {
   it("listens on window by default", () => {
@@ -48,5 +49,11 @@ describe("useEventListener", () => {
     unmount();
     window.dispatchEvent(new Event("resize"));
     expect(handler).not.toHaveBeenCalled();
+  });
+});
+
+describe("useEventListener on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useEventListener", "click", () => {}, null);
   });
 });

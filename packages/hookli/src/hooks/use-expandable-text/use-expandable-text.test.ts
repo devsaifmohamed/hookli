@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useExpandableText } from "./use-expandable-text";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 const LONG = "The quick brown fox jumps over the lazy dog again and again";
 
@@ -74,4 +75,10 @@ describe("useExpandableText", () => {
   // NOTE: line-based truncation detection relies on real layout (scrollHeight /
   // getComputedStyle line-height), which jsdom does not compute — so isTruncated
   // via `maxLines` is exercised in the browser demo, not here.
+});
+
+describe("useExpandableText on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useExpandableText", "Some long text");
+  });
 });

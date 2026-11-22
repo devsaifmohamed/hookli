@@ -4,11 +4,11 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
 const IS_SERVER = typeof window === "undefined";
 
-/**
- * Options accepted by {@link useScreen}.
- */
 export interface UseScreenOptions {
-  /** Read the real screen synchronously on mount. Defaults to `true`. */
+  /**
+   * Read the real screen synchronously on mount. Set false to start as null and populate after
+   * hydration. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
@@ -19,8 +19,21 @@ export interface UseScreenOptions {
  * starts as `null` and populates after mount. The `resize` listener is attached
  * via {@link useEventListener} and removed on cleanup.
  *
- * @param options - Optional hydration flag.
- * @returns The current `Screen`, or `null` before hydration / on the server.
+ * @category dom
+ * @keywords screen, window.screen, screen resolution, display size, orientation
+ * @returns screen - The current window.screen (width, height, availWidth, colorDepth,
+ *   orientation…), refreshed on every resize. null on the server and until hydration.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useScreen } from "hookli";
+ *
+ * export function Demo() {
+ *   const screen = useScreen();
+ *
+ *   return <p>Screen: {screen ? `${screen.width}×${screen.height}` : "…"}</p>;
+ * }
+ * ```
  */
 export function useScreen(options: UseScreenOptions = {}): Screen | null {
   const { initializeWithValue = true } = options;

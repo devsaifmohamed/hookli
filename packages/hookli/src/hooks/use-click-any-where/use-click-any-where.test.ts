@@ -2,6 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { useClickAnyWhere } from "./use-click-any-where";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useClickAnyWhere", () => {
   it("fires on a document-wide click", () => {
@@ -28,5 +29,11 @@ describe("useClickAnyWhere", () => {
     unmount();
     window.dispatchEvent(new MouseEvent("click"));
     expect(handler).not.toHaveBeenCalled();
+  });
+});
+
+describe("useClickAnyWhere on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useClickAnyWhere", () => {});
   });
 });

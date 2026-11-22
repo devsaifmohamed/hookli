@@ -1,27 +1,21 @@
 import { useCallback, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
-/**
- * Options accepted by {@link useScrollLock}.
- */
 export interface UseScrollLockOptions {
-  /** Lock scrolling automatically on mount. Defaults to `true`. */
+  /** Lock automatically on mount and restore on unmount. Defaults to `true`. */
   autoLock?: boolean;
-  /** Element (or CSS selector) whose scroll to lock. Defaults to `<body>`. */
+  /** Element or CSS selector. Defaults to `<body>`. */
   lockTarget?: HTMLElement | string;
-  /** Compensate for the removed scrollbar with padding. Defaults to `true`. */
+  /**
+   * Compensate for the removed scrollbar with padding so the layout does not shift. Defaults to
+   * `true`.
+   */
   widthReflow?: boolean;
 }
 
-/**
- * The value returned by {@link useScrollLock}.
- */
 export interface UseScrollLockReturn {
-  /** Whether the target's scroll is currently locked. */
   isLocked: boolean;
-  /** Lock the target's scroll. */
   lock: () => void;
-  /** Restore the target's original scroll behaviour. */
   unlock: () => void;
 }
 
@@ -38,8 +32,25 @@ interface OriginalStyle {
  * DOM access is deferred to effects/callbacks, so the hook is SSR-safe, and the
  * original styles are restored on unmount if still locked.
  *
- * @param options - Auto-lock, the lock target, and scrollbar compensation.
- * @returns The current `isLocked` flag plus `lock` and `unlock`.
+ * @category dom
+ * @keywords scroll lock, disable scroll, prevent scrolling, body overflow hidden, modal scroll,
+ *   lock page
+ *
+ * @example Usage
+ * ```tsx
+ * import { useScrollLock } from "hookli";
+ *
+ * export function Modal({ onClose }: { onClose: () => void }) {
+ *   // Locks <body> scroll on mount, restores it on unmount.
+ *   useScrollLock();
+ *
+ *   return (
+ *     <div role="dialog" onClick={onClose}>
+ *       Scrolling behind this modal is frozen.
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useScrollLock = (
   options: UseScrollLockOptions = {},
