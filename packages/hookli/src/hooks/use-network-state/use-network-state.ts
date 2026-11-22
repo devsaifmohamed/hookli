@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 
-/**
- * The network snapshot returned by {@link useNetworkState}. Connection details
- * come from the Network Information API and are `undefined` where unsupported.
- */
 export interface NetworkState {
-  /** Whether the browser is online (`navigator.onLine`). */
   online: boolean;
-  /** Effective connection type, e.g. `"4g"` (if supported). */
+  /** Effective connection type (e.g. '4g'). */
   effectiveType?: string;
-  /** Downlink speed estimate in Mbps (if supported). */
+  /** Estimated bandwidth in megabits per second. */
   downlink?: number;
-  /** Round-trip time estimate in ms (if supported). */
+  /** Estimated round-trip time in milliseconds. */
   rtt?: number;
-  /** Whether the user requested reduced data usage (if supported). */
+  /** Whether user enabled data-saving mode. */
   saveData?: boolean;
 }
 
@@ -54,7 +49,25 @@ const read = (): NetworkState => {
  * where the Network Information API is available. Listeners attach in an effect,
  * so it is SSR-safe (returns `{ online: true }` on the server).
  *
- * @returns The current {@link NetworkState}.
+ * @category data
+ * @keywords online, offline, network status, internet connection, connection type, navigator.onLine
+ *
+ * @example Usage
+ * ```tsx
+ * import { useNetworkState } from "hookli";
+ *
+ * export function Demo() {
+ *   const { online, effectiveType, downlink } = useNetworkState();
+ *
+ *   return (
+ *     <div>
+ *       <p>Status: {online ? "Online" : "Offline"}</p>
+ *       <p>Effective Type: {effectiveType ?? "unknown"}</p>
+ *       <p>Downlink: {downlink ?? 0} Mbps</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useNetworkState = (): NetworkState => {
   const [state, setState] = useState<NetworkState>(() =>

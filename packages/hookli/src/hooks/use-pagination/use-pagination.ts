@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
 
-/** Options for {@link usePagination}. */
 export interface UsePaginationOptions {
   /** Total number of items. Defaults to `0`. */
   total?: number;
@@ -10,29 +9,19 @@ export interface UsePaginationOptions {
   initialPage?: number;
 }
 
-/** The value returned by {@link usePagination}. */
 export interface UsePaginationReturn {
-  /** Current page (1-indexed). */
+  /** Current page number (1-indexed). */
   page: number;
-  /** Items per page. */
   pageSize: number;
-  /** Total number of pages (always ≥ 1). */
   totalPages: number;
-  /** Jump to a page (clamped to `[1, totalPages]`). */
   setPage: (page: number) => void;
-  /** Go to the next page (clamped). */
   next: () => void;
-  /** Go to the previous page (clamped). */
   prev: () => void;
-  /** Jump to the first page. */
   first: () => void;
-  /** Jump to the last page. */
   last: () => void;
-  /** Whether a previous page exists. */
   canPrev: boolean;
-  /** Whether a next page exists. */
   canNext: boolean;
-  /** Zero-based item index range for the current page: `[start, end)`. */
+  /** Zero-based item indices for the current page. */
   range: { start: number; end: number };
 }
 
@@ -43,8 +32,29 @@ const clamp = (value: number, min: number, max: number): number =>
  * Manages 1-indexed pagination state — page, page size, total pages, navigation
  * helpers, and the current item `range`. Pure state math; no data fetching.
  *
- * @param options - `{ total, pageSize, initialPage }`.
- * @returns Pagination state and navigation helpers.
+ * @category data
+ * @keywords pagination, pages, page number, page size, next page, offset limit, table paging
+ *
+ * @example Usage
+ * ```tsx
+ * import { usePagination } from "hookli";
+ *
+ * export function Demo() {
+ *   const { page, totalPages, next, prev, canNext, canPrev } = usePagination({
+ *     total: 100,
+ *     pageSize: 10,
+ *     initialPage: 1,
+ *   });
+ *
+ *   return (
+ *     <div>
+ *       <p>Page {page} of {totalPages}</p>
+ *       <button disabled={!canPrev} onClick={prev}>Prev</button>
+ *       <button disabled={!canNext} onClick={next}>Next</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const usePagination = (
   options: UsePaginationOptions = {},

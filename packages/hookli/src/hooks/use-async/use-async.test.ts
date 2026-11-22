@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useAsync } from "./use-async";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useAsync", () => {
   it("runs on mount and sets the resolved value", async () => {
@@ -28,5 +29,11 @@ describe("useAsync", () => {
       await result.current.execute();
     });
     expect(result.current.value).toBe(1);
+  });
+});
+
+describe("useAsync on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useAsync", async () => {}, false);
   });
 });

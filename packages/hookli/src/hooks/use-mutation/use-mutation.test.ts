@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useMutation } from "./use-mutation";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useMutation", () => {
   it("starts idle", () => {
@@ -41,5 +42,11 @@ describe("useMutation", () => {
     act(() => result.current.reset());
     expect(result.current.status).toBe("idle");
     expect(result.current.data).toBeNull();
+  });
+});
+
+describe("useMutation on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useMutation", async () => {});
   });
 });

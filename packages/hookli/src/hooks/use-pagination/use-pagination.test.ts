@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { usePagination } from "./use-pagination";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("usePagination", () => {
   it("computes total pages and the current range", () => {
@@ -33,5 +34,11 @@ describe("usePagination", () => {
   it("always has at least one page", () => {
     const { result } = renderHook(() => usePagination());
     expect(result.current.totalPages).toBe(1);
+  });
+});
+
+describe("usePagination on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("usePagination");
   });
 });
