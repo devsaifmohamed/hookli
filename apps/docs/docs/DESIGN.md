@@ -149,7 +149,7 @@ Modeled on usehooks-ts's progressive disclosure + Mantine's demo-first ordering:
 Right-side table of contents: added in T16 (`components/on-this-page.tsx`) — an "On this
 page" scroll-spy rail (Demo / Usage / API / Hook), hidden below `xl`, with a T12 support
 slot beneath it. Every hook page also embeds its implementation source (**Hook** section,
-`lib/hook-sources.ts`) with a view-on-GitHub link, per the usehooks-ts anatomy parity in T16.
+`lib/hook-catalog.ts`) with a view-on-GitHub link, per the usehooks-ts anatomy parity in T16.
 
 ---
 

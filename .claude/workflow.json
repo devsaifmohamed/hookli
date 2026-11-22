@@ -28,7 +28,7 @@
     {
       "name": "docs",
       "kind": "frontend",
-      "paths": ["apps/docs/**", "scripts/gen-hook-sources.mjs"],
+      "paths": ["apps/docs/**"],
       "stack": "Next.js App Router + Fumadocs, Tailwind tokens, Geist / JetBrains Mono, deployed on Vercel",
       "conventions": ["CLAUDE.md", "apps/docs/CLAUDE.md", "apps/docs/AGENTS.md"],
       "verify": { "cwd": "apps/docs", "commands": ["pnpm lint", "pnpm typecheck", "pnpm build", "pnpm check:playgrounds"] },
@@ -39,8 +39,8 @@
     "Releases are human-gated: never npm publish, npm version or push a tag. The owner publishes with npm publish --otp=<code>.",
     "Never push to main or deploy from an agent loop. A push to main deploys the docs to Vercel.",
     "No Claude attribution in commits or PRs: no Co-Authored-By trailers, no Claude Code footer, no session links.",
-    "Run pnpm --filter hookli run gen:manifest and commit the README it writes (CI fails when stale). The MCP catalog and the docs' hook sources are built at build time, never committed.",
-    "Shared facts (hook list, count, descriptions, version) come from packages/hookli/hooks.manifest.json, never hand-maintained copies.",
+    "Run pnpm readme and commit the README it writes (CI fails when stale). The catalog, the manifest and everything the docs and MCP read are built at build time, never committed.",
+    "Shared facts (hook list, count, descriptions, version) come from each hook's TSDoc via the catalog the library build writes, never hand-maintained copies. Start a hook with pnpm new:hook use-x.",
     "A library release bumps packages/hookli version + CHANGELOG.md; an MCP release bumps packages/hookli-mcp. Tags: vX.Y.Z and mcp-vX.Y.Z."
   ]
 }

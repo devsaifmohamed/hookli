@@ -14,10 +14,9 @@ Adds documentation for several new hooks in a single commit, following the same 
 
 ## Common Files
 
-- `components/demos/{hook-name}-demo.tsx`
-- `lib/hook-docs.ts`
-- `lib/hook-sources.ts`
-- `lib/hooks-registry.ts`
+- `packages/hookli/src/hooks/{hook-name}/{hook-name}.ts` (its TSDoc is the page content)
+- `apps/docs/components/demos/{hook-name}-demo.tsx`
+- `apps/docs/components/demos/index.ts`
 
 ## Suggested Sequence
 
@@ -28,10 +27,8 @@ Adds documentation for several new hooks in a single commit, following the same 
 
 ## Typical Commit Signals
 
-- For each hook: create demo component in components/demos/{hook-name}-demo.tsx
-- For each hook: add entry to lib/hook-docs.ts
-- For each hook: add source to lib/hook-sources.ts
-- For each hook: add to lib/hooks-registry.ts
+- For each hook: `pnpm new:hook {hook-name}` (writes the hook, test, demo and map lines)
+- For each hook: replace every TODO in its TSDoc and write the demo
 
 ## Notes
 

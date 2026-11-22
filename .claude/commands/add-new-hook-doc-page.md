@@ -14,10 +14,9 @@ Adds documentation for a new React hook, including interactive demo, registry en
 
 ## Common Files
 
-- `components/demos/{hook-name}-demo.tsx`
-- `lib/hook-docs.ts`
-- `lib/hook-sources.ts`
-- `lib/hooks-registry.ts`
+- `packages/hookli/src/hooks/{hook-name}/{hook-name}.ts` (its TSDoc is the page content)
+- `apps/docs/components/demos/{hook-name}-demo.tsx`
+- `apps/docs/components/demos/index.ts`
 
 ## Suggested Sequence
 
@@ -28,10 +27,8 @@ Adds documentation for a new React hook, including interactive demo, registry en
 
 ## Typical Commit Signals
 
-- Create demo component in components/demos/{hook-name}-demo.tsx
-- Add hook entry to lib/hook-docs.ts
-- Add hook source to lib/hook-sources.ts
-- Add hook to lib/hooks-registry.ts
+- Start the hook with `pnpm new:hook {hook-name}` (writes the hook, test, demo and map lines)
+- Replace every TODO in the hook's TSDoc and write the demo
 
 ## Notes
 

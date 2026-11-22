@@ -58,7 +58,8 @@ Each workspace owns its conventions — **read the workspace `CLAUDE.md` before 
   only), token-only styling, a11y.
 
 Never let the two drift: shared facts (hook list, count, descriptions, version) come from the
-**library manifest**, not hand-maintained copies. See `packages/hookli/CLAUDE.md`.
+**hook's own TSDoc** (the catalog the library build writes), not hand-maintained copies. See
+`packages/hookli/CLAUDE.md` and the "TSDoc format" section of `CONTRIBUTING.md`.
 
 ## Releasing (human-gated — do NOT automate)
 

@@ -18,6 +18,7 @@
     "typecheck": "tsc --noEmit",
     "readme": "node scripts/build-catalog.mjs --strict --readme",
     "test:package": "node scripts/check-package.mjs",
+    "new:hook": "node scripts/new-hook.mjs",
     "build:catalog": "node scripts/build-catalog.mjs",
     "examples:check": "node scripts/build-catalog.mjs && node scripts/check-examples.mjs"
   },
