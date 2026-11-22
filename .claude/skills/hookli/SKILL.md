@@ -56,14 +56,12 @@ This skill covers the development patterns, coding conventions, and collaborativ
 **Trigger:** When someone wants to document a new hook for the site.  
 **Command:** `/add-hook-doc`
 
-1. Create a demo component:  
-   `components/demos/{hook-name}-demo.tsx`
-2. Add a hook entry to:  
-   `lib/hook-docs.ts`
-3. Add the hook's source snapshot to:  
-   `lib/hook-sources.ts`
-4. Register the hook in:  
-   `lib/hooks-registry.ts`
+1. Start the hook from the repo root:  
+   `pnpm new:hook {hook-name}` (hook, test, folder barrel, barrel line, demo, demo-map line)
+2. Replace every TODO in the hook's TSDoc (it is the page content) and write the demo in:  
+   `apps/docs/components/demos/{hook-name}-demo.tsx`
+3. Add a search case to:  
+   `packages/hookli-mcp/test/search-cases.ts`
 
 **Example:**
 ```typescript
@@ -83,10 +81,8 @@ export default function UseIntervalDemo() {
 **Command:** `/batch-add-hook-docs`
 
 1. For each hook:
-   - Create demo in `components/demos/{hook-name}-demo.tsx`
-   - Add entry to `lib/hook-docs.ts`
-   - Add source to `lib/hook-sources.ts`
-   - Register in `lib/hooks-registry.ts`
+   - `pnpm new:hook {hook-name}`, then replace the TODOs and write the demo
+   - Add a search case to `packages/hookli-mcp/test/search-cases.ts`
 
 ---
 

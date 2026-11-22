@@ -95,8 +95,10 @@ App Router files keep their framework names (`page.tsx`, `layout.tsx`, `not-foun
 
 - `lib/hooks-registry.ts` (`HOOKS` + helpers) is the ONLY hook list. Sidebar, pages, search, and counts
   all derive from it — never redeclare the list or hardcode a count.
-- Per-hook page content in `lib/hook-docs.ts`; vendored implementation snapshots in `lib/hook-sources.ts`
-  (kept in sync with the installed `hookli` version).
+- Per-hook page content (summary, details, usage, API tables, source) comes from the library's
+  catalog via `lib/hook-catalog.ts` (server-only: the catalog holds every hook's source). It is
+  built from each hook's TSDoc; never copy hook docs into the docs app.
+- Each hook's live demo is registered once in `components/demos/index.ts`.
 - **Live hooks import from the published `hookli` package** — never a relative path or the sibling repo.
 
 ```ts

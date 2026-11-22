@@ -83,21 +83,19 @@ docs/DESIGN.md           Design source of truth (brand tokens, IA, page anatomy)
 
 ## Adding a new hook page
 
-Because everything is data-driven, a new hook needs **no new layout code** — only data
-and one demo component:
+Everything is data-driven, so a new hook needs **no docs code** except its demo.
+`pnpm new:hook use-<name>` (from the repo root) writes the hook and a demo stub; see
+`CONTRIBUTING.md`.
 
-1. **Registry** — add an entry to `HOOKS` in `lib/hooks-registry.ts`
-   (`slug`, `name`, `description`, `category`, `signature`). Sidebar, search, sitemap,
-   OG images, `generateStaticParams`, and the "N hooks" landing count all pick it up.
-2. **Page content** — add a matching entry to `HOOK_DOCS` in `lib/hook-docs.ts`
-   (the demo component, usage snippet, `parameters`, `returns`, and any `types`).
-   A slug with no entry falls back to a signature-only page automatically.
-3. **Demo** — create `components/demos/use-<name>-demo.tsx` (`"use client"`), importing the
-   hook from **`hookli`**. Gate any `window`/`localStorage`/`document` access behind a
-   `mounted` flag so `next build` prerender stays green. Reuse the primitives in
-   `components/demos/ui.tsx`.
-4. **Source snapshot** — add the hook's implementation to `lib/hook-sources.ts` (kept in
-   sync with the installed `hookli` version) so the page's **Hook** section shows real code.
+- **Hook list** — `lib/hooks-registry.ts` reads `hookli/manifest`. Sidebar, search, sitemap,
+  OG images, `generateStaticParams` and the "N hooks" counts pick a new hook up.
+- **Page content** — `lib/hook-catalog.ts` reads the library's catalog (summary, details,
+  usage, API tables, source), built from the hook's TSDoc.
+- **Demo** — `components/demos/use-<name>-demo.tsx` (`"use client"`), importing the hook from
+  **`hookli`** and built from the primitives in `components/demos/ui.tsx`, registered in
+  `components/demos/index.ts`. Gate any `window`/`localStorage`/`document` access behind a
+  `mounted` flag so `next build` prerender stays green. `check:playgrounds` fails when a hook
+  has no demo.
 
 `app/docs/[slug]/page.tsx` and `components/hook-page.tsx` need no changes.
 

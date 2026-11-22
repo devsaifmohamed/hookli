@@ -32,18 +32,69 @@ Only file/folder names are kebab-case; the **export name stays camelCase** (`use
 
 ## Adding a new hook
 
-1. **Create the folder** `src/hooks/use-<name>/` with three files:
-   - `use-<name>.ts` — the hook. Named export `use<Name>`; type the public API with a named
-     `interface`/`type`; use generics where it's data-shaped.
-   - `use-<name>.test.ts` — a vitest test (see any existing hook for the pattern; use
-     `renderHook`/`act` from `@testing-library/react`).
-   - `index.ts` — `export * from "./use-<name>";`
-2. **Register it** in `src/hooks/index.ts`: `export * from "./use-<name>";` (a hook that isn't
-   re-exported ships to nobody).
-3. **Stay SSR-safe** — never touch `window` / `document` / `navigator` / `localStorage` during
+```bash
+pnpm new:hook use-<name>
+```
+
+The starter writes everything a hook needs, and the build fails until each `TODO` in it is replaced:
+
+- `src/hooks/use-<name>/use-<name>.ts` (the hook, with a TSDoc template), `use-<name>.test.ts`
+  (with its server-render case) and `index.ts`, plus the line in `src/hooks/index.ts`
+- `apps/docs/components/demos/use-<name>-demo.tsx` (a working demo) and its line in
+  `apps/docs/components/demos/index.ts`
+
+Then:
+
+1. **Write the hook.** Type the public API with a named `interface`/`type`; use generics where
+   it's data-shaped.
+2. **Stay SSR-safe** — never touch `window` / `document` / `navigator` / `localStorage` during
    render or at module scope; only inside `useEffect`, or behind `typeof window !== "undefined"`.
-4. **Clean up** every `addEventListener` / `setTimeout` / observer in the effect's cleanup return.
-5. **Document it** in `README.md` under "Available hooks".
+   The test's `expectSSRSafe` case checks it.
+3. **Clean up** every `addEventListener` / `setTimeout` / observer in the effect's cleanup return.
+4. **Replace every TODO in the TSDoc** (format below) and make the demo show the hook.
+5. **Add a search case** for the hook to `packages/hookli-mcp/test/search-cases.ts`.
+
+That's all. The README index, the docs page, `llms.txt`, `hookli/manifest` and the MCP
+server all read the hook's TSDoc; there is no other copy to update. Run `pnpm readme` to
+refresh the README index (CI checks it).
+
+## TSDoc format
+
+Each hook's TSDoc is its documentation. The build reads it with the TypeScript compiler and
+fails with `use-x: <field>: <problem>` when something is missing.
+
+```ts
+/**
+ * Delays updating a value until it has stopped changing for `delay` ms.   ← summary (one sentence)
+ *
+ * The timer restarts on every change and is cleared on unmount, so no      ← details (optional)
+ * update lands after the component is gone. SSR-safe.
+ *
+ * @category effects                                ← one of catalog/categories.json
+ * @keywords debounce, wait until typing stops, delay value
+ * @param delay - In milliseconds. Defaults to `500`.
+ * @returns value - The last value that held still for `delay` ms.
+ *
+ * @example Usage                                   ← the first @example is the usage
+ * ```tsx
+ * import { useDebounce } from "hookli";
+ *
+ * export function Search() {
+ *   const [text, setText] = useState("");
+ *   const query = useDebounce(text, 300);
+ *   …
+ * }
+ * ```
+ */
+```
+
+- **Parameters, return values and types come from the code.** Write a `@param` or `@returns`,
+  or a comment on an interface member, only when it says something the name and type don't:
+  behaviour, defaults (`Defaults to …`), units, SSR, edge cases. An obvious one is left out.
+- Label tuple members in the type (`[value: boolean, toggle: () => void]`), or name them with
+  `@returns [0] value - …`.
+- Every `@example` is compiled against the library (`pnpm --filter hookli run examples:check`).
+- A deprecated alias is `/** @deprecated Use useX. */ export const useOld = useX;`.
 
 Full conventions live in [`CLAUDE.md`](./CLAUDE.md).
 
@@ -52,10 +103,10 @@ Full conventions live in [`CLAUDE.md`](./CLAUDE.md).
 ```bash
 npx tsc --noEmit   # 1. typecheck
 pnpm test          # 2. vitest - all hooks have colocated tests
-pnpm build         # 3. tsup: CJS + ESM + .d.ts must all emit
+pnpm build         # 3. the strict catalog build, then tsup: CJS + ESM + .d.ts must all emit
 ```
 
-Or run all three for every workspace from the root: `pnpm typecheck && pnpm test && pnpm build`. **CI runs these on every pull request, plus lint (`pnpm lint`), a check that generated files are committed, and the MCP package install test (`pnpm --filter hookli-mcp run test:package`).**
+Or run all three for every workspace from the root: `pnpm typecheck && pnpm test && pnpm build`. **CI runs these on every pull request, plus lint (`pnpm lint`), the README check (`pnpm readme`), `examples:check`, the library and MCP package tests (`test:package`) and the StackBlitz playground check.** None of it needs secrets, so it passes on a fork.
 
 ## Commit & PR
 

@@ -12,7 +12,8 @@
     "typecheck": "turbo run typecheck",
     "dev": "turbo run dev",
     "gen:banner": "node scripts/render-banner.mjs",
-    "readme": "pnpm --filter hookli run readme"
+    "readme": "pnpm --filter hookli run readme",
+    "new:hook": "pnpm --filter hookli run new:hook"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",

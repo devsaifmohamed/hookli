@@ -96,10 +96,12 @@ belongs inside `useEffect` (client-only) or behind `typeof window !== "undefined
 
 `addEventListener` / `setTimeout` / observers must be removed in the effect's cleanup return.
 
-### 6 — Document it in `README.md`
+### 6 — Document it in its TSDoc
 
-Add the hook to the "Available hooks" list with a one-line description. Public API changes go in
-the README (and, once it exists, the docs site's `hook-docs` entry in `../hookli-docs`).
+Start a hook with `pnpm new:hook use-x`. Its TSDoc is the only copy of its docs: the build
+turns it into `generated/catalog.json`, `hooks.manifest.json` and the README index, and the
+docs site and MCP server read the catalog. Format and comment rule: "TSDoc format" in the
+root `CONTRIBUTING.md`. Run `pnpm readme` after changing a summary or adding a hook.
 
 ### Build & typecheck stay green
 
