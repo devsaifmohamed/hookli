@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useKeyPress } from "./use-key-press";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useKeyPress", () => {
   it("is false initially", () => {
@@ -28,5 +29,11 @@ describe("useKeyPress", () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "b" }));
     });
     expect(result.current).toBe(false);
+  });
+});
+
+describe("useKeyPress on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useKeyPress", "Escape");
   });
 });

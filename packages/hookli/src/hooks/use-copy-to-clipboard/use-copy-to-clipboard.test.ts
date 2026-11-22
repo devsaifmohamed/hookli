@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useCopyToClipboard } from "./use-copy-to-clipboard";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 let writeText: ReturnType<typeof vi.fn>;
 
@@ -65,5 +66,11 @@ describe("useCopyToClipboard", () => {
 
     expect(ok).toBe(false);
     expect(result.current[0]).toBeNull();
+  });
+});
+
+describe("useCopyToClipboard on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useCopyToClipboard");
   });
 });

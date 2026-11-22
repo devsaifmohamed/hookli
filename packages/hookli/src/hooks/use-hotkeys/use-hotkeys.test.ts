@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useHotkeys } from "./use-hotkeys";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useHotkeys", () => {
   it("fires on the matching combo", () => {
@@ -28,5 +29,11 @@ describe("useHotkeys", () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
     });
     expect(cb).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("useHotkeys on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useHotkeys", "ctrl+k", () => {});
   });
 });

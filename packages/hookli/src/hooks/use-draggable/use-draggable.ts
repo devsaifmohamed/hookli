@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
-/** A point: translate px, or a `0..1` ratio of the bounds box when `unit` is `"ratio"`. */
+/** A point in the chosen unit. */
 export interface Position {
+  /** Horizontal: px offset, or 0..1 of the bounds box width. */
   x: number;
+  /** Vertical: px offset, or 0..1 of the bounds box height. */
   y: number;
 }
 
@@ -16,50 +18,54 @@ export type DragBounds =
   | RefObject<HTMLElement | null>
   | { left?: number; top?: number; right?: number; bottom?: number };
 
-/** Options for {@link useDraggable}. */
+/** Pass position + onChange for controlled use, or initialPosition for uncontrolled. */
 export interface UseDraggableOptions {
   /**
-   * How positions are expressed. `"px"` is the translate offset from the element's
-   * layout spot. `"ratio"` is where the element's `anchor` point sits inside the
-   * bounds box, `0..1` on each axis, so it survives the box resizing. `"ratio"`
-   * needs element bounds (`"parent"` or a ref). Defaults to `"px"`.
+   * px: translate offset from the layout spot. ratio: where the anchor point sits in the bounds
+   * box, 0..1 per axis, so it survives resizes. Needs element bounds. Defaults to `"px"`.
    */
   unit?: "px" | "ratio";
-  /** Controlled position. When set, the element only moves when this prop changes; pair it with `onChange`. */
+  /** Controlled position. Input calls onChange; the element moves only when this prop changes. */
   position?: Position;
   /** Uncontrolled starting position. Defaults to `{ x: 0, y: 0 }`. */
   initialPosition?: Position;
-  /** Called whenever input (drag, jump, keys, `moveTo`) produces a new position. */
+  /**
+   * Called when a drag, jump, arrow key or moveTo produces a new position. Not called for prop
+   * changes or resize re-clamps.
+   */
   onChange?: (position: Position) => void;
   /** Restrict movement to one axis. Defaults to `"both"`. */
   axis?: "x" | "y" | "both";
   /**
-   * Keep the element inside a box. Element bounds are live: they are re-measured
-   * on every gesture and whenever the element or the box resizes. Unbounded by default.
+   * Keep the element inside a box. Element bounds are live: re-measured on every gesture and on
+   * resize.
    */
   bounds?: DragBounds;
-  /** Snap the translate offset to a `[x, y]` px grid. */
+  /** Snap the translate offset to a px grid. */
   grid?: [number, number];
-  /** Ignore pointer and keyboard input (`moveTo` still works). Defaults to `false`. */
+  /** Ignore pointer and keyboard input. moveTo still works. Defaults to `false`. */
   disabled?: boolean;
   /**
-   * Pressing an empty spot of the `containerRef` element makes the element jump
-   * there, and holding the button keeps dragging. Defaults to `false`.
+   * Pressing an empty spot of the container jumps the element there; holding keeps dragging.
+   * Defaults to `false`.
    */
   jumpOnClick?: boolean;
   /**
-   * The element's reference point: what lands on the pointer when jumping, and
-   * what a `"ratio"` position describes. Defaults to `"center"`.
+   * The element point that lands on the pointer when jumping, and that a ratio position describes.
+   * Defaults to `"center"`.
    */
   anchor?: "center" | "top-left";
-  /** Jump animation length in ms; `0` snaps instantly. Defaults to `200`. */
+  /** Jump animation length in ms; 0 snaps instantly. Defaults to `200`. */
   transition?: number;
   /**
-   * How softly the element trails the pointer while dragging, from `0` (glued to
-   * the pointer) to just under `1` (very floaty). Defaults to `0.3`.
+   * How softly the element trails the pointer, from 0 (glued) to just under 1 (floaty). Reduced
+   * motion turns it off. Defaults to `0.3`.
    */
   smoothing?: number;
-  /** Arrow-key step in px (the grid step wins when `grid` is set); `false` disables. Defaults to `10`. */
+  /**
+   * Arrow-key step in px when the element is focused; the grid step wins when grid is set.
+   * Defaults to `10`.
+   */
   keyboardStep?: number | false;
   /** Called when a drag starts (including the drag that follows a jump). */
   onDragStart?: (position: Position) => void;
@@ -71,13 +77,11 @@ export interface UseDraggableOptions {
   onJump?: (position: Position) => void;
 }
 
-/** Options for {@link UseDraggableReturn.moveTo}. */
 export interface MoveToOptions {
   /** Animate with the `transition` duration instead of snapping. Defaults to `false`. */
   animate?: boolean;
 }
 
-/** Return value of {@link useDraggable}. */
 export interface UseDraggableReturn<T extends HTMLElement, C extends HTMLElement> {
   /** Callback ref for the draggable element. */
   ref: (node: T | null) => void;
@@ -174,8 +178,41 @@ const boundsElement = (element: HTMLElement, bounds: DragBounds | undefined) =>
  * The element is moved with `transform: translate3d()`, so layout is untouched.
  * Give it `tabIndex={0}` and an `aria-label` for keyboard use.
  *
- * @param options - See {@link UseDraggableOptions}.
- * @returns Refs to attach, the current `position`, `isDragging`, `moveTo` and `reset`.
+ * @category dom
+ * @keywords drag, draggable, drag and drop, move element, reposition, pointer drag, slider
+ *
+ * @example Usage
+ * ```tsx
+ * import { useDraggable } from "hookli";
+ *
+ * export function Demo() {
+ *   const { ref, containerRef, position, isDragging } = useDraggable<
+ *     HTMLDivElement,
+ *     HTMLDivElement
+ *   >({
+ *     unit: "ratio",
+ *     bounds: "parent",
+ *     initialPosition: { x: 0.5, y: 0.5 },
+ *     jumpOnClick: true,
+ *   });
+ *
+ *   return (
+ *     <div ref={containerRef} style={{ position: "relative", height: 224 }}>
+ *       <div
+ *         ref={ref}
+ *         tabIndex={0}
+ *         aria-label="Draggable puck"
+ *         style={{ position: "absolute", top: 0, left: 0, width: 44, height: 44 }}
+ *       >
+ *         {isDragging ? "●" : "○"}
+ *       </div>
+ *       <p>
+ *         {(position.x * 100).toFixed(1)}% × {(position.y * 100).toFixed(1)}%
+ *       </p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useDraggable = <
   T extends HTMLElement = HTMLElement,
