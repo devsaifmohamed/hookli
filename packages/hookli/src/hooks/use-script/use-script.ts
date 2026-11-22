@@ -22,6 +22,7 @@ export interface UseScriptOptions {
  *
  * @category dom
  * @keywords load script, script tag, third party script, external script, sdk loader, cdn script
+ * @returns status - The current load status: "idle" | "loading" | "ready" | "error".
  *
  * @example Usage
  * ```tsx

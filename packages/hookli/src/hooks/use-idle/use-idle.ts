@@ -16,6 +16,7 @@ const ACTIVITY_EVENTS = [
  *
  * @category dom
  * @keywords idle, inactive, inactivity, afk, away, auto logout, session timeout
+ * @returns isIdle - True if user has been inactive for at least ms milliseconds.
  *
  * @example Usage
  * ```tsx

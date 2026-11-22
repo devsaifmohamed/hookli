@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
  * @category dom
  * @keywords key press, key down, key held, keyboard key, escape key, is key pressed
  * @param targetKey - The KeyboardEvent.key to watch (e.g. 'Enter', 'Escape').
+ * @returns pressed - True while the specified key is held down.
  *
  * @example Usage
  * ```tsx

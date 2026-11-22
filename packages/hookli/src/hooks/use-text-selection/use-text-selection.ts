@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
  *
  * @category dom
  * @keywords text selection, selected text, highlight, window.getSelection, quote selection
+ * @returns text - The currently selected text on the document.
  *
  * @example Usage
  * ```tsx
