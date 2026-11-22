@@ -21,6 +21,8 @@ export interface UseScreenOptions {
  *
  * @category dom
  * @keywords screen, window.screen, screen resolution, display size, orientation
+ * @returns screen - The current window.screen (width, height, availWidth, colorDepth,
+ *   orientation…), refreshed on every resize. null on the server and until hydration.
  *
  * @example Usage
  * ```tsx

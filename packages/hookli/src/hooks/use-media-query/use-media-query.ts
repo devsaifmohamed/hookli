@@ -23,6 +23,8 @@ export interface UseMediaQueryOptions {
  *
  * @category dom
  * @keywords media query, matchMedia, breakpoint, responsive, mobile, screen size, is mobile
+ * @returns matches - Whether the query currently matches. Re-renders on every matchMedia change
+ *   event, and starts from defaultValue on the server.
  *
  * @example Usage
  * ```tsx
