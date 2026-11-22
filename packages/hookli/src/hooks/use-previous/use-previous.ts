@@ -9,6 +9,7 @@ import { useEffect, useRef } from "react";
  *
  * @category state
  * @keywords previous value, last render value, prev props, previous state, compare old and new
+ * @returns previousValue - The value from the previous render (undefined on first render).
  *
  * @example Usage
  * ```tsx
