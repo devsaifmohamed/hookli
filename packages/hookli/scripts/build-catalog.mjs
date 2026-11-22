@@ -150,9 +150,10 @@ function parseExample(tagText) {
 // ---------------------------------------------------------------------------
 // Types reached from a hook's signature and return type.
 
+// An optional member (`name?:`) carries `optional: true`; its type stays as written.
 function memberRows(members, prefix = "") {
   return members.flatMap((member) => {
-    const doc = memberDoc(member);
+    const doc = { ...memberDoc(member), ...(member.questionToken && { optional: true }) };
     if (ts.isCallSignatureDeclaration(member)) return [{ name: "(...args)", type: callText(member), ...doc }];
     if (ts.isIndexSignatureDeclaration(member)) {
       return [{ name: `[${member.parameters.map(text).join(", ")}]`, type: text(member.type), ...doc }];

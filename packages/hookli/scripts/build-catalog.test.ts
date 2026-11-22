@@ -299,7 +299,7 @@ export const useWrap = <Args extends unknown[], R>(fn: (...args: Args) => R): Wr
     ]);
   });
 
-  it("turns `Defaults to …` into defaultValue and drops it from the row text", () => {
+  it("turns `Defaults to …` into defaultValue, drops it from the row text and marks `?` members optional", () => {
     const source = `${doc("Takes options.", "@param options - The options.")}
 export interface Options {
   /** Run on the leading edge. Defaults to \`false\`. */
@@ -312,8 +312,8 @@ export const useOpts = (options: Options = {}): void => {};
     const hook = hookOf({ hooks: { "use-opts": source } }, "useOpts");
     expect(hook?.parameters[0]).toMatchObject({ name: "options", type: "Options", defaultValue: "{}" });
     expect(hook?.typeAliases[0].rows).toEqual([
-      { name: "leading", type: "boolean", defaultValue: "false", description: "Run on the leading edge." },
-      { name: "suffix", type: "string", defaultValue: '"…"', description: "Suffix to add." },
+      { name: "leading", type: "boolean", defaultValue: "false", description: "Run on the leading edge.", optional: true },
+      { name: "suffix", type: "string", defaultValue: '"…"', description: "Suffix to add.", optional: true },
     ]);
   });
 
