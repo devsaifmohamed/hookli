@@ -10,8 +10,29 @@ import {
  * subsequent dependency changes. Handy for reacting to updates without the
  * effect firing once on first render.
  *
- * @param effect - Imperative effect callback; may return a cleanup function.
- * @param deps - Dependency list, with the same semantics as `useEffect`.
+ * @category effects
+ * @keywords skip first render, update only, componentDidUpdate, not on mount
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useUpdateEffect } from "hookli";
+ *
+ * export function Demo() {
+ *   const [count, setCount] = useState(0);
+ *
+ *   useUpdateEffect(() => {
+ *     console.log("Count changed to:", count);
+ *   }, [count]);
+ *
+ *   return (
+ *     <div>
+ *       <p>Count: {count}</p>
+ *       <button onClick={() => setCount((c) => c + 1)}>Increment</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useUpdateEffect = (
   effect: EffectCallback,

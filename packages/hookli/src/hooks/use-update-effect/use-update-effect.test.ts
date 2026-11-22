@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useUpdateEffect } from "./use-update-effect";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useUpdateEffect", () => {
   it("does not run on the first render", () => {
@@ -33,5 +34,11 @@ describe("useUpdateEffect", () => {
     expect(cleanup).toHaveBeenCalledTimes(1);
     unmount();
     expect(cleanup).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("useUpdateEffect on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useUpdateEffect", () => {}, []);
   });
 });

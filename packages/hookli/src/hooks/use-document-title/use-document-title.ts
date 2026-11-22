@@ -2,14 +2,8 @@ import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 import { useUnmount } from "../use-unmount";
 
-/**
- * Options for {@link useDocumentTitle}.
- */
 export interface UseDocumentTitleOptions {
-  /**
-   * When `false`, the previous document title is restored on unmount. Defaults
-   * to `true`, which leaves the title in place.
-   */
+  /** When false, the title from mount is restored on unmount. Defaults to `true`. */
   preserveTitleOnUnmount?: boolean;
 }
 
@@ -20,8 +14,21 @@ export interface UseDocumentTitleOptions {
  * rendering, so it is SSR-safe. When `preserveTitleOnUnmount` is `false`, the
  * title captured on mount is restored when the component unmounts.
  *
- * @param title - The document title to apply.
- * @param options - Behaviour options (see {@link UseDocumentTitleOptions}).
+ * @category effects
+ * @keywords document title, page title, tab title, browser title
+ *
+ * @example Usage
+ * ```tsx
+ * import { useDocumentTitle } from "hookli";
+ *
+ * export function Demo() {
+ *   useDocumentTitle("Dashboard — hookli", {
+ *     preserveTitleOnUnmount: false,
+ *   });
+ *
+ *   return <h1>Dashboard</h1>;
+ * }
+ * ```
  */
 export const useDocumentTitle = (
   title: string,

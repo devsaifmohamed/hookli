@@ -5,7 +5,23 @@ import { useEffect, useState } from "react";
  * (`document.visibilityState`). The listener attaches in an effect, so it is
  * SSR-safe (returns `true` on the server).
  *
- * @returns `true` while the tab is visible, `false` when hidden/backgrounded.
+ * @category effects
+ * @keywords page visibility, tab hidden, tab visible, visibilitychange, background tab, tab focus
+ *
+ * @example Usage
+ * ```tsx
+ * import { usePageVisibility } from "hookli";
+ *
+ * export function Demo() {
+ *   const isVisible = usePageVisibility();
+ *
+ *   return (
+ *     <div>
+ *       <p>Tab is currently: {isVisible ? "Visible" : "Hidden"}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const usePageVisibility = (): boolean => {
   const [visible, setVisible] = useState<boolean>(true);

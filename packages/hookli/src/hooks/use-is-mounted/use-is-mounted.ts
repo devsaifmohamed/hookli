@@ -7,7 +7,36 @@ import { useCallback, useEffect, useRef } from "react";
  * avoid the "state update on an unmounted component" pitfall. The getter keeps a
  * stable identity, so it is safe to omit from dependency arrays.
  *
- * @returns A function that returns `true` while mounted and `false` after unmount.
+ * @category effects
+ * @keywords is mounted, unmounted, async state update, memory leak warning, state update after
+ *   unmount, setState on unmounted component
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useIsMounted } from "hookli";
+ *
+ * const fetchData = () =>
+ *   new Promise<string>((resolve) => setTimeout(() => resolve("Loaded!"), 1000));
+ *
+ * export function Demo() {
+ *   const isMounted = useIsMounted();
+ *   const [data, setData] = useState<string | null>(null);
+ *
+ *   async function load() {
+ *     const result = await fetchData();
+ *     // Skip the update if the component unmounted while waiting.
+ *     if (isMounted()) setData(result);
+ *   }
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={load}>Load</button>
+ *       <p>{data ?? "Nothing loaded yet"}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useIsMounted = (): (() => boolean) => {
   const isMounted = useRef<boolean>(false);

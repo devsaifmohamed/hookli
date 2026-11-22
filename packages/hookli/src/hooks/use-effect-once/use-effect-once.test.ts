@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useEffectOnce } from "./use-effect-once";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useEffectOnce", () => {
   it("runs once on mount and not on re-render", () => {
@@ -17,5 +18,11 @@ describe("useEffectOnce", () => {
     expect(cleanup).not.toHaveBeenCalled();
     unmount();
     expect(cleanup).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("useEffectOnce on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useEffectOnce", () => {});
   });
 });

@@ -9,9 +9,31 @@ import { useEffect, useRef, useState } from "react";
  * The twin of {@link useDebounce} — throttle emits on a steady cadence while the
  * value keeps changing; debounce waits for the changes to stop.
  *
- * @param value - The value to throttle.
- * @param interval - Minimum time between updates, in milliseconds. Defaults to `500`.
- * @returns The throttled value.
+ * @category effects
+ * @keywords throttle, rate limit, scroll performance, limit updates, at most once
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useThrottle } from "hookli";
+ *
+ * export function Demo() {
+ *   const [query, setQuery] = useState("");
+ *   const throttledQuery = useThrottle(query, 500);
+ *
+ *   return (
+ *     <div>
+ *       <input
+ *         value={query}
+ *         onChange={(e) => setQuery(e.target.value)}
+ *         placeholder="Search..."
+ *       />
+ *       <p>Instant: {query}</p>
+ *       <p>Throttled: {throttledQuery}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useThrottle = <T>(value: T, interval: number = 500): T => {
   const [throttled, setThrottled] = useState<T>(value);

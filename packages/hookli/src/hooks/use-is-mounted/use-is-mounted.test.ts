@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useIsMounted } from "./use-is-mounted";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useIsMounted", () => {
   it("reports mounted after render", () => {
@@ -22,5 +23,11 @@ describe("useIsMounted", () => {
 
     rerender();
     expect(result.current).toBe(first);
+  });
+});
+
+describe("useIsMounted on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useIsMounted");
   });
 });
