@@ -1,26 +1,36 @@
 import { useCallback, useState } from "react";
 
-/**
- * The value and setters returned by {@link useBoolean}.
- */
 export interface UseBooleanReturn {
-  /** The current boolean value. */
   value: boolean;
-  /** Set the value directly. */
   setValue: (value: boolean) => void;
-  /** Set the value to `true`. */
   setTrue: () => void;
-  /** Set the value to `false`. */
   setFalse: () => void;
-  /** Toggle the value. */
   toggle: () => void;
 }
 
 /**
  * A custom hook to manage a boolean value with convenient setters.
  *
- * @param defaultValue - The initial boolean value. Defaults to `false`.
- * @returns An object with the current value and setters `setValue`, `setTrue`, `setFalse`, and `toggle`.
+ * @category state
+ * @keywords boolean, flag, setTrue, setFalse, open state, visibility flag
+ *
+ * @example Usage
+ * ```tsx
+ * import { useBoolean } from "hookli";
+ *
+ * export function Demo() {
+ *   const { value, setTrue, setFalse, toggle } = useBoolean(false);
+ *
+ *   return (
+ *     <div>
+ *       <p>{value ? "On" : "Off"}</p>
+ *       <button onClick={toggle}>Toggle</button>
+ *       <button onClick={setTrue}>On</button>
+ *       <button onClick={setFalse}>Off</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useBoolean = (defaultValue: boolean = false): UseBooleanReturn => {
   const [value, setValue] = useState<boolean>(defaultValue);

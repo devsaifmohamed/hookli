@@ -11,15 +11,21 @@ declare global {
 const IS_SERVER = typeof window === "undefined";
 
 export interface UseSessionStorageOptions<T> {
+  /** Defaults to `JSON.stringify`. */
   serializer?: (value: T) => string;
+  /** Defaults to `JSON.parse`. */
   deserializer?: (value: string) => T;
+  /**
+   * Read sessionStorage synchronously on mount. Set false to defer to after hydration and avoid
+   * SSR mismatches. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
 export type UseSessionStorageReturn<T> = [
-  T,
-  (value: T | ((prev: T) => T)) => void,
-  () => void,
+  value: T,
+  setValue: (value: T | ((prev: T) => T)) => void,
+  removeValue: () => void,
 ];
 
 /**
@@ -31,10 +37,26 @@ export type UseSessionStorageReturn<T> = [
  * mirrors the `useState` API and accepts an updater; `removeValue` clears the
  * key and resets the state to `initialValue`.
  *
- * @param key - The `sessionStorage` key to read and write.
- * @param initialValue - Fallback value (or factory) when the key is absent.
- * @param options - Optional custom serializer/deserializer and hydration flag.
- * @returns `[value, setValue, removeValue]`.
+ * @category state
+ * @keywords sessionStorage, tab session, per tab state, persist until tab closes
+ * @param initialValue - Value used before hydration and when the key is empty. Pass a function to
+ *   compute it lazily.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useSessionStorage } from "hookli";
+ *
+ * export function Demo() {
+ *   const [draft, setDraft, removeDraft] = useSessionStorage("draft", "");
+ *
+ *   return (
+ *     <div>
+ *       <input value={draft} onChange={(e) => setDraft(e.target.value)} />
+ *       <button type="button" onClick={removeDraft}>Clear</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export function useSessionStorage<T>(
   key: string,

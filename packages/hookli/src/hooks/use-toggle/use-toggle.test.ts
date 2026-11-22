@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { expectSSRSafe } from "../../test-utils/ssr";
 import { useToggle } from "./use-toggle";
 
 describe("useToggle", () => {
@@ -15,5 +16,9 @@ describe("useToggle", () => {
     expect(result.current[0]).toBe(true);
     act(() => result.current[2](false));
     expect(result.current[0]).toBe(false);
+  });
+
+  it("server-renders without browser globals", async () => {
+    await expectSSRSafe("useToggle");
   });
 });

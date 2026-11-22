@@ -10,7 +10,15 @@ declare global {
 const IS_SERVER = typeof window === "undefined";
 
 export interface UseReadLocalStorageOptions<T> {
+  /**
+   * Parse the stored string into a value; the default returns the raw string when it isn't JSON.
+   * Defaults to `JSON.parse`.
+   */
   deserializer?: (value: string) => T;
+  /**
+   * Read localStorage synchronously on mount. Set false to defer to after hydration and avoid SSR
+   * mismatches. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
@@ -22,9 +30,20 @@ export interface UseReadLocalStorageOptions<T> {
  * SSR-safe: returns `null` on the server and, when `initializeWithValue` is
  * false, on the first client render before hydrating from storage.
  *
- * @param key - The `localStorage` key to observe.
- * @param options - Optional custom deserializer and hydration flag.
- * @returns The parsed value, or `null` when the key is absent.
+ * @category state
+ * @keywords read localStorage, read only storage, subscribe to storage key, cross tab sync
+ * @returns value - The parsed value, or null when the key is absent.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useReadLocalStorage } from "hookli";
+ *
+ * export function Demo() {
+ *   const theme = useReadLocalStorage<string>("theme");
+ *
+ *   return <p>Saved theme: {theme ?? "none"}</p>;
+ * }
+ * ```
  */
 export function useReadLocalStorage<T>(
   key: string,
