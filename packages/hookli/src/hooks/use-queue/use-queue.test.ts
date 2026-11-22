@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useQueue } from "./use-queue";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useQueue", () => {
   it("adds and removes in FIFO order", () => {
@@ -25,5 +26,11 @@ describe("useQueue", () => {
     act(() => result.current.clear());
     expect(result.current.queue).toEqual([]);
     expect(result.current.first).toBeUndefined();
+  });
+});
+
+describe("useQueue on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useQueue");
   });
 });

@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useRafState } from "./use-raf-state";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useRafState", () => {
   afterEach(() => vi.unstubAllGlobals());
@@ -16,5 +17,11 @@ describe("useRafState", () => {
     expect(result.current[0]).toBe(0);
     act(() => result.current[1](5));
     expect(result.current[0]).toBe(5);
+  });
+});
+
+describe("useRafState on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useRafState", 1);
   });
 });

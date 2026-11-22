@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useDefault, useDefaultValue } from "./index";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useDefaultValue", () => {
   it("returns the value when set", () => {
@@ -21,5 +22,11 @@ describe("useDefaultValue", () => {
 
   it("provides backwards compatibility via useDefault alias", () => {
     expect(useDefault).toBe(useDefaultValue);
+  });
+});
+
+describe("useDefaultValue on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useDefaultValue", null, 1);
   });
 });

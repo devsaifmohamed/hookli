@@ -1,30 +1,45 @@
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
 
-/**
- * The helpers returned as the second tuple element of {@link useStep}.
- */
 export interface UseStepActions {
-  /** Advance to the next step (no-op when already at `maxStep`). */
+  /** Advances to the next step; a no-op at maxStep. */
   goToNextStep: () => void;
-  /** Go back to the previous step (no-op when already at step 1). */
+  /** Goes back one step; a no-op at step 1. */
   goToPrevStep: () => void;
-  /** Reset back to step 1. */
+  /** Resets back to step 1. */
   reset: () => void;
-  /** Whether a next step is available. */
   canGoToNextStep: boolean;
-  /** Whether a previous step is available. */
   canGoToPrevStep: boolean;
-  /** Set the step directly (1-indexed); throws if out of the `1..maxStep` range. */
+  /** Sets the step directly (1-indexed); throws if outside the 1..maxStep range. */
   setStep: Dispatch<SetStateAction<number>>;
 }
 
 /**
  * A custom hook to manage a 1-indexed step counter (e.g. for wizards/steppers).
  *
- * @param maxStep - The highest reachable step (inclusive). Steps run from `1` to `maxStep`.
- * @returns A tuple of the current step and an actions object.
+ * @category state
+ * @keywords wizard, stepper, steps, onboarding flow, next step, previous step, multi step form
+ * @param maxStep - The highest reachable step (inclusive). Steps run from 1 to maxStep.
+ *
+ * @example Usage
+ * ```tsx
+ * import { useStep } from "hookli";
+ *
+ * export function Demo() {
+ *   const [step, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep, reset }] =
+ *     useStep(4);
+ *
+ *   return (
+ *     <div>
+ *       <p>Step {step} of 4</p>
+ *       <button onClick={goToPrevStep} disabled={!canGoToPrevStep}>Back</button>
+ *       <button onClick={goToNextStep} disabled={!canGoToNextStep}>Next</button>
+ *       <button onClick={reset}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
-export const useStep = (maxStep: number): [number, UseStepActions] => {
+export const useStep = (maxStep: number): [step: number, actions: UseStepActions] => {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   const canGoToNextStep = useMemo(() => currentStep + 1 <= maxStep, [currentStep, maxStep]);

@@ -1,20 +1,13 @@
 import { useMemo, useRef, useState } from "react";
 
-/**
- * Actions returned by {@link useSet} for manipulating the Set immutably.
- */
 export interface UseSetActions<T> {
-  /** Add a value (no-op if already present). */
   add: (value: T) => void;
-  /** Remove a value (no-op if absent). */
   remove: (value: T) => void;
-  /** Add the value if missing, remove it if present. */
+  /** Adds the value if absent, removes it if present. */
   toggle: (value: T) => void;
-  /** Whether the value is currently in the set (reads the latest set). */
   has: (value: T) => boolean;
-  /** Empty the set. */
   clear: () => void;
-  /** Reset to the initial values the hook was created with. */
+  /** Back to the initial values. */
   reset: () => void;
 }
 
@@ -24,10 +17,30 @@ export interface UseSetActions<T> {
  * and `add`/`remove` return the previous set unchanged when nothing changes to
  * avoid needless renders. `has` always reads the latest value.
  *
- * @param initial - Initial values (any iterable). Defaults to empty.
- * @returns A tuple of `[set, actions]`.
+ * @category state
+ * @keywords Set, unique values, selected ids, toggle selection, set state
+ *
+ * @example Usage
+ * ```tsx
+ * import { useSet } from "hookli";
+ *
+ * export function Demo() {
+ *   const [set, { add, remove, toggle, clear, reset }] = useSet<string>(["react"]);
+ *
+ *   return (
+ *     <div>
+ *       <p>Selected: {Array.from(set).join(", ")}</p>
+ *       <button onClick={() => toggle("typescript")}>Toggle typescript</button>
+ *       <button onClick={() => add("nextjs")}>Add nextjs</button>
+ *       <button onClick={() => remove("react")}>Remove react</button>
+ *       <button onClick={clear}>Clear</button>
+ *       <button onClick={reset}>Reset</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
-export const useSet = <T>(initial?: Iterable<T>): [Set<T>, UseSetActions<T>] => {
+export const useSet = <T>(initial?: Iterable<T>): [set: Set<T>, actions: UseSetActions<T>] => {
   const [set, setSet] = useState<Set<T>>(() => new Set(initial));
   const latest = useRef(set);
   latest.current = set;
