@@ -1,6 +1,6 @@
 # hookli-mcp
 
-> The official **Model Context Protocol (MCP)** server for [hookli](https://hookli.vercel.app) — giving AI assistants direct access to all 66 typed, SSR-safe, zero-dependency React hooks.
+> The official **Model Context Protocol (MCP)** server for [hookli](https://hookli.vercel.app) — giving AI assistants direct access to every typed, SSR-safe, zero-dependency React hooks.
 
 ---
 
@@ -139,7 +139,7 @@ Build first (`pnpm --filter hookli-mcp run build`), then point your client at th
 
 | Tool | Description | Inputs |
 |---|---|---|
-| `list_hooks` | List all 66 hooks with signatures and descriptions | `category?` (`state`, `effects`, `dom`, `data`), `query?` |
+| `list_hooks` | List all hooks with signatures and descriptions | `category?` (`state`, `effects`, `dom`, `data`), `query?` |
 | `get_hook` | Get complete documentation, parameters, returns, and usage | `name` (e.g. `useDebounce`, `useLocalStorage`) |
 | `search_hooks` | Natural language and use-case search with relevance ranking | `query` (e.g. *"detect outside clicks"*), `category?`, `limit?` |
 | `get_hook_source` | Inspect the pure TypeScript implementation | `name` |
@@ -149,7 +149,7 @@ Build first (`pnpm --filter hookli-mcp run build`), then point your client at th
 
 ## Available Resources
 
-- `hookli://catalog`: Complete catalog of 66 hooks with all metadata as JSON.
+- `hookli://catalog`: Complete catalog of hooks with all metadata as JSON.
 - `hookli://manifest`: Lightweight library summary.
 - `hookli://hooks/{slug}`: Dynamic Markdown documentation for any hook.
 

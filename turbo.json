@@ -10,14 +10,12 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "$TURBO_ROOT$/scripts/gen-hook-sources.mjs",
-        "$TURBO_ROOT$/scripts/build-mcp-catalog.mjs",
         "$TURBO_ROOT$/apps/docs/lib/hook-docs.ts"
       ],
       "outputs": [
         "dist/**",
         "generated/**",
-        "$TURBO_ROOT$/apps/docs/lib/hook-sources.generated.ts",
-        "$TURBO_ROOT$/packages/hookli-mcp/src/data/**"
+        "$TURBO_ROOT$/apps/docs/lib/hook-sources.generated.ts"
       ]
     },
     "test": {

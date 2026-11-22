@@ -1,17 +1,20 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import {
+  CATEGORY_IDS,
   CATALOG,
   formatHookMarkdown,
   getAllHooks,
   getHookBySlugOrName,
+  getRemovedHook,
+  removedAnswer,
   getHooksByCategory,
   searchHooks,
 } from "../catalog.js";
 import { suggestForTask } from "../search.js";
 import type { HookCategory } from "../types.js";
 
-const CategoryEnum = z.enum(["state", "effects", "dom", "data"]);
+const CategoryEnum = z.enum(CATEGORY_IDS);
 
 export function registerTools(server: McpServer): void {
   // 1. list_hooks
@@ -73,6 +76,8 @@ export function registerTools(server: McpServer): void {
     },
     async ({ name }) => {
       const hook = getHookBySlugOrName(name);
+      const removed = hook ? undefined : getRemovedHook(name);
+      if (removed) return { isError: true, content: [{ type: "text", text: removedAnswer(removed) }] };
       if (!hook) {
         const suggestions = searchHooks(name, { limit: 3 });
         const didYouMean = suggestions.length
@@ -162,6 +167,8 @@ export function registerTools(server: McpServer): void {
     },
     async ({ name }) => {
       const hook = getHookBySlugOrName(name);
+      const removed = hook ? undefined : getRemovedHook(name);
+      if (removed) return { isError: true, content: [{ type: "text", text: removedAnswer(removed) }] };
       if (!hook) {
         return {
           isError: true,
