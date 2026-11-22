@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
  *
  * @category effects
  * @keywords is client, browser check, hydration, client only, server or client, ssr
+ * @returns isClient - false during server rendering and the first hydration pass, then true once
+ *   mounted in the browser. Gate browser-only UI on it to keep both renders identical.
  *
  * @example Usage
  * ```tsx

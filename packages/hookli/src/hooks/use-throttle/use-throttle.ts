@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
  *
  * @category effects
  * @keywords throttle, rate limit, scroll performance, limit updates, at most once
+ * @returns throttledValue - The throttled value, updated at most once per interval.
  *
  * @example Usage
  * ```tsx

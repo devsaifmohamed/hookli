@@ -10,6 +10,9 @@ import { useCallback, useEffect, useRef } from "react";
  * @category effects
  * @keywords is mounted, unmounted, async state update, memory leak warning, state update after
  *   unmount, setState on unmounted component
+ * @returns isMounted - A stable getter that returns true while mounted and false after unmount.
+ *   Call it inside async callbacks before setting state; its identity never changes, so it is safe
+ *   to omit from dependency arrays.
  *
  * @example Usage
  * ```tsx

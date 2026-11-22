@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
  *
  * @category effects
  * @keywords page visibility, tab hidden, tab visible, visibilitychange, background tab, tab focus
+ * @returns isVisible - True if the document/tab is currently visible, false when hidden or
+ *   backgrounded.
  *
  * @example Usage
  * ```tsx
