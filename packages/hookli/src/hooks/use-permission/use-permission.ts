@@ -16,6 +16,8 @@ export type UsePermissionResult = PermissionState | "pending" | "unsupported";
  * @keywords permission, permissions api, camera, microphone, notifications, geolocation permission,
  *   granted denied
  * @param name - The permission name to query (e.g. 'geolocation', 'notifications').
+ * @returns status - The permission state ('granted', 'denied', 'prompt', 'pending', or
+ *   'unsupported').
  *
  * @example Usage
  * ```tsx
