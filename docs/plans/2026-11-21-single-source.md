@@ -296,7 +296,7 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
 
 ## 7. Delivery plan (task lane)
 
-Release branch `release/single-source`. Build PRs carry at most 15 production files each (tests on top). **Each file is changed by one PR only, and nothing temporary is committed (CEO, amendment 2).** Numbers are `x/15` in the PR titles.
+Release branch `release/single-source`. Build PRs carry at most 15 production files each (tests on top). **Each file is changed by one PR only, and nothing temporary is committed (CEO, amendment 2).** Numbers are `x/17` in the PR titles (amendment 3 split the last three rows into four).
 
 | x/15 | PR | Slice | Depends on |
 |---|---|---|---|
@@ -381,3 +381,19 @@ The measured before score is **40.6 / 100**: M1 10.9, M2 9.2, M3 13.3 (8 of 15 c
 | Generated files edited in every PR | Built at build time instead of committed (S9 brought forward): new PR 3/15 (#23). CEO chose the library `build` writing them (same shape as the final design) over per-workspace `pre*` scripts or a CI/deploy-only step, which would break local `dev` and `typecheck`. Both scripts write only when the content changed, so a later `test` doesn't make `dist` look stale | 3 |
 | Temporary files committed and deleted later | The codemod and the parity check run privately (like the score); each hook PR states its parity result. M5 already excluded the codemod | 4–10 |
 | Keep the `@example` in the TSDoc? | Kept: it feeds the editor hover, the docs page, StackBlitz, `llms.txt` and two MCP answers, and `examples:check` compiles it | — |
+
+## Amendment 3 (2026-11-22, building PRs 11–17)
+
+| Finding | Change to the plan | PR |
+|---|---|---|
+| Rows 13 and 14 came to about 20 production files each, over the cap | The docs row splits into 13/17 (hook pages read the catalog, 15 files) and 14/17 (category text and counts, 4 files). Row 14 splits into 15/17 (manifest and README built, `test:package`, `vercel.json`, CHANGELOG) and 16/17 (`new:hook` starter, CONTRIBUTING, CLAUDE.md, AGENTS.md, `.claude` files). The removed page is 17/17. Every title is now `x/17` | 13–17 |
+| Generator code needed by 14–16 (`--manifest`, `--readme`, X12, starter placeholders, category titles) | Written once in #18, the generator's PR, so the generator file is changed by one PR | 2 |
+| Parity: optional members lost their `?` | Catalog rows carry `optional: true` (#18) | 2 |
+| The central SSR test kept the "every hook has a case" guard | `src/ssr.test.ts` stays as that guard only; the `ARGS` list is gone | 10 |
+| `server-only` is not installed in the docs | Added as a docs dependency; `check:playgrounds` runs with `--conditions=react-server` | 13 |
+| StackBlitz lazy-loaded every hook's source on the client | The page passes the playground's sources from the server | 13 |
+| The featured-hooks check found `useLocalStorage` on the Data card (it is a state hook, so it never showed) | Removed from that card | 14 |
+| `.gitignore` lines for files that 12 and 13 stop writing | Removed by the PR that removes the writer | 12, 13 |
+| Open (CEO): 43 demo files say "Mirrors lib/hook-docs.ts" | A comment-only PR over the cap, or wait for the Chakra demo rewrite | — |
+| Open (CEO): many summaries from the old JSDoc are weaker than the old manifest text | Reword chosen summaries (one TSDoc edit each) before the release | — |
+
