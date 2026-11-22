@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CopyButton } from "@/components/copy-button";
 import { SparklesIcon } from "@/components/icons";
+import { HOOKS } from "@/lib/hooks-registry";
 
 type Mode = "package" | "agent";
 
@@ -86,7 +87,7 @@ export function DualInstallWidget({ className = "" }: { className?: string }) {
         </Link>
       ) : (
         <span className="text-xs text-gray-body/60">
-          Zero dependencies · 66 hooks · SSR-safe
+          Zero dependencies · {HOOKS.length} hooks · SSR-safe
         </span>
       )}
     </div>

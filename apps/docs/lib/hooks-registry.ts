@@ -1,10 +1,21 @@
-/* The hook list is the LIBRARY manifest — the single source of truth
-   (`packages/hookli/hooks.manifest.json`, imported via the `hookli/manifest` subpath
-   export). Adding a hook in the library makes it appear here automatically; nothing is
-   hand-maintained. This file keeps the docs-side types, category order/labels and helpers. */
+/* The hook list is the LIBRARY manifest (`hookli/manifest`) and the categories are the
+   library's catalog/categories.json. Adding a hook or a category in the library makes it
+   appear here; nothing is hand-maintained. Both are small, so client code may import this. */
 import manifest from "hookli/manifest";
+import categories from "../../../packages/hookli/catalog/categories.json";
 
-export type HookCategory = "state" | "effects" | "dom" | "data";
+const CATEGORY_IDS = ["state", "effects", "dom", "data"] as const;
+export type HookCategory = (typeof CATEGORY_IDS)[number];
+
+export type CategoryInfo = { id: HookCategory; label: string; title: string; description: string };
+
+/* The docs key icons and featured hooks by category id, so the ids must match the library's. */
+if (categories.map((c) => c.id).join() !== CATEGORY_IDS.join()) {
+  throw new Error(`hooks-registry: catalog/categories.json ids (${categories.map((c) => c.id)}) differ from HookCategory (${CATEGORY_IDS})`);
+}
+
+/* In catalog/categories.json order (docs/DESIGN.md §6). */
+export const CATEGORIES = categories as CategoryInfo[];
 
 export type HookEntry = {
   slug: string;
@@ -16,20 +27,9 @@ export type HookEntry = {
 
 export const HOOKS: readonly HookEntry[] = (manifest as { hooks: readonly HookEntry[] }).hooks;
 
-/* Sidebar / docs-index group order (docs/DESIGN.md §6). */
-export const CATEGORY_ORDER: readonly HookCategory[] = [
-  "state",
-  "effects",
-  "dom",
-  "data",
-] as const;
+export const CATEGORY_ORDER: readonly HookCategory[] = CATEGORIES.map((c) => c.id);
 
-export const CATEGORY_LABELS: Record<HookCategory, string> = {
-  state: "State",
-  effects: "Effects",
-  dom: "DOM",
-  data: "Data",
-};
+export const CATEGORY_LABELS = Object.fromEntries(CATEGORIES.map((c) => [c.id, c.label])) as Record<HookCategory, string>;
 
 export function getHook(slug: string): HookEntry | undefined {
   return HOOKS.find((hook) => hook.slug === slug);
