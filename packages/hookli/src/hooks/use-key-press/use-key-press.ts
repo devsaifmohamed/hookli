@@ -5,8 +5,26 @@ import { useEffect, useState } from "react";
  * and `keyup` on `window` (attached in an effect, so SSR-safe) and removes the
  * listeners on unmount.
  *
- * @param targetKey - The `KeyboardEvent.key` to watch (e.g. `"Enter"`, `"a"`, `"Escape"`).
- * @returns `true` while the key is pressed, `false` otherwise.
+ * @category dom
+ * @keywords key press, key down, key held, keyboard key, escape key, is key pressed
+ * @param targetKey - The KeyboardEvent.key to watch (e.g. 'Enter', 'Escape').
+ *
+ * @example Usage
+ * ```tsx
+ * import { useKeyPress } from "hookli";
+ *
+ * export function Demo() {
+ *   const enterPressed = useKeyPress("Enter");
+ *   const escapePressed = useKeyPress("Escape");
+ *
+ *   return (
+ *     <div>
+ *       <p>Enter: {enterPressed ? "Pressed" : "Released"}</p>
+ *       <p>Escape: {escapePressed ? "Pressed" : "Released"}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useKeyPress = (targetKey: string): boolean => {
   const [pressed, setPressed] = useState(false);

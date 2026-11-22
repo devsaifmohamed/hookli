@@ -17,8 +17,21 @@ const MODIFIERS = [
  * attaches to `window` in an effect (SSR-safe) and calls `preventDefault()` on a
  * match. The callback is held in a ref, so re-renders don't re-bind.
  *
- * @param keys - The combo, e.g. `"ctrl+k"` (case-insensitive).
- * @param callback - Called with the `KeyboardEvent` when the combo matches.
+ * @category dom
+ * @keywords hotkeys, keyboard shortcut, key combo, ctrl, cmd, command palette, shortcut
+ *
+ * @example Usage
+ * ```tsx
+ * import { useHotkeys } from "hookli";
+ *
+ * export function Demo() {
+ *   useHotkeys("ctrl+k", () => {
+ *     console.log("Ctrl+K pressed");
+ *   });
+ *
+ *   return <div>Press Ctrl+K to trigger shortcut</div>;
+ * }
+ * ```
  */
 export const useHotkeys = (
   keys: string,

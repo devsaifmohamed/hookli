@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { useWindowSize } from "./use-window-size";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 const setSize = (width: number, height: number) => {
   Object.defineProperty(window, "innerWidth", {
@@ -50,5 +51,11 @@ describe("useWindowSize", () => {
 
     resize(640, 480);
     expect(result.current).toEqual({ width: 640, height: 480 });
+  });
+});
+
+describe("useWindowSize on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useWindowSize");
   });
 });

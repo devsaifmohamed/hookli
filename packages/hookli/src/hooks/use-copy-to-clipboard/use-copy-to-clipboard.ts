@@ -4,7 +4,7 @@ export type CopiedValue = string | null;
 
 export type CopyFn = (text: string) => Promise<boolean>;
 
-export type UseCopyToClipboardReturn = [CopiedValue, CopyFn];
+export type UseCopyToClipboardReturn = [copiedText: CopiedValue, copy: CopyFn];
 
 /**
  * Copies text to the clipboard via the async Clipboard API and tracks the last
@@ -15,8 +15,23 @@ export type UseCopyToClipboardReturn = [CopiedValue, CopyFn];
  * `false` when the API is unavailable or the write is rejected, resetting the
  * tracked value to `null` on failure.
  *
- * @returns `[copiedText, copy]` — the last copied string (or `null`) and the
- * async copy function.
+ * @category dom
+ * @keywords clipboard, copy, copy to clipboard, copy button, copy link, navigator.clipboard
+ *
+ * @example Usage
+ * ```tsx
+ * import { useCopyToClipboard } from "hookli";
+ *
+ * export function Demo() {
+ *   const [copiedText, copy] = useCopyToClipboard();
+ *
+ *   return (
+ *     <button type="button" onClick={() => copy("npm i hookli")}>
+ *       {copiedText ? "Copied!" : "Copy"}
+ *     </button>
+ *   );
+ * }
+ * ```
  */
 export function useCopyToClipboard(): UseCopyToClipboardReturn {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);

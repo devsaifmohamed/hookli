@@ -3,6 +3,7 @@ import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useDraggable, type UseDraggableOptions } from "./use-draggable";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 // jsdom has no layout: the canvas is 500x300 at the viewport origin and the
 // 40x40 element sits at (100, 50), shifted by whatever transform it carries.
@@ -434,5 +435,11 @@ describe("useDraggable", () => {
       return null;
     };
     expect(() => renderToString(createElement(Probe))).not.toThrow();
+  });
+});
+
+describe("useDraggable on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useDraggable");
   });
 });

@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { useScript } from "./use-script";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 const SRC = "https://example.com/lib.js";
 
@@ -64,5 +65,11 @@ describe("useScript", () => {
     expect(document.querySelector(`script[src="${SRC}"]`)).not.toBeNull();
     unmount();
     expect(document.querySelector(`script[src="${SRC}"]`)).toBeNull();
+  });
+});
+
+describe("useScript on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useScript", null);
   });
 });

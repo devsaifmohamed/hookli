@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useFullscreen } from "./use-fullscreen";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useFullscreen", () => {
   it("defaults to not fullscreen and exposes controls", async () => {
@@ -13,5 +14,11 @@ describe("useFullscreen", () => {
     await act(async () => {
       await result.current.enter();
     });
+  });
+});
+
+describe("useFullscreen on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useFullscreen", { current: null });
   });
 });

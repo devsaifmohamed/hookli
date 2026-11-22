@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useLongPress } from "./use-long-press";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useLongPress", () => {
   afterEach(() => vi.useRealTimers());
@@ -25,5 +26,11 @@ describe("useLongPress", () => {
     act(() => result.current.onMouseUp());
     act(() => vi.advanceTimersByTime(500));
     expect(cb).not.toHaveBeenCalled();
+  });
+});
+
+describe("useLongPress on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useLongPress", () => {});
   });
 });

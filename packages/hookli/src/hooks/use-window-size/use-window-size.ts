@@ -4,19 +4,18 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
 
 const IS_SERVER = typeof window === "undefined";
 
-/**
- * The viewport size reported by {@link useWindowSize}.
- */
 export interface WindowSize {
+  /** In pixels. */
   width: number;
+  /** In pixels. */
   height: number;
 }
 
-/**
- * Options accepted by {@link useWindowSize}.
- */
 export interface UseWindowSizeOptions {
-  /** Read the real size synchronously on mount. Defaults to `true`. */
+  /**
+   * Read the real size synchronously on mount. Set false to start at 0 and populate after
+   * hydration. Defaults to `true`.
+   */
   initializeWithValue?: boolean;
 }
 
@@ -27,8 +26,19 @@ export interface UseWindowSizeOptions {
  * start at `0` and populate after mount. The `resize` listener is attached via
  * {@link useEventListener} and removed on cleanup.
  *
- * @param options - Optional hydration flag.
- * @returns The current window `{ width, height }` in pixels.
+ * @category dom
+ * @keywords window size, viewport size, window width, window height, innerWidth, resize
+ *
+ * @example Usage
+ * ```tsx
+ * import { useWindowSize } from "hookli";
+ *
+ * export function Demo() {
+ *   const { width, height } = useWindowSize();
+ *
+ *   return <p>{width} × {height}</p>;
+ * }
+ * ```
  */
 export function useWindowSize(options: UseWindowSizeOptions = {}): WindowSize {
   const { initializeWithValue = true } = options;

@@ -14,8 +14,23 @@ const ACTIVITY_EVENTS = [
  * milliseconds. Any mouse/keyboard/touch/scroll activity resets the timer.
  * Listeners attach in an effect, so it is SSR-safe.
  *
- * @param ms - Inactivity threshold in milliseconds. Defaults to `60000` (1 min).
- * @returns `true` once the user has been idle for `ms`, `false` while active.
+ * @category dom
+ * @keywords idle, inactive, inactivity, afk, away, auto logout, session timeout
+ *
+ * @example Usage
+ * ```tsx
+ * import { useIdle } from "hookli";
+ *
+ * export function Demo() {
+ *   const isIdle = useIdle(5000);
+ *
+ *   return (
+ *     <div>
+ *       <p>User is: {isIdle ? "Idle" : "Active"}</p>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useIdle = (ms: number = 60_000): boolean => {
   const [idle, setIdle] = useState<boolean>(false);

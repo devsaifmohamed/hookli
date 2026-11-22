@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useWindowScroll } from "./use-window-scroll";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useWindowScroll", () => {
   it("starts at the current scroll position", () => {
@@ -16,5 +17,11 @@ describe("useWindowScroll", () => {
       window.dispatchEvent(new Event("scroll"));
     });
     expect(result.current).toEqual({ x: 10, y: 20 });
+  });
+});
+
+describe("useWindowScroll on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useWindowScroll");
   });
 });

@@ -3,7 +3,12 @@ import { useEffect, useState } from "react";
 export type UseScriptStatus = "idle" | "loading" | "ready" | "error";
 
 export interface UseScriptOptions {
+  /**
+   * Keep the status "idle" without injecting the script — useful for deferring a load. Defaults to
+   * `false`.
+   */
   shouldPreventLoad?: boolean;
+  /** Remove the injected <script> tag when the component unmounts. Defaults to `false`. */
   removeOnUnmount?: boolean;
 }
 
@@ -15,9 +20,20 @@ export interface UseScriptOptions {
  * `data-status` attribute) so multiple components can share one load. Pass a
  * `null` `src` or `shouldPreventLoad` to keep the status `"idle"`.
  *
- * @param src - The script URL to load, or `null` to skip loading.
- * @param options - Optional `shouldPreventLoad` and `removeOnUnmount` flags.
- * @returns The current status: `"idle" | "loading" | "ready" | "error"`.
+ * @category dom
+ * @keywords load script, script tag, third party script, external script, sdk loader, cdn script
+ *
+ * @example Usage
+ * ```tsx
+ * import { useScript } from "hookli";
+ *
+ * export function Demo() {
+ *   const status = useScript("https://example.com/widget.js");
+ *
+ *   if (status === "ready") return <p>Widget loaded.</p>;
+ *   return <p>Loading… ({status})</p>;
+ * }
+ * ```
  */
 export function useScript(
   src: string | null,

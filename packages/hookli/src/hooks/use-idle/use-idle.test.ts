@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useIdle } from "./use-idle";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useIdle", () => {
   afterEach(() => vi.useRealTimers());
@@ -27,5 +28,11 @@ describe("useIdle", () => {
       window.dispatchEvent(new Event("mousemove"));
     });
     expect(result.current).toBe(false);
+  });
+});
+
+describe("useIdle on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useIdle");
   });
 });

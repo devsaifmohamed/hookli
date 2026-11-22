@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useState, type RefObject } from "react";
 
-/** The value returned by {@link useFullscreen}. */
 export interface UseFullscreenReturn {
-  /** Whether the referenced element is currently fullscreen. */
   isFullscreen: boolean;
-  /** Request fullscreen for the referenced element. */
   enter: () => Promise<void>;
-  /** Exit fullscreen (if this element is fullscreen). */
   exit: () => Promise<void>;
-  /** Toggle fullscreen for the referenced element. */
   toggle: () => Promise<void>;
 }
 
@@ -17,8 +12,27 @@ export interface UseFullscreenReturn {
  * currently fullscreen (via `fullscreenchange`). Listeners attach in an effect,
  * so the hook is SSR-safe; calls are no-ops where the API is unavailable.
  *
- * @param ref - A ref to the element to make fullscreen.
- * @returns `{ isFullscreen, enter, exit, toggle }`.
+ * @category dom
+ * @keywords fullscreen, full screen, requestFullscreen, presentation mode, video fullscreen
+ *
+ * @example Usage
+ * ```tsx
+ * import { useRef } from "react";
+ * import { useFullscreen } from "hookli";
+ *
+ * export function Demo() {
+ *   const ref = useRef<HTMLDivElement>(null);
+ *   const { isFullscreen, toggle } = useFullscreen(ref);
+ *
+ *   return (
+ *     <div ref={ref}>
+ *       <button onClick={toggle}>
+ *         {isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useFullscreen = <T extends HTMLElement = HTMLElement>(
   ref: RefObject<T | null>,
