@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { SparklesIcon, ArrowRightIcon } from "@/components/icons";
+import { HOOKS } from "@/lib/hooks-registry";
 
 const IDE_NAMES = [
   "Cursor · Composer Agent",
@@ -191,7 +192,7 @@ export function HeroAgentPreview({ className = "" }: { className?: string }) {
       {/* Bottom Action Footer */}
       <div className="flex items-center justify-between border-t border-white/[0.06] bg-white/[0.015] px-4 py-2.5 text-xs">
         <span className="text-gray-body/60">
-          Zero hallucinations · Real TypeScript AST · 66 hooks
+          Zero hallucinations · Real TypeScript AST · {HOOKS.length} hooks
         </span>
         <Link
           href="/docs/mcp"

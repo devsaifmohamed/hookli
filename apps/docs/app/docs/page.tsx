@@ -13,6 +13,7 @@ import {
 } from "@/components/icons";
 import { InstallCommand } from "@/components/install-command";
 import {
+  CATEGORIES,
   CATEGORY_LABELS,
   CATEGORY_ORDER,
   HOOKS,
@@ -32,38 +33,30 @@ export const metadata: Metadata = {
   },
 };
 
+/* Docs-only UI per category. Title and description come from the library's
+   catalog/categories.json; a featured name that isn't a hook fails the build. */
 const CATEGORY_META: Record<
   HookCategory,
   {
-    title: string;
-    desc: string;
     icon: React.ComponentType<{ className?: string }>;
     featured: string[];
   }
 > = {
   state: {
-    title: "State Management",
-    desc: "Primitives for boolean flags, counters, multi-step wizards, forms, and undo/redo queues.",
     icon: SlidersIcon,
     featured: ["useToggle", "useCounter", "useForm", "useStep"],
   },
   dom: {
-    title: "DOM & Browser",
-    desc: "Intersection observers, outside clicks, resize detection, mouse tracking, and keyboard hotkeys.",
     icon: GlobeIcon,
     featured: ["useClickOutside", "useEventListener", "useIntersectionObserver"],
   },
   effects: {
-    title: "Effects & Timing",
-    desc: "Debouncing, throttling, intervals, countdown timers, and SSR-safe lifecycle side-effects.",
     icon: ZapIcon,
     featured: ["useDebounce", "useInterval", "useTimeout", "useThrottle"],
   },
   data: {
-    title: "Data & Storage",
-    desc: "On-demand async mutations, client-side fetching, and reactive localStorage & sessionStorage.",
     icon: DatabaseIcon,
-    featured: ["useMutation", "useFetch", "useLocalStorage"],
+    featured: ["useMutation", "useFetch"],
   },
 };
 
@@ -222,6 +215,7 @@ export default function DocsIndexPage() {
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {CATEGORY_ORDER.map((category) => {
             const meta = CATEGORY_META[category];
+            const info = CATEGORIES.find((c) => c.id === category)!;
             const hooks = hooksByCategory(category);
             const Icon = meta.icon;
 
@@ -237,7 +231,7 @@ export default function DocsIndexPage() {
                         <Icon className="size-4" />
                       </span>
                       <h3 className="font-semibold text-base text-fg">
-                        {meta.title}
+                        {info.title}
                       </h3>
                     </div>
                     <span className="rounded-full bg-white/[0.04] px-2 py-0.5 font-mono text-xs text-gray-body/60 border border-white/[0.04]">
@@ -246,7 +240,7 @@ export default function DocsIndexPage() {
                   </div>
 
                   <p className="mt-3 text-xs sm:text-sm leading-relaxed text-gray-body">
-                    {meta.desc}
+                    {info.description}
                   </p>
                 </div>
 
@@ -255,7 +249,7 @@ export default function DocsIndexPage() {
                   <span className="text-[11px] text-gray-body/50 font-mono">Popular:</span>
                   {meta.featured.map((name) => {
                     const hook = hooks.find((h) => h.name === name);
-                    if (!hook) return null;
+                    if (!hook) throw new Error(`docs index: featured "${name}" is not a ${category} hook`);
                     return (
                       <Link
                         key={hook.slug}
