@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
  * @category effects
  * @keywords debounce, typing delay, search as you type, wait until typing stops, delay value
  * @param delay - Milliseconds the value must stay unchanged before the debounced value updates.
+ * @returns debouncedValue - Trails the input value, updating only after delay ms without a change.
  *
  * @example Usage
  * ```tsx

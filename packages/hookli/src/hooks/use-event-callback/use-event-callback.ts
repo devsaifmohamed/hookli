@@ -13,6 +13,8 @@ import { useIsomorphicLayoutEffect } from "../use-isomorphic-layout-effect";
  * @keywords stable callback, latest props, stale closure, useEvent, callback ref
  * @param fn - Calling the returned callback during render throws: use it in event handlers and
  *   effects.
+ * @returns callback - A memoized callback with an unchanging identity that always forwards to the
+ *   latest fn.
  *
  * @example Usage
  * ```tsx
