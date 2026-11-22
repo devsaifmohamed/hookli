@@ -3,6 +3,10 @@
 All notable changes are documented here. This project follows semantic versioning.
 Releases are also published at https://github.com/devsaifmohamed/hookli/releases.
 
+## Unreleased
+- Docs come from each hook's own TSDoc. `hookli/manifest` keeps its shape and fields, but each `description` is now the hook's TSDoc summary, so the wording of many descriptions changed. The `.d.ts` hovers show the same text.
+- `useDefault` is marked `@deprecated` in the published types (use `useDefaultValue`).
+
 ## 1.7.0 — 2026-11-20
 - `useEventListener`, `useHover` and `useResizeObserver` accept the element itself as well as a ref (`RefObject<T> | T | null`). Keep the element in state with `ref={setEl}` to follow an element that a child component mounts with its own state, which a `useRef` cannot report. `null` attaches nothing. Refs work as before.
 - Docs: a "mounted by a child component" example for each of the three hooks.

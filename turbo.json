@@ -7,7 +7,7 @@
     },
     "hookli#build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "generated/**"]
+      "outputs": ["dist/**", "generated/**", "hooks.manifest.json"]
     },
     "test": {
       "dependsOn": ["^build"]

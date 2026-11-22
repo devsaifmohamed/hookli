@@ -23,13 +23,13 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # The README hook index must match the manifest. (The MCP catalog and the docs' hook
-      # sources are written by the library build, never committed.)
-      - name: Generated files are up to date
+      # The README hook index is the one generated file that is committed (the npm page shows
+      # it), so it must match the hooks' TSDoc. Everything else is built, never committed.
+      - name: README is up to date
         run: |
-          pnpm --filter hookli run gen:manifest
+          pnpm readme
           git status --porcelain
-          test -z "$(git status --porcelain)" || { echo "::error::Generated files are stale or uncommitted. Run the commands above and commit the result."; exit 1; }
+          test -z "$(git status --porcelain)" || { echo "::error::The README is stale. Run pnpm readme and commit the result."; exit 1; }
 
       # Turborepo runs each task across both workspaces (docs waits for the library build).
       - name: Build
@@ -39,6 +39,10 @@ jobs:
         run: pnpm test
 
       # Every @example in the hooks' TSDoc must compile against the current library.
+      # The npm tarball carries the built manifest (hookli/manifest) and the bundles.
+      - name: Library package contents
+        run: pnpm --filter hookli run test:package
+
       - name: Examples compile
         run: pnpm --filter hookli run examples:check
 
