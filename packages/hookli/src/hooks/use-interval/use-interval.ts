@@ -7,8 +7,30 @@ import { useEffect, useRef } from "react";
  * interval is created inside an effect so the hook is SSR-safe and always
  * cleared on cleanup. Passing `null` as `delay` pauses the interval.
  *
- * @param callback - The function to run on every tick.
- * @param delay - Milliseconds between ticks, or `null` to pause.
+ * @category effects
+ * @keywords setInterval, interval, every n seconds, repeat, polling, periodic, tick
+ *
+ * @example Usage
+ * ```tsx
+ * import { useState } from "react";
+ * import { useInterval } from "hookli";
+ *
+ * export function Demo() {
+ *   const [count, setCount] = useState(0);
+ *   const [running, setRunning] = useState(true);
+ *
+ *   useInterval(() => setCount((prev) => prev + 1), running ? 1000 : null);
+ *
+ *   return (
+ *     <div>
+ *       <p>{count}</p>
+ *       <button onClick={() => setRunning((prev) => !prev)}>
+ *         {running ? "Pause" : "Resume"}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useInterval = (callback: () => void, delay: number | null): void => {
   const savedCallback = useRef<() => void>(callback);

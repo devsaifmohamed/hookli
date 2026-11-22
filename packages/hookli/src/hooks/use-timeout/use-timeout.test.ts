@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useTimeout } from "./use-timeout";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useTimeout", () => {
   beforeEach(() => vi.useFakeTimers());
@@ -46,5 +47,11 @@ describe("useTimeout", () => {
     unmount();
     vi.advanceTimersByTime(5000);
     expect(cb).not.toHaveBeenCalled();
+  });
+});
+
+describe("useTimeout on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useTimeout", () => {}, 100);
   });
 });

@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useUnmount } from "./use-unmount";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useUnmount", () => {
   it("does not call the function before unmount", () => {
@@ -31,5 +32,11 @@ describe("useUnmount", () => {
 
     expect(first).not.toHaveBeenCalled();
     expect(second).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("useUnmount on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useUnmount", () => {});
   });
 });

@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useInterval } from "./use-interval";
+import { expectSSRSafe } from "../../test-utils/ssr";
 
 describe("useInterval", () => {
   beforeEach(() => vi.useFakeTimers());
@@ -48,5 +49,11 @@ describe("useInterval", () => {
     unmount();
     vi.advanceTimersByTime(5000);
     expect(cb).not.toHaveBeenCalled();
+  });
+});
+
+describe("useInterval on the server", () => {
+  it("renders without browser globals", async () => {
+    await expectSSRSafe("useInterval", () => {}, 100);
   });
 });
