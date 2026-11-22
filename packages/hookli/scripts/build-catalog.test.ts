@@ -438,6 +438,14 @@ describe("build-catalog --strict: each mistake fails, naming the hook and the fi
     expect(output).toContain('use-thing: parameters: @param "bogus" names no parameter');
   });
 
+  it("a value return with no @returns tag, and a hook with no return type", () => {
+    expect(strict(thing({ tags: ["@category state", "@keywords a", "@param initial - x"] }))).toContain(
+      'use-thing: returns: returns number but has no "@returns name - text" tag',
+    );
+    const untyped = completeHook("useThing").replace("(initial: number): number =>", "(initial: number) =>");
+    expect(strict({ hooks: { "use-thing": untyped } })).toContain("use-thing: returns: no return type: annotate it so the return can be documented");
+  });
+
   it("X12: a hook that imports a sibling which is no longer an exported hook", () => {
     const body = "const [value] = useState(useGone(initial));\n  return value;";
     const source = completeHook("useThing", { body }).replace('import { useState } from "react";', 'import { useState } from "react";\nimport { useGone } from "../use-gone";');

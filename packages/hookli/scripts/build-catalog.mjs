@@ -273,7 +273,7 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
   /** Return rows come from the code: every member of an object return, every element of a
       tuple return (named by its label or its `@returns [i] name` tag). A row's text is its
       `@returns` tag, else the member's own TSDoc, else empty. Any other return is described
-      by its tags only. */
+      by its tags only, so it needs one unless it is `void`. */
   function returnRows(slug, tags, returnType) {
     const rows = tags.map((tag) => returnRow(slug, tag, returnType, tags.length === 1));
     const shape = shapeOf(returnType);
@@ -292,6 +292,8 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
         return { name: tagged?.name ?? `[${i}] ${label ?? `arg${i}`}`, type, description: tagged?.description ?? "" };
       });
     }
+    if (!returnType) report(slug, "returns", "no return type: annotate it so the return can be documented");
+    else if (!rows.length && text(returnType) !== "void") report(slug, "returns", `returns ${text(returnType)} but has no "@returns name - text" tag`);
     return rows;
   }
 
@@ -376,7 +378,7 @@ export function buildCatalog(packageRoot = PACKAGE_ROOT) {
         ? checker.getSignaturesOfType(checker.getTypeAtLocation(variable), ts.SignatureKind.Call).map((s) => s.declaration).filter(Boolean)
         : [];
     let signature = signatures.map((sig) => `${name}${typeParams(sig)}(${sig.parameters.map(text).join(", ")})${sig.type ? `: ${text(sig.type)}` : ""}`).join("\n");
-    const returnType = signatures[0]?.type ?? variable?.type;
+    const returnType = signatures[0]?.type ?? annotated[0]?.type ?? variable?.type;
     if (!signatures.length) {
       if (annotated.length) signature = annotated.map((sig) => `${name}${typeParams(sig)}(${sig.parameters.map(text).join(", ")})${sig.type ? `: ${text(sig.type)}` : ""}`).join("\n");
       else if (variable?.type) signature = `${name}: ${text(variable.type)}`;
