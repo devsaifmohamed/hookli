@@ -110,7 +110,11 @@ if (missingSource.length || missingKeywords.length) {
 }
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2) + "\n", "utf-8");
-fs.writeFileSync(metaPath, JSON.stringify({ libraryVersion, mcpVersion, hookCount: catalog.length }, null, 2) + "\n", "utf-8");
+// Unchanged files keep their mtime, so a later run doesn't make dist look stale (test:package).
+const writeIfChanged = (file, text) => {
+  if (!fs.existsSync(file) || fs.readFileSync(file, "utf-8") !== text) fs.writeFileSync(file, text, "utf-8");
+};
+writeIfChanged(outputPath, JSON.stringify(catalog, null, 2) + "\n");
+writeIfChanged(metaPath, JSON.stringify({ libraryVersion, mcpVersion, hookCount: catalog.length }, null, 2) + "\n");
 
 console.log(`MCP catalog: ${catalog.length} hooks, hookli ${libraryVersion}, source for ${sourcesFound}/${catalog.length}.`);

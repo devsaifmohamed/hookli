@@ -39,7 +39,7 @@
     "Releases are human-gated: never npm publish, npm version or push a tag. The owner publishes with npm publish --otp=<code>.",
     "Never push to main or deploy from an agent loop. A push to main deploys the docs to Vercel.",
     "No Claude attribution in commits or PRs: no Co-Authored-By trailers, no Claude Code footer, no session links.",
-    "Generated files must be committed: run node scripts/build-mcp-catalog.mjs, node scripts/gen-hook-sources.mjs and pnpm --filter hookli run gen:manifest (CI fails when stale).",
+    "Run pnpm --filter hookli run gen:manifest and commit the README it writes (CI fails when stale). The MCP catalog and the docs' hook sources are built at build time, never committed.",
     "Shared facts (hook list, count, descriptions, version) come from packages/hookli/hooks.manifest.json, never hand-maintained copies.",
     "A library release bumps packages/hookli version + CHANGELOG.md; an MCP release bumps packages/hookli-mcp. Tags: vX.Y.Z and mcp-vX.Y.Z."
   ]

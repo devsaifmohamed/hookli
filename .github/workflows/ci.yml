@@ -23,12 +23,10 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Generated files must match their sources: the MCP catalog (served to AI agents),
-      # the docs' hook sources (doc pages, llms.txt, StackBlitz) and the README hook index.
+      # The README hook index must match the manifest. (The MCP catalog and the docs' hook
+      # sources are written by the library build, never committed.)
       - name: Generated files are up to date
         run: |
-          node scripts/build-mcp-catalog.mjs
-          node scripts/gen-hook-sources.mjs
           pnpm --filter hookli run gen:manifest
           git status --porcelain
           test -z "$(git status --porcelain)" || { echo "::error::Generated files are stale or uncommitted. Run the commands above and commit the result."; exit 1; }
