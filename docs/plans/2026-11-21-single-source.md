@@ -1,6 +1,6 @@
 # RFC: One source of truth per hook
 
-Status: **Locked** by the CEO on 2026-11-21, with **amendment 1** (same day, after PR 1 measured the repo; see the end of this doc). The business half and every open question were approved; the plan was reviewed by the product owner, three tech-lead lenses and two re-reviews, with every finding folded in (see "Review log").
+Status: **Locked** by the CEO on 2026-11-21, with **amendment 1** (same day, after PR 1 measured the repo) and **amendment 2** (2026-11-22, CEO review of the first PRs); see the end of this doc. The business half and every open question were approved; the plan was reviewed by the product owner, three tech-lead lenses and two re-reviews, with every finding folded in (see "Review log").
 Codex: skipped for this plan, at the CEO's request.
 Diagrams: [today](assets/2026-11-21-hookli-architecture-today.png) and [target](assets/2026-11-21-hookli-single-source-target.png).
 
@@ -42,9 +42,9 @@ What a contributor does in the target state, and what must be true after. The "i
 | # | Scenario | Ideal hand edits (frozen) | Must be true after |
 |---|---|---|---|
 | S1 | **Add a hook** | 7: `use-x.ts`, `use-x.test.ts` (including its SSR case), `use-x/index.ts`, barrel line in `src/hooks/index.ts`, `use-x-demo.tsx`, one line in the demo map, one MCP search tuning case | `useX` is in npm, `hookli/manifest`, the README index and count, `/docs/use-x` with its demo, `llms.txt`, and MCP `list_hooks` / `search_hooks` |
-| S2 | **Add a hook, forget something** | — | CI fails with `use-x: <field>: <problem>` (mistakes X1–X7, X10) |
+| S2 | **Add a hook, forget something** | — | CI fails with `use-x: <field>: <problem>` (mistakes X1–X6, X10) |
 | S3 | **Bug fix, no API change** | 2: code + test | The Source section, StackBlitz and MCP `get_hook_source` show the new code. No generated file in the diff |
-| S4 | **Public API change** (param type, new optional param, new return field) | 2: code (with its TSDoc) + test | Manifest signature, docs tables and MCP update. A stale or missing `@param` fails CI (X6, X7) |
+| S4 | **Public API change** (param type, new optional param, new return field) | 2: code (with its TSDoc) + test | Manifest signature, docs tables and MCP update. A stale `@param` fails CI (X6); a new parameter or return field gets its row from the code |
 | S5 | **Docs text only** (summary, example, keywords) | 1 | Docs page, README line and MCP search update |
 | S6 | **Rename with deprecated alias** | 7: the 3 renamed folder files, barrel, the demo file renamed, the demo map line, the search tuning case | The old name is still importable and marked deprecated, with no catalog entry or page of its own. The old URL redirects. Hooks that import the old folder are updated, or CI fails |
 | S7 | **Move to another category** | 1 (a new category: 2, adding `catalog/categories.json`) | README grouping, docs sidebar and MCP filter follow. A category left empty fails CI (X13) |
@@ -69,7 +69,7 @@ Each mistake must make the CI command fail with a message naming the hook. It is
 | X4 | No keywords | |
 | X5 | No usage example | |
 | X6 | `@param` names a parameter that doesn't exist | |
-| X7 | A parameter with no `@param` | |
+| X7 | ~~A parameter with no `@param`~~ **Retired (amendment 2):** an obvious parameter needs no comment; its row comes from the code | |
 | X8 | An `@example` that doesn't compile against the current API | |
 | X9 | A demo for a hook that doesn't exist | |
 | X10 | A hook with no demo | `useDraggable` (3c1e009) |
@@ -87,7 +87,7 @@ A number from 0 to 100. **It's a measurement for this project, not code in the r
 |---|---|---|---|---|
 | M1 | Copies per fact | Hand-written places for the 6 facts in the Problem table, summed. The category list counts, so the floor is 7: `@category` plus `catalog/categories.json` | 7 | 25 |
 | M2 | Hand edits per scenario | For S1 and S3–S8: ideal ÷ actual edits, averaged. Before: replayed once on `main`. After: counted by the scenario tests. Each test also runs every "one edit left out" variant, and each variant must fail, so the count can't be padded or trimmed | the frozen table above | 25 |
-| M3 | Mistakes caught | Share of X1–X15 that make the CI command set fail. The score script applies each mistake fixture and runs that set (`pnpm test`, `examples:check`, the docs demo check). X14 and X15 count as caught only when M1 shows a single copy of that fact, so the bug can't exist | 100% | 25 |
+| M3 | Mistakes caught | Share of X1–X15 (X7 retired, so 14) that make the CI command set fail. The score script applies each mistake fixture and runs that set (`pnpm test`, `examples:check`, the docs demo check). X14 and X15 count as caught only when M1 shows a single copy of that fact, so the bug can't exist | 100% | 25 |
 | M4 | Committed generated files | Tracked files a generator writes. The README and its root mirror are one output | 1 | 15 |
 | M5 | Generator scripts | Scripts that write data the shipped outputs read (README, manifest, catalog, docs or MCP data). The fixed list lives in the score script; banner rendering, the score script, the codemod and check scripts aren't counted | 1 | 10 |
 
@@ -117,7 +117,7 @@ Each metric scores `ideal ÷ actual`, capped at 1, times its weight; M3 uses the
 - **Deleted hooks:** the old URL shows a "Removed in vX" page naming the replacement. Until a release ships it, the page shows "Removed (next release)". (CEO, version rule from the review)
 - **Score:** weights as written, target 90 or more. (CEO)
 - **Codemod PRs:** split by category within the 15-file cap. (CEO) The counts (state 19, effects 16, dom 23, data 8) make it **7 PRs**, 3a–3g. The question said 6, which was a miscount.
-- **Row text:** where docs table text and code TSDoc differ (parameter, return and type-field text), the docs table text wins and moves into the TSDoc. (CEO)
+- **Row text:** where docs table text and code TSDoc differ (parameter, return and type-field text), the docs table text wins and moves into the TSDoc. (CEO) **Amended:** text that only repeats the name and type is dropped instead (amendment 2).
 - **Types:** the code's type wins over a simplified or stale docs type. Every changed type is listed in the approved diffs. (CEO)
 
 ---
@@ -137,7 +137,7 @@ Everything about a hook lives in `packages/hookli/src/hooks/use-x/use-x.ts`, as 
  * @category dom
  * @keywords hover, mouse enter, mouse leave, is hovered, hover state
  * @param elementRef - A ref to the element, or the element itself (`null` until mounted).
- * @returns isHovered - `true` while the pointer is over the element.
+ * @returns isHovered - `true` while the pointer is over the element.             ← only when it adds something
  *
  * @example Usage
  * ```tsx
@@ -163,12 +163,14 @@ The generator uses the TypeScript compiler API with the type checker: `ts.create
 | `summary`, `details` | First sentence of the TSDoc; the rest |
 | `category`, `keywords` | `@category` (must be in `catalog/categories.json`); `@keywords` (comma list) |
 | `signature` | Source text of the declaration. **Overloads** (`useEventListener` has 4): one line per overload, implementation excluded. TSDoc is read from the first overload. `export { x }` at the end of the file is supported |
-| `parameters[]` | Names and defaults from the code. Types from the code (the code wins over today's simplified docs types, listed in the approved diffs). Text from `@param` |
-| `returns[]` | One row per `@returns` tag, in order. A tag is `@returns name - text` or `@returns [0] value - text` for tuple members. Each row's type comes from the checker (the tuple element, the property, or the whole return type). So `useToggle` (`[0]`/`[1]`/`[2]`), `useDebounceValue` (aliased tuple), `useBoolean` (5 rows) and `useQueue` (one row plus an alias table) are all expressible with no `.d.ts` change |
+| `parameters[]` | Names and defaults from the code. Types from the code (the code wins over today's simplified docs types, listed in the approved diffs). Text from `@param`, optional (amendment 2) |
+| `returns[]` | **From the code (amendment 2).** An object return gives one row per member; a tuple return one row per element, named by its label in the type (`[value: boolean, toggle: () => void]`) or a `@returns [i] name` tag, and an unnamed element is reported. A row's text is its `@returns` tag, else the member's own comment, else empty. Any other return (`boolean`, `T`) has rows only from `@returns name - text` tags. A lone tag that names no member describes the whole return (`useQueue` before amendment 2) |
 | `typeAliases[]` | Types reached from the signature and the return type, followed transitively, **exported or not** (`GeolocationState` is local), in first-seen order. Rows:<br>• object and interface members (nested objects get dotted names, e.g. `coords.latitude`)<br>• a call signature becomes a `(...args)` row<br>• a union becomes one `value` row listing its members (`TernaryDarkMode`)<br>• each member's text comes from its own TSDoc, and `Defaults to …` gives `defaultValue`<br>The alias name keeps its generics (`DebouncedState<Args, R>`) |
 | `usage`, `examples[]` | First `@example` is the usage; the rest are examples (title on the tag line, optional text, one code block) |
 | `source`, `sourcePath`, `deps` | File text; path; sibling hooks imported (as `gen-hook-sources.mjs` does today) |
-| `aliases[]` | `@deprecated` re-exports in the folder's `index.ts` (for example `useDefault`) |
+| `aliases[]` | `@deprecated` aliases: `export { useX as useOld }` or `export const useOld = useX` (for example `useDefault`) |
+
+**Comment rule (CEO, amendment 2):** a comment, `@param` or `@returns` is written only when it says something the name and type don't: behaviour, defaults (`Defaults to …`), units, SSR, edge cases.
 
 ## 2. Files and data shapes
 
@@ -232,7 +234,7 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
 - **Until every hook is migrated (PRs 2–3g):** the generator runs only as a standalone script and in its fixture tests. It writes `generated/catalog.json` only, never the still-committed manifest. It reports missing fields as a list instead of failing.
 - **PR 4 makes it strict and wires it into `build`.** The manifest switches over in PR 7.
 - `build-catalog.mjs --readme` writes the README index and count, and its root mirror. It runs in CI's check step (README committed and stale-checked, the only generated file left) and in `prepublishOnly`.
-- **Validation:** it fails with `use-x: <field>: <problem>` for X1–X7, X11 and X13. X8 is covered by `examples:check`, X9 and X10 by the docs demo check, and X12 by `tsc` plus a generator message naming the dependent hook.
+- **Validation:** it fails with `use-x: <field>: <problem>` for X1–X6, X11 and X13, and for placeholder text the `new:hook` starter writes (for example `@category TODO`). X8 is covered by `examples:check`, X9 and X10 by the docs demo check, and X12 by `tsc` plus a generator message naming the dependent hook.
 - The `@example` blocks are extracted to temp `.tsx` files and type-checked against the library (`pnpm --filter hookli examples:check`, part of the library verify).
 - It replaces `gen-readme.mjs`, `scripts/gen-hook-sources.mjs` and `scripts/build-mcp-catalog.mjs`. The last one runs `hook-docs.ts` text in a `vm` sandbox, which is not a security boundary; parsing runs nothing.
 
@@ -273,14 +275,14 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
 ## 5. Measurement and tests
 
 - **Kept in the repo (they protect the future):**
-  - `packages/hookli/scripts/build-catalog.test.ts`: vitest fixture tests. One per mistake X1–X7, X11–X13, and one per scenario's library end state S1–S8 (catalog, manifest, README), run on temp copies of fixture hook folders. Each scenario also runs its "one edit left out" variants, and each must fail. Library edits are covered here; the demo-file and demo-map variants of S1, S6 and S8 are covered by the docs demo check, and the MCP variants by the MCP tests.
+  - `packages/hookli/scripts/build-catalog.test.ts`: vitest fixture tests. One per mistake X1–X6, X11–X13, and one per scenario's library end state S1–S8 (catalog, manifest, README), run on temp copies of fixture hook folders. Each scenario also runs its "one edit left out" variants, and each must fail. Library edits are covered here; the demo-file and demo-map variants of S1, S6 and S8 are covered by the docs demo check, and the MCP variants by the MCP tests.
   - **MCP end states** (S1, S6, S8: `list_hooks`, alias lookup, removed answer): MCP tests against a fixture catalog.
   - **Docs end states** (page exists, redirect, removed page, demo map): `check-playgrounds` and the docs build.
   - `examples:check` (X8).
   - The docs demo check (X9, X10).
-- **Outside the repo (CEO):** the score script and the "before" replay. M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 come from the replay (before) and from the tests above (after).
-- **Release branch only (deleted before merge):**
-  - The parity test from 3a (catalog vs `hook-docs.ts` + manifest, field by field) and `parity-approved.json`. They leave `main` in PR 6. The release-branch copy and a snapshot of `main`'s outputs stay until the release PR's parity report is made.
+- **Outside the repo (CEO):**
+  - The score script and the "before" replay. M1, M4 and M5 are static: a declared fact table, checked against `git ls-files` and the scripts that write outputs. M2 and M3 come from the replay (before) and from the tests above (after).
+  - **The codemod and the parity check (amendment 2).** The codemod (`hook-docs.ts` → TSDoc) and the parity check (catalog vs `hook-docs.ts` + manifest, field by field, every difference approved with a reason) are one-off migration tools, run privately on each hook PR. Each hook PR states its parity result. A snapshot of `main`'s outputs is kept with them for the release PR's parity report.
 - **Release PR body:** both scorecards; the parity report (JS byte-identical, `.d.ts` identical once comments are stripped, approved diffs listed, search eval floors green).
 
 ## 6. Impacted surface (CEO to confirm)
@@ -294,19 +296,20 @@ removed-hooks.json entry (1) ──► "Removed" page + MCP get_hook answer; nev
 
 ## 7. Delivery plan (task lane)
 
-Release branch `release/single-source`. Build PRs carry at most 15 production files each.
+Release branch `release/single-source`. Build PRs carry at most 15 production files each (tests on top). **Each file is changed by one PR only, and nothing temporary is committed (CEO, amendment 2).** Numbers are `x/15` in the PR titles.
 
-| PR | Slice | Depends on |
-|---|---|---|
-| 1 | ~~Score + before replay~~ **Done outside the repo** (#19 closed unmerged, CEO): before scorecard 40.6 / 100 | — |
-| 2 | `build-catalog.mjs` (with the type checker) as a standalone script: writes `generated/catalog.json` only, lists missing fields without failing; fixture tests; `examples:check` | — (sibling of 1) |
-| 3a–3g | Codemod `hook-docs.ts` → TSDoc, one category slice per PR (state 3a–3b, effects 3c–3d, dom 3e–3f, data 3g, all ≤15 files); JSDoc for the 11 missing; `catalog/categories.json` in 3a. 3a adds the parity test (catalog vs `hook-docs.ts` + manifest, migrated hooks only) and `parity-approved.json`; each PR extends both. Until PRs 5 and 6, each also regenerates and commits `hookli-mcp/src/data/catalog.json` and `docs/lib/hook-sources.generated.ts` (they embed hook source, and CI checks them). Those count against the 15-file cap | 2, stacked in order |
-| 4 | Generator strict (X1–X7, X11, X13 fail), wired into the library `build` (catalog only); turbo outputs (`generated/**`); hookli-mcp devDependency on `hookli` and MCP `test` after its `build`; `dev` after `^build` | 3g |
-| 5 | MCP imports the catalog; `rootDir` widened; meta, `docsUrl`, aliases, removed answer; delete `build-mcp-catalog.mjs` **and its CI line**, plus the MCP `prebuild` and `gen:catalog` scripts that call it | 4 |
-| 6 | Docs read the catalog (server-only) and keep the manifest in client code; demo map; delete `hook-docs.ts`, `hook-sources.generated.ts`, `gen-hook-sources.mjs` **and its CI line**; delete the parity test | 5 (needs `build-mcp-catalog.mjs` gone, since it reads `hook-docs.ts`) |
-| 7 | Manifest built and git-ignored (turbo output `hooks.manifest.json`); `--readme`; delete `gen-readme.mjs`; CI README check; `prepublishOnly` + `test:package`; `vercel.json`; `pnpm new:hook use-x` starter (CEO: writes `use-x.ts` with a TSDoc template whose tags carry one-line hints, `use-x.test.ts` with the `expectSSRSafe` case, `use-x/index.ts`, adds the barrel line, writes a working `use-x-demo.tsx` stub (calls the hook, shows the result with `DemoReadout`; built only from `components/demos/ui.tsx` parts, no raw Tailwind classes, so a later UI-kit swap changes `ui.tsx` only) and its demo-map line; prints the one remaining edit: the MCP search case); CONTRIBUTING "TSDoc format" section with one full example, CLAUDE.md, `.claude` files, CHANGELOG | 6 |
-| 8 | `catalog/removed-hooks.json` + "Removed" page + alias redirects | 7 |
-| — | **After scorecard** + parity report (JS byte-identical, `.d.ts` identical once comments are stripped, approved diffs, search eval) in the release PR | all |
+| x/15 | PR | Slice | Depends on |
+|---|---|---|---|
+| — | 1 | ~~Score + before replay~~ **Done outside the repo** (#19 closed unmerged, CEO): before scorecard 40.6 / 100 | — |
+| 2 | #18 | `build-catalog.mjs` (with the type checker), final rules: standalone, writes `generated/catalog.json` only, lists problems without failing; fixture tests; `examples:check`; `.gitignore` for every built file. Later PRs don't touch the generator until PR 7 adds `--readme` | — |
+| 3 | #23 | **Built, not committed (amendment 2):** `hook-sources.generated.ts` and the MCP `src/data/` are git-ignored and written by each workspace's `dev`/`build`/`test`/`typecheck` scripts (only when the content changed); turbo inputs for both builds; CI's generated-files step keeps only the README | 2 |
+| 4–10 | #20, #21, #22, then 3d–3g | TSDoc for each hook, one category slice per PR (state 3a–3b, effects 3c–3d, dom 3e–3f, data 3g); JSDoc for the 11 missing; obvious comments dropped and tuple members labelled. Each hook's SSR case moves into its own test; 3a adds `src/test-utils/ssr.ts`, and 3g deletes the central `src/ssr.test.ts`. A hook PR touches only its hooks and their tests | 3, stacked in order |
+| 11 | 4 | Generator strict (X1–X6, X11, X13 fail), wired into the library `build` (catalog only); turbo outputs (`generated/**`); hookli-mcp devDependency on `hookli` and MCP `test` after its `build`; `dev` after `^build` | 3g |
+| 12 | 5 | MCP imports the catalog; `rootDir` widened; meta, `docsUrl`, aliases, removed answer; delete `build-mcp-catalog.mjs`, the MCP `gen:catalog` and `pre*` scripts that call it, and its turbo entry | 4 |
+| 13 | 6 | Docs read the catalog (server-only) and keep the manifest in client code; demo map; delete `hook-docs.ts`, `hook-sources.generated.ts`, `gen-hook-sources.mjs`, the docs `pre*` scripts that call it, and its turbo entry | 5 (needs `build-mcp-catalog.mjs` gone, since it reads `hook-docs.ts`) |
+| 14 | 7 | Manifest built and git-ignored (turbo output `hooks.manifest.json`); `--readme`; delete `gen-readme.mjs`; CI README check; `prepublishOnly` + `test:package`; `vercel.json`; `pnpm new:hook use-x` starter (CEO: writes `use-x.ts` with a TSDoc template whose tags carry one-line hints, `use-x.test.ts` with the `expectSSRSafe` case, `use-x/index.ts`, adds the barrel line, writes a working `use-x-demo.tsx` stub (calls the hook, shows the result with `DemoReadout`; built only from `components/demos/ui.tsx` parts, no raw Tailwind classes, so a later UI-kit swap changes `ui.tsx` only) and its demo-map line; prints the one remaining edit: the MCP search case). The starter's placeholders fail the strict generator until replaced, and a test runs the starter into a temp folder and checks the result passes the strict generator, `examples:check`, typecheck and the demo check. CONTRIBUTING "TSDoc format" section with one full example (including the comment rule), CLAUDE.md, `.claude` files, CHANGELOG | 6 |
+| 15 | 8 | `catalog/removed-hooks.json` + "Removed" page + alias redirects | 7 |
+| — | — | **After scorecard** + parity report (JS byte-identical, `.d.ts` identical once comments are stripped, approved diffs, search eval) in the release PR | all |
 
 Every PR builds and passes CI on its own: any script a PR deletes, it also removes from CI, and nothing reads the generator's strict output before PR 4.
 
@@ -315,7 +318,7 @@ Tests ship with the code in library and MCP PRs. Docs PRs rely on the demo check
 ## 8. Deployment Steps
 
 - **Env vars / migrations:** none.
-- **Vercel:** `apps/docs/vercel.json` pins the build command (PR 7). Check that the previews of PR 6 and PR 7 build from a cold cache, since those are the first PRs where the docs read generated files.
+- **Vercel:** `apps/docs/vercel.json` pins the build command (PR 7). Check that the previews of #23 (3/15), PR 6 and PR 7 build from a cold cache: #23 is the first PR where the docs build writes a file it used to find committed.
 - **npm:** nothing in this work. The next human release of `hookli` runs the new `prepublishOnly`, so `test:package` proves `hooks.manifest.json` is in the tarball. The manifest descriptions change, so the `CHANGELOG` notes it.
 - **Rollback:** Vercel Instant Rollback first, then revert the release merge. If a release already shipped: `npm deprecate` it and publish a patch, never unpublish.
 
@@ -323,7 +326,7 @@ Tests ship with the code in library and MCP PRs. Docs PRs rely on the demo check
 
 - **MCP search ranking.** The summary changes (weight 1.5), the keywords don't (weight 3). The eval floors run in parity. If one drops, fix the keywords, not the floors.
 - **Docs types change to the code's.** Some docs types were simplified or out of date by hand. Showing the code's types is more accurate, but some pages get longer types. Every case is listed in the approved diffs.
-- **Codemod mistakes.** The parity test (from 3a) compares every field for all 66 hooks before anything switches over.
+- **Codemod mistakes.** The private parity check compares every field for all 66 hooks before anything switches over, and each hook PR reports it.
 - **turbo or Vercel cache.** Covered by the outputs fix and a cold-cache preview check.
 
 ## 10. Open questions
@@ -344,7 +347,7 @@ None. All answered by the CEO on 2026-11-21 (see "Decisions taken").
 | Re-review (all lenses) | PR 2 can't pass CI before the codemod; PRs 4 and 5 can't be siblings | §7 reordered: standalone generator until 3g, strict + wired in PR 4, MCP before docs, every deleted script also leaves CI |
 | Re-review (all lenses) | M1 ideal unreachable; M2 tautological; docs and MCP end states outside vitest; X14/X15 untestable; M5 ambiguous | M1 ideal 7; "one edit left out" variants must fail; MCP fixture tests + docs checks; X14/X15 rule; a fixed M5 list |
 | Re-review (all lenses) | Full catalog in the client bundle; MCP `rootDir`; `description` rename is a public API change | Catalog server-only, manifest in client code; `rootDir` widened; field name kept |
-| Second re-review | `.d.ts` can't stay byte-identical once TSDoc is added; MCP `prebuild`; manifest types file; 3a–3g must regenerate the committed files; stale PR numbers; owner of each "one edit left out" variant | JS byte-identical, `.d.ts` compared with comments stripped; PR 5 drops `prebuild`/`gen:catalog`; types file kept; 3a–3g regenerate and count those files; sections aligned (parity from 3a, `vercel.json` in PR 7, cold-cache check on PRs 6–7, M1 7/12); variant owners named |
+| Second re-review | `.d.ts` can't stay byte-identical once TSDoc is added; MCP `prebuild`; manifest types file; 3a–3g must regenerate the committed files; stale PR numbers; owner of each "one edit left out" variant | JS byte-identical, `.d.ts` compared with comments stripped; PR 5 drops `prebuild`/`gen:catalog`; types file kept; 3a–3g regenerate and count those files (superseded by amendment 2: built, not committed); sections aligned (parity from 3a, `vercel.json` in PR 7, cold-cache check on PRs 6–7, M1 7/12); variant owners named |
 
 ## Amendment 1 (2026-11-21, after PR 1 #19 and PR 2 #18)
 
@@ -367,3 +370,14 @@ The measured before score is **40.6 / 100**: M1 10.9, M2 9.2, M3 13.3 (8 of 15 c
 | CEO on #19: the score is for us, not for the repo | #19 closed unmerged. The score and replay scripts live outside the repo and are run once more at the end for the after score. The durable scenario and mistake tests next to the generator stay, because they are real tests of the generator | 1 |
 | CEO: will other developers manage the TSDoc format? | A `pnpm new:hook` starter writes the hook, test and folder barrel (plus the barrel line) from a template with hints, and CONTRIBUTING documents the format; the generator's errors name each missing tag. Added to PR 7 | 7 |
 | CEO: a demo is hard for a new contributor | The starter also writes a demo stub and its map line (option 1: page always has a live demo, CI check stays). Swapping Tailwind for Chakra UI in the docs is a later, separate project; the stub uses only `ui.tsx` parts so it survives that swap | 7 |
+
+## Amendment 2 (2026-11-22, CEO review of #18, #20–#22)
+
+| Finding (CEO) | Change to the plan | PR |
+|---|---|---|
+| #20 had 31 files, over the cap | Tooling and hooks split; the cap counts production files, tests on top. All open PRs re-checked | 2, 3, 4–6 |
+| Comments on members and parameters that need no explanation | Comment rule in §1: write one only when it adds something. Return rows come from the code, `@param` text is optional, tuple members are labelled in the type. X7 retired. Obvious comments removed from the migrated hooks, older ones too | 2, 4–10 |
+| "Final version of each file in one PR, no stale copies" | Each file is changed by one PR. Generator changes from the hook PRs folded into #18. Hook PRs touch only hooks and their tests; the central `ssr.test.ts` is left alone and deleted once in 3g | 2, 4–10 |
+| Generated files edited in every PR | Built at build time instead of committed (S9 brought forward): new PR 3/15 (#23). Both scripts write only when the content changed, so a later `test` doesn't make `dist` look stale | 3 |
+| Temporary files committed and deleted later | The codemod and the parity check run privately (like the score); each hook PR states its parity result. M5 already excluded the codemod | 4–10 |
+| Keep the `@example` in the TSDoc? | Kept: it feeds the editor hover, the docs page, StackBlitz, `llms.txt` and two MCP answers, and `examples:check` compiles it | — |
